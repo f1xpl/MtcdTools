@@ -1,6 +1,6 @@
 package com.f1x.mtcdtools;
 
-import com.f1x.mtcdtools.keyinputs.KeyInputsWriterInterface;
+import com.f1x.mtcdtools.keys.storage.KeyInputsWriterInterface;
 
 import java.io.IOException;
 
@@ -18,7 +18,7 @@ class MockKeyInputsWriter implements KeyInputsWriterInterface {
     }
 
     public String getOutput() {
-        return new String(mOutput);
+        return mOutput;
     }
 
     private String mOutput;

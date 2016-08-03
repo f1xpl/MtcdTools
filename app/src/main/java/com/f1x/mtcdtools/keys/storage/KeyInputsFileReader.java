@@ -1,4 +1,4 @@
-package com.f1x.mtcdtools.keyinputs;
+package com.f1x.mtcdtools.keys.storage;
 
 import android.content.Context;
 
@@ -17,17 +17,23 @@ public class KeyInputsFileReader implements KeyInputsReaderInterface {
     @Override
     public String read() throws IOException  {
         FileInputStream inputStream = openFileInput();
-        byte[] inputBuffer = new byte[inputStream.available()];
-        inputStream.read(inputBuffer);
-        String inputString = new String(inputBuffer, KeyInputsStorage.CHARSET);
+        final int totalBytes = inputStream.available();
+        byte[] inputBuffer = new byte[totalBytes];
 
-        return inputString;
+        int bytesRead = inputStream.read(inputBuffer, 0, totalBytes);
+        while(bytesRead < totalBytes) {
+            bytesRead += inputStream.read(inputBuffer, bytesRead, totalBytes);
+        }
+
+        return new String(inputBuffer, KeyInputsStorage.CHARSET);
     }
 
     private FileInputStream openFileInput() throws IOException {
         File inputFile = new File(mContext.getFilesDir(), KeyInputsStorage.STORAGE_FILE_NAME);
         if(!inputFile.exists()) {
-            inputFile.createNewFile();
+            if(!inputFile.createNewFile()) {
+                throw new IOException("Could not create file: " + inputFile.getName());
+            }
         }
 
         return mContext.openFileInput(inputFile.getName());

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MtcdTools</string>
+    <string name="ConfigurationFileReadError">Could not read configuration file</string>
+    <string name="ConfigurationFileParsingError">Configuration file seems to be corrupted</string>
 </resources>

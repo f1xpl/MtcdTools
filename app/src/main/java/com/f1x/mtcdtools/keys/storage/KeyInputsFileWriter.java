@@ -1,4 +1,4 @@
-package com.f1x.mtcdtools.keyinputs;
+package com.f1x.mtcdtools.keys.storage;
 
 import android.content.Context;
 
@@ -23,8 +23,11 @@ public class KeyInputsFileWriter implements KeyInputsWriterInterface {
 
     private FileOutputStream openFileOutput() throws IOException {
         File outputFile = new File(mContext.getFilesDir(), KeyInputsStorage.STORAGE_FILE_NAME);
+
         if(!outputFile.exists()) {
-            outputFile.createNewFile();
+            if(!outputFile.createNewFile()) {
+                throw new IOException("Could not create file: " + outputFile.getName());
+            }
         }
 
         return mContext.openFileOutput(outputFile.getName(), Context.MODE_PRIVATE);

@@ -1,8 +1,8 @@
 package com.f1x.mtcdtools;
 
-import com.f1x.mtcdtools.keyinputs.KeyInput;
-import com.f1x.mtcdtools.keyinputs.KeyInputType;
-import com.f1x.mtcdtools.keyinputs.KeyInputsStorage;
+import com.f1x.mtcdtools.keys.input.KeyInput;
+import com.f1x.mtcdtools.keys.input.KeyInputType;
+import com.f1x.mtcdtools.keys.storage.KeyInputsStorage;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -10,9 +10,9 @@ import org.json.JSONObject;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
@@ -23,28 +23,30 @@ public class KeyInputsStorageTest {
     public KeyInputsStorageTest() throws JSONException {
         mMockKeyInputsReader = new MockKeyInputsReader();
         mMockKeyInputsWriter = new MockKeyInputsWriter();
+        mKeyInputsStorage = new KeyInputsStorage(mMockKeyInputsReader, mMockKeyInputsWriter);
 
-        mTestKeyInputs = createTesKeyInputs();
+        mTestKeyInputs = createTestKeyInputs();
         mTestJsonObject = createTestJsonObject(mTestKeyInputs);
     }
 
     @Test
     public void parseJsonString() throws JSONException, IOException {
         mMockKeyInputsReader.setInput(mTestJsonObject.toString());
+        mKeyInputsStorage.read();
 
-        KeyInputsStorage keyInputsStorage = new KeyInputsStorage(mMockKeyInputsReader, mMockKeyInputsWriter);
-        assertEquals(mTestKeyInputs, keyInputsStorage.getInputs());
+        assertEquals(mTestKeyInputs, mKeyInputsStorage.getInputs());
     }
 
     @Test
     public void insertElement() throws JSONException, IOException {
-        KeyInputsStorage keyInputsStorage = new KeyInputsStorage(mMockKeyInputsReader, mMockKeyInputsWriter);
-        List<KeyInput> testKeyInputs = new ArrayList<>();
+        mKeyInputsStorage.read();
 
-        for(KeyInput testInput : mTestKeyInputs) {
-            keyInputsStorage.insert(testInput);
-            testKeyInputs.add(testInput);
-            assertEquals(testKeyInputs, keyInputsStorage.getInputs());
+        Map<Integer, KeyInput> testKeyInputs = new HashMap<>();
+
+        for(Map.Entry<Integer, KeyInput> testInput : mTestKeyInputs.entrySet()) {
+            mKeyInputsStorage.insert(testInput.getValue());
+            testKeyInputs.put(testInput.getKey(), testInput.getValue());
+            assertEquals(testKeyInputs, mKeyInputsStorage.getInputs());
 
             JSONObject testJsonObject = createTestJsonObject(testKeyInputs);
             assertEquals(testJsonObject.toString(), mMockKeyInputsWriter.getOutput());
@@ -53,38 +55,40 @@ public class KeyInputsStorageTest {
 
     @Test
     public void removeElement() throws JSONException, IOException {
-        KeyInputsStorage keyInputsStorage = new KeyInputsStorage(mMockKeyInputsReader, mMockKeyInputsWriter);
+        mKeyInputsStorage.read();
 
-        for(KeyInput testInput : mTestKeyInputs) {
-            keyInputsStorage.insert(testInput);
+        for (Map.Entry<Integer, KeyInput> testInput : mTestKeyInputs.entrySet()) {
+            mKeyInputsStorage.insert(testInput.getValue());
         }
 
-        Iterator<KeyInput> iter = mTestKeyInputs.iterator();
+        Iterator iter = mTestKeyInputs.entrySet().iterator();
         while (iter.hasNext()) {
-            keyInputsStorage.remove(iter.next());
-            iter.remove();
+            Map.Entry inputEntry = (Map.Entry)iter.next();
 
-            assertEquals(mTestKeyInputs, keyInputsStorage.getInputs());
+            mKeyInputsStorage.remove((KeyInput)inputEntry.getValue());
+            iter.remove();
+            assertEquals(mTestKeyInputs, mKeyInputsStorage.getInputs());
+
             JSONObject testJsonObject = createTestJsonObject(mTestKeyInputs);
             assertEquals(testJsonObject.toString(), mMockKeyInputsWriter.getOutput());
         }
     }
 
-    private final static List<KeyInput> createTesKeyInputs() {
-        List<KeyInput> inputs = new ArrayList<>();
+    private static Map<Integer, KeyInput> createTestKeyInputs() {
+        Map<Integer, KeyInput> inputs = new HashMap<>();
 
         for(int i = 1; i < 5; ++i) {
             KeyInput input = new KeyInput(i, KeyInputType.values()[i], "com.test.command" + i);
-            inputs.add(input);
+            inputs.put(i, input);
         }
 
         return inputs;
     }
 
-    private final static JSONObject createTestJsonObject(List<KeyInput> testKeyInputs) throws JSONException {
+    private static JSONObject createTestJsonObject(Map<Integer, KeyInput> testKeyInputs) throws JSONException {
         JSONArray inputsArray = new JSONArray();
-        for(KeyInput testInput : testKeyInputs) {
-            inputsArray.put(testInput.toJson());
+        for (Map.Entry<Integer, KeyInput> testInput : testKeyInputs.entrySet()) {
+            inputsArray.put(testInput.getValue().toJson());
         }
 
         JSONObject testJson = new JSONObject();
@@ -95,6 +99,7 @@ public class KeyInputsStorageTest {
 
     private final MockKeyInputsReader mMockKeyInputsReader;
     private final MockKeyInputsWriter mMockKeyInputsWriter;
-    private final List<KeyInput> mTestKeyInputs;
+    private final KeyInputsStorage mKeyInputsStorage;
+    private final Map<Integer, KeyInput> mTestKeyInputs;
     private final JSONObject mTestJsonObject;
 }

@@ -1,4 +1,4 @@
-package com.f1x.mtcdtools.keyinputs;
+package com.f1x.mtcdtools.keys.storage;
 
 import java.io.IOException;
 

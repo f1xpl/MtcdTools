@@ -1,7 +1,7 @@
 package com.f1x.mtcdtools;
 
-import com.f1x.mtcdtools.keyinputs.KeyInput;
-import com.f1x.mtcdtools.keyinputs.KeyInputType;
+import com.f1x.mtcdtools.keys.input.KeyInput;
+import com.f1x.mtcdtools.keys.input.KeyInputType;
 
 import org.json.JSONObject;
 import org.junit.Test;
@@ -29,7 +29,7 @@ public class KeyInputTest {
                                                  "{\"%s\":%d, \"%s\":\"%s\",\"%s\":\"%s\"}",
                                                  KeyInput.KEY_CODE_NAME, mKeyCode,
                                                  KeyInput.TYPE_NAME, KeyInputType.toString(mInputType),
-                                                 KeyInput.COMMAND_NAME, mCommand));
+                                                 KeyInput.PARAMETER_NAME, mCommand));
         assertEquals(input.toJson().toString(), expectedJson.toString());
     }
 
@@ -39,12 +39,12 @@ public class KeyInputTest {
                                                 "{\"%s\":%d, \"%s\":\"%s\",\"%s\":\"%s\"}",
                                                 KeyInput.KEY_CODE_NAME, mKeyCode,
                                                 KeyInput.TYPE_NAME, KeyInputType.toString(mInputType),
-                                                KeyInput.COMMAND_NAME, mCommand));
+                                                KeyInput.PARAMETER_NAME, mCommand));
 
         KeyInput keyInput = new KeyInput(inputJson);
         assertEquals(keyInput.getKeyCode(), mKeyCode);
         assertEquals(keyInput.getType(), mInputType);
-        assertEquals(keyInput.getCommand(), mCommand);
+        assertEquals(keyInput.getParameter(), mCommand);
     }
 
     @Test

@@ -1,7 +1,7 @@
 package com.f1x.mtcdtools;
 
-import com.f1x.mtcdtools.keyinputs.KeyInputsReaderInterface;
-import com.f1x.mtcdtools.keyinputs.KeyInputsStorage;
+import com.f1x.mtcdtools.keys.storage.KeyInputsReaderInterface;
+import com.f1x.mtcdtools.keys.storage.KeyInputsStorage;
 
 import org.json.JSONArray;
 import org.json.JSONException;
