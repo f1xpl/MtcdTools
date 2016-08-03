@@ -1,4 +1,4 @@
-package com.f1x.mtcdinput;
+package com.f1x.mtcdtools;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

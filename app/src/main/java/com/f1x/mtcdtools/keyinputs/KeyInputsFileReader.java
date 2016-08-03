@@ -1,4 +1,4 @@
-package com.f1x.mtcdinput.keyinputs;
+package com.f1x.mtcdtools.keyinputs;
 
 import android.content.Context;
 

@@ -1,4 +1,4 @@
-package com.f1x.mtcdinput;
+package com.f1x.mtcdtools;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

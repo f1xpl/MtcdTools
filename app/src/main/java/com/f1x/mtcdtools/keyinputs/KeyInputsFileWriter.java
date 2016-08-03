@@ -1,10 +1,6 @@
-package com.f1x.mtcdinput.keyinputs;
+package com.f1x.mtcdtools.keyinputs;
 
 import android.content.Context;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;

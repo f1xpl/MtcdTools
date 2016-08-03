@@ -5,7 +5,7 @@ android {
     buildToolsVersion "24.0.1"
 
     defaultConfig {
-        applicationId "com.f1x.mtcdinput"
+        applicationId "com.f1x.mtcdtools"
         minSdkVersion 19
         targetSdkVersion 24
         versionCode 1

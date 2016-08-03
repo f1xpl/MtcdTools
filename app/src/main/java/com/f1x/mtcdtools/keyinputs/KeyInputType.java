@@ -1,4 +1,4 @@
-package com.f1x.mtcdinput.keyinputs;
+package com.f1x.mtcdtools.keyinputs;
 
 /**
  * Created by COMPUTER on 2016-08-01.

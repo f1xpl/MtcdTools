@@ -1,6 +1,6 @@
-package com.f1x.mtcdinput;
+package com.f1x.mtcdtools;
 
-import com.f1x.mtcdinput.keyinputs.KeyInputsWriterInterface;
+import com.f1x.mtcdtools.keyinputs.KeyInputsWriterInterface;
 
 import java.io.IOException;
 
