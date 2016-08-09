@@ -27,11 +27,11 @@ public class KeyPressDispatcher {
         if(keyInput.getType() == KeyInputType.LAUNCH && actionType == KeyEvent.ACTION_DOWN) {
             mEvaluator.evaluateLaunchInput(keyInput.getParameter());
         } else if(keyInput.getType() == KeyInputType.TOGGLE_PLAY) {
-            mEvaluator.evaluateMediaInput(actionType, KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE, keyInput.getParameter());
+            mEvaluator.evaluateMediaInput(actionType, KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE, null);
         } else if(keyInput.getType() == KeyInputType.NEXT) {
-            mEvaluator.evaluateMediaInput(actionType, KeyEvent.KEYCODE_MEDIA_NEXT, null); // TODO: Handle Spotify permission
+            mEvaluator.evaluateMediaInput(actionType, KeyEvent.KEYCODE_MEDIA_NEXT, null);
         } else if(keyInput.getType() == KeyInputType.PREVIOUS) {
-            mEvaluator.evaluateMediaInput(actionType, KeyEvent.KEYCODE_MEDIA_PREVIOUS, null); // TODO: Handle Spotify permission
+            mEvaluator.evaluateMediaInput(actionType, KeyEvent.KEYCODE_MEDIA_PREVIOUS, null);
         }
     }
 

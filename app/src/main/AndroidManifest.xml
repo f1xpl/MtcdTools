@@ -26,7 +26,8 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".NewBindingActivity"></activity>
+        <activity android:name=".NewBindingActivity" />
+        <activity android:name=".EditBindingsActivity"></activity>
     </application>
 
 </manifest>

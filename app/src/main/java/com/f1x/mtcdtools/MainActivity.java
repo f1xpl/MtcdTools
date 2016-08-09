@@ -20,6 +20,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button editBindingsButton = (Button)findViewById(R.id.buttonEditBindings);
+        editBindingsButton.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, EditBindingsActivity.class));
+            }
+        });
+
         this.startService(new Intent(this, MtcdService.class));
     }
 }

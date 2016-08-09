@@ -11,12 +11,12 @@
     <string name="CancelButton">Cancel</string>
 
     <string name="ObtainKeyInputButton">Obtain key input</string>
-    <string name="SelectApplicationButton">Select application</string>
 
     <string name="KeyCodeTextView">KeyCode: </string>
     <string name="DefaultKeyCodeLabel">EMPTY</string>
 
     <string name="KeyBindingAdditionFailure">Failed to add new binding</string>
+    <string name="KeyBindingRemovalFailure">Failed to remove binding</string>
 
     <string name="ObtainKeyInputProgressBarTitle">Wait for key press</string>
     <string name="ObtainKeyInputProgressBarText">Press key you want to bind</string>

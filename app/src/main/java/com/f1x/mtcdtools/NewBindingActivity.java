@@ -31,9 +31,9 @@ public class NewBindingActivity extends AppCompatActivity implements MessageHand
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_binding);
 
-        mApplicationArrayAdapter = new ApplicationArrayAdapter(this);
+        ApplicationEntryArrayAdapter applicationEntryArrayAdapter = new ApplicationEntryArrayAdapter(this);
         final Spinner applicationListSpinner = (Spinner)findViewById(R.id.spinnerApplication);
-        applicationListSpinner.setAdapter(mApplicationArrayAdapter);
+        applicationListSpinner.setAdapter(applicationEntryArrayAdapter);
         applicationListSpinner.setVisibility(View.INVISIBLE);
         //-------------------------------------------------------------------------------------
 
@@ -90,7 +90,7 @@ public class NewBindingActivity extends AppCompatActivity implements MessageHand
                     Toast.makeText(NewBindingActivity.this, getString(R.string.NotObtainedKeyCode), Toast.LENGTH_LONG).show();
                 } else if(keyInputType == KeyInputType.NONE) {
                     Toast.makeText(NewBindingActivity.this, getString(R.string.NotSelectedInputType), Toast.LENGTH_LONG).show();
-                } else if(keyInputType == KeyInputType.LAUNCH && packageName == "") {
+                } else if(keyInputType == KeyInputType.LAUNCH && packageName.isEmpty()) {
                     Toast.makeText(NewBindingActivity.this, getString(R.string.NotSelectedApplication), Toast.LENGTH_LONG).show();
                 } else {
                     KeyInput keyInput = new KeyInput(Integer.parseInt(mKeyCodeTextView.getText().toString()), keyInputType, packageName);
@@ -122,10 +122,7 @@ public class NewBindingActivity extends AppCompatActivity implements MessageHand
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        if(mServiceConnection != null && mServiceMessenger != null) {
-            this.unbindService(mServiceConnection);
-        }
+        this.unbindService(mServiceConnection);
     }
 
     @Override
@@ -200,10 +197,9 @@ public class NewBindingActivity extends AppCompatActivity implements MessageHand
     private ProgressDialog mKeyObtainProgressDialog;
     private static final StaticMessageHandler mMessageHandler = new StaticMessageHandler();
     private final Messenger mMessenger = new Messenger(mMessageHandler);
-
-    private ApplicationArrayAdapter mApplicationArrayAdapter;
-    private KeyInputTypeArrayAdapter mKeyInputTypeArrayAdapter;
     private Messenger mServiceMessenger;
+
+    private KeyInputTypeArrayAdapter mKeyInputTypeArrayAdapter;
 
     private static final long KEY_OBTAIN_TIMER_DURATION_MS = 5000;
     private static final long KEY_OBTAIN_TIMER_STEP_MS = 1000;

@@ -100,10 +100,7 @@ public class MtcdService extends android.app.Service implements MessageHandlerIn
             mKeyPressDispatcher.updateKeyInputs(mKeyInputsStorage.getInputs());
             response.arg1 = Messaging.KeyInputAdditionResult.SUCCEED;
             sendMessage(response, request.replyTo);
-        } catch (IOException e) {
-            e.printStackTrace();
-            sendMessage(response, request.replyTo);
-        } catch (JSONException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
             sendMessage(response, request.replyTo);
         }
@@ -121,10 +118,7 @@ public class MtcdService extends android.app.Service implements MessageHandlerIn
             response.arg1 = Messaging.KeyInputRemovalResult.SUCCEED;
             sendMessage(response, request.replyTo);
             sendKeyInputsChanged(request.replyTo);
-        } catch (IOException e) {
-            e.printStackTrace();
-            sendMessage(response, request.replyTo);
-        } catch (JSONException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
             sendMessage(response, request.replyTo);
         }
@@ -132,8 +126,8 @@ public class MtcdService extends android.app.Service implements MessageHandlerIn
 
     private void handleKeyInputsRequest(Message request) {
         Message response = new Message();
-        request.what = Messaging.MessageIds.KEY_INPUTS_RESPONSE;
-        request.obj = mKeyInputsStorage.getInputs();
+        response.what = Messaging.MessageIds.KEY_INPUTS_RESPONSE;
+        response.obj = mKeyInputsStorage.getInputs();
         sendMessage(response, request.replyTo);
     }
 

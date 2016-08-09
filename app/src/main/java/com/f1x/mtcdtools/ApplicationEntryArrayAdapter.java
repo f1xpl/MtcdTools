@@ -14,8 +14,8 @@ import android.widget.TextView;
 /**
  * Created by COMPUTER on 2016-08-08.
  */
-public class ApplicationArrayAdapter extends ArrayAdapter<ApplicationEntry> {
-    public ApplicationArrayAdapter(Context context) {
+public class ApplicationEntryArrayAdapter extends ArrayAdapter<ApplicationEntry> {
+    public ApplicationEntryArrayAdapter(Context context) {
         super(context, R.layout.application_row, R.id.applicationName);
         PackageManager packageManager = context.getPackageManager();
 
@@ -40,11 +40,11 @@ public class ApplicationArrayAdapter extends ArrayAdapter<ApplicationEntry> {
 
         ApplicationEntry applicationEntry = getItem(position);
         if(applicationEntry != null) {
-            ImageView applicationIcon = (ImageView) view.findViewById(R.id.applicationIcon);
-            applicationIcon.setImageDrawable(applicationEntry.getIcon());
+            ImageView applicationIconImageView = (ImageView) view.findViewById(R.id.applicationIcon);
+            applicationIconImageView.setImageDrawable(applicationEntry.getIcon());
 
-            TextView applicationName = (TextView) view.findViewById(R.id.applicationName);
-            applicationName.setText(applicationEntry.getApplicationName());
+            TextView applicationNameTextView = (TextView) view.findViewById(R.id.applicationName);
+            applicationNameTextView.setText(applicationEntry.getApplicationName());
         }
 
         return view;
