@@ -7,8 +7,8 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.widget.Toast;
 
-import com.f1x.mtcdtools.keys.evaluation.KeyPressEvaluator;
 import com.f1x.mtcdtools.keys.evaluation.KeyPressDispatcher;
+import com.f1x.mtcdtools.keys.evaluation.KeyPressEvaluator;
 import com.f1x.mtcdtools.keys.input.KeyInput;
 import com.f1x.mtcdtools.keys.input.KeyPressReceiver;
 import com.f1x.mtcdtools.keys.storage.KeyInputsFileReader;
@@ -42,10 +42,10 @@ public class MtcdService extends android.app.Service implements MessageHandlerIn
         } catch(IOException e) {
             e.printStackTrace();
             Toast.makeText(this, getString(R.string.ConfigurationFileReadError), Toast.LENGTH_LONG).show();
+            stopSelf();
         } catch(JSONException e) {
             e.printStackTrace();
             Toast.makeText(this, getString(R.string.ConfigurationFileParsingError), Toast.LENGTH_LONG).show();
-        } finally {
             stopSelf();
         }
     }
@@ -93,20 +93,18 @@ public class MtcdService extends android.app.Service implements MessageHandlerIn
     private void handleKeyInputAdditionRequest(Message request) {
         Message response = new Message();
         response.what = Messaging.MessageIds.ADD_KEY_INPUT_RESPONSE;
+        response.arg1 = Messaging.KeyInputAdditionResult.FAILURE;
 
         try {
             mKeyInputsStorage.insert((KeyInput)request.obj);
             mKeyPressDispatcher.updateKeyInputs(mKeyInputsStorage.getInputs());
-
             response.arg1 = Messaging.KeyInputAdditionResult.SUCCEED;
             sendMessage(response, request.replyTo);
-            sendKeyInputsChanged(request.replyTo);
         } catch (IOException e) {
             e.printStackTrace();
+            sendMessage(response, request.replyTo);
         } catch (JSONException e) {
             e.printStackTrace();
-        } finally {
-            response.arg1 = Messaging.KeyInputAdditionResult.FAILURE;
             sendMessage(response, request.replyTo);
         }
     }
@@ -114,6 +112,7 @@ public class MtcdService extends android.app.Service implements MessageHandlerIn
     private void handleKeyInputRemovalRequest(Message request) {
         Message response = new Message();
         response.what = Messaging.MessageIds.REMOVE_KEY_INPUT_RESPONSE;
+        response.arg1 = Messaging.KeyInputRemovalResult.FAILURE;
 
         try {
             mKeyInputsStorage.remove((KeyInput)request.obj);
@@ -124,10 +123,9 @@ public class MtcdService extends android.app.Service implements MessageHandlerIn
             sendKeyInputsChanged(request.replyTo);
         } catch (IOException e) {
             e.printStackTrace();
+            sendMessage(response, request.replyTo);
         } catch (JSONException e) {
             e.printStackTrace();
-        } finally {
-            response.arg1 = Messaging.KeyInputRemovalResult.FAILURE;
             sendMessage(response, request.replyTo);
         }
     }
