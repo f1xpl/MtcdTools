@@ -25,13 +25,13 @@ public class KeyPressDispatcherTest {
         KeyInput launchKeyInput = new KeyInput(1, KeyInputType.LAUNCH, "com.test.package");
         mKeyInputs.put(1, launchKeyInput);
 
-        KeyInput nextKeyInput = new KeyInput(2, KeyInputType.NEXT, null);
+        KeyInput nextKeyInput = new KeyInput(2, KeyInputType.NEXT, "");
         mKeyInputs.put(2, nextKeyInput);
 
-        KeyInput previousKeyInput = new KeyInput(3, KeyInputType.PREVIOUS, null);
+        KeyInput previousKeyInput = new KeyInput(3, KeyInputType.PREVIOUS, "");
         mKeyInputs.put(3, previousKeyInput);
 
-        KeyInput togglePlayKeyInput = new KeyInput(4, KeyInputType.TOGGLE_PLAY, "com.permission");
+        KeyInput togglePlayKeyInput = new KeyInput(4, KeyInputType.TOGGLE_PLAY, "");
         mKeyInputs.put(4, togglePlayKeyInput);
 
         mKeyPressEvaluator = new MockKeyPressEvaluator();
@@ -107,7 +107,6 @@ public class KeyPressDispatcherTest {
         assertFalse(mKeyPressEvaluator.wasLaunchInputEvaluated());
         assertEquals(KeyEvent.ACTION_DOWN, mKeyPressEvaluator.getActionType().intValue());
         assertEquals(KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE, mKeyPressEvaluator.getAndroidKeyCode().intValue());
-        assertEquals(keyInput.getParameter(), mKeyPressEvaluator.getMediaKeyPermission());
     }
 
     @Test
@@ -118,7 +117,6 @@ public class KeyPressDispatcherTest {
         assertFalse(mKeyPressEvaluator.wasLaunchInputEvaluated());
         assertEquals(KeyEvent.ACTION_UP, mKeyPressEvaluator.getActionType().intValue());
         assertEquals(KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE, mKeyPressEvaluator.getAndroidKeyCode().intValue());
-        assertEquals(keyInput.getParameter(), mKeyPressEvaluator.getMediaKeyPermission());
     }
 
     private final Map<Integer, KeyInput> mKeyInputs;

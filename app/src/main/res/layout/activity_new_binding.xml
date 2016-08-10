@@ -9,67 +9,92 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.f1x.mtcdtools.NewBindingActivity">
 
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinnerKeyInputType"
-        android:spinnerMode="dialog"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:stretchColumns="*" >
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/ObtainKeyInputButton"
-        android:id="@+id/buttonObtainKeyInput"
-        android:layout_below="@+id/textViewKeyCodeLabel"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/KeyCodeTextView"
-        android:id="@+id/textViewKeyCodeLabel"
-        android:layout_below="@+id/spinnerKeyInputType"
-        android:layout_alignStart="@+id/spinnerKeyInputType"
-        android:layout_marginTop="54dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/KeyInputTypeTextView"
+                android:id="@+id/textViewKeyInputType" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/SaveButton"
-        android:id="@+id/buttonSaveNew"
-        android:layout_alignParentBottom="true"
-        android:layout_toStartOf="@+id/buttonCancelNew" />
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinnerKeyInputType"
+                android:spinnerMode="dialog" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/CancelButton"
-        android:id="@+id/buttonCancelNew"
-        android:layout_alignTop="@+id/buttonSaveNew"
-        android:layout_alignParentEnd="true" />
+        </TableRow>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/textViewKeyCode"
-        android:text="@string/DefaultKeyCodeLabel"
-        android:layout_alignTop="@+id/textViewKeyCodeLabel"
-        android:layout_toEndOf="@+id/textViewKeyCodeLabel" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
 
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinnerApplication"
-        android:layout_below="@+id/buttonObtainKeyInput"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="89dp"
-        android:layout_alignEnd="@+id/buttonObtainKeyInput"
-        android:spinnerMode="dialog" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/ApplicationTextView"
+                android:id="@+id/textViewApplication" />
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinnerApplication"
+                android:spinnerMode="dialog" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/KeyCodeTextView"
+                android:id="@+id/textViewKeyCodeLabel" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/textViewKeyCode"
+                android:text="@string/DefaultKeyCodeLabel" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            <Button
+                android:text="@string/ObtainKeyInputButton"
+                android:id="@+id/buttonObtainKeyInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:text="@string/SaveButton"
+                android:id="@+id/buttonSaveNew"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:text="@string/CancelButton"
+                android:id="@+id/buttonCancelNew"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+    </TableLayout>
 
 </RelativeLayout>

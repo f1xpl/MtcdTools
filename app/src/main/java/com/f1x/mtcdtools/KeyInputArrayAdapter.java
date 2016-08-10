@@ -55,12 +55,12 @@ public class KeyInputArrayAdapter extends ArrayAdapter<KeyInput> {
             try {
                 bindingIcon = packageManager.getApplicationIcon(keyInput.getParameter());
                 ApplicationInfo applicationInfo = packageManager.getApplicationInfo(keyInput.getParameter(), 0);
-                bindingName = "[" + Integer.toString(keyInput.getKeyCode()) + "] | " + KeyInputType.toString(keyInput.getType()) + " | " + packageManager.getApplicationLabel(applicationInfo);
+                bindingName = "[" + Integer.toString(keyInput.getKeyCode()) + "] [" + KeyInputType.toString(keyInput.getType()) + "] :: " + packageManager.getApplicationLabel(applicationInfo);
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
             }
         } else {
-            bindingName = "[" + Integer.toString(keyInput.getKeyCode()) + "] | " + KeyInputType.toString(keyInput.getType());
+            bindingName = "[" + Integer.toString(keyInput.getKeyCode()) + "] [" + KeyInputType.toString(keyInput.getType()) + "]";
         }
 
         ImageView bindingIconImageView = (ImageView) view.findViewById(R.id.bindingIcon);

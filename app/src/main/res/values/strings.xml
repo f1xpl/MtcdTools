@@ -12,6 +12,9 @@
 
     <string name="ObtainKeyInputButton">Obtain key input</string>
 
+    <string name="KeyInputTypeTextView">Input type: </string>
+    <string name="ApplicationTextView">Application: </string>
+
     <string name="KeyCodeTextView">KeyCode: </string>
     <string name="DefaultKeyCodeLabel">EMPTY</string>
 

@@ -27,11 +27,11 @@ public class KeyPressDispatcher {
         if(keyInput.getType() == KeyInputType.LAUNCH && actionType == KeyEvent.ACTION_DOWN) {
             mEvaluator.evaluateLaunchInput(keyInput.getParameter());
         } else if(keyInput.getType() == KeyInputType.TOGGLE_PLAY) {
-            mEvaluator.evaluateMediaInput(actionType, KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE, null);
+            mEvaluator.evaluateMediaInput(actionType, KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE);
         } else if(keyInput.getType() == KeyInputType.NEXT) {
-            mEvaluator.evaluateMediaInput(actionType, KeyEvent.KEYCODE_MEDIA_NEXT, null);
+            mEvaluator.evaluateMediaInput(actionType, KeyEvent.KEYCODE_MEDIA_NEXT);
         } else if(keyInput.getType() == KeyInputType.PREVIOUS) {
-            mEvaluator.evaluateMediaInput(actionType, KeyEvent.KEYCODE_MEDIA_PREVIOUS, null);
+            mEvaluator.evaluateMediaInput(actionType, KeyEvent.KEYCODE_MEDIA_PREVIOUS);
         }
     }
 

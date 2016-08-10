@@ -10,7 +10,7 @@ import com.f1x.mtcdtools.keys.input.KeyInputType;
  */
 public class KeyInputTypeArrayAdapter extends ArrayAdapter<String> {
     public KeyInputTypeArrayAdapter(Context context) {
-        super(context, android.R.layout.simple_list_item_1);
+        super(context, R.layout.key_input_row);
 
         for(KeyInputType keyInputType : KeyInputType.values()) {
             add(KeyInputType.toString(keyInputType));

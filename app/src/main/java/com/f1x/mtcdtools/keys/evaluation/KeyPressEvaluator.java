@@ -2,6 +2,7 @@ package com.f1x.mtcdtools.keys.evaluation;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.view.KeyEvent;
 
 /**
@@ -10,6 +11,7 @@ import android.view.KeyEvent;
 public class KeyPressEvaluator implements KeyPressEvaluatorInterface {
     public KeyPressEvaluator(Context context) {
         mContext = context;
+        mAudioManager = (AudioManager)mContext.getSystemService(Context.AUDIO_SERVICE);
     }
 
     @Override
@@ -20,12 +22,11 @@ public class KeyPressEvaluator implements KeyPressEvaluatorInterface {
     }
 
     @Override
-    public void evaluateMediaInput(int actionType, int androidKeyCode, String permissions) {
-        Intent intent = new Intent(Intent.ACTION_MEDIA_BUTTON);
+    public void evaluateMediaInput(int actionType, int androidKeyCode) {
         KeyEvent keyEvent = new KeyEvent(actionType, androidKeyCode);
-        intent.putExtra(Intent.EXTRA_KEY_EVENT, keyEvent);
-        mContext.sendOrderedBroadcast(intent, permissions);
+        mAudioManager.dispatchMediaKeyEvent(keyEvent);
     }
 
     private final Context mContext;
+    private final AudioManager mAudioManager;
 }

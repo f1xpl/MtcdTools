@@ -17,10 +17,9 @@ public class MockKeyPressEvaluator implements KeyPressEvaluatorInterface {
     }
 
     @Override
-    public void evaluateMediaInput(int actionType, int androidKeyCode, String permissions) {
+    public void evaluateMediaInput(int actionType, int androidKeyCode) {
         mActionType = actionType;
         mAndroidKeyCode = androidKeyCode;
-        mMediaKeyPermission = permissions;
     }
 
     public boolean wasLaunchInputEvaluated() {
@@ -39,14 +38,9 @@ public class MockKeyPressEvaluator implements KeyPressEvaluatorInterface {
         return mAndroidKeyCode;
     }
 
-    public String getMediaKeyPermission() {
-        return mMediaKeyPermission;
-    }
-
     private boolean mLaunchInputEvaluated;
     private String mLaunchPackageName;
 
-    private Integer mActionType;
-    private Integer mAndroidKeyCode;
-    private String mMediaKeyPermission;
+    Integer mActionType;
+    Integer mAndroidKeyCode;
 }

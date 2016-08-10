@@ -5,5 +5,5 @@ package com.f1x.mtcdtools.keys.evaluation;
  */
 public interface KeyPressEvaluatorInterface {
     void evaluateLaunchInput(String packageName);
-    void evaluateMediaInput(int actionType, int androidKeyCode, String permissions);
+    void evaluateMediaInput(int actionType, int androidKeyCode);
 }
