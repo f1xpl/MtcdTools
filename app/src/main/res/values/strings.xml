@@ -5,7 +5,6 @@
 
     <string name="AddNewBindingButton">Create a new binding</string>
     <string name="EditBindingsButton">Edit existing bindings</string>
-    <string name="AboutButton">About</string>
 
     <string name="SaveButton">Save</string>
     <string name="CancelButton">Cancel</string>
@@ -27,4 +26,6 @@
     <string name="NotSelectedInputType">Please select input type</string>
     <string name="NotObtainedKeyCode">Please obtain key code</string>
     <string name="NotSelectedApplication">Please select application</string>
+
+    <string name="MtcdServiceDescription">MtcdTools Service is now active</string>
 </resources>

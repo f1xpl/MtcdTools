@@ -1,10 +1,16 @@
 package com.f1x.mtcdtools;
 
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
+import android.os.SystemClock;
+import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
 import com.f1x.mtcdtools.keys.evaluation.KeyPressDispatcher;
@@ -26,37 +32,19 @@ public class MtcdService extends android.app.Service implements MessageHandlerIn
     @Override
     public void onCreate() {
         super.onCreate();
-
-        KeyInputsFileReader keyInputsFileReader = new KeyInputsFileReader(this);
-        KeyInputsFileWriter keyInputsFileWriter = new KeyInputsFileWriter(this);
-
-        try {
-            mKeyInputsStorage = new KeyInputsStorage(keyInputsFileReader, keyInputsFileWriter);
-            mKeyInputsStorage.read();
-            KeyPressEvaluator keyInputEvaluator = new KeyPressEvaluator(this);
-            mKeyPressDispatcher = new KeyPressDispatcher(keyInputEvaluator, mKeyInputsStorage.getInputs());
-
-            mServiceMessageHandler.setTarget(this);
-            mKeyInputDispatchingActive = true;
-            registerReceiver(mKeyPressReceiver, mKeyPressReceiver.getIntentFilter());
-        } catch(IOException e) {
-            e.printStackTrace();
-            Toast.makeText(this, getString(R.string.ConfigurationFileReadError), Toast.LENGTH_LONG).show();
-            stopSelf();
-        } catch(JSONException e) {
-            e.printStackTrace();
-            Toast.makeText(this, getString(R.string.ConfigurationFileParsingError), Toast.LENGTH_LONG).show();
-            stopSelf();
-        }
+        mServiceStarted = false;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
 
+        mServiceStarted = false;
         mKeyInputDispatchingActive = false;
         unregisterReceiver(mKeyPressReceiver);
         mServiceMessageHandler.setTarget(null);
+
+        scheduleServiceRestart();
     }
 
     @Override
@@ -67,7 +55,54 @@ public class MtcdService extends android.app.Service implements MessageHandlerIn
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
+
+        if(!mServiceStarted) {
+            KeyInputsFileReader keyInputsFileReader = new KeyInputsFileReader(this);
+            KeyInputsFileWriter keyInputsFileWriter = new KeyInputsFileWriter(this);
+
+            try {
+                mKeyInputsStorage = new KeyInputsStorage(keyInputsFileReader, keyInputsFileWriter);
+                mKeyInputsStorage.read();
+                KeyPressEvaluator keyInputEvaluator = new KeyPressEvaluator(this);
+                mKeyPressDispatcher = new KeyPressDispatcher(keyInputEvaluator, mKeyInputsStorage.getInputs());
+
+                mServiceMessageHandler.setTarget(this);
+                mKeyInputDispatchingActive = true;
+                registerReceiver(mKeyPressReceiver, mKeyPressReceiver.getIntentFilter());
+
+                mServiceStarted = true;
+                startForeground(SERVICE_ID, createNotification());
+            } catch(IOException e) {
+                e.printStackTrace();
+                Toast.makeText(this, getString(R.string.ConfigurationFileReadError), Toast.LENGTH_LONG).show();
+                stopSelf();
+            } catch(JSONException e) {
+                e.printStackTrace();
+                Toast.makeText(this, getString(R.string.ConfigurationFileParsingError), Toast.LENGTH_LONG).show();
+                stopSelf();
+            }
+        }
+
         return START_STICKY;
+    }
+
+    void scheduleServiceRestart() {
+        // WORKAROUND: Do not know why MTCD Android does not respect START_STICKY
+        Intent restartService = new Intent(getApplicationContext(), this.getClass());
+        restartService.setPackage(getPackageName());
+
+        PendingIntent restartServiceIntent = PendingIntent.getService(getApplicationContext(), SERVICE_ID, restartService, PendingIntent.FLAG_ONE_SHOT);
+        AlarmManager alarmManager = (AlarmManager)getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + SERVICE_RESTART_DELAY_MS, restartServiceIntent);
+    }
+
+    Notification createNotification() {
+        return new NotificationCompat.Builder(this)
+                .setContentTitle(getString(R.string.app_name))
+                .setContentText(getString(R.string.MtcdServiceDescription))
+                .setSmallIcon(R.drawable.notificationicon)
+                .setOngoing(true)
+                .build();
     }
 
     public void handleMessage(Message message) {
@@ -154,9 +189,13 @@ public class MtcdService extends android.app.Service implements MessageHandlerIn
         }
     };
 
+    private boolean mServiceStarted;
     private KeyInputsStorage mKeyInputsStorage;
     private KeyPressDispatcher mKeyPressDispatcher;
     private boolean mKeyInputDispatchingActive;
     private final Messenger mMessenger = new Messenger(mServiceMessageHandler);
+
     private static final StaticMessageHandler mServiceMessageHandler = new StaticMessageHandler();
+    private static final int SERVICE_ID = 1555;
+    private static final int SERVICE_RESTART_DELAY_MS = 100;
 }
