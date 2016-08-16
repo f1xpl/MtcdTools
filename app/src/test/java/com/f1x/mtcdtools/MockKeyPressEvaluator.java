@@ -1,6 +1,6 @@
 package com.f1x.mtcdtools;
 
-import com.f1x.mtcdtools.keys.evaluation.KeyPressEvaluatorInterface;
+import com.f1x.mtcdtools.evaluation.KeyPressEvaluatorInterface;
 
 /**
  * Created by COMPUTER on 2016-08-04.
@@ -8,6 +8,7 @@ import com.f1x.mtcdtools.keys.evaluation.KeyPressEvaluatorInterface;
 public class MockKeyPressEvaluator implements KeyPressEvaluatorInterface {
     public MockKeyPressEvaluator() {
         mLaunchInputEvaluated = false;
+        mModeInputEvaluated = false;
     }
 
     @Override
@@ -17,8 +18,12 @@ public class MockKeyPressEvaluator implements KeyPressEvaluatorInterface {
     }
 
     @Override
-    public void evaluateMediaInput(int actionType, int androidKeyCode) {
-        mActionType = actionType;
+    public void evaluateModeInput() {
+        mModeInputEvaluated = true;
+    }
+
+    @Override
+    public void evaluateMediaInput(int androidKeyCode) {
         mAndroidKeyCode = androidKeyCode;
     }
 
@@ -26,12 +31,12 @@ public class MockKeyPressEvaluator implements KeyPressEvaluatorInterface {
         return mLaunchInputEvaluated;
     }
 
-    public String getLaunchPackageName() {
-        return mLaunchPackageName;
+    public boolean wasModeInputEvaluated() {
+        return mModeInputEvaluated;
     }
 
-    public Integer getActionType() {
-        return mActionType;
+    public String getLaunchPackageName() {
+        return mLaunchPackageName;
     }
 
     public Integer getAndroidKeyCode() {
@@ -39,8 +44,8 @@ public class MockKeyPressEvaluator implements KeyPressEvaluatorInterface {
     }
 
     private boolean mLaunchInputEvaluated;
+    private boolean mModeInputEvaluated;
     private String mLaunchPackageName;
 
-    Integer mActionType;
     Integer mAndroidKeyCode;
 }

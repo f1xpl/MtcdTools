@@ -13,13 +13,15 @@ import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
-import com.f1x.mtcdtools.keys.evaluation.KeyPressDispatcher;
-import com.f1x.mtcdtools.keys.evaluation.KeyPressEvaluator;
-import com.f1x.mtcdtools.keys.input.KeyInput;
-import com.f1x.mtcdtools.keys.input.KeyPressReceiver;
-import com.f1x.mtcdtools.keys.storage.KeyInputsFileReader;
-import com.f1x.mtcdtools.keys.storage.KeyInputsFileWriter;
-import com.f1x.mtcdtools.keys.storage.KeyInputsStorage;
+import com.f1x.mtcdtools.evaluation.KeyPressDispatcher;
+import com.f1x.mtcdtools.evaluation.KeyPressEvaluator;
+import com.f1x.mtcdtools.evaluation.ModePackagesRotator;
+import com.f1x.mtcdtools.input.KeyInput;
+import com.f1x.mtcdtools.input.KeyPressReceiver;
+import com.f1x.mtcdtools.storage.FileReader;
+import com.f1x.mtcdtools.storage.FileWriter;
+import com.f1x.mtcdtools.storage.KeyInputsStorage;
+import com.f1x.mtcdtools.storage.ModePackagesStorage;
 
 import org.json.JSONException;
 
@@ -32,7 +34,16 @@ public class MtcdService extends android.app.Service implements MessageHandlerIn
     @Override
     public void onCreate() {
         super.onCreate();
+
         mServiceStarted = false;
+        mKeyInputDispatchingActive = false;
+
+        mKeyInputsStorage = new KeyInputsStorage(new FileReader(this), new FileWriter(this));
+        mModePackagesStorage = new ModePackagesStorage(new FileReader(this), new FileWriter(this));
+        mModePackagesRotator = new ModePackagesRotator();
+
+        KeyPressEvaluator keyInputEvaluator = new KeyPressEvaluator(this, mModePackagesRotator);
+        mKeyPressDispatcher = new KeyPressDispatcher(keyInputEvaluator);
     }
 
     @Override
@@ -57,21 +68,19 @@ public class MtcdService extends android.app.Service implements MessageHandlerIn
         super.onStartCommand(intent, flags, startId);
 
         if(!mServiceStarted) {
-            KeyInputsFileReader keyInputsFileReader = new KeyInputsFileReader(this);
-            KeyInputsFileWriter keyInputsFileWriter = new KeyInputsFileWriter(this);
-
             try {
-                mKeyInputsStorage = new KeyInputsStorage(keyInputsFileReader, keyInputsFileWriter);
                 mKeyInputsStorage.read();
-                KeyPressEvaluator keyInputEvaluator = new KeyPressEvaluator(this);
-                mKeyPressDispatcher = new KeyPressDispatcher(keyInputEvaluator, mKeyInputsStorage.getInputs());
+                mKeyPressDispatcher.updateKeyInputs(mKeyInputsStorage.getInputs());
 
-                mServiceMessageHandler.setTarget(this);
-                mKeyInputDispatchingActive = true;
+                mModePackagesStorage.read();
+                mModePackagesRotator.updatePackages(mModePackagesStorage.getPackages());
+
                 registerReceiver(mKeyPressReceiver, mKeyPressReceiver.getIntentFilter());
+                mServiceMessageHandler.setTarget(this);
 
-                mServiceStarted = true;
                 startForeground(SERVICE_ID, createNotification());
+                mKeyInputDispatchingActive = true;
+                mServiceStarted = true;
             } catch(IOException e) {
                 e.printStackTrace();
                 Toast.makeText(this, getString(R.string.ConfigurationFileReadError), Toast.LENGTH_LONG).show();
@@ -152,7 +161,7 @@ public class MtcdService extends android.app.Service implements MessageHandlerIn
 
             response.arg1 = Messaging.KeyInputRemovalResult.SUCCEED;
             sendMessage(response, request.replyTo);
-            sendKeyInputsChanged(request.replyTo);
+            sendKeyInputsChangedIndication(request.replyTo);
         } catch (IOException | JSONException e) {
             e.printStackTrace();
             sendMessage(response, request.replyTo);
@@ -166,7 +175,7 @@ public class MtcdService extends android.app.Service implements MessageHandlerIn
         sendMessage(response, request.replyTo);
     }
 
-    private void sendKeyInputsChanged(Messenger messenger) {
+    private void sendKeyInputsChangedIndication(Messenger messenger) {
         Message indication = new Message();
         indication.what = Messaging.MessageIds.KEY_INPUTS_CHANGED;
         sendMessage(indication, messenger);
@@ -182,17 +191,21 @@ public class MtcdService extends android.app.Service implements MessageHandlerIn
 
     private final KeyPressReceiver mKeyPressReceiver = new KeyPressReceiver() {
         @Override
-        public void handleKeyInput(int keyCode, int actionType) {
+        public void handleKeyInput(int keyCode) {
             if(mKeyInputDispatchingActive) {
-                mKeyPressDispatcher.dispatch(keyCode, actionType);
+                mKeyPressDispatcher.dispatch(keyCode);
             }
         }
     };
 
     private boolean mServiceStarted;
-    private KeyInputsStorage mKeyInputsStorage;
-    private KeyPressDispatcher mKeyPressDispatcher;
     private boolean mKeyInputDispatchingActive;
+
+    private KeyInputsStorage mKeyInputsStorage;
+    private ModePackagesStorage mModePackagesStorage;
+    private ModePackagesRotator mModePackagesRotator;
+
+    private KeyPressDispatcher mKeyPressDispatcher;
     private final Messenger mMessenger = new Messenger(mServiceMessageHandler);
 
     private static final StaticMessageHandler mServiceMessageHandler = new StaticMessageHandler();
