@@ -4,7 +4,7 @@
     <string name="ConfigurationFileParsingError">Configuration file seems to be corrupted</string>
 
     <string name="AddNewBindingButton">Create a new binding</string>
-    <string name="EditBindingsButton">Edit existing bindings</string>
+    <string name="RemoveBindingsButton">Remove existing bindings</string>
 
     <string name="SaveButton">Save</string>
     <string name="CancelButton">Cancel</string>

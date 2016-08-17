@@ -23,11 +23,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button editBindingsButton = (Button)findViewById(R.id.buttonEditBindings);
-        editBindingsButton.setOnClickListener(new Button.OnClickListener() {
+        Button removeBindingsButton = (Button)findViewById(R.id.buttonRemoveBindings);
+        removeBindingsButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, EditBindingsActivity.class));
+                startActivity(new Intent(MainActivity.this, RemoveBindingsActivity.class));
             }
         });
 

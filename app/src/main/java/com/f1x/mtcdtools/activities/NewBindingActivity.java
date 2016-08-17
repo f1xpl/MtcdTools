@@ -12,7 +12,6 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -102,7 +101,7 @@ public class NewBindingActivity extends AppCompatActivity implements MessageHand
                     Toast.makeText(NewBindingActivity.this, getString(R.string.NotSelectedApplication), Toast.LENGTH_LONG).show();
                 } else {
                     KeyInput keyInput = new KeyInput(Integer.parseInt(mKeyCodeTextView.getText().toString()), keyInputType, packageName);
-                    sendMessage(Messaging.MessageIds.ADD_KEY_INPUT_REQUEST, keyInput);
+                    sendKeyInputAddRequest(keyInput);
                 }
             }
         });
@@ -136,10 +135,10 @@ public class NewBindingActivity extends AppCompatActivity implements MessageHand
     @Override
     public void handleMessage(Message message) {
         switch(message.what) {
-            case Messaging.MessageIds.ADD_KEY_INPUT_RESPONSE:
-                if(message.arg1 == Messaging.KeyInputAdditionResult.SUCCEED) {
+            case Messaging.MessageIds.EDIT_KEY_INPUTS_RESPONSE:
+                if(message.arg1 == Messaging.KeyInputsEditResult.SUCCEED) {
                     finish();
-                } else if(message.arg1 == Messaging.KeyInputAdditionResult.FAILURE) {
+                } else if(message.arg1 == Messaging.KeyInputsEditResult.FAILURE) {
                     Toast.makeText(this, getString(R.string.KeyBindingAdditionFailure), Toast.LENGTH_LONG).show();
                 }
                 break;
@@ -147,14 +146,23 @@ public class NewBindingActivity extends AppCompatActivity implements MessageHand
     }
 
     private void sendMessage(int messageId) {
-        sendMessage(messageId, null);
+        Message message = new Message();
+        message.what = messageId;
+        message.replyTo = mMessenger;
+
+        try {
+            mServiceMessenger.send(message);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void sendMessage(int messageId, Object object) {
+    private void sendKeyInputAddRequest(KeyInput keyInput) {
         try {
             Message message = new Message();
-            message.what = messageId;
-            message.obj = object;
+            message.what = Messaging.MessageIds.EDIT_KEY_INPUTS_REQUEST;
+            message.arg1 = Messaging.KeyInputsEditType.ADD;
+            message.obj = keyInput;
             message.replyTo = mMessenger;
 
             mServiceMessenger.send(message);

@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.NewBindingActivity" />
-        <activity android:name=".activities.EditBindingsActivity" />
+        <activity android:name=".activities.RemoveBindingsActivity" />
 
         <service android:name=".MtcdService" />
 
