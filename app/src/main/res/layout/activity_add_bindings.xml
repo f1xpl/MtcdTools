@@ -8,7 +8,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:stretchColumns="*"
-    tools:context=".activities.NewBindingActivity">
+    tools:context=".activities.AddBindingsActivity">
 
     <TableRow
         android:layout_width="match_parent"
@@ -69,29 +69,30 @@
             android:text="@string/DefaultKeyCodeLabel" />
     </TableRow>
 
-    <TableRow
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
+        android:layout_height="wrap_content">
         <Button
             android:text="@string/CancelButton"
             android:id="@+id/buttonCancelNew"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <Button
             android:text="@string/SaveButton"
             android:id="@+id/buttonSaveNew"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <Button
             android:text="@string/ObtainKeyInputButton"
             android:id="@+id/buttonObtainKeyInput"
-            android:layout_width="wrap_content"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
-
-    </TableRow>
+    </LinearLayout>
 
 </TableLayout>

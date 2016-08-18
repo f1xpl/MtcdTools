@@ -16,10 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.NewBindingActivity" />
+        <activity android:name=".activities.AddBindingsActivity" />
         <activity android:name=".activities.RemoveBindingsActivity" />
 
-        <service android:name=".MtcdService" />
+        <service android:name=".services.MtcdService" />
 
         <receiver android:name=".BootCompletedBroadcastReceiver">
             <intent-filter>

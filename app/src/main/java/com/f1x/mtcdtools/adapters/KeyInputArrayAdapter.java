@@ -3,6 +3,7 @@ package com.f1x.mtcdtools.adapters;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +23,7 @@ import java.util.Map;
  */
 public class KeyInputArrayAdapter extends ArrayAdapter<KeyInput> {
     public KeyInputArrayAdapter(Context context) {
-        super(context, R.layout.binding_row, R.id.bindingName);
+        super(context, R.layout.key_input_row);
     }
 
     public void reset(Map<Integer, KeyInput> keyInputs) {
@@ -35,41 +36,35 @@ public class KeyInputArrayAdapter extends ArrayAdapter<KeyInput> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = convertView;
-
-        if(view == null) {
-            LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.binding_row, null);
-        }
+        TextView keyInputTextView = (TextView)super.getView(position, convertView, parent);
 
         KeyInput keyInput = getItem(position);
         if(keyInput == null) {
-            return view;
+            return keyInputTextView;
         }
 
-        Drawable bindingIcon = null;
-        String bindingName = "";
+        Drawable applicationIcon = null;
+        String labelText = "";
 
         if(keyInput.getType() == KeyInputType.LAUNCH) {
             PackageManager packageManager = getContext().getPackageManager();
 
             try {
-                bindingIcon = packageManager.getApplicationIcon(keyInput.getLaunchPackage());
+                applicationIcon = packageManager.getApplicationIcon(keyInput.getLaunchPackage());
+                applicationIcon.setBounds(new Rect(0, 0, 64, 64));
                 ApplicationInfo applicationInfo = packageManager.getApplicationInfo(keyInput.getLaunchPackage(), 0);
-                bindingName = "[" + Integer.toString(keyInput.getKeyCode()) + "] [" + KeyInputType.toString(keyInput.getType()) + "] :: " + packageManager.getApplicationLabel(applicationInfo);
+                labelText = "[" + Integer.toString(keyInput.getKeyCode()) + "] [" + KeyInputType.toString(keyInput.getType()) + "] :: " + packageManager.getApplicationLabel(applicationInfo);
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
             }
         } else {
-            bindingName = "[" + Integer.toString(keyInput.getKeyCode()) + "] [" + KeyInputType.toString(keyInput.getType()) + "]";
+            labelText = "[" + Integer.toString(keyInput.getKeyCode()) + "] [" + KeyInputType.toString(keyInput.getType()) + "]";
         }
 
-        ImageView bindingIconImageView = (ImageView) view.findViewById(R.id.bindingIcon);
-        bindingIconImageView.setImageDrawable(bindingIcon);
 
-        TextView bindingNameTextView = (TextView)view.findViewById(R.id.bindingName);
-        bindingNameTextView.setText(bindingName);
+        keyInputTextView.setCompoundDrawables(null, null, applicationIcon, null);
+        keyInputTextView.setText(labelText);
 
-        return view;
+        return keyInputTextView;
     }
 }

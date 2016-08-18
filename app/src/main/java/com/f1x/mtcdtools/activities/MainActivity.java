@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.f1x.mtcdtools.MtcdService;
+import com.f1x.mtcdtools.services.MtcdService;
 import com.f1x.mtcdtools.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         addNewBindingButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, NewBindingActivity.class));
+                startActivity(new Intent(MainActivity.this, AddBindingsActivity.class));
             }
         });
 

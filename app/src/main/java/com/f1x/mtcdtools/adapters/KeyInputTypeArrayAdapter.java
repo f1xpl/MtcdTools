@@ -11,7 +11,7 @@ import com.f1x.mtcdtools.input.KeyInputType;
  */
 public class KeyInputTypeArrayAdapter extends ArrayAdapter<String> {
     public KeyInputTypeArrayAdapter(Context context) {
-        super(context, R.layout.key_input_row);
+        super(context, R.layout.key_input_type_row);
 
         for(KeyInputType keyInputType : KeyInputType.values()) {
             add(KeyInputType.toString(keyInputType));

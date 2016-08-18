@@ -1,4 +1,4 @@
-package com.f1x.mtcdtools;
+package com.f1x.mtcdtools.services;
 
 import android.app.Notification;
 import android.content.Intent;
@@ -9,11 +9,15 @@ import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
+import com.f1x.mtcdtools.MessageHandlerInterface;
+import com.f1x.mtcdtools.Messaging;
+import com.f1x.mtcdtools.MtcdServiceWatchdog;
+import com.f1x.mtcdtools.R;
+import com.f1x.mtcdtools.StaticMessageHandler;
 import com.f1x.mtcdtools.evaluation.KeyPressDispatcher;
 import com.f1x.mtcdtools.evaluation.KeyPressEvaluator;
 import com.f1x.mtcdtools.evaluation.ModePackagesRotator;
 import com.f1x.mtcdtools.input.KeyPressReceiver;
-import com.f1x.mtcdtools.storage.StorageService;
 
 import org.json.JSONException;
 
@@ -28,6 +32,7 @@ public class MtcdService extends StorageService implements MessageHandlerInterfa
         super.onCreate();
 
         mServiceInitialized = false;
+        mKeyInputDispatchingActive = true;
         mModePackagesRotator = new ModePackagesRotator();
         KeyPressEvaluator keyInputEvaluator = new KeyPressEvaluator(this, mModePackagesRotator);
         mKeyPressDispatcher = new KeyPressDispatcher(keyInputEvaluator);
@@ -37,10 +42,14 @@ public class MtcdService extends StorageService implements MessageHandlerInterfa
     public void onDestroy() {
         super.onDestroy();
 
+        if(mServiceInitialized) {
+            unregisterReceiver(mKeyPressReceiver);
+            MtcdServiceWatchdog.schedulerServiceRestart(this);
+        }
+
         mServiceInitialized = false;
+        mKeyInputDispatchingActive = false;
         mServiceMessageHandler.setTarget(null);
-        unregisterReceiver(mKeyPressReceiver);
-        MtcdServiceWatchdog.schedulerServiceRestart(this);
     }
 
     @Override
@@ -65,6 +74,7 @@ public class MtcdService extends StorageService implements MessageHandlerInterfa
 
                 startForeground(1555, createNotification());
                 mServiceInitialized = true;
+                mKeyInputDispatchingActive = true;
             } catch(IOException e) {
                 e.printStackTrace();
                 Toast.makeText(this, getString(R.string.ConfigurationFileReadError), Toast.LENGTH_LONG).show();
@@ -97,10 +107,10 @@ public class MtcdService extends StorageService implements MessageHandlerInterfa
                 handleKeyInputsRequest(message);
                 break;
             case Messaging.MessageIds.SUSPEND_KEY_INPUT_DISPATCHING:
-                unregisterReceiver(mKeyPressReceiver);
+                mKeyInputDispatchingActive = false;
                 break;
             case Messaging.MessageIds.RESUME_KEY_INPUT_DISPATCHING:
-                registerReceiver(mKeyPressReceiver, mKeyPressReceiver.getIntentFilter());
+                mKeyInputDispatchingActive = true;
                 break;
         }
     }
@@ -137,11 +147,14 @@ public class MtcdService extends StorageService implements MessageHandlerInterfa
     private final KeyPressReceiver mKeyPressReceiver = new KeyPressReceiver() {
         @Override
         public void handleKeyInput(int keyCode) {
-            mKeyPressDispatcher.dispatch(keyCode);
+            if(mKeyInputDispatchingActive) {
+                mKeyPressDispatcher.dispatch(keyCode);
+            }
         }
     };
 
     private boolean mServiceInitialized;
+    private boolean mKeyInputDispatchingActive;
     private ModePackagesRotator mModePackagesRotator;
     private KeyPressDispatcher mKeyPressDispatcher;
     private final Messenger mMessenger = new Messenger(mServiceMessageHandler);

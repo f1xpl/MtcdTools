@@ -21,7 +21,6 @@ public abstract class KeyPressReceiver extends BroadcastReceiver {
         if(intent.getAction().equals(KEY_DOWN_ACTION_NAME)) {
             int keyCode = intent.getIntExtra(KEYCODE_PARAM_NAME, DEFAULT_KEY_CODE);
             handleKeyInput(keyCode);
-            handleKeyInput(keyCode);
         }
     }
 

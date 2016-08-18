@@ -1,10 +1,14 @@
-package com.f1x.mtcdtools.storage;
+package com.f1x.mtcdtools.services;
 
 import android.os.Message;
 import android.os.Messenger;
 
 import com.f1x.mtcdtools.Messaging;
 import com.f1x.mtcdtools.input.KeyInput;
+import com.f1x.mtcdtools.storage.FileReader;
+import com.f1x.mtcdtools.storage.FileWriter;
+import com.f1x.mtcdtools.storage.KeyInputsStorage;
+import com.f1x.mtcdtools.storage.ModePackagesStorage;
 
 import org.json.JSONException;
 
