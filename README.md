@@ -8,6 +8,7 @@ Using MtcdTools you are able to bind your device hard keys to android NEXT/PREV/
 # Launch on startup
 # Bind any device key or steering wheel key to NEXT/PREV/TOGGLE PLAY action
 # Bind any device key or steering wheel key to Launch any application
+# Create custom MODE applications list (does not override original one)
 
 In order to make MtcdTools work, first you need to bind your key to the specific action. Use "Create a new binding" button, select one of available actions (NEXT/PREV/TOGGLE PLAY or LAUNCH), obtain key code and save the binding.
 
