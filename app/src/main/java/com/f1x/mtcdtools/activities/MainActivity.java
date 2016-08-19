@@ -6,8 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.f1x.mtcdtools.services.MtcdService;
 import com.f1x.mtcdtools.R;
+import com.f1x.mtcdtools.services.MtcdService;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -28,6 +28,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, RemoveBindingsActivity.class));
+            }
+        });
+
+        Button editModePackagesButton = (Button)findViewById(R.id.buttonEditModePackages);
+        editModePackagesButton.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, EditModePackagesActivity.class));
             }
         });
 

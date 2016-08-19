@@ -1,7 +1,6 @@
 package com.f1x.mtcdtools.evaluation;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**

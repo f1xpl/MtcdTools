@@ -5,26 +5,26 @@ import android.graphics.drawable.Drawable;
 /**
  * Created by COMPUTER on 2016-08-08.
  */
-public class ApplicationEntry {
-    public ApplicationEntry(Drawable icon, String name, String packageName) {
+public class PackageEntry {
+    public PackageEntry(Drawable icon, String label, String name) {
         mIcon = icon;
+        mLabel = label;
         mName = name;
-        mPackageName = packageName;
     }
 
     public Drawable getIcon() {
         return mIcon;
     }
 
-    public String getApplicationName() {
+    public String getLabel() {
+        return mLabel;
+    }
+
+    public String getName() {
         return mName;
     }
 
-    public String getPackageName() {
-        return mPackageName;
-    }
-
     private final Drawable mIcon;
+    private final String mLabel;
     private final String mName;
-    private final String mPackageName;
 }

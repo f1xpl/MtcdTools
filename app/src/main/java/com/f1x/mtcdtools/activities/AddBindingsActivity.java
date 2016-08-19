@@ -13,9 +13,9 @@ import android.widget.Toast;
 
 import com.f1x.mtcdtools.Messaging;
 import com.f1x.mtcdtools.R;
-import com.f1x.mtcdtools.adapters.ApplicationEntry;
-import com.f1x.mtcdtools.adapters.ApplicationEntryArrayAdapter;
+import com.f1x.mtcdtools.adapters.InstalledPackagesArrayAdapter;
 import com.f1x.mtcdtools.adapters.KeyInputTypeArrayAdapter;
+import com.f1x.mtcdtools.adapters.PackageEntry;
 import com.f1x.mtcdtools.input.KeyInput;
 import com.f1x.mtcdtools.input.KeyInputType;
 
@@ -25,10 +25,10 @@ public class AddBindingsActivity extends EditBindingsActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_bindings);
 
-        ApplicationEntryArrayAdapter applicationEntryArrayAdapter = new ApplicationEntryArrayAdapter(this);
-        final Spinner applicationListSpinner = (Spinner)findViewById(R.id.spinnerApplication);
-        applicationListSpinner.setAdapter(applicationEntryArrayAdapter);
-        applicationListSpinner.setVisibility(View.INVISIBLE);
+        InstalledPackagesArrayAdapter installedPackagesArrayAdapter = new InstalledPackagesArrayAdapter(this);
+        final Spinner packagesListSpinner = (Spinner)findViewById(R.id.spinnerPackageBind);
+        packagesListSpinner.setAdapter(installedPackagesArrayAdapter);
+        packagesListSpinner.setVisibility(View.INVISIBLE);
         //-------------------------------------------------------------------------------------
 
         mKeyInputTypeArrayAdapter = new KeyInputTypeArrayAdapter(this);
@@ -38,15 +38,15 @@ public class AddBindingsActivity extends EditBindingsActivity {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 if(KeyInputType.fromString(mKeyInputTypeArrayAdapter.getItem(position)) == KeyInputType.LAUNCH) {
-                    applicationListSpinner.setVisibility(View.VISIBLE);
+                    packagesListSpinner.setVisibility(View.VISIBLE);
                 } else {
-                    applicationListSpinner.setVisibility(View.INVISIBLE);
+                    packagesListSpinner.setVisibility(View.INVISIBLE);
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                applicationListSpinner.setVisibility(View.INVISIBLE);
+                packagesListSpinner.setVisibility(View.INVISIBLE);
             }
         });
         //-------------------------------------------------------------------------------------
@@ -62,7 +62,7 @@ public class AddBindingsActivity extends EditBindingsActivity {
         //-------------------------------------------------------------------------------------
 
         mKeyCodeTextView = (TextView)findViewById(R.id.textViewKeyCode);
-        Button saveButton = (Button)findViewById(R.id.buttonSaveNew);
+        Button saveButton = (Button)findViewById(R.id.buttonSaveNewBinding);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,14 +70,12 @@ public class AddBindingsActivity extends EditBindingsActivity {
                 String packageName = "";
 
                 if(keyInputType == KeyInputType.LAUNCH) {
-                    ApplicationEntry applicationEntry = (ApplicationEntry)applicationListSpinner.getSelectedItem();
-                    packageName = applicationEntry.getPackageName();
+                    PackageEntry packageEntry = (PackageEntry)packagesListSpinner.getSelectedItem();
+                    packageName = packageEntry.getName();
                 }
 
                 String keyCodeText = mKeyCodeTextView.getText().toString();
-                if(keyInputType == KeyInputType.NONE) {
-                    Toast.makeText(AddBindingsActivity.this, getString(R.string.NotSelectedInputType), Toast.LENGTH_LONG).show();
-                } else if(keyInputType == KeyInputType.LAUNCH && packageName.isEmpty()) {
+                if(keyInputType == KeyInputType.LAUNCH && packageName.isEmpty()) {
                     Toast.makeText(AddBindingsActivity.this, getString(R.string.NotSelectedApplication), Toast.LENGTH_LONG).show();
                 } else if(keyCodeText.equals(getString(R.string.DefaultKeyCodeLabel))) {
                     Toast.makeText(AddBindingsActivity.this, getString(R.string.NotObtainedKeyCode), Toast.LENGTH_LONG).show();
@@ -89,7 +87,7 @@ public class AddBindingsActivity extends EditBindingsActivity {
         });
         //-------------------------------------------------------------------------------------
 
-        Button cancelButton = (Button)findViewById(R.id.buttonCancelNew);
+        Button cancelButton = (Button)findViewById(R.id.buttonCancelNewBinding);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

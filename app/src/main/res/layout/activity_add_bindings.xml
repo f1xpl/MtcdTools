@@ -40,12 +40,12 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/ApplicationTextView"
-            android:id="@+id/textViewApplication" />
+            android:id="@+id/textViewApplicationBind" />
 
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/spinnerApplication"
+            android:id="@+id/spinnerPackageBind"
             android:spinnerMode="dialog" />
 
     </TableRow>
@@ -75,14 +75,14 @@
         android:layout_height="wrap_content">
         <Button
             android:text="@string/CancelButton"
-            android:id="@+id/buttonCancelNew"
+            android:id="@+id/buttonCancelNewBinding"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <Button
             android:text="@string/SaveButton"
-            android:id="@+id/buttonSaveNew"
+            android:id="@+id/buttonSaveNewBinding"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

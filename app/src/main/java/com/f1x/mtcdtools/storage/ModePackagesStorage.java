@@ -43,7 +43,7 @@ public class ModePackagesStorage extends Storage {
         write(STORAGE_FILE_NAME, ROOT_ARRAY_NAME, inputsArray);
     }
 
-    List<String> mPackages;
+    private List<String> mPackages;
 
     private static final String STORAGE_FILE_NAME = "modePackages.json";
     private static final String ROOT_ARRAY_NAME = "packages";

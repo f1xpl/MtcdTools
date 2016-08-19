@@ -48,5 +48,5 @@ public class ModePackagesRotatorTest {
         }
     }
 
-    ModePackagesRotator mModePackagesRotator;
+    private final ModePackagesRotator mModePackagesRotator;
 }

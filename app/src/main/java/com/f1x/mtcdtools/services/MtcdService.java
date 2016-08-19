@@ -5,32 +5,33 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
-import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
-import com.f1x.mtcdtools.MessageHandlerInterface;
 import com.f1x.mtcdtools.Messaging;
-import com.f1x.mtcdtools.MtcdServiceWatchdog;
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.StaticMessageHandler;
 import com.f1x.mtcdtools.evaluation.KeyPressDispatcher;
 import com.f1x.mtcdtools.evaluation.KeyPressEvaluator;
 import com.f1x.mtcdtools.evaluation.ModePackagesRotator;
+import com.f1x.mtcdtools.input.KeyInput;
 import com.f1x.mtcdtools.input.KeyPressReceiver;
 
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by COMPUTER on 2016-08-03.
  */
-public class MtcdService extends StorageService implements MessageHandlerInterface {
+public class MtcdService extends StorageService {
     @Override
     public void onCreate() {
         super.onCreate();
 
+        mForceRestart = true;
         mServiceInitialized = false;
         mKeyInputDispatchingActive = true;
         mModePackagesRotator = new ModePackagesRotator();
@@ -42,9 +43,12 @@ public class MtcdService extends StorageService implements MessageHandlerInterfa
     public void onDestroy() {
         super.onDestroy();
 
+        if(mForceRestart) {
+            MtcdServiceWatchdog.scheduleServiceRestart(this);
+        }
+
         if(mServiceInitialized) {
             unregisterReceiver(mKeyPressReceiver);
-            MtcdServiceWatchdog.schedulerServiceRestart(this);
         }
 
         mServiceInitialized = false;
@@ -63,26 +67,24 @@ public class MtcdService extends StorageService implements MessageHandlerInterfa
 
         if(!mServiceInitialized) {
             try {
-                mKeyInputsStorage.read();
-                mKeyPressDispatcher.updateKeyInputs(mKeyInputsStorage.getInputs());
-
-                mModePackagesStorage.read();
-                mModePackagesRotator.updatePackages(mModePackagesStorage.getPackages());
+                readStorage();
 
                 registerReceiver(mKeyPressReceiver, mKeyPressReceiver.getIntentFilter());
                 mServiceMessageHandler.setTarget(this);
 
-                startForeground(1555, createNotification());
                 mServiceInitialized = true;
                 mKeyInputDispatchingActive = true;
+                startForeground(1555, createNotification());
             } catch(IOException e) {
                 e.printStackTrace();
                 Toast.makeText(this, getString(R.string.ConfigurationFileReadError), Toast.LENGTH_LONG).show();
                 stopSelf();
+                mForceRestart = false;
             } catch(JSONException e) {
                 e.printStackTrace();
                 Toast.makeText(this, getString(R.string.ConfigurationFileParsingError), Toast.LENGTH_LONG).show();
                 stopSelf();
+                mForceRestart = false;
             }
         }
 
@@ -98,15 +100,12 @@ public class MtcdService extends StorageService implements MessageHandlerInterfa
                 .build();
     }
 
+    @Override
     public void handleMessage(Message message) {
+        super.handleMessage(message);
+
         switch(message.what) {
-            case Messaging.MessageIds.EDIT_KEY_INPUTS_REQUEST:
-                handleKeyInputsEditRequest(message);
-                break;
-            case Messaging.MessageIds.GET_KEY_INPUTS_REQUEST:
-                handleKeyInputsRequest(message);
-                break;
-            case Messaging.MessageIds.SUSPEND_KEY_INPUT_DISPATCHING:
+             case Messaging.MessageIds.SUSPEND_KEY_INPUT_DISPATCHING:
                 mKeyInputDispatchingActive = false;
                 break;
             case Messaging.MessageIds.RESUME_KEY_INPUT_DISPATCHING:
@@ -116,32 +115,13 @@ public class MtcdService extends StorageService implements MessageHandlerInterfa
     }
 
     @Override
-    protected void handleKeyInputsEditResult(int result, Messenger replyTo) {
-        if(result == Messaging.KeyInputsEditResult.SUCCEED) {
-            mKeyPressDispatcher.updateKeyInputs(mKeyInputsStorage.getInputs());
-        }
-
-        Message response = new Message();
-        response.what = Messaging.MessageIds.EDIT_KEY_INPUTS_RESPONSE;
-        response.arg1 = result;
-
-        try {
-            replyTo.send(response);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+    protected void updateKeyInputs(Map<Integer, KeyInput> keyInputs) {
+        mKeyPressDispatcher.updateKeyInputs(keyInputs);
     }
 
-    private void handleKeyInputsRequest(Message request) {
-        Message response = new Message();
-        response.what = Messaging.MessageIds.GET_KEY_INPUTS_RESPONSE;
-        response.obj = mKeyInputsStorage.getInputs();
-
-        try {
-            request.replyTo.send(response);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+    @Override
+    protected void updateModePackages(List<String> packages) {
+        mModePackagesRotator.updatePackages(packages);
     }
 
     private final KeyPressReceiver mKeyPressReceiver = new KeyPressReceiver() {
@@ -153,6 +133,7 @@ public class MtcdService extends StorageService implements MessageHandlerInterfa
         }
     };
 
+    private boolean mForceRestart;
     private boolean mServiceInitialized;
     private boolean mKeyInputDispatchingActive;
     private ModePackagesRotator mModePackagesRotator;

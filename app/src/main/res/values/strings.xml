@@ -5,6 +5,7 @@
 
     <string name="AddNewBindingButton">Create a new binding</string>
     <string name="RemoveBindingsButton">Remove existing bindings</string>
+    <string name="EditModePackagesButton">Edit MODE applications</string>
 
     <string name="SaveButton">Save</string>
     <string name="CancelButton">Cancel</string>
@@ -19,6 +20,7 @@
 
     <string name="KeyBindingAdditionFailure">Failed to add new binding</string>
     <string name="KeyBindingRemovalFailure">Failed to remove binding</string>
+    <string name="ModePackagesSaveFailure">Failed to save mode applications list</string>
 
     <string name="ObtainKeyInputProgressBarTitle">Wait for key press</string>
     <string name="ObtainKeyInputProgressBarText">Press key you want to bind</string>
@@ -26,6 +28,8 @@
     <string name="NotSelectedInputType">Please select input type</string>
     <string name="NotObtainedKeyCode">Please obtain key code</string>
     <string name="NotSelectedApplication">Please select application</string>
+
+    <string name="AddModePackageButton">Add application</string>
 
     <string name="MtcdServiceDescription">MtcdTools Service is now active</string>
 </resources>

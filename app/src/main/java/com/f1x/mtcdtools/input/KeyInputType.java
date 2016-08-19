@@ -4,7 +4,6 @@ package com.f1x.mtcdtools.input;
  * Created by COMPUTER on 2016-08-01.
  */
 public enum KeyInputType {
-    NONE,
     LAUNCH,
     NEXT,
     PREVIOUS,
@@ -23,9 +22,9 @@ public enum KeyInputType {
                 return TOGGLE_PLAY_STRING;
             case MODE:
                 return MODE_STRING;
-            default:
-                return NONE_STRING;
         }
+
+        return null;
     }
 
     public static KeyInputType fromString(String inputType) {
@@ -40,12 +39,11 @@ public enum KeyInputType {
                 return TOGGLE_PLAY;
             case MODE_STRING:
                 return MODE;
-            default:
-                return NONE;
         }
+
+        return null;
     }
 
-    private static final String NONE_STRING = "NONE";
     private static final String LAUNCH_STRING = "Launch";
     private static final String NEXT_STRING = "Next";
     private static final String PREVIOUS_STRING = "Previous";

@@ -9,7 +9,7 @@ import org.json.JSONObject;
 public class KeyInput {
     public static final String KEY_CODE_NAME = "keyCode";
     public static final String TYPE_NAME = "type";
-    public static final String LAUNCH_PACKAGE_NAME = "launchPackage";
+    public static final String LAUNCH_PACKAGE_NAME = "parameter";
 
     public KeyInput(JSONObject json) throws JSONException {
         mKeyCode = json.getInt(KEY_CODE_NAME);

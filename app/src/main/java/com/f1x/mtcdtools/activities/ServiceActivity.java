@@ -12,8 +12,8 @@ import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 
 import com.f1x.mtcdtools.MessageHandlerInterface;
-import com.f1x.mtcdtools.services.MtcdService;
 import com.f1x.mtcdtools.StaticMessageHandler;
+import com.f1x.mtcdtools.services.MtcdService;
 
 /**
  * Created by COMPUTER on 2016-08-18.

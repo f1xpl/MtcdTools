@@ -1,12 +1,9 @@
 package com.f1x.mtcdtools.storage;
 
 import com.f1x.mtcdtools.input.KeyInput;
-import com.f1x.mtcdtools.storage.FileReaderInterface;
-import com.f1x.mtcdtools.storage.FileWriterInterface;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;

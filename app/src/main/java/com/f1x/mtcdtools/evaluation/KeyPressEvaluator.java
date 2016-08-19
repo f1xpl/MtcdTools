@@ -35,7 +35,7 @@ public class KeyPressEvaluator implements KeyPressEvaluatorInterface {
     public void evaluateModeInput() {
         String packageName = mModePackagesRotator.getNextPackage();
 
-        if(packageName != "") {
+        if(!packageName.isEmpty()) {
             evaluateLaunchInput(packageName);
         }
     }

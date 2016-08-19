@@ -1,7 +1,9 @@
 package com.f1x.mtcdtools.evaluation;
 
 import android.view.KeyEvent;
+
 import com.f1x.mtcdtools.input.KeyInput;
+
 import java.util.HashMap;
 import java.util.Map;
 

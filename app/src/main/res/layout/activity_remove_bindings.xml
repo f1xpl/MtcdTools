@@ -15,5 +15,6 @@
         android:id="@+id/listViewBindings"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:choiceMode="singleChoice" />
+        android:choiceMode="singleChoice"
+        android:drawSelectorOnTop="true" />
 </RelativeLayout>

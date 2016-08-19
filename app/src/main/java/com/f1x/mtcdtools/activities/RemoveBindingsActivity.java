@@ -1,6 +1,5 @@
 package com.f1x.mtcdtools.activities;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
@@ -40,13 +39,16 @@ public class RemoveBindingsActivity extends EditBindingsActivity {
 
     @Override
     protected void handleKeyInput(int keyCode) {
+        mBindingsListView.clearChoices();
+        mBindingsListView.requestLayout();
+
         for(int i = 0; i < mKeyInputArrayAdapter.getCount(); ++i) {
             KeyInput keyInput = mKeyInputArrayAdapter.getItem(i);
-            View v = mBindingsListView.getChildAt(i);
+
             if(keyInput.getKeyCode() == keyCode) {
-                v.setBackgroundColor(Color.GRAY);
-            } else {
-                v.setBackgroundColor(Color.WHITE);
+                mBindingsListView.setItemChecked(i, true);
+                mBindingsListView.requestFocusFromTouch();
+                mBindingsListView.setSelection(i);
             }
         }
     }
@@ -62,7 +64,8 @@ public class RemoveBindingsActivity extends EditBindingsActivity {
                     Toast.makeText(this, getString(R.string.KeyBindingRemovalFailure), Toast.LENGTH_LONG).show();
                 } else {
                     sendMessage(Messaging.MessageIds.GET_KEY_INPUTS_REQUEST);
-                    resetBindingsListViewHighlights();
+                    mBindingsListView.clearChoices();
+                    mBindingsListView.requestLayout();
                 }
                 break;
         }
@@ -72,12 +75,6 @@ public class RemoveBindingsActivity extends EditBindingsActivity {
     protected void onServiceConnected() {
         super.onServiceConnected();
         sendMessage(Messaging.MessageIds.GET_KEY_INPUTS_REQUEST);
-    }
-
-    private void resetBindingsListViewHighlights() {
-        for(int i = 0; i < mKeyInputArrayAdapter.getCount(); ++i) {
-            mBindingsListView.getChildAt(i).setBackgroundColor(Color.WHITE);
-        }
     }
 
     private ListView mBindingsListView;
