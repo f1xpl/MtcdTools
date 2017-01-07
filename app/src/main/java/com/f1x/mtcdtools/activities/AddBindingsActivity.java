@@ -3,7 +3,6 @@ package com.f1x.mtcdtools.activities;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Message;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -11,7 +10,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.f1x.mtcdtools.Messaging;
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.adapters.InstalledPackagesArrayAdapter;
 import com.f1x.mtcdtools.adapters.KeyInputTypeArrayAdapter;
@@ -81,7 +79,12 @@ public class AddBindingsActivity extends EditBindingsActivity {
                     Toast.makeText(AddBindingsActivity.this, getString(R.string.NotObtainedKeyCode), Toast.LENGTH_LONG).show();
                 } else {
                     KeyInput keyInput = new KeyInput(Integer.parseInt(mKeyCodeTextView.getText().toString()), keyInputType, packageName);
-                    sendKeyInputEditRequest(Messaging.KeyInputsEditType.ADD, keyInput);
+
+                    if(mServiceBinder.addKeyInput(keyInput)) {
+                        finish();
+                    } else {
+                        Toast.makeText(AddBindingsActivity.this, getString(R.string.KeyBindingAdditionFailure), Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });
@@ -109,19 +112,6 @@ public class AddBindingsActivity extends EditBindingsActivity {
             mKeyObtainTimer.cancel();
             mKeyObtainProgressDialog.dismiss();
             mKeyCodeTextView.setText(Integer.toString(keyCode));
-        }
-    }
-
-    @Override
-    public void handleMessage(Message message) {
-        switch(message.what) {
-            case Messaging.MessageIds.EDIT_KEY_INPUTS_RESPONSE:
-                if(message.arg1 == Messaging.KeyInputsEditResult.SUCCEED) {
-                    finish();
-                } else if(message.arg1 == Messaging.KeyInputsEditResult.FAILURE) {
-                    Toast.makeText(this, getString(R.string.KeyBindingAdditionFailure), Toast.LENGTH_LONG).show();
-                }
-                break;
         }
     }
 

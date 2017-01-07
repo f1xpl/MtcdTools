@@ -1,18 +1,14 @@
 package com.f1x.mtcdtools.activities;
 
 import android.os.Bundle;
-import android.os.Message;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.f1x.mtcdtools.Messaging;
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.adapters.KeyInputArrayAdapter;
 import com.f1x.mtcdtools.input.KeyInput;
-
-import java.util.Map;
 
 public class RemoveBindingsActivity extends EditBindingsActivity {
     @Override
@@ -29,7 +25,13 @@ public class RemoveBindingsActivity extends EditBindingsActivity {
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
                 KeyInput keyInput = mKeyInputArrayAdapter.getItem(position);
                 if(keyInput != null) {
-                    sendKeyInputEditRequest(Messaging.KeyInputsEditType.REMOVE, keyInput);
+                    if(mServiceBinder.removeKeyInput(keyInput)) {
+                        mBindingsListView.clearChoices();
+                        mBindingsListView.requestLayout();
+                        mKeyInputArrayAdapter.reset(mServiceBinder.getKeyInputs());
+                    } else {
+                        Toast.makeText(RemoveBindingsActivity.this, getString(R.string.KeyBindingRemovalFailure), Toast.LENGTH_LONG).show();
+                    }
                 }
 
                 return true;
@@ -51,30 +53,6 @@ public class RemoveBindingsActivity extends EditBindingsActivity {
                 mBindingsListView.setSelection(i);
             }
         }
-    }
-
-    @Override
-    public void handleMessage(Message message) {
-        switch(message.what) {
-            case Messaging.MessageIds.GET_KEY_INPUTS_RESPONSE:
-                mKeyInputArrayAdapter.reset((Map<Integer, KeyInput>)message.obj);
-                break;
-            case Messaging.MessageIds.EDIT_KEY_INPUTS_RESPONSE:
-                if(message.arg1 == Messaging.KeyInputsEditResult.FAILURE) {
-                    Toast.makeText(this, getString(R.string.KeyBindingRemovalFailure), Toast.LENGTH_LONG).show();
-                } else {
-                    sendMessage(Messaging.MessageIds.GET_KEY_INPUTS_REQUEST);
-                    mBindingsListView.clearChoices();
-                    mBindingsListView.requestLayout();
-                }
-                break;
-        }
-    }
-
-    @Override
-    protected void onServiceConnected() {
-        super.onServiceConnected();
-        sendMessage(Messaging.MessageIds.GET_KEY_INPUTS_REQUEST);
     }
 
     private ListView mBindingsListView;

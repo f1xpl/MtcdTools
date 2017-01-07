@@ -1,8 +1,6 @@
 package com.f1x.mtcdtools.activities;
 
 import android.os.Bundle;
-import android.os.Message;
-import android.os.RemoteException;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -10,14 +8,12 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.f1x.mtcdtools.Messaging;
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.adapters.InstalledPackagesArrayAdapter;
 import com.f1x.mtcdtools.adapters.PackageEntry;
 import com.f1x.mtcdtools.adapters.PackageEntryArrayAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class EditModePackagesActivity extends ServiceActivity {
     @Override
@@ -34,7 +30,18 @@ public class EditModePackagesActivity extends ServiceActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendSaveModePackagesRequest();
+                ArrayList<String> modePackagesList = new ArrayList<>();
+
+                for(int i = 0; i < mModePackagesArrayAdapter.getCount(); ++i) {
+                    PackageEntry packageEntry = mModePackagesArrayAdapter.getItem(i);
+                    modePackagesList.add(packageEntry.getName());
+                }
+
+                if(mServiceBinder != null && mServiceBinder.saveModePackages(modePackagesList)) {
+                    finish();
+                } else {
+                    Toast.makeText(EditModePackagesActivity.this, getString(R.string.ModePackagesSaveFailure), Toast.LENGTH_LONG).show();
+                }
             }
         });
         //-------------------------------------------------------------------------------------
@@ -79,55 +86,14 @@ public class EditModePackagesActivity extends ServiceActivity {
     protected void onResume() {
         super.onResume();
 
-        if(mServiceMessenger != null) {
-            sendMessage(Messaging.MessageIds.GET_MODE_PACKAGES_REQUEST);
+        if(mServiceBinder != null) {
+            mModePackagesArrayAdapter.reset(mServiceBinder.getModePackages());
         }
     }
 
     @Override
     protected void onServiceConnected() {
-        sendMessage(Messaging.MessageIds.GET_MODE_PACKAGES_REQUEST);
-    }
-
-    @Override
-    public void handleMessage(Message message) {
-        switch(message.what) {
-            case Messaging.MessageIds.GET_MODE_PACKAGES_RESPONSE:
-                mModePackagesArrayAdapter.reset((List<String>)message.obj);
-                break;
-            case Messaging.MessageIds.SAVE_MODE_PACKAGES_RESPONSE:
-                handleSaveModePackagesResult(message);
-                break;
-        }
-    }
-
-    private void sendSaveModePackagesRequest() {
-        Message message = new Message();
-        message.what = Messaging.MessageIds.SAVE_MODE_PACKAGES_REQUEST;
-        message.replyTo = mMessenger;
-
-        ArrayList<String> modePackagesList = new ArrayList<>();
-
-        for(int i = 0; i < mModePackagesArrayAdapter.getCount(); ++i) {
-            PackageEntry packageEntry = mModePackagesArrayAdapter.getItem(i);
-            modePackagesList.add(packageEntry.getName());
-        }
-
-        message.obj = modePackagesList;
-
-        try {
-            mServiceMessenger.send(message);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void handleSaveModePackagesResult(Message message) {
-        if(message.arg1 == Messaging.ModePackagesSaveResult.SUCCEED) {
-            finish();
-        } else {
-            Toast.makeText(this, getString(R.string.ModePackagesSaveFailure), Toast.LENGTH_LONG).show();
-        }
+        mModePackagesArrayAdapter.reset(mServiceBinder.getModePackages());
     }
 
     private PackageEntryArrayAdapter mModePackagesArrayAdapter;

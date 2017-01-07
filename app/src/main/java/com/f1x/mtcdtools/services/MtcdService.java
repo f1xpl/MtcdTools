@@ -3,19 +3,19 @@ package com.f1x.mtcdtools.services;
 import android.app.Notification;
 import android.content.Intent;
 import android.os.IBinder;
-import android.os.Message;
-import android.os.Messenger;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
-import com.f1x.mtcdtools.Messaging;
 import com.f1x.mtcdtools.R;
-import com.f1x.mtcdtools.StaticMessageHandler;
 import com.f1x.mtcdtools.evaluation.KeyPressDispatcher;
 import com.f1x.mtcdtools.evaluation.KeyPressEvaluator;
 import com.f1x.mtcdtools.evaluation.ModePackagesRotator;
 import com.f1x.mtcdtools.input.KeyInput;
 import com.f1x.mtcdtools.input.KeyPressReceiver;
+import com.f1x.mtcdtools.storage.FileReader;
+import com.f1x.mtcdtools.storage.FileWriter;
+import com.f1x.mtcdtools.storage.KeyInputsStorage;
+import com.f1x.mtcdtools.storage.ModePackagesStorage;
 
 import org.json.JSONException;
 
@@ -26,7 +26,7 @@ import java.util.Map;
 /**
  * Created by COMPUTER on 2016-08-03.
  */
-public class MtcdService extends StorageService {
+public class MtcdService extends android.app.Service {
     @Override
     public void onCreate() {
         super.onCreate();
@@ -34,6 +34,8 @@ public class MtcdService extends StorageService {
         mForceRestart = true;
         mServiceInitialized = false;
         mKeyInputDispatchingActive = true;
+        mKeyInputsStorage = new KeyInputsStorage(new FileReader(this), new FileWriter(this));
+        mModePackagesStorage = new ModePackagesStorage(new FileReader(this), new FileWriter(this));
         mModePackagesRotator = new ModePackagesRotator();
         KeyPressEvaluator keyInputEvaluator = new KeyPressEvaluator(this, mModePackagesRotator);
         mKeyPressDispatcher = new KeyPressDispatcher(keyInputEvaluator);
@@ -53,12 +55,11 @@ public class MtcdService extends StorageService {
 
         mServiceInitialized = false;
         mKeyInputDispatchingActive = false;
-        mServiceMessageHandler.setTarget(null);
     }
 
     @Override
     public IBinder onBind(Intent intent) {
-        return mMessenger.getBinder();
+        return mServiceBinder;
     }
 
     @Override
@@ -67,10 +68,10 @@ public class MtcdService extends StorageService {
 
         if(!mServiceInitialized) {
             try {
-                readStorage();
+                mKeyInputsStorage.read();
+                mModePackagesStorage.read();
 
                 registerReceiver(mKeyPressReceiver, mKeyPressReceiver.getIntentFilter());
-                mServiceMessageHandler.setTarget(this);
 
                 mServiceInitialized = true;
                 mKeyInputDispatchingActive = true;
@@ -91,37 +92,13 @@ public class MtcdService extends StorageService {
         return START_STICKY;
     }
 
-    Notification createNotification() {
+    private Notification createNotification() {
         return new NotificationCompat.Builder(this)
                 .setContentTitle(getString(R.string.app_name))
                 .setContentText(getString(R.string.MtcdServiceDescription))
                 .setSmallIcon(R.drawable.notificationicon)
                 .setOngoing(true)
                 .build();
-    }
-
-    @Override
-    public void handleMessage(Message message) {
-        super.handleMessage(message);
-
-        switch(message.what) {
-             case Messaging.MessageIds.SUSPEND_KEY_INPUT_DISPATCHING:
-                mKeyInputDispatchingActive = false;
-                break;
-            case Messaging.MessageIds.RESUME_KEY_INPUT_DISPATCHING:
-                mKeyInputDispatchingActive = true;
-                break;
-        }
-    }
-
-    @Override
-    protected void updateKeyInputs(Map<Integer, KeyInput> keyInputs) {
-        mKeyPressDispatcher.updateKeyInputs(keyInputs);
-    }
-
-    @Override
-    protected void updateModePackages(List<String> packages) {
-        mModePackagesRotator.updatePackages(packages);
     }
 
     private final KeyPressReceiver mKeyPressReceiver = new KeyPressReceiver() {
@@ -136,9 +113,69 @@ public class MtcdService extends StorageService {
     private boolean mForceRestart;
     private boolean mServiceInitialized;
     private boolean mKeyInputDispatchingActive;
+    private KeyInputsStorage mKeyInputsStorage;
+    private ModePackagesStorage mModePackagesStorage;
     private ModePackagesRotator mModePackagesRotator;
     private KeyPressDispatcher mKeyPressDispatcher;
-    private final Messenger mMessenger = new Messenger(mServiceMessageHandler);
 
-    private static final StaticMessageHandler mServiceMessageHandler = new StaticMessageHandler();
+    private final ServiceBinder mServiceBinder = new ServiceBinder() {
+        @Override
+        public boolean addKeyInput(KeyInput keyInput) {
+            try {
+                mKeyInputsStorage.insert(keyInput);
+                mKeyPressDispatcher.updateKeyInputs(mKeyInputsStorage.getInputs());
+                return true;
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+
+            return false;
+        }
+
+        @Override
+        public boolean removeKeyInput(KeyInput keyInput) {
+            try {
+                mKeyInputsStorage.remove(keyInput);
+                mKeyPressDispatcher.updateKeyInputs(mKeyInputsStorage.getInputs());
+                return true;
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+
+            return false;
+        }
+
+        @Override
+        public Map<Integer, KeyInput> getKeyInputs() {
+            return mKeyInputsStorage.getInputs();
+        }
+
+        @Override
+        public boolean saveModePackages(List<String> packages) {
+            try {
+                mModePackagesStorage.setPackages(packages);
+                mModePackagesRotator.updatePackages(getModePackages());
+                return true;
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+
+            return false;
+        }
+
+        @Override
+        public List<String> getModePackages() {
+            return mModePackagesStorage.getPackages();
+        }
+
+        @Override
+        public void suspendKeyInputsProcessing() {
+            MtcdService.this.mKeyInputDispatchingActive = false;
+        }
+
+        @Override
+        public void resumeKeyInputsProcessing() {
+            MtcdService.this.mKeyInputDispatchingActive = true;
+        }
+    };
 }
