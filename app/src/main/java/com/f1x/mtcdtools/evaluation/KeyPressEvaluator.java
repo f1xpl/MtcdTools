@@ -18,8 +18,11 @@ public class KeyPressEvaluator implements KeyPressEvaluatorInterface {
     @Override
     public void evaluateLaunchInput(String packageName) {
         Intent intent = mContext.getPackageManager().getLaunchIntentForPackage(packageName);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        mContext.startActivity(intent);
+
+        if(intent != null) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mContext.startActivity(intent);
+        }
     }
 
     @Override
