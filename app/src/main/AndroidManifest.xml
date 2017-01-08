@@ -20,7 +20,7 @@
         <activity android:name=".activities.AddBindingsActivity" />
         <activity android:name=".activities.RemoveBindingsActivity" />
 
-        <service android:name=".services.MtcdService" />
+        <service android:name=".service.MtcdService" />
 
         <receiver android:name=".BootCompletedBroadcastReceiver">
             <intent-filter>

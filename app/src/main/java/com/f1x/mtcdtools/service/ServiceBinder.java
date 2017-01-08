@@ -1,4 +1,4 @@
-package com.f1x.mtcdtools.services;
+package com.f1x.mtcdtools.service;
 
 import android.os.Binder;
 

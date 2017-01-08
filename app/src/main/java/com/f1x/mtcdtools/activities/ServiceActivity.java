@@ -8,8 +8,8 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 
-import com.f1x.mtcdtools.services.MtcdService;
-import com.f1x.mtcdtools.services.ServiceBinder;
+import com.f1x.mtcdtools.service.MtcdService;
+import com.f1x.mtcdtools.service.ServiceBinder;
 
 /**
  * Created by COMPUTER on 2016-08-18.

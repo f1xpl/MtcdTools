@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.f1x.mtcdtools.R;
-import com.f1x.mtcdtools.services.MtcdService;
+import com.f1x.mtcdtools.service.MtcdService;
 
 public class MainActivity extends AppCompatActivity {
     @Override
