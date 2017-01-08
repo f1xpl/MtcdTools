@@ -55,6 +55,12 @@ public class RemoveBindingsActivity extends EditBindingsActivity {
         }
     }
 
+    @Override
+    protected void onServiceConnected() {
+        super.onServiceConnected();
+        mKeyInputArrayAdapter.reset(mServiceBinder.getKeyInputs());
+    }
+
     private ListView mBindingsListView;
     private KeyInputArrayAdapter mKeyInputArrayAdapter;
 }
