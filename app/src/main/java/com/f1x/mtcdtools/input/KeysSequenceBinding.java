@@ -23,6 +23,12 @@ public class KeysSequenceBinding {
         mTargetName = json.getString(TARGET_NAME_PROPERTY);
     }
 
+    public KeysSequenceBinding(List<Integer> keysSequence, String targetType, String targetName) {
+        mKeysSequence = keysSequence;
+        mTargetName = targetName;
+        mTargetType = targetType;
+    }
+
     public String getTargetType() {
         return mTargetType;
     }
