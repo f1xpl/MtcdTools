@@ -1,5 +1,39 @@
 <resources>
     <string name="app_name">MtcdTools</string>
+    <string name="CreateNewBinding">Create a new binding</string>
+    <string name="CreateNewAction">Create a new action</string>
+    <string name="CreateNewActionsSequence">Create a new actions sequence</string>
+    <string name="ApplicationSettings">Settings</string>
+    <string name="RemoveActions">Remove actions</string>
+    <string name="RemoveActionsSequences">Remove actions sequences</string>
+
+    <string name="CreateNewBroadcastIntentAction">Create a new Broadcast Intent action</string>
+    <string name="CreateNewKeyAction">Create a new key action</string>
+    <string name="CreateNewLaunchAction">Create a new launch action</string>
+    <string name="CreateNewStartActivityAction">Create a new start activity action</string>
+
+    <string name="InsertNameHint">Insert name</string>
+    <string name="SelectActionOrSequence">Select action or actions sequence</string>
+    <string name="Action">Action</string>
+    <string name="ActionsSequence">Actions sequence</string>
+    <string name="ObtainKeysSequence">Obtain keys sequence</string>
+    <string name="Save">Save</string>
+    <string name="Cancel">Cancel</string>
+
+    <string name="ActionsSequenceName">Actions sequence name</string>
+    <string name="AddAction">Add action</string>
+    <string name="Actions">Actions</string>
+    <string name="ActionName">Action name</string>
+    <string name="KeyCodes">Key codes</string>
+    <string name="Applications">Applications</string>
+    <string name="ActionProperty">Action property</string>
+    <string name="Category">Category</string>
+    <string name="Data">Data</string>
+    <string name="Type">Type</string>
+    <string name="Extras">Extras</string>
+    <string name="Permissions">Permissions</string>
+
+
     <string name="ConfigurationFileReadError">Could not read configuration file</string>
     <string name="ConfigurationFileParsingError">Configuration file seems to be corrupted</string>
 

@@ -18,6 +18,8 @@ public class ActionsSequenceTest {
     @Before
     public void init() throws JSONException {
         mSequenceJson = new JSONObject();
+        mSequenceName = "sequence1";
+        mSequenceJson.put(ActionsSequence.NAME_PROPERTY, mSequenceName);
 
         mActionsArray = new JSONArray();
         mActionsArray.put("action1");
@@ -42,6 +44,8 @@ public class ActionsSequenceTest {
     @Test
     public void test_Construct() throws JSONException {
         ActionsSequence actionsSequence = new ActionsSequence(mSequenceJson);
+
+        assertEquals(mSequenceName, actionsSequence.getName());
 
         List<String> actionNames = actionsSequence.getActionNames();
         assertEquals(mActionsArray.length(), actionNames.size());
@@ -68,6 +72,7 @@ public class ActionsSequenceTest {
         assertEquals(mSequenceJson.toString(), actionsSequence.toJson().toString());
     }
 
+    String mSequenceName;
     JSONObject mSequenceJson;
     JSONArray mActionsArray;
     JSONArray mKeysSequenceUpArray;

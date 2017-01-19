@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_create_new_action"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".activities.MainActivity">
+    tools:context="com.f1x.mtcdtools.activities.CreateNewActionActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -19,53 +20,40 @@
             android:orientation="vertical" >
 
             <Button
-                android:text="@string/CreateNewAction"
+                android:text="@string/CreateNewBroadcastIntentAction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
-                android:id="@+id/buttonCreateNewAction"
+                android:id="@+id/buttonCreateNewBroadcastIntentAction"
                 android:layout_alignParentEnd="true" />
 
             <Button
-                android:text="@string/CreateNewActionsSequence"
+                android:text="@string/CreateNewKeyAction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/buttonCreateNewAction"
-                android:layout_alignParentStart="true"
-                android:id="@+id/buttonCreateNewActionsSequence"
-                android:layout_alignParentEnd="true" />
-
-            <Button
-                android:text="@string/CreateNewBinding"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_alignEnd="@+id/buttonCreateNewActionsSequence"
-                android:id="@+id/buttonCreateNewBinding"
+                android:layout_below="@+id/buttonCreateNewBroadcastIntentAction"
+                android:layout_alignEnd="@+id/buttonCreateNewBroadcastIntentAction"
+                android:id="@+id/buttonCreateNewKeyAction"
                 android:layout_alignParentStart="true" />
 
             <Button
-                android:text="@string/RemoveActions"
+                android:text="@string/CreateNewLaunchAction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/buttonRemoveActions" />
-
-            <Button
-                android:text="@string/RemoveActionsSequences"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/buttonRemoveActionsSequences" />
-
-            <Button
-                android:text="@string/ApplicationSettings"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/buttonCreateNewBinding"
+                android:layout_below="@+id/buttonCreateNewKeyAction"
                 android:layout_alignParentStart="true"
-                android:id="@+id/buttonApplicationSettings"
+                android:id="@+id/buttonCreateNewLaunchAction"
                 android:layout_alignParentEnd="true" />
 
+            <Button
+                android:text="@string/CreateNewStartActivityAction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/buttonCreateNewLaunchAction"
+                android:layout_alignParentStart="true"
+                android:id="@+id/buttonCreateNewStartActivityAction"
+                android:layout_alignParentEnd="true" />
         </LinearLayout>
     </ScrollView>
 
