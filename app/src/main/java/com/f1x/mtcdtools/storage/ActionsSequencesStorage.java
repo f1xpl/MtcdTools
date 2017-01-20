@@ -16,7 +16,7 @@ import java.util.Map;
  */
 
 public class ActionsSequencesStorage extends Storage {
-    public ActionsSequencesStorage(FileReaderInterface reader, FileWriterInterface writer) {
+    public ActionsSequencesStorage(FileReader reader, FileWriter writer) {
         super(reader, writer);
 
         mActionsSequences = new HashMap<>();

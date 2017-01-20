@@ -14,7 +14,7 @@ import java.util.List;
  */
 
 public class KeysSequenceBindingsStorage extends Storage {
-    public KeysSequenceBindingsStorage(FileReaderInterface reader, FileWriterInterface writer) {
+    public KeysSequenceBindingsStorage(FileReader reader, FileWriter writer) {
         super(reader, writer);
 
         mKeysSequenceBindings = new ArrayList<>();

@@ -10,7 +10,7 @@ import java.io.IOException;
  * Created by COMPUTER on 2016-08-15.
  */
 public class Storage {
-    public Storage(FileReaderInterface reader, FileWriterInterface writer) {
+    public Storage(FileReader reader, FileWriter writer) {
         mReader = reader;
         mWriter = writer;
     }
@@ -31,8 +31,8 @@ public class Storage {
         mWriter.write(inputsJson.toString(), fileName, CHARSET);
     }
 
-    protected final FileReaderInterface mReader;
-    protected final FileWriterInterface mWriter;
+    protected final FileReader mReader;
+    protected final FileWriter mWriter;
 
     private static final String CHARSET = "UTF-8";
 }

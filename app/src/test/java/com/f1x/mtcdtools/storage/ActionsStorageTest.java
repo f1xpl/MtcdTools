@@ -6,9 +6,6 @@ import com.f1x.mtcdtools.actions.Action;
 import com.f1x.mtcdtools.actions.ActionsFactory;
 import com.f1x.mtcdtools.actions.KeyAction;
 import com.f1x.mtcdtools.actions.LaunchAction;
-import com.f1x.mtcdtools.storage.ActionsStorage;
-import com.f1x.mtcdtools.storage.FileReaderInterface;
-import com.f1x.mtcdtools.storage.FileWriterInterface;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -188,10 +185,10 @@ public class ActionsStorageTest {
     Context mMockContext;
 
     @Mock
-    FileReaderInterface mMockFileReader;
+    FileReader mMockFileReader;
 
     @Mock
-    FileWriterInterface mMockFileWriter;
+    FileWriter mMockFileWriter;
 
     @Mock
     Action mMockAction1;

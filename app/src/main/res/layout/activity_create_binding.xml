@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.f1x.mtcdtools.activities.CreateNewBindingActivity">
+    tools:context="com.f1x.mtcdtools.activities.CreateBindingActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -34,19 +34,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <RadioButton
-                    android:text="@string/Action"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/radioButtonAction"
-                    android:layout_weight="1" />
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_weight="1" >
 
-                <RadioButton
-                    android:text="@string/ActionsSequence"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/radioButtonActionsSequence"
-                    android:layout_weight="1" />
+                    <RadioButton
+                        android:text="@string/ActionsSequence"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/radioButtonActionsSequence"
+                        android:layout_weight="1" />
+
+                    <RadioButton
+                        android:text="@string/Action"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/radioButtonAction"
+                        android:layout_weight="1" />
+                </RadioGroup>
+
             </LinearLayout>
 
             <LinearLayout
@@ -54,23 +62,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <EditText
+                <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:ems="10"
-                    android:id="@+id/editTextKeysSequence"
-                    android:hint="@string/ObtainKeysSequence" />
+                    android:id="@+id/spinnerAction" />
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:ems="10"
-                    android:layout_marginTop="79dp"
-                    android:id="@+id/editTextActionOrActionsSequence"
-                    android:hint="@string/SelectActionOrSequence" />
             </LinearLayout>
+
+            <TextView
+                android:text="@string/KeysSequence"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewKeysSequence" />
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="185dp"
+                android:id="@+id/listViewKeysSequence" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -85,12 +93,20 @@
                     android:layout_weight="1" />
 
                 <Button
+                    android:text="@string/ObtainKeysSequence"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/buttonObtainKeysSequence"
+                    android:layout_weight="1" />
+
+                <Button
                     android:text="@string/Save"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/buttonSave"
                     android:layout_weight="1" />
             </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

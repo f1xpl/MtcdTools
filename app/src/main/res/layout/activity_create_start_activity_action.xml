@@ -51,6 +51,14 @@
                 android:id="@+id/editTextData"
                 android:hint="@string/Data" />
 
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/editTextPackage"
+                android:hint="@string/Package" />
+
             <TextView
                 android:text="@string/Extras"
                 android:layout_width="match_parent"

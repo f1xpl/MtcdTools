@@ -3,10 +3,10 @@ package com.f1x.mtcdtools.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Button;
 
 import com.f1x.mtcdtools.R;
+import com.f1x.mtcdtools.StartActivityButtonClickListener;
 import com.f1x.mtcdtools.service.MtcdService;
 
 public class MainActivity extends AppCompatActivity {
@@ -15,6 +15,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.startService(new Intent(this, MtcdService.class));
+        //this.startService(new Intent(this, MtcdService.class));
+
+        Button createActionButton = (Button)findViewById(R.id.buttonCreateNewAction);
+        createActionButton.setOnClickListener(new StartActivityButtonClickListener(this, CreateActionActivity.class));
+
+        Button createBindingButton = (Button)findViewById(R.id.buttonCreateNewBinding);
+        createBindingButton.setOnClickListener(new StartActivityButtonClickListener(this, CreateBindingActivity.class));
+
+        Button createActionSequencesButton = (Button)findViewById(R.id.buttonCreateNewActionsSequence);
+        createActionSequencesButton.setOnClickListener(new StartActivityButtonClickListener(this, CreateActionsSequenceActivity.class));
     }
 }

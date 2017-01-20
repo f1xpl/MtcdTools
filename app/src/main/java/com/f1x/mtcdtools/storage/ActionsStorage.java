@@ -17,7 +17,7 @@ import java.util.Map;
  */
 
 public class ActionsStorage extends Storage {
-    public ActionsStorage(FileReaderInterface reader, FileWriterInterface writer, Context context) {
+    public ActionsStorage(FileReader reader, FileWriter writer, Context context) {
         super(reader, writer);
 
         mActions = new HashMap<>();

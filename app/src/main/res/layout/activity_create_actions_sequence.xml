@@ -17,7 +17,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:weightSum="1">
 
             <EditText
                 android:layout_width="match_parent"
@@ -33,9 +34,58 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/textViewActions" />
 
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinnerActions" />
+
+            <TextView
+                android:text="@string/AddedActions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewAddedActions" />
+
             <ListView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="183dp"
+                android:id="@+id/listViewActions" />
+
+            <TextView
+                android:text="@string/KeysSequenceUp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewKeysSequenceUp" />
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="185dp"
+                android:id="@+id/listViewKeysSequenceUp"
+                android:layout_weight="0.47" />
+
+            <Button
+                android:text="@string/ObtainKeysSequenceUp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/buttonObtainKeysSequenceUp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:text="@string/KeysSequenceDown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewKeysSequenceDown" />
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="185dp"
+                android:id="@+id/listViewKeysSequenceDown" />
+
+            <Button
+                android:text="@string/ObtainKeysSequenceDown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/buttonObtainKeysSequenceDown"
+                android:layout_weight="1" />
 
             <LinearLayout
                 android:orientation="horizontal"

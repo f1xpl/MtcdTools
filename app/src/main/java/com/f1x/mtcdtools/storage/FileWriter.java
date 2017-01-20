@@ -9,12 +9,11 @@ import java.io.IOException;
 /**
  * Created by COMPUTER on 2016-08-01.
  */
-public class FileWriter implements FileWriterInterface {
+public class FileWriter {
     public FileWriter(Context context) {
         mContext = context;
     }
 
-    @Override
     public void write(String output, String fileName, String charset) throws IOException {
         FileOutputStream outputStream = openFileOutput(fileName);
         String outputString = new String(output.getBytes(), charset);

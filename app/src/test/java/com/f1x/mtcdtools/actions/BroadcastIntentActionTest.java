@@ -38,6 +38,7 @@ public class BroadcastIntentActionTest {
         mActionJson = new JSONObject();
         mActionJson.put(BroadcastIntentAction.NAME_PROPERTY, "TestBroadcastIntentAction");
         mActionJson.put(BroadcastIntentAction.TYPE_PROPERTY, BroadcastIntentAction.ACTION_TYPE);
+        mActionJson.put(BroadcastIntentAction.INTENT_PACKAGE_PROPERTY, "com.test.package");
         mActionJson.put(BroadcastIntentAction.INTENT_CATEGORY_PROPERTY, "intentCategory");
         mActionJson.put(BroadcastIntentAction.INTENT_TYPE_PROPERTY, "intentType");
         mActionJson.put(BroadcastIntentAction.INTENT_DATA_PROPERTY, "intentData");
@@ -60,6 +61,7 @@ public class BroadcastIntentActionTest {
         verify(mMockContext).sendOrderedBroadcast(mBroadcastIntent, mActionJson.getString(BroadcastIntentAction.PERMISSIONS_PROPERTY));
         verify(mBroadcastIntent).setDataAndType(mMockUri, mActionJson.getString(BroadcastIntentAction.INTENT_TYPE_PROPERTY));
         verify(mBroadcastIntent).addCategory(mActionJson.getString(BroadcastIntentAction.INTENT_CATEGORY_PROPERTY));
+        verify(mBroadcastIntent).setPackage(mActionJson.getString(BroadcastIntentAction.INTENT_PACKAGE_PROPERTY));
         verify(mBroadcastIntent).setAction(mActionJson.getString(BroadcastIntentAction.INTENT_ACTION_PROPERTY));
         verify(mBroadcastIntent).putExtras(mMockBundle);
     }

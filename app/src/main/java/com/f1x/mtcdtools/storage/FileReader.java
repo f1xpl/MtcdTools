@@ -9,12 +9,11 @@ import java.io.IOException;
 /**
  * Created by COMPUTER on 2016-08-01.
  */
-public class FileReader implements FileReaderInterface {
+public class FileReader {
     public FileReader(Context context) {
         mContext = context;
     }
 
-    @Override
     public String read(String fileName, String charset) throws IOException  {
         FileInputStream inputStream = openFileInput(fileName);
         final int totalBytes = inputStream.available();

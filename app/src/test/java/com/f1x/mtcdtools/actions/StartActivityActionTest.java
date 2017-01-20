@@ -38,6 +38,7 @@ public class StartActivityActionTest {
         mActionJson = new JSONObject();
         mActionJson.put(StartActivityAction.NAME_PROPERTY, "TestStartActivityAction");
         mActionJson.put(StartActivityAction.TYPE_PROPERTY, StartActivityAction.ACTION_TYPE);
+        mActionJson.put(BroadcastIntentAction.INTENT_PACKAGE_PROPERTY, "com.test.package");
         mActionJson.put(StartActivityAction.INTENT_CATEGORY_PROPERTY, "intentCategory");
         mActionJson.put(StartActivityAction.INTENT_TYPE_PROPERTY, "intentType");
         mActionJson.put(StartActivityAction.INTENT_DATA_PROPERTY, "intentData");
@@ -60,6 +61,7 @@ public class StartActivityActionTest {
         verify(mMockStartActivityIntent).setDataAndType(mMockUri, mActionJson.getString(StartActivityAction.INTENT_TYPE_PROPERTY));
         verify(mMockStartActivityIntent).addCategory(mActionJson.getString(StartActivityAction.INTENT_CATEGORY_PROPERTY));
         verify(mMockStartActivityIntent).setAction(mActionJson.getString(StartActivityAction.INTENT_ACTION_PROPERTY));
+        verify(mMockStartActivityIntent).setPackage(mActionJson.getString(BroadcastIntentAction.INTENT_PACKAGE_PROPERTY));
         verify(mMockStartActivityIntent).putExtras(mMockBundle);
     }
 

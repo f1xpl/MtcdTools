@@ -118,10 +118,10 @@ public class KeysSequenceBindingsStorageTest {
     }
 
     @Mock
-    FileReaderInterface mMockFileReader;
+    FileReader mMockFileReader;
 
     @Mock
-    FileWriterInterface mMockFileWriter;
+    FileWriter mMockFileWriter;
 
     List<KeysSequenceBinding> mKeysSequenceBindings;
     JSONObject mKeysSequenceBindingsJson;

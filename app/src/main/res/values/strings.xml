@@ -32,6 +32,14 @@
     <string name="Type">Type</string>
     <string name="Extras">Extras</string>
     <string name="Permissions">Permissions</string>
+    <string name="Package">Package</string>
+    <string name="KeysSequence">Keys sequence</string>
+    <string name="AddedActions">Added actions</string>
+    <string name="KeysSequenceUp">UP keys sequence</string>
+    <string name="KeysSequenceDown">DOWN keys sequence</string>
+    <string name="ObtainKeysSequenceUp">Obtain UP keys sequence</string>
+    <string name="ObtainKeysSequenceDown">Obtain DOWN keys sequence</string>
+    <string name="Reset">Reset</string>
 
 
     <string name="ConfigurationFileReadError">Could not read configuration file</string>

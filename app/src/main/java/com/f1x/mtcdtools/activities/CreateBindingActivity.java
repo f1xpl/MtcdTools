@@ -4,11 +4,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import com.f1x.mtcdtools.R;
 
-public class CreateNewBindingActivity extends AppCompatActivity {
+public class CreateBindingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_new_binding);
+        setContentView(R.layout.activity_create_binding);
     }
 }
