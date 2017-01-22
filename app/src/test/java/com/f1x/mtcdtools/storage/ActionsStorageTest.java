@@ -6,6 +6,8 @@ import com.f1x.mtcdtools.actions.Action;
 import com.f1x.mtcdtools.actions.ActionsFactory;
 import com.f1x.mtcdtools.actions.KeyAction;
 import com.f1x.mtcdtools.actions.LaunchAction;
+import com.f1x.mtcdtools.storage.exceptions.DuplicatedEntryException;
+import com.f1x.mtcdtools.storage.exceptions.EntryCreationFailed;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,6 +23,7 @@ import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -91,7 +94,7 @@ public class ActionsStorageTest {
     }
 
     @Test
-    public void test_Read() throws Exception {
+    public void test_Read() throws JSONException, IOException, EntryCreationFailed, DuplicatedEntryException {
         mActionsArray.put(mAction1Json);
         mActionsArray.put(mAction2Json);
         mActionsJson.put(ActionsStorage.ROOT_ARRAY_NAME, mActionsArray);
@@ -107,7 +110,7 @@ public class ActionsStorageTest {
     }
 
     @Test
-    public void test_Read_Duplicated_Name() throws Exception {
+    public void test_Read_Duplicated_Name() throws JSONException, IOException, EntryCreationFailed {
         mActionsArray.put(mAction1Json);
         mActionsArray.put(mAction2Json);
         mActionsJson.put(ActionsStorage.ROOT_ARRAY_NAME, mActionsArray);
@@ -123,8 +126,7 @@ public class ActionsStorageTest {
         boolean exceptionCaught = false;
         try {
             actionsStorage.read();
-        } catch(Exception e) {
-            assertEquals(e.getMessage(), "Action name is duplicated, name: " + mAction1Json.getString(Action.NAME_PROPERTY) + ", type: " + mAction1Json.getString(Action.TYPE_PROPERTY));
+        } catch(DuplicatedEntryException e) {
             exceptionCaught = true;
         }
 
@@ -132,7 +134,7 @@ public class ActionsStorageTest {
     }
 
     @Test
-    public void test_Insert() throws Exception {
+    public void test_Insert() throws JSONException, IOException, DuplicatedEntryException {
         mActionsArray.put(mAction1Json);
         mActionsJson.put(ActionsStorage.ROOT_ARRAY_NAME, mActionsArray);
 
@@ -142,7 +144,7 @@ public class ActionsStorageTest {
     }
 
     @Test
-    public void test_Insert_Duplicated_Name() throws Exception {
+    public void test_Insert_Duplicated_Name() throws JSONException, IOException, DuplicatedEntryException {
         mActionsArray.put(mAction1Json);
         mActionsJson.put(ActionsStorage.ROOT_ARRAY_NAME, mActionsArray);
 
@@ -153,8 +155,7 @@ public class ActionsStorageTest {
         boolean exceptionCaught = false;
         try {
             actionsStorage.insert(mMockAction1);
-        } catch(Exception e) {
-            assertEquals(e.getMessage(), "Action name is duplicated, name: " + mAction1Json.getString(Action.NAME_PROPERTY) + ", type: " + mAction1Json.getString(Action.TYPE_PROPERTY));
+        } catch(DuplicatedEntryException e) {
             exceptionCaught = true;
         }
 
@@ -162,7 +163,7 @@ public class ActionsStorageTest {
     }
 
     @Test
-    public void test_Remove() throws Exception {
+    public void test_Remove() throws JSONException, IOException, DuplicatedEntryException {
         mActionsArray.put(mAction2Json);
         mActionsJson.put(ActionsStorage.ROOT_ARRAY_NAME, mActionsArray);
 
@@ -174,7 +175,7 @@ public class ActionsStorageTest {
     }
 
     @Test
-    public void test_Remove_NonExistent() throws Exception {
+    public void test_Remove_NonExistent() throws JSONException, IOException, DuplicatedEntryException {
         ActionsStorage actionsStorage = new ActionsStorage(mMockFileReader, mMockFileWriter, mMockContext);
         actionsStorage.remove(mMockAction1);
         actionsStorage.remove(mMockAction2);

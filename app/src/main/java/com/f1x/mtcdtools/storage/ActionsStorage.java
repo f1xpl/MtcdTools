@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.f1x.mtcdtools.actions.Action;
 import com.f1x.mtcdtools.actions.ActionsFactory;
+import com.f1x.mtcdtools.storage.exceptions.DuplicatedEntryException;
+import com.f1x.mtcdtools.storage.exceptions.EntryCreationFailed;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,16 +26,16 @@ public class ActionsStorage extends Storage {
         mContext = context;
     }
 
-    public void read() throws Exception {
+    public void read() throws JSONException, IOException, DuplicatedEntryException, EntryCreationFailed {
         JSONArray actionsArray = read(STORAGE_FILE_NAME, ROOT_ARRAY_NAME);
 
         for (int i = 0; i < actionsArray.length(); ++i) {
             Action action = ActionsFactory.createAction(actionsArray.getJSONObject(i), mContext);
 
             if(action == null) {
-                throw new Exception("Error in creating of an action");
+                throw new EntryCreationFailed();
             } else if(mActions.containsKey(action.getName())) {
-                throw new Exception("Action name is duplicated, name: " + action.getName() + ", type: " + action.getType());
+                throw new DuplicatedEntryException("action name: " + action.getName() + ", action type: " + action.getType());
             } else {
                 mActions.put(action.getName(), action);
             }
@@ -49,9 +51,9 @@ public class ActionsStorage extends Storage {
         write(STORAGE_FILE_NAME, ROOT_ARRAY_NAME, actionsArray);
     }
 
-    public void insert(Action action) throws Exception {
+    public void insert(Action action) throws JSONException, IOException, DuplicatedEntryException {
         if(mActions.containsKey(action.getName())) {
-            throw new Exception("Action name is duplicated, name: " + action.getName() + ", type: " + action.getType());
+            throw new DuplicatedEntryException("action name: " + action.getName() + ", action type: " + action.getType());
         } else {
             mActions.put(action.getName(), action);
             write();
