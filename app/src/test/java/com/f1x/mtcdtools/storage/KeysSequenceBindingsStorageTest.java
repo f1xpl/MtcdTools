@@ -2,6 +2,7 @@ package com.f1x.mtcdtools.storage;
 
 import com.f1x.mtcdtools.actions.ActionsFactory;
 import com.f1x.mtcdtools.input.KeysSequenceBinding;
+import com.f1x.mtcdtools.storage.exceptions.DuplicatedEntryException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,8 +20,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -55,20 +58,40 @@ public class KeysSequenceBindingsStorageTest {
     }
 
     @Test
-    public void test_Read() throws Exception {
+    public void test_Read() throws JSONException, IOException, DuplicatedEntryException {
         KeysSequenceBindingsStorage keysSequenceBindingsStorage = new KeysSequenceBindingsStorage(mMockFileReader, mMockFileWriter);
         keysSequenceBindingsStorage.read();
 
-        List<KeysSequenceBinding> keysSequenceBindings = keysSequenceBindingsStorage.getKeysSequenceBindings();
-
+        Map<List<Integer>, KeysSequenceBinding> keysSequenceBindings = keysSequenceBindingsStorage.getKeysSequenceBindings();
         assertEquals(mKeysSequenceBindings.size(), keysSequenceBindings.size());
+
         for(int i = 0; i < mKeysSequenceBindings.size(); ++i) {
-            assertEquals(mKeysSequenceBindings.get(i).toJson().toString(), keysSequenceBindings.get(i).toJson().toString());
+            KeysSequenceBinding expectedKeysSequenceBinding = mKeysSequenceBindings.get(i);
+            KeysSequenceBinding actualKeysSequenceBinding = keysSequenceBindings.get(expectedKeysSequenceBinding.getKeysSequence());
+            assertEquals(actualKeysSequenceBinding.toJson().toString(), expectedKeysSequenceBinding.toJson().toString());
         }
     }
 
     @Test
-    public void test_Insert() throws Exception {
+    public void test_Insert_Duplicated() throws JSONException, IOException, DuplicatedEntryException {
+        KeysSequenceBindingsStorage keysSequenceBindingsStorage = new KeysSequenceBindingsStorage(mMockFileReader, mMockFileWriter);
+        keysSequenceBindingsStorage.read();
+
+        Map<List<Integer>, KeysSequenceBinding> keysSequenceBindings = keysSequenceBindingsStorage.getKeysSequenceBindings();
+        assertEquals(mKeysSequenceBindings.size(), keysSequenceBindings.size());
+
+        boolean exceptionCaught = false;
+        try {
+            keysSequenceBindingsStorage.insert(new KeysSequenceBinding(Arrays.asList(1, 2, 5), KeysSequenceBinding.TARGET_TYPE_ACTIONS_SEQUENCE, "binding1"));
+        } catch(DuplicatedEntryException e) {
+            exceptionCaught = true;
+        }
+
+        assertTrue(exceptionCaught);
+    }
+
+    @Test
+    public void test_Insert() throws JSONException, IOException, DuplicatedEntryException {
         KeysSequenceBinding keysSequenceBinding = new KeysSequenceBinding(Arrays.asList(5, 4, 7), KeysSequenceBinding.TARGET_TYPE_ACTION, "action5");
         mKeysSequenceBindings.add(keysSequenceBinding);
 
@@ -81,26 +104,31 @@ public class KeysSequenceBindingsStorageTest {
         JSONObject keysSequenceBindingsJson = new JSONObject();
         keysSequenceBindingsJson.put(KeysSequenceBindingsStorage.ROOT_ARRAY_NAME, mKeysSequenceBindingsArray);
 
-        List<KeysSequenceBinding> keysSequenceBindings = keysSequenceBindingsStorage.getKeysSequenceBindings();
+        Map<List<Integer>, KeysSequenceBinding> keysSequenceBindings = keysSequenceBindingsStorage.getKeysSequenceBindings();
         assertEquals(mKeysSequenceBindings.size(), keysSequenceBindings.size());
+
         for(int i = 0; i < mKeysSequenceBindings.size(); ++i) {
-            assertEquals(mKeysSequenceBindings.get(i).toJson().toString(), keysSequenceBindings.get(i).toJson().toString());
+            KeysSequenceBinding expectedKeysSequenceBinding = mKeysSequenceBindings.get(i);
+            KeysSequenceBinding actualKeysSequenceBinding = keysSequenceBindings.get(expectedKeysSequenceBinding.getKeysSequence());
+            assertEquals(actualKeysSequenceBinding.toJson().toString(), expectedKeysSequenceBinding.toJson().toString());
         }
 
         verify(mMockFileWriter, times(1)).write(keysSequenceBindingsJson.toString(), KeysSequenceBindingsStorage.STORAGE_FILE_NAME, "UTF-8");
     }
 
     @Test
-    public void test_Remove() throws Exception {
+    public void test_Remove() throws JSONException, IOException, DuplicatedEntryException {
         KeysSequenceBindingsStorage keysSequenceBindingsStorage = new KeysSequenceBindingsStorage(mMockFileReader, mMockFileWriter);
         keysSequenceBindingsStorage.read();
 
-        List<KeysSequenceBinding> keysSequenceBindings = keysSequenceBindingsStorage.getKeysSequenceBindings();
-        keysSequenceBindingsStorage.remove(keysSequenceBindings.get(0));
-        keysSequenceBindings = keysSequenceBindingsStorage.getKeysSequenceBindings();
+        keysSequenceBindingsStorage.remove(mKeysSequenceBindings.get(0));
 
+        Map<List<Integer>, KeysSequenceBinding> keysSequenceBindings = keysSequenceBindingsStorage.getKeysSequenceBindings();
         assertEquals(1, keysSequenceBindings.size());
-        assertEquals(mKeysSequenceBindings.get(1).toJson().toString(), keysSequenceBindings.get(0).toJson().toString());
+
+        KeysSequenceBinding expectedKeysSequenceBinding = mKeysSequenceBindings.get(1);
+        KeysSequenceBinding actualKeysSequenceBinding = keysSequenceBindings.get(expectedKeysSequenceBinding.getKeysSequence());
+        assertEquals(expectedKeysSequenceBinding.toJson().toString(), actualKeysSequenceBinding.toJson().toString());
 
         mKeysSequenceBindingsArray.remove(0);
         JSONObject keysSequenceBindingsJson = new JSONObject();
@@ -109,7 +137,7 @@ public class KeysSequenceBindingsStorageTest {
     }
 
     @Test
-    public void test_Remove_NonExistent() throws Exception {
+    public void test_Remove_NonExistent() throws JSONException, IOException, DuplicatedEntryException {
         KeysSequenceBindingsStorage keysSequenceBindingsStorage = new KeysSequenceBindingsStorage(mMockFileReader, mMockFileWriter);
         keysSequenceBindingsStorage.remove(mKeysSequenceBindings.get(0));
         keysSequenceBindingsStorage.remove(mKeysSequenceBindings.get(1));
