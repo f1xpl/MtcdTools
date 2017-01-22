@@ -10,6 +10,6 @@ public class CreateActionsSequenceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_actions_sequence);
+        setContentView(R.layout.activity_actions_sequence_details);
     }
 }

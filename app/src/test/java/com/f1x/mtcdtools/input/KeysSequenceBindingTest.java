@@ -1,6 +1,4 @@
-package com.f1x.mtcdtools;
-
-import com.f1x.mtcdtools.input.KeysSequenceBinding;
+package com.f1x.mtcdtools.input;
 
 import org.json.JSONArray;
 import org.json.JSONException;

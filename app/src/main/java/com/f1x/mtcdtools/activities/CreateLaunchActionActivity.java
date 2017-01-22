@@ -9,6 +9,6 @@ public class CreateLaunchActionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_launch_action);
+        setContentView(R.layout.activity_launch_action_details);
     }
 }

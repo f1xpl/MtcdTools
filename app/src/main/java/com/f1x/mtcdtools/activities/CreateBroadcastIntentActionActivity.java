@@ -9,6 +9,6 @@ public class CreateBroadcastIntentActionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_broadcast_intent_action);
+        setContentView(R.layout.activity_broadcast_intent_action_details);
     }
 }
