@@ -12,19 +12,20 @@ import org.json.JSONObject;
  */
 
 public class KeyAction extends Action {
-    public KeyAction(JSONObject json, Context context) throws JSONException {
+    public KeyAction(JSONObject json) throws JSONException {
         super(json);
-        mAudioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
         mKeyCode = json.getInt(KEYCODE_PROPERTY);
     }
 
     @Override
-    public void evaluate() {
+    public void evaluate(Context context) {
+        AudioManager audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
+
         KeyEvent keyEventDown = new KeyEvent(KeyEvent.ACTION_DOWN, mKeyCode);
-        mAudioManager.dispatchMediaKeyEvent(keyEventDown);
+        audioManager.dispatchMediaKeyEvent(keyEventDown);
 
         KeyEvent keyEventUp = new KeyEvent(KeyEvent.ACTION_UP, mKeyCode);
-        mAudioManager.dispatchMediaKeyEvent(keyEventUp);
+        audioManager.dispatchMediaKeyEvent(keyEventUp);
     }
 
     @Override
@@ -35,7 +36,6 @@ public class KeyAction extends Action {
         return json;
     }
 
-    private final AudioManager mAudioManager;
     private final int mKeyCode;
 
     static public final String ACTION_TYPE = "KeyAction";

@@ -10,17 +10,17 @@ import org.json.JSONObject;
  */
 
 public class ActionsFactory {
-    public static Action createAction(JSONObject json, Context context) throws JSONException {
+    public static Action createAction(JSONObject json) throws JSONException {
         String actionType = json.getString(Action.TYPE_PROPERTY);
 
         if(actionType.equals(KeyAction.ACTION_TYPE)) {
-            return new KeyAction(json, context);
+            return new KeyAction(json);
         } else if(actionType.equals(LaunchAction.ACTION_TYPE)) {
-            return new LaunchAction(json, context);
+            return new LaunchAction(json);
         } else if(actionType.equals(StartActivityAction.ACTION_TYPE)) {
-            return new StartActivityAction(json, context);
+            return new StartActivityAction(json);
         } else if(actionType.equals(BroadcastIntentAction.ACTION_TYPE)) {
-            return new BroadcastIntentAction(json, context);
+            return new BroadcastIntentAction(json);
         }
 
         return null;

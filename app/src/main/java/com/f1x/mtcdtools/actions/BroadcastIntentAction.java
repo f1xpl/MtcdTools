@@ -10,15 +10,14 @@ import org.json.JSONObject;
  */
 
 public class BroadcastIntentAction extends CustomIntentAction {
-    public BroadcastIntentAction(JSONObject json, Context context) throws JSONException {
+    public BroadcastIntentAction(JSONObject json) throws JSONException {
         super(json);
-        mContext = context;
         mPermissions = json.getString(PERMISSIONS_PROPERTY);
     }
 
     @Override
-    public void evaluate() {
-        mContext.sendOrderedBroadcast(getIntent(), mPermissions);
+    public void evaluate(Context context) {
+        context.sendOrderedBroadcast(getIntent(), mPermissions);
     }
 
     @Override
@@ -29,7 +28,6 @@ public class BroadcastIntentAction extends CustomIntentAction {
         return json;
     }
 
-    private final Context mContext;
     private final String mPermissions;
 
     static public final String ACTION_TYPE = "BroadcastIntentAction";

@@ -10,17 +10,14 @@ import org.json.JSONObject;
  */
 
 public class StartActivityAction extends CustomIntentAction {
-    public StartActivityAction(JSONObject json, Context context) throws JSONException {
+    public StartActivityAction(JSONObject json) throws JSONException {
         super(json);
-        mContext = context;
     }
 
     @Override
-    public void evaluate() {
-        mContext.startActivity(getIntent());
+    public void evaluate(Context context) {
+        context.startActivity(getIntent());
     }
-
-    private final Context mContext;
 
     static public final String ACTION_TYPE = "StartActivityAction";
 }

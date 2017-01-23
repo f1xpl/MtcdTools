@@ -47,8 +47,8 @@ public class KeyActionTest {
         PowerMockito.whenNew(KeyEvent.class).withArguments(KeyEvent.ACTION_DOWN, mActionJson.getInt(KeyAction.KEYCODE_PROPERTY)).thenReturn(mMockKeyEventDown);
         PowerMockito.whenNew(KeyEvent.class).withArguments(KeyEvent.ACTION_UP, mActionJson.getInt(KeyAction.KEYCODE_PROPERTY)).thenReturn(mMockKeyEventUp);
 
-        KeyAction keyAction = new KeyAction(mActionJson, mMockContext);
-        keyAction.evaluate();
+        KeyAction keyAction = new KeyAction(mActionJson);
+        keyAction.evaluate(mMockContext);
 
         InOrder keyEventsOrder = inOrder(mMockAudioManager);
         keyEventsOrder.verify(mMockAudioManager).dispatchMediaKeyEvent(mMockKeyEventDown);
@@ -57,7 +57,7 @@ public class KeyActionTest {
 
     @Test
     public void test_toJson() throws JSONException {
-        KeyAction keyAction = new KeyAction(mActionJson, mMockContext);
+        KeyAction keyAction = new KeyAction(mActionJson);
         assertEquals(keyAction.toJson().toString(), mActionJson.toString());
     }
 

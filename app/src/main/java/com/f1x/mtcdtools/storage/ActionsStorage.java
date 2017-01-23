@@ -30,7 +30,7 @@ public class ActionsStorage extends Storage {
         JSONArray actionsArray = read(STORAGE_FILE_NAME, ROOT_ARRAY_NAME);
 
         for (int i = 0; i < actionsArray.length(); ++i) {
-            Action action = ActionsFactory.createAction(actionsArray.getJSONObject(i), mContext);
+            Action action = ActionsFactory.createAction(actionsArray.getJSONObject(i));
 
             if(action == null) {
                 throw new EntryCreationFailed();

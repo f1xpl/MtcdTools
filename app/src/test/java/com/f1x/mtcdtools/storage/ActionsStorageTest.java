@@ -102,8 +102,8 @@ public class ActionsStorageTest {
         when(mMockFileReader.read(ActionsStorage.STORAGE_FILE_NAME, "UTF-8")).thenReturn(mActionsJson.toString());
         PowerMockito.mockStatic(ActionsFactory.class);
 
-        when(ActionsFactory.createAction(jsonEq(mAction1Json), eq(mMockContext))).thenReturn(mMockAction1);
-        when(ActionsFactory.createAction(jsonEq(mAction2Json), eq(mMockContext))).thenReturn(mMockAction2);
+        when(ActionsFactory.createAction(jsonEq(mAction1Json))).thenReturn(mMockAction1);
+        when(ActionsFactory.createAction(jsonEq(mAction2Json))).thenReturn(mMockAction2);
 
         ActionsStorage actionsStorage = new ActionsStorage(mMockFileReader, mMockFileWriter, mMockContext);
         actionsStorage.read();
@@ -118,8 +118,8 @@ public class ActionsStorageTest {
         when(mMockFileReader.read(ActionsStorage.STORAGE_FILE_NAME, "UTF-8")).thenReturn(mActionsJson.toString());
         PowerMockito.mockStatic(ActionsFactory.class);
 
-        when(ActionsFactory.createAction(jsonEq(mAction1Json), eq(mMockContext))).thenReturn(mMockAction1);
-        when(ActionsFactory.createAction(jsonEq(mAction2Json), eq(mMockContext))).thenReturn(mMockAction1);
+        when(ActionsFactory.createAction(jsonEq(mAction1Json))).thenReturn(mMockAction1);
+        when(ActionsFactory.createAction(jsonEq(mAction2Json))).thenReturn(mMockAction1);
 
         ActionsStorage actionsStorage = new ActionsStorage(mMockFileReader, mMockFileWriter, mMockContext);
 

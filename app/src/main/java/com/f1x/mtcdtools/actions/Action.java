@@ -1,5 +1,7 @@
 package com.f1x.mtcdtools.actions;
 
+import android.content.Context;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -13,7 +15,7 @@ public abstract class Action {
         mType = json.getString(TYPE_PROPERTY);
     }
 
-    public abstract void evaluate();
+    public abstract void evaluate(Context context);
 
     public String getType() {
         return mType;

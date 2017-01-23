@@ -42,8 +42,8 @@ public class LaunchActionTest {
         Mockito.when(mMockContext.getPackageManager()).thenReturn(mMockPackageManager);
         Mockito.when(mMockPackageManager.getLaunchIntentForPackage(mActionJson.getString(LaunchAction.PACKAGE_NAME_PROPERTY))).thenReturn(mMockLaunchIntent);
 
-        LaunchAction launchAction = new LaunchAction(mActionJson, mMockContext);
-        launchAction.evaluate();
+        LaunchAction launchAction = new LaunchAction(mActionJson);
+        launchAction.evaluate(mMockContext);
 
         Mockito.verify(mMockLaunchIntent, times(1)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Mockito.verify(mMockContext, times(1)).startActivity(mMockLaunchIntent);
@@ -54,15 +54,15 @@ public class LaunchActionTest {
         Mockito.when(mMockContext.getPackageManager()).thenReturn(mMockPackageManager);
         Mockito.when(mMockPackageManager.getLaunchIntentForPackage(mActionJson.getString(LaunchAction.PACKAGE_NAME_PROPERTY))).thenReturn(null);
 
-        LaunchAction launchAction = new LaunchAction(mActionJson, mMockContext);
-        launchAction.evaluate();
+        LaunchAction launchAction = new LaunchAction(mActionJson);
+        launchAction.evaluate(mMockContext);
 
         Mockito.verify(mMockContext, never()).startActivity(null);
     }
 
     @Test
     public void test_toJson() throws JSONException {
-        LaunchAction launchAction = new LaunchAction(mActionJson, mMockContext);
+        LaunchAction launchAction = new LaunchAction(mActionJson);
         assertEquals(launchAction.toJson().toString(), mActionJson.toString());
     }
 

@@ -54,8 +54,8 @@ public class StartActivityActionTest {
         PowerMockito.when(UriParser.fromString(mActionJson.getString(StartActivityAction.INTENT_DATA_PROPERTY))).thenReturn(mMockUri);
         PowerMockito.when(ExtrasParser.fromJSON(any(JSONObject.class))).thenReturn(mMockBundle);
 
-        StartActivityAction startActivityAction = new StartActivityAction(mActionJson, mMockContext);
-        startActivityAction.evaluate();
+        StartActivityAction startActivityAction = new StartActivityAction(mActionJson);
+        startActivityAction.evaluate(mMockContext);
 
         verify(mMockContext).startActivity(mMockStartActivityIntent);
         verify(mMockStartActivityIntent).setDataAndType(mMockUri, mActionJson.getString(StartActivityAction.INTENT_TYPE_PROPERTY));
@@ -70,7 +70,7 @@ public class StartActivityActionTest {
         PowerMockito.when(ExtrasParser.fromJSON(any(JSONObject.class))).thenReturn(mMockBundle);
         PowerMockito.when(ExtrasParser.toJSON(mMockBundle)).thenReturn(new JSONObject());
 
-        StartActivityAction startActivityAction = new StartActivityAction(mActionJson, mMockContext);
+        StartActivityAction startActivityAction = new StartActivityAction(mActionJson);
         assertEquals(mActionJson.toString(), startActivityAction.toJson().toString());
     }
 

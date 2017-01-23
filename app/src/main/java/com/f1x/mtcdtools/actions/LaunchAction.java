@@ -11,19 +11,18 @@ import org.json.JSONObject;
  */
 
 public class LaunchAction extends Action {
-    public LaunchAction(JSONObject json, Context context) throws JSONException {
+    public LaunchAction(JSONObject json) throws JSONException {
         super(json);
-        mContext = context;
         mPackageName = json.getString(PACKAGE_NAME_PROPERTY);
     }
 
     @Override
-    public void evaluate() {
-        Intent intent = mContext.getPackageManager().getLaunchIntentForPackage(mPackageName);
+    public void evaluate(Context context) {
+        Intent intent = context.getPackageManager().getLaunchIntentForPackage(mPackageName);
 
         if(intent != null) {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            mContext.startActivity(intent);
+            context.startActivity(intent);
         }
     }
 
@@ -35,7 +34,6 @@ public class LaunchAction extends Action {
         return json;
     }
 
-    private final Context mContext;
     private final String mPackageName;
 
     static public final String ACTION_TYPE = "LaunchAction";

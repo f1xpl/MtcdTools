@@ -55,8 +55,8 @@ public class BroadcastIntentActionTest {
         PowerMockito.when(UriParser.fromString(mActionJson.getString(BroadcastIntentAction.INTENT_DATA_PROPERTY))).thenReturn(mMockUri);
         PowerMockito.when(ExtrasParser.fromJSON(any(JSONObject.class))).thenReturn(mMockBundle);
 
-        BroadcastIntentAction broadcastIntentAction = new BroadcastIntentAction(mActionJson, mMockContext);
-        broadcastIntentAction.evaluate();
+        BroadcastIntentAction broadcastIntentAction = new BroadcastIntentAction(mActionJson);
+        broadcastIntentAction.evaluate(mMockContext);
 
         verify(mMockContext).sendOrderedBroadcast(mBroadcastIntent, mActionJson.getString(BroadcastIntentAction.PERMISSIONS_PROPERTY));
         verify(mBroadcastIntent).setDataAndType(mMockUri, mActionJson.getString(BroadcastIntentAction.INTENT_TYPE_PROPERTY));
@@ -71,7 +71,7 @@ public class BroadcastIntentActionTest {
         PowerMockito.when(ExtrasParser.fromJSON(any(JSONObject.class))).thenReturn(mMockBundle);
         PowerMockito.when(ExtrasParser.toJSON(mMockBundle)).thenReturn(new JSONObject());
 
-        BroadcastIntentAction broadcastIntentAction = new BroadcastIntentAction(mActionJson, mMockContext);
+        BroadcastIntentAction broadcastIntentAction = new BroadcastIntentAction(mActionJson);
         assertEquals(mActionJson.toString(), broadcastIntentAction.toJson().toString());
     }
 
