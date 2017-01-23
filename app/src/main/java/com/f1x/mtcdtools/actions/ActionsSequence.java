@@ -1,5 +1,7 @@
 package com.f1x.mtcdtools.actions;
 
+import com.f1x.mtcdtools.input.KeysSequenceConverter;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,41 +23,20 @@ public class ActionsSequence {
             mActionNames.add(actionsArray.getString(i));
         }
 
-        mKeysSequenceUp = new ArrayList<>();
-        JSONArray keysSequenceUpArray = json.getJSONArray(KEYS_SEQUENCE_UP_PROPERTY);
-        for (int i = 0; i < keysSequenceUpArray.length(); ++i) {
-            mKeysSequenceUp.add(keysSequenceUpArray.getInt(i));
-        }
-
-        mKeysSequenceDown = new ArrayList<>();
-        JSONArray keysSequenceDownArray = json.getJSONArray(KEYS_SEQUENCE_DOWN_PROPERTY);
-        for (int i = 0; i < keysSequenceDownArray.length(); ++i) {
-            mKeysSequenceDown.add(keysSequenceDownArray.getInt(i));
-        }
+        mKeysSequenceUp = KeysSequenceConverter.fromJson(json.getJSONArray(KEYS_SEQUENCE_UP_PROPERTY));
+        mKeysSequenceDown = KeysSequenceConverter.fromJson(json.getJSONArray(KEYS_SEQUENCE_DOWN_PROPERTY));
     }
 
     List<Integer> getKeysSequenceUp() {
         return new ArrayList<>(mKeysSequenceUp);
     }
 
-    void setKeysSequenceUp(List<Integer> keysSequenceUp) {
-        mKeysSequenceUp = keysSequenceUp;
-    }
-
     List<Integer> getKeysSequenceDown() {
         return new ArrayList<>(mKeysSequenceDown);
     }
 
-    void setKeysSequenceDown(List<Integer> keysSequenceDown) {
-        mKeysSequenceDown = keysSequenceDown;
-    }
-
     public List<String> getActionNames() {
         return new ArrayList<>(mActionNames);
-    }
-
-    public void setActionNames(List<String> actionNames) {
-        mActionNames = actionNames;
     }
 
     public JSONObject toJson() throws JSONException {
@@ -68,18 +49,8 @@ public class ActionsSequence {
             actionsArray.put(action);
         }
         json.put(ACTIONS_PROPERTY, actionsArray);
-
-        JSONArray keysSequenceUpArray = new JSONArray();
-        for (int key : mKeysSequenceUp) {
-            keysSequenceUpArray.put(key);
-        }
-        json.put(KEYS_SEQUENCE_UP_PROPERTY, keysSequenceUpArray);
-
-        JSONArray keysSequenceDownArray = new JSONArray();
-        for (int key : mKeysSequenceDown) {
-            keysSequenceDownArray.put(key);
-        }
-        json.put(KEYS_SEQUENCE_DOWN_PROPERTY, keysSequenceDownArray);
+        json.put(KEYS_SEQUENCE_UP_PROPERTY, KeysSequenceConverter.toJsonArray(mKeysSequenceUp));
+        json.put(KEYS_SEQUENCE_DOWN_PROPERTY, KeysSequenceConverter.toJsonArray(mKeysSequenceDown));
 
         return json;
     }

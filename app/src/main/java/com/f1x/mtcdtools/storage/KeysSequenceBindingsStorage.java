@@ -1,6 +1,7 @@
 package com.f1x.mtcdtools.storage;
 
 import com.f1x.mtcdtools.input.KeysSequenceBinding;
+import com.f1x.mtcdtools.input.KeysSequenceConverter;
 import com.f1x.mtcdtools.storage.exceptions.DuplicatedEntryException;
 
 import org.json.JSONArray;
@@ -29,7 +30,7 @@ public class KeysSequenceBindingsStorage extends Storage {
             KeysSequenceBinding keysSequenceBinding = new KeysSequenceBinding(keysSequenceBindingsArray.getJSONObject(i));
 
             if(mKeysSequenceBindings.containsKey(keysSequenceBinding.getKeysSequence())) {
-                throw new DuplicatedEntryException("KeysSequenceBinding");
+                throw new DuplicatedEntryException(KeysSequenceConverter.toJsonArray(keysSequenceBinding.getKeysSequence()).toString());
             } else {
                 mKeysSequenceBindings.put(keysSequenceBinding.getKeysSequence(), keysSequenceBinding);
             }

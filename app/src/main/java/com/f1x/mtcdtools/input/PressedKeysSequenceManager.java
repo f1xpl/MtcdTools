@@ -41,10 +41,21 @@ public class PressedKeysSequenceManager extends BroadcastReceiver {
             int keyCode = intent.getIntExtra(KEYCODE_PARAM_NAME, DEFAULT_KEY_CODE);
 
             if(keyCode != DEFAULT_KEY_CODE) {
-                mPressedKeysSequence.add(keyCode);
-                mKeysCollectingTimer.cancel();
-                mKeysCollectingTimer.start();
+                if(!mListeners.isEmpty()) {
+                    mListeners.get(mListeners.size() - 1).handleSingleKey(keyCode);
+
+                    mPressedKeysSequence.add(keyCode);
+                    mKeysCollectingTimer.cancel();
+                    mKeysCollectingTimer.start();
+                }
             }
+        }
+    }
+
+    public void onTimerFinish() {
+        if(!mListeners.isEmpty()) {
+            mListeners.get(mListeners.size() - 1).handleKeysSequence(mPressedKeysSequence);
+            mPressedKeysSequence.clear();
         }
     }
 
@@ -54,10 +65,7 @@ public class PressedKeysSequenceManager extends BroadcastReceiver {
 
         @Override
         public void onFinish() {
-            if(!mListeners.isEmpty()) {
-                mListeners.get(mListeners.size() - 1).handleKeysSequence(mPressedKeysSequence);
-                mPressedKeysSequence.clear();
-            }
+            onTimerFinish();
         }
     };
 

@@ -41,32 +41,6 @@ public class ActionsSequencesStorage extends Storage {
         write(STORAGE_FILE_NAME, ROOT_ARRAY_NAME, actionsSequencesArray);
     }
 
-    public void saveSequenceActions(String sequenceName, List<String> actions) throws Exception {
-        if(mActionsSequences.containsKey(sequenceName)) {
-            mActionsSequences.get(sequenceName).setActionNames(actions);
-            write();
-        }
-    }
-
-    public void removeSequence(String sequenceName) throws IOException, JSONException {
-        if(mActionsSequences.containsKey(sequenceName)) {
-            mActionsSequences.remove(sequenceName);
-            write();
-        }
-    }
-
-    Map<String, ActionsSequence> getActionsSequences() {
-        return new HashMap<>(mActionsSequences);
-    }
-
-    List<String> getSequenceActions(String sequenceName) {
-        if(mActionsSequences.containsKey(sequenceName)) {
-            return new ArrayList<>(mActionsSequences.get(sequenceName).getActionNames());
-        }
-
-        return new ArrayList<>();
-    }
-
     private final Map<String, ActionsSequence> mActionsSequences;
 
     public static final String STORAGE_FILE_NAME = "actionsSequences.json";

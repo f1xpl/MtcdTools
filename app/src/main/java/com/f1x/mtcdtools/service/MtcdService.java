@@ -6,6 +6,10 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 
 import com.f1x.mtcdtools.R;
+import com.f1x.mtcdtools.input.PressedKeysSequenceManager;
+import com.f1x.mtcdtools.storage.ActionsSequencesStorage;
+import com.f1x.mtcdtools.storage.ActionsStorage;
+import com.f1x.mtcdtools.storage.KeysSequenceBindingsStorage;
 
 /**
  * Created by COMPUTER on 2016-08-03.
@@ -17,7 +21,6 @@ public class MtcdService extends android.app.Service {
 
         mForceRestart = true;
         mServiceInitialized = false;
-        mKeyInputDispatchingActive = true;
     }
 
     @Override
@@ -32,7 +35,6 @@ public class MtcdService extends android.app.Service {
         }
 
         mServiceInitialized = false;
-        mKeyInputDispatchingActive = false;
     }
 
     @Override
@@ -46,7 +48,6 @@ public class MtcdService extends android.app.Service {
 
         if(!mServiceInitialized) {
             mServiceInitialized = true;
-            mKeyInputDispatchingActive = true;
             startForeground(1555, createNotification());
         }
 
@@ -64,8 +65,30 @@ public class MtcdService extends android.app.Service {
 
     private boolean mForceRestart;
     private boolean mServiceInitialized;
-    private boolean mKeyInputDispatchingActive;
+    private ActionsStorage mActionsStorage;
+    private ActionsSequencesStorage mActionsSequencesStorage;
+    private KeysSequenceBindingsStorage mKeysSequenceBindingsStorage;
+    private PressedKeysSequenceManager mPressedKeysSequenceManager;
 
     private final ServiceBinder mServiceBinder = new ServiceBinder() {
+        @Override
+        public KeysSequenceBindingsStorage getKeysSequenceBindingsStorage() {
+            return mKeysSequenceBindingsStorage;
+        }
+
+        @Override
+        public ActionsStorage getActionsStorage() {
+            return mActionsStorage;
+        }
+
+        @Override
+        public ActionsSequencesStorage getActionsSequencesStorage() {
+            return mActionsSequencesStorage;
+        }
+
+        @Override
+        public PressedKeysSequenceManager getPressedKeysSequenceManager() {
+            return mPressedKeysSequenceManager;
+        }
     };
 }
