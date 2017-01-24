@@ -22,7 +22,7 @@ public class ActionsSequencesStorage extends Storage {
         mActionsSequences = new HashMap<>();
     }
 
-    public void read() throws Exception {
+    public void read() throws JSONException, IOException {
         JSONArray actionsSequencesArray = read(STORAGE_FILE_NAME, ROOT_ARRAY_NAME);
 
         for (int i = 0; i < actionsSequencesArray.length(); ++i) {

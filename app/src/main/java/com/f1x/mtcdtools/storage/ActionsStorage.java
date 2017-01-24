@@ -5,10 +5,11 @@ import android.content.Context;
 import com.f1x.mtcdtools.actions.Action;
 import com.f1x.mtcdtools.actions.ActionsFactory;
 import com.f1x.mtcdtools.storage.exceptions.DuplicatedEntryException;
-import com.f1x.mtcdtools.storage.exceptions.EntryCreationFailed;
+import com.f1x.mtcdtools.storage.exceptions.ActionCreationFailed;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -26,14 +27,15 @@ public class ActionsStorage extends Storage {
         mContext = context;
     }
 
-    public void read() throws JSONException, IOException, DuplicatedEntryException, EntryCreationFailed {
+    public void read() throws JSONException, IOException, DuplicatedEntryException, ActionCreationFailed {
         JSONArray actionsArray = read(STORAGE_FILE_NAME, ROOT_ARRAY_NAME);
 
         for (int i = 0; i < actionsArray.length(); ++i) {
-            Action action = ActionsFactory.createAction(actionsArray.getJSONObject(i));
+            JSONObject actionJson = actionsArray.getJSONObject(i);
+            Action action = ActionsFactory.createAction(actionJson);
 
             if(action == null) {
-                throw new EntryCreationFailed();
+                throw new ActionCreationFailed(actionJson.getString(Action.NAME_PROPERTY));
             } else if(mActions.containsKey(action.getName())) {
                 throw new DuplicatedEntryException("action name: " + action.getName() + ", action type: " + action.getType());
             } else {

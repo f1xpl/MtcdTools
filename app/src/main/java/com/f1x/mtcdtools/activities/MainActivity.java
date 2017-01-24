@@ -25,5 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button createActionSequencesButton = (Button)findViewById(R.id.buttonCreateNewActionsSequence);
         createActionSequencesButton.setOnClickListener(new StartActivityButtonClickListener(this, CreateActionsSequenceActivity.class));
+
+        this.startService(new Intent(this, MtcdService.class));
     }
 }

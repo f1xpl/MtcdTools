@@ -13,5 +13,10 @@ public class DuplicatedEntryException extends Throwable {
         return mEntryDetails;
     }
 
+    @Override
+    public String getMessage() {
+        return "Entry: " + mEntryDetails + " is duplicated.";
+    }
+
     private final String mEntryDetails;
 }

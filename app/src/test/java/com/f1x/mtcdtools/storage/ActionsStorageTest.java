@@ -7,7 +7,7 @@ import com.f1x.mtcdtools.actions.ActionsFactory;
 import com.f1x.mtcdtools.actions.KeyAction;
 import com.f1x.mtcdtools.actions.LaunchAction;
 import com.f1x.mtcdtools.storage.exceptions.DuplicatedEntryException;
-import com.f1x.mtcdtools.storage.exceptions.EntryCreationFailed;
+import com.f1x.mtcdtools.storage.exceptions.ActionCreationFailed;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -94,7 +94,7 @@ public class ActionsStorageTest {
     }
 
     @Test
-    public void test_Read() throws JSONException, IOException, EntryCreationFailed, DuplicatedEntryException {
+    public void test_Read() throws JSONException, IOException, ActionCreationFailed, DuplicatedEntryException {
         mActionsArray.put(mAction1Json);
         mActionsArray.put(mAction2Json);
         mActionsJson.put(ActionsStorage.ROOT_ARRAY_NAME, mActionsArray);
@@ -110,7 +110,7 @@ public class ActionsStorageTest {
     }
 
     @Test
-    public void test_Read_Duplicated_Name() throws JSONException, IOException, EntryCreationFailed {
+    public void test_Read_Duplicated_Name() throws JSONException, IOException, ActionCreationFailed {
         mActionsArray.put(mAction1Json);
         mActionsArray.put(mAction2Json);
         mActionsJson.put(ActionsStorage.ROOT_ARRAY_NAME, mActionsArray);

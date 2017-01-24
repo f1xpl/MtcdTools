@@ -4,12 +4,21 @@ import android.app.Notification;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
+import android.widget.Toast;
 
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.input.PressedKeysSequenceManager;
 import com.f1x.mtcdtools.storage.ActionsSequencesStorage;
 import com.f1x.mtcdtools.storage.ActionsStorage;
+import com.f1x.mtcdtools.storage.FileReader;
+import com.f1x.mtcdtools.storage.FileWriter;
 import com.f1x.mtcdtools.storage.KeysSequenceBindingsStorage;
+import com.f1x.mtcdtools.storage.exceptions.DuplicatedEntryException;
+import com.f1x.mtcdtools.storage.exceptions.ActionCreationFailed;
+
+import org.json.JSONException;
+
+import java.io.IOException;
 
 /**
  * Created by COMPUTER on 2016-08-03.
@@ -21,6 +30,13 @@ public class MtcdService extends android.app.Service {
 
         mForceRestart = true;
         mServiceInitialized = false;
+
+        FileReader fileReader = new FileReader(this);
+        FileWriter fileWriter = new FileWriter(this);
+        mActionsStorage = new ActionsStorage(fileReader, fileWriter, this);
+        mActionsSequencesStorage = new ActionsSequencesStorage(fileReader, fileWriter);
+        mKeysSequenceBindingsStorage = new KeysSequenceBindingsStorage(fileReader, fileWriter);
+        mPressedKeysSequenceManager = new PressedKeysSequenceManager();
     }
 
     @Override
@@ -32,6 +48,7 @@ public class MtcdService extends android.app.Service {
         }
 
         if(mServiceInitialized) {
+            unregisterReceiver(mPressedKeysSequenceManager);
         }
 
         mServiceInitialized = false;
@@ -47,8 +64,18 @@ public class MtcdService extends android.app.Service {
         super.onStartCommand(intent, flags, startId);
 
         if(!mServiceInitialized) {
-            mServiceInitialized = true;
-            startForeground(1555, createNotification());
+            try {
+                mActionsStorage.read();
+                mActionsSequencesStorage.read();
+                mKeysSequenceBindingsStorage.read();
+                registerReceiver(mPressedKeysSequenceManager, mPressedKeysSequenceManager.getIntentFilter());
+
+                mServiceInitialized = true;
+                startForeground(1555, createNotification());
+            } catch (JSONException | IOException | DuplicatedEntryException | ActionCreationFailed e) {
+                e.printStackTrace();
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+            }
         }
 
         return START_STICKY;
