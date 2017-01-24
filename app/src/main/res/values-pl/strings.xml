@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="Applications">Aplikacje</string>
+    <string name="BroadcastPermissions">Zezwolenia rozgłaszania</string>
+    <string name="Cancel">Anuluj</string>
+    <string name="CreateActionFailed">Nie można utworzyć akcji. Sprawdź parametry.</string>
+    <string name="CreateNewAction">Utwórz nową akcję</string>
+    <string name="CreateNewActionsSequence">Utwórz nową sekwencję akcji</string>
+    <string name="CreateNewBinding">Utwórz nowe powiązanie</string>
+    <string name="CreateNewBroadcastIntentAction">Utwórz akcję rozgłoszeniową</string>
+    <string name="CreateNewKeyAction">Utwórz akcję klawisza</string>
+    <string name="CreateNewLaunchAction">Utwórz akcję uruchamiania aplikacji</string>
+    <string name="CreateNewStartActivityAction">Utwórz akcję uruchamiania aktywności</string>
+    <string name="DuplicatedActionNameError">Akcja o podanej nazwie już istnieje.</string>
+    <string name="EmptyActionNameError">Podaj nazwę akcji.</string>
+    <string name="Action">Akcja</string>
+    <string name="ActionName">Nazwa akcji</string>
+    <string name="Actions">Akcje</string>
+    <string name="ActionsSequence">Sekwencja akcji</string>
+    <string name="ActionsSequenceName">Nazwa sekwencji akcji</string>
+    <string name="AddAction">Dodaj akcję</string>
+    <string name="AddedActions">Utworzone akcje</string>
+    <string name="ApplicationSettings">Ustawienia</string>
+    <string name="IntentCategory">Kategoria intencji</string>
+    <string name="IntentData">Dane intencji</string>
+    <string name="IntentExtras">Parametry intencji</string>
+    <string name="IntentPackage">Pakiet</string>
+    <string name="IntentType">Typ intencji</string>
+    <string name="InternalError">Wystąpił błąd wewnętrzny</string>
+    <string name="KeyCodes">Kody klawiszy</string>
+    <string name="KeysSequence">Sekwencja klawiszy</string>
+    <string name="KeysSequenceDown">Sekwencja klawiszy W DÓŁ</string>
+    <string name="KeysSequenceUp">Sekwencja klawiszy W GÓRę</string>
+    <string name="MtcdServiceDescription">Serwis MtcdTools jest aktywny</string>
+    <string name="ObtainKeysSequence">Wprowadź sekwencję klawiszy</string>
+    <string name="ObtainKeysSequenceDown">Wprowadź sekwencję klawiszy W DÓŁ</string>
+    <string name="ObtainKeysSequenceUp">Wprowadź sekwencję klawiszy W GÓRĘ</string>
+    <string name="ManageActions">Zarządzaj akcjami</string>
+    <string name="ManageActionsSequences">Zarządzaj sekwencjami akcji</string>
+    <string name="Reset">Resetuj</string>
+    <string name="Save">Zapisz</string>
+    <string name="SelectActionOrSequence">Wybierz akcję lub sekwencję akcji</string>
+</resources>

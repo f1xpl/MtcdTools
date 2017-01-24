@@ -1,6 +1,7 @@
 package com.f1x.mtcdtools.actions;
 
 import android.content.Context;
+import android.os.Bundle;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,6 +14,13 @@ public class BroadcastIntentAction extends CustomIntentAction {
     public BroadcastIntentAction(JSONObject json) throws JSONException {
         super(json);
         mPermissions = json.getString(PERMISSIONS_PROPERTY);
+    }
+
+    public BroadcastIntentAction(String actionName, String intentPackage, String intentAction,
+                                 String intentCategory, String intentData, String intentType,
+                                 JSONObject intentExtras, String intentPermissions) throws JSONException {
+        super(actionName, ACTION_TYPE, intentPackage, intentAction, intentCategory, intentData, intentType, intentExtras);
+        mPermissions = intentPermissions;
     }
 
     @Override

@@ -38,6 +38,12 @@ public class LaunchActionTest {
     }
 
     @Test
+    public void test_construct() throws JSONException {
+        LaunchAction launchAction = new LaunchAction(mActionJson.getString(LaunchAction.NAME_PROPERTY), mActionJson.getString(LaunchAction.PACKAGE_NAME_PROPERTY));
+        assertEquals(mActionJson.toString(), launchAction.toJson().toString());
+    }
+
+    @Test
     public void test_evaluate() throws JSONException {
         Mockito.when(mMockContext.getPackageManager()).thenReturn(mMockPackageManager);
         Mockito.when(mMockPackageManager.getLaunchIntentForPackage(mActionJson.getString(LaunchAction.PACKAGE_NAME_PROPERTY))).thenReturn(mMockLaunchIntent);

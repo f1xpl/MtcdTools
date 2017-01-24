@@ -46,13 +46,13 @@
                 android:layout_alignParentStart="true" />
 
             <Button
-                android:text="@string/RemoveActions"
+                android:text="@string/ManageActions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/buttonRemoveActions" />
 
             <Button
-                android:text="@string/RemoveActionsSequences"
+                android:text="@string/ManageActionsSequences"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/buttonRemoveActionsSequences" />

@@ -48,6 +48,23 @@ public class BroadcastIntentActionTest {
     }
 
     @Test
+    public void test_construct() throws JSONException {
+        PowerMockito.when(ExtrasParser.fromJSON(any(JSONObject.class))).thenReturn(mMockBundle);
+        PowerMockito.when(ExtrasParser.toJSON(mMockBundle)).thenReturn(new JSONObject());
+
+        BroadcastIntentAction broadcastIntentAction = new BroadcastIntentAction(mActionJson.getString(BroadcastIntentAction.NAME_PROPERTY),
+                                                                                mActionJson.getString(BroadcastIntentAction.INTENT_PACKAGE_PROPERTY),
+                                                                                mActionJson.getString(BroadcastIntentAction.INTENT_ACTION_PROPERTY),
+                                                                                mActionJson.getString(BroadcastIntentAction.INTENT_CATEGORY_PROPERTY),
+                                                                                mActionJson.getString(BroadcastIntentAction.INTENT_DATA_PROPERTY),
+                                                                                mActionJson.getString(BroadcastIntentAction.INTENT_TYPE_PROPERTY),
+                                                                                new JSONObject(),
+                                                                                mActionJson.getString(BroadcastIntentAction.PERMISSIONS_PROPERTY));
+
+        assertEquals(mActionJson.toString(), broadcastIntentAction.toJson().toString());
+    }
+
+    @Test
     public void test_evaluate() throws Exception {
         PowerMockito.whenNew(Intent.class).withAnyArguments().thenReturn(mBroadcastIntent);
 

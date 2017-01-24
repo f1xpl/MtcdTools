@@ -16,6 +16,11 @@ public class LaunchAction extends Action {
         mPackageName = json.getString(PACKAGE_NAME_PROPERTY);
     }
 
+    public LaunchAction(String actionName, String packageName) {
+        super(actionName, ACTION_TYPE);
+        mPackageName = packageName;
+    }
+
     @Override
     public void evaluate(Context context) {
         Intent intent = context.getPackageManager().getLaunchIntentForPackage(mPackageName);

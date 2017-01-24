@@ -47,6 +47,22 @@ public class StartActivityActionTest {
     }
 
     @Test
+    public void test_construct() throws JSONException {
+        PowerMockito.when(ExtrasParser.fromJSON(any(JSONObject.class))).thenReturn(mMockBundle);
+        PowerMockito.when(ExtrasParser.toJSON(mMockBundle)).thenReturn(new JSONObject());
+
+        StartActivityAction startActivityAction = new StartActivityAction(mActionJson.getString(BroadcastIntentAction.NAME_PROPERTY),
+                                                                          mActionJson.getString(BroadcastIntentAction.INTENT_PACKAGE_PROPERTY),
+                                                                          mActionJson.getString(BroadcastIntentAction.INTENT_ACTION_PROPERTY),
+                                                                          mActionJson.getString(BroadcastIntentAction.INTENT_CATEGORY_PROPERTY),
+                                                                          mActionJson.getString(BroadcastIntentAction.INTENT_DATA_PROPERTY),
+                                                                          mActionJson.getString(BroadcastIntentAction.INTENT_TYPE_PROPERTY),
+                                                                          new JSONObject());
+
+        assertEquals(mActionJson.toString(), startActivityAction.toJson().toString());
+    }
+
+    @Test
     public void test_evaluate() throws Exception {
         PowerMockito.whenNew(Intent.class).withAnyArguments().thenReturn(mMockStartActivityIntent);
 

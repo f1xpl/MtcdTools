@@ -29,7 +29,7 @@ public class KeyCodesArrayAdapter extends ArrayAdapter<String> {
         }
     }
 
-    int getValue(String key) {
+    public int getKeyCode(String key) {
         if(mKeyCodesMap.containsKey(key)) {
             return mKeyCodesMap.get(key);
         }
@@ -37,6 +37,6 @@ public class KeyCodesArrayAdapter extends ArrayAdapter<String> {
         return INVALID_KEY;
     }
 
-    private static final Map<String, Integer> mKeyCodesMap = new HashMap<>();
+    private final Map<String, Integer> mKeyCodesMap = new HashMap<>();
     public static int INVALID_KEY = -1;
 }

@@ -23,6 +23,18 @@ public abstract class CustomIntentAction extends Action {
         mIntentExtras = ExtrasParser.fromJSON(json.getJSONObject(INTENT_EXTRAS_PROPERTY));
     }
 
+    CustomIntentAction(String actionName, String actionType, String intentPackage,
+                       String intentAction, String intentCategory, String intentData,
+                       String intentType, JSONObject intentExtras) throws JSONException {
+        super(actionName, actionType);
+        mIntentPackage = intentPackage;
+        mIntentAction = intentAction;
+        mIntentCategory = intentCategory;
+        mIntentData = intentData;
+        mIntentType = intentType;
+        mIntentExtras = ExtrasParser.fromJSON(intentExtras);
+    }
+
     @Override
     public JSONObject toJson() throws JSONException {
         JSONObject json = super.toJson();

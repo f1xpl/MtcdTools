@@ -14,6 +14,12 @@ public class StartActivityAction extends CustomIntentAction {
         super(json);
     }
 
+    public StartActivityAction(String actionName, String intentPackage, String intentAction,
+                                 String intentCategory, String intentData, String intentType,
+                                 JSONObject intentExtras) throws JSONException {
+        super(actionName, ACTION_TYPE, intentPackage, intentAction, intentCategory, intentData, intentType, intentExtras);
+    }
+
     @Override
     public void evaluate(Context context) {
         context.startActivity(getIntent());

@@ -1,18 +1,17 @@
 <resources>
-    <string name="app_name">MtcdTools</string>
+    <string name="app_name" translatable="false">MtcdTools</string>
     <string name="CreateNewBinding">Create a new binding</string>
     <string name="CreateNewAction">Create a new action</string>
     <string name="CreateNewActionsSequence">Create a new actions sequence</string>
     <string name="ApplicationSettings">Settings</string>
-    <string name="RemoveActions">Remove actions</string>
-    <string name="RemoveActionsSequences">Remove actions sequences</string>
+    <string name="ManageActions">Manage actions</string>
+    <string name="ManageActionsSequences">Manage actions sequences</string>
 
     <string name="CreateNewBroadcastIntentAction">Create a new Broadcast Intent action</string>
     <string name="CreateNewKeyAction">Create a new key action</string>
     <string name="CreateNewLaunchAction">Create a new launch action</string>
     <string name="CreateNewStartActivityAction">Create a new start activity action</string>
 
-    <string name="InsertNameHint">Insert name</string>
     <string name="SelectActionOrSequence">Select action or actions sequence</string>
     <string name="Action">Action</string>
     <string name="ActionsSequence">Actions sequence</string>
@@ -22,17 +21,18 @@
 
     <string name="ActionsSequenceName">Actions sequence name</string>
     <string name="AddAction">Add action</string>
+
     <string name="Actions">Actions</string>
     <string name="ActionName">Action name</string>
     <string name="KeyCodes">Key codes</string>
     <string name="Applications">Applications</string>
-    <string name="ActionProperty">Action property</string>
-    <string name="Category">Category</string>
-    <string name="Data">Data</string>
-    <string name="Type">Type</string>
-    <string name="Extras">Extras</string>
-    <string name="Permissions">Permissions</string>
-    <string name="Package">Package</string>
+
+    <string name="IntentCategory">Intent category</string>
+    <string name="IntentData">Intent data</string>
+    <string name="IntentType">Intent type</string>
+    <string name="IntentExtras">Intent extras</string>
+    <string name="BroadcastPermissions">Broadcast permissions</string>
+    <string name="IntentPackage">Intent package</string>
     <string name="KeysSequence">Keys sequence</string>
     <string name="AddedActions">Added actions</string>
     <string name="KeysSequenceUp">UP keys sequence</string>
@@ -40,38 +40,10 @@
     <string name="ObtainKeysSequenceUp">Obtain UP keys sequence</string>
     <string name="ObtainKeysSequenceDown">Obtain DOWN keys sequence</string>
     <string name="Reset">Reset</string>
-
-
-    <string name="ConfigurationFileReadError">Could not read configuration file</string>
-    <string name="ConfigurationFileParsingError">Configuration file seems to be corrupted</string>
-
-    <string name="AddNewBindingButton">Create a new binding</string>
-    <string name="RemoveBindingsButton">Remove existing bindings</string>
-    <string name="EditModePackagesButton">Edit MODE applications</string>
-
-    <string name="SaveButton">Save</string>
-    <string name="CancelButton">Cancel</string>
-
-    <string name="ObtainKeyInputButton">Obtain key input</string>
-
-    <string name="KeyInputTypeTextView">Input type: </string>
-    <string name="ApplicationTextView">Application: </string>
-
-    <string name="KeyCodeTextView">KeyCode: </string>
-    <string name="DefaultKeyCodeLabel">EMPTY</string>
-
-    <string name="KeyBindingAdditionFailure">Failed to add new binding</string>
-    <string name="KeyBindingRemovalFailure">Failed to remove binding</string>
-    <string name="ModePackagesSaveFailure">Failed to save mode applications list</string>
-
-    <string name="ObtainKeyInputProgressBarTitle">Wait for key press</string>
-    <string name="ObtainKeyInputProgressBarText">Press key you want to bind</string>
-
-    <string name="NotSelectedInputType">Please select input type</string>
-    <string name="NotObtainedKeyCode">Please obtain key code</string>
-    <string name="NotSelectedApplication">Please select application</string>
-
-    <string name="AddModePackageButton">Add application</string>
+    <string name="InternalError">An internal error occurred</string>
+    <string name="CreateActionFailed">Failed to create an action. Please check parameters.</string>
+    <string name="DuplicatedActionNameError">Action with given name already exist</string>
+    <string name="EmptyActionNameError">Please provide action name</string>
 
     <string name="MtcdServiceDescription">MtcdTools Service is now active</string>
 </resources>

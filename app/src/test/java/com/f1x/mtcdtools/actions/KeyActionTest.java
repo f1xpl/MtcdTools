@@ -56,6 +56,14 @@ public class KeyActionTest {
     }
 
     @Test
+    public void test_ConstructFromParameters() throws JSONException {
+        KeyAction keyAction = new KeyAction(mActionJson.getString(KeyAction.NAME_PROPERTY),
+                                            mActionJson.getInt(KeyAction.KEYCODE_PROPERTY));
+
+        assertEquals(keyAction.toJson().toString(), mActionJson.toString());
+    }
+
+    @Test
     public void test_toJson() throws JSONException {
         KeyAction keyAction = new KeyAction(mActionJson);
         assertEquals(keyAction.toJson().toString(), mActionJson.toString());

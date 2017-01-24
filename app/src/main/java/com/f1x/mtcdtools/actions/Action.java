@@ -15,6 +15,11 @@ public abstract class Action {
         mType = json.getString(TYPE_PROPERTY);
     }
 
+    Action(String name, String type) {
+        mName = name;
+        mType = type;
+    }
+
     public abstract void evaluate(Context context);
 
     public String getType() {

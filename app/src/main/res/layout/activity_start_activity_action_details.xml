@@ -32,45 +32,40 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
-                android:id="@+id/editTextActionProperty"
-                android:hint="@string/ActionProperty" />
+                android:id="@+id/editTextIntentCategory"
+                android:hint="@string/IntentCategory" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
-                android:id="@+id/editTextCategory"
-                android:hint="@string/Category" />
+                android:id="@+id/editTextIntentData"
+                android:hint="@string/IntentData" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
-                android:id="@+id/editTextData"
-                android:hint="@string/Data" />
+                android:id="@+id/editTextIntentType"
+                android:hint="@string/IntentType" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
-                android:id="@+id/editTextPackage"
-                android:hint="@string/Package" />
-
-            <TextView
-                android:text="@string/Extras"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textViewExtras" />
+                android:id="@+id/editTextIntentPackage"
+                android:hint="@string/IntentPackage" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:inputType="textMultiLine"
                 android:ems="10"
-                android:id="@+id/editTextExtras" />
+                android:id="@+id/editTextIntentExtras"
+                android:hint="@string/IntentExtras" />
 
             <LinearLayout
                 android:orientation="horizontal"

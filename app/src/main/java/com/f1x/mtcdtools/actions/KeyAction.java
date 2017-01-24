@@ -17,6 +17,11 @@ public class KeyAction extends Action {
         mKeyCode = json.getInt(KEYCODE_PROPERTY);
     }
 
+    public KeyAction(String actionName, int keyCode) {
+        super(actionName, ACTION_TYPE);
+        mKeyCode = keyCode;
+    }
+
     @Override
     public void evaluate(Context context) {
         AudioManager audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
