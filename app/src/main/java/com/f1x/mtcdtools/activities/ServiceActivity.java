@@ -7,7 +7,9 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
+import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.service.MtcdService;
 import com.f1x.mtcdtools.service.ServiceBinder;
 
@@ -33,7 +35,11 @@ public abstract class ServiceActivity extends AppCompatActivity {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             mServiceBinder = (ServiceBinder)service;
-            ServiceActivity.this.onServiceConnected();
+            if(mServiceBinder == null) {
+                Toast.makeText(ServiceActivity.this, ServiceActivity.this.getText(R.string.ServiceUnavailable), Toast.LENGTH_LONG).show();
+            } else {
+                ServiceActivity.this.onServiceConnected();
+            }
         }
 
         @Override

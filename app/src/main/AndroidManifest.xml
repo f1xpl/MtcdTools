@@ -17,7 +17,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.RemoveBindingsActivity" />
 
         <service android:name=".service.MtcdService" />
 
@@ -30,11 +29,13 @@
         <activity android:name=".activities.CreateActionActivity" />
         <activity android:name=".activities.CreateBindingActivity" />
         <activity android:name=".activities.CreateActionsSequenceActivity" />
-        <activity android:name=".activities.CreateKeyActionActivity" />
-        <activity android:name=".activities.CreateLaunchActionActivity" />
-        <activity android:name=".activities.CreateStartActivityActionActivity" />
-        <activity android:name=".activities.CreateBroadcastIntentActionActivity" />
-        <activity android:name=".activities.ObtainKeysSequenceActivity"></activity>
+        <activity android:name=".activities.actions.key.KeyActionActivity" />
+        <activity android:name=".activities.actions.key.EditKeyActionActivity" />
+        <activity android:name=".activities.actions.CreateLaunchActionActivity" />
+        <activity android:name=".activities.actions.CreateStartActivityActionActivity" />
+        <activity android:name=".activities.actions.CreateBroadcastIntentActionActivity" />
+        <activity android:name=".activities.ObtainKeysSequenceActivity" />
+        <activity android:name=".activities.ManageActionsActivity" />
     </application>
 
 </manifest>

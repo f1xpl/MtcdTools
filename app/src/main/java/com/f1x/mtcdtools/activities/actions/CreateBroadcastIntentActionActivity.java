@@ -1,4 +1,4 @@
-package com.f1x.mtcdtools.activities;
+package com.f1x.mtcdtools.activities.actions;
 
 import android.os.Bundle;
 import android.widget.EditText;

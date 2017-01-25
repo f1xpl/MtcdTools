@@ -1,4 +1,4 @@
-package com.f1x.mtcdtools.activities;
+package com.f1x.mtcdtools.activities.actions.key;
 
 import android.os.Bundle;
 import android.widget.Spinner;
@@ -6,10 +6,14 @@ import android.widget.Spinner;
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.actions.Action;
 import com.f1x.mtcdtools.actions.KeyAction;
+import com.f1x.mtcdtools.activities.actions.StoreActionActivity;
 import com.f1x.mtcdtools.adapters.KeyCodesArrayAdapter;
 
-public class CreateKeyActionActivity extends StoreActionActivity {
+/**
+ * Created by COMPUTER on 2017-01-25.
+ */
 
+public class KeyActionActivity extends StoreActionActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,9 +32,8 @@ public class CreateKeyActionActivity extends StoreActionActivity {
     }
 
     @Override
-    protected void onServiceConnected() {
-    }
+    protected void onServiceConnected() {}
 
-    private KeyCodesArrayAdapter mKeyCodesArrayAdapter;
-    private Spinner mKeyCodesSpinner;
+    protected KeyCodesArrayAdapter mKeyCodesArrayAdapter;
+    protected Spinner mKeyCodesSpinner;
 }

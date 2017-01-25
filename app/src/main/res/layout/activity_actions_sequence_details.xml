@@ -12,7 +12,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,6 +39,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/spinnerActions" />
+
+            <Button
+                android:text="@string/AddAction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/buttonAddAction" />
 
             <TextView
                 android:text="@string/AddedActions"
@@ -97,13 +104,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/buttonCancel"
-                    android:layout_weight="1" />
-
-                <Button
-                    android:text="@string/AddAction"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/buttonAddAction"
                     android:layout_weight="1" />
 
                 <Button

@@ -11,7 +11,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -49,13 +50,13 @@
                 android:text="@string/ManageActions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/buttonRemoveActions" />
+                android:id="@+id/buttonManageActions" />
 
             <Button
                 android:text="@string/ManageActionsSequences"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/buttonRemoveActionsSequences" />
+                android:id="@+id/buttonManageActionsSequences" />
 
             <Button
                 android:text="@string/ApplicationSettings"

@@ -62,11 +62,19 @@ public class ActionsStorage extends Storage {
         }
     }
 
-    public void remove(Action action) throws IOException, JSONException {
-        if(mActions.containsKey(action.getName())) {
-            mActions.remove(action.getName());
+    public void remove(String actionName) throws IOException, JSONException {
+        if(mActions.containsKey(actionName)) {
+            mActions.remove(actionName);
             write();
         }
+    }
+
+    public Action getAction(String actionName) {
+        return mActions.containsKey(actionName )? mActions.get(actionName) : null;
+    }
+
+    public Map<String, Action> getActions() {
+        return new HashMap<>(mActions);
     }
 
     private final Map<String, Action> mActions;

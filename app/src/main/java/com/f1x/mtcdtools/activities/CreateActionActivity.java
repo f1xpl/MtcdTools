@@ -6,6 +6,10 @@ import android.widget.Button;
 
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.StartActivityButtonClickListener;
+import com.f1x.mtcdtools.activities.actions.CreateBroadcastIntentActionActivity;
+import com.f1x.mtcdtools.activities.actions.CreateLaunchActionActivity;
+import com.f1x.mtcdtools.activities.actions.CreateStartActivityActionActivity;
+import com.f1x.mtcdtools.activities.actions.key.KeyActionActivity;
 
 public class CreateActionActivity extends AppCompatActivity {
 
@@ -15,7 +19,7 @@ public class CreateActionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_action);
 
         Button createKeyActionButton = (Button)findViewById(R.id.buttonCreateNewKeyAction);
-        createKeyActionButton.setOnClickListener(new StartActivityButtonClickListener(this, CreateKeyActionActivity.class));
+        createKeyActionButton.setOnClickListener(new StartActivityButtonClickListener(this, KeyActionActivity.class));
 
         Button createLaunchActionButton = (Button)findViewById(R.id.buttonCreateNewLaunchAction);
         createLaunchActionButton.setOnClickListener(new StartActivityButtonClickListener(this, CreateLaunchActionActivity.class));

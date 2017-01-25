@@ -41,6 +41,10 @@ public class KeyAction extends Action {
         return json;
     }
 
+    public int getKeyCode() {
+        return mKeyCode;
+    }
+
     private final int mKeyCode;
 
     static public final String ACTION_TYPE = "KeyAction";

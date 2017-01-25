@@ -40,10 +40,14 @@
     <string name="ObtainKeysSequenceUp">Obtain UP keys sequence</string>
     <string name="ObtainKeysSequenceDown">Obtain DOWN keys sequence</string>
     <string name="Reset">Reset</string>
-    <string name="InternalError">An internal error occurred</string>
     <string name="CreateActionFailed">Failed to create an action. Please check parameters.</string>
     <string name="DuplicatedActionNameError">Action with given name already exist</string>
     <string name="EmptyActionNameError">Please provide action name</string>
 
     <string name="MtcdServiceDescription">MtcdTools Service is now active</string>
+    <string name="CreatedActions">Created actions</string>
+    <string name="ServiceUnavailable">Service is unavailable</string>
+    <string name="ActionNotFound">Action not found</string>
+    <string name="UnknownActionType">Unknown action type</string>
+    <string name="InvalidActionName">Provided action name is invalid</string>
 </resources>

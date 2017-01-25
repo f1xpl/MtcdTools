@@ -37,6 +37,17 @@ public class KeyCodesArrayAdapter extends ArrayAdapter<String> {
         return INVALID_KEY;
     }
 
+    public int getPosition(int keyCode) {
+        for(int i = 0; i < getCount(); ++i) {
+            String keyCodeString = getItem(i);
+            if(mKeyCodesMap.containsKey(keyCodeString) && mKeyCodesMap.get(keyCodeString) == keyCode) {
+                return i;
+            }
+        }
+
+        return INVALID_KEY;
+    }
+
     private final Map<String, Integer> mKeyCodesMap = new HashMap<>();
     public static int INVALID_KEY = -1;
 }

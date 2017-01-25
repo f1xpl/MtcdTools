@@ -61,12 +61,18 @@ public class KeyActionTest {
                                             mActionJson.getInt(KeyAction.KEYCODE_PROPERTY));
 
         assertEquals(keyAction.toJson().toString(), mActionJson.toString());
+        assertEquals(mActionJson.getString(KeyAction.NAME_PROPERTY), keyAction.getName());
+        assertEquals(mActionJson.getString(KeyAction.TYPE_PROPERTY), keyAction.getType());
+        assertEquals(mActionJson.getInt(KeyAction.KEYCODE_PROPERTY), keyAction.getKeyCode());
     }
 
     @Test
     public void test_toJson() throws JSONException {
         KeyAction keyAction = new KeyAction(mActionJson);
         assertEquals(keyAction.toJson().toString(), mActionJson.toString());
+        assertEquals(mActionJson.getString(KeyAction.NAME_PROPERTY), keyAction.getName());
+        assertEquals(mActionJson.getString(KeyAction.TYPE_PROPERTY), keyAction.getType());
+        assertEquals(mActionJson.getInt(KeyAction.KEYCODE_PROPERTY), keyAction.getKeyCode());
     }
 
     @Mock

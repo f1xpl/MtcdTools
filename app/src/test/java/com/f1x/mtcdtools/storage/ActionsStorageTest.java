@@ -170,15 +170,15 @@ public class ActionsStorageTest {
         ActionsStorage actionsStorage = new ActionsStorage(mMockFileReader, mMockFileWriter, mMockContext);
         actionsStorage.insert(mMockAction1);
         actionsStorage.insert(mMockAction2);
-        actionsStorage.remove(mMockAction1);
+        actionsStorage.remove(mAction1Json.getString(Action.NAME_PROPERTY));
         verify(mMockFileWriter, times(1)).write(mActionsJson.toString(), ActionsStorage.STORAGE_FILE_NAME, "UTF-8");
     }
 
     @Test
     public void test_Remove_NonExistent() throws JSONException, IOException, DuplicatedEntryException {
         ActionsStorage actionsStorage = new ActionsStorage(mMockFileReader, mMockFileWriter, mMockContext);
-        actionsStorage.remove(mMockAction1);
-        actionsStorage.remove(mMockAction2);
+        actionsStorage.remove(mAction1Json.getString(Action.NAME_PROPERTY));
+        actionsStorage.remove(mAction2Json.getString(Action.NAME_PROPERTY));
         Mockito.verify(mMockFileWriter, never()).write(any(String.class), any(String.class), any(String.class));
     }
 

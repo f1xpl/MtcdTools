@@ -15,8 +15,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //this.startService(new Intent(this, MtcdService.class));
-
         Button createActionButton = (Button)findViewById(R.id.buttonCreateNewAction);
         createActionButton.setOnClickListener(new StartActivityButtonClickListener(this, CreateActionActivity.class));
 
@@ -25,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
 
         Button createActionSequencesButton = (Button)findViewById(R.id.buttonCreateNewActionsSequence);
         createActionSequencesButton.setOnClickListener(new StartActivityButtonClickListener(this, CreateActionsSequenceActivity.class));
+
+        Button manageActionsButton = (Button)findViewById(R.id.buttonManageActions);
+        manageActionsButton.setOnClickListener(new StartActivityButtonClickListener(this, ManageActionsActivity.class));
 
         this.startService(new Intent(this, MtcdService.class));
     }

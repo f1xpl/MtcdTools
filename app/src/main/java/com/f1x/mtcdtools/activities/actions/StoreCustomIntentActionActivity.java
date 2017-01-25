@@ -1,4 +1,4 @@
-package com.f1x.mtcdtools.activities;
+package com.f1x.mtcdtools.activities.actions;
 
 import android.widget.EditText;
 import android.widget.Toast;
@@ -24,11 +24,6 @@ public abstract class StoreCustomIntentActionActivity extends StoreActionActivit
         mIntentPackageEditText = (EditText)this.findViewById(R.id.editTextIntentPackage);
         mIntentTypeEditText = (EditText)this.findViewById(R.id.editTextIntentType);
         mIntentExtrasEditText = (EditText)this.findViewById(R.id.editTextIntentExtras);
-    }
-
-    @Override
-    protected void onServiceConnected() {
-
     }
 
     @Override
