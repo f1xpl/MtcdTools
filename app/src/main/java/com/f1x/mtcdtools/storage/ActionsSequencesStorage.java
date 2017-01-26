@@ -1,14 +1,12 @@
 package com.f1x.mtcdtools.storage;
 
-import com.f1x.mtcdtools.actions.ActionsSequence;
+import com.f1x.mtcdtools.ActionsSequence;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

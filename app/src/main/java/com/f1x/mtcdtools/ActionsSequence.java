@@ -1,4 +1,4 @@
-package com.f1x.mtcdtools.actions;
+package com.f1x.mtcdtools;
 
 import com.f1x.mtcdtools.input.KeysSequenceConverter;
 
