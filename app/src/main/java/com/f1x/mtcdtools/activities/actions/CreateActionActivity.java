@@ -1,4 +1,4 @@
-package com.f1x.mtcdtools.activities;
+package com.f1x.mtcdtools.activities.actions;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

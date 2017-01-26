@@ -26,7 +26,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activities.CreateActionActivity" />
+        <activity android:name=".activities.actions.CreateActionActivity" />
         <activity android:name=".activities.CreateBindingActivity" />
         <activity android:name=".activities.CreateActionsSequenceActivity" />
         <activity android:name=".activities.actions.KeyActionActivity" />
@@ -34,7 +34,7 @@
         <activity android:name=".activities.actions.StartActivityActionActivity" />
         <activity android:name=".activities.actions.BroadcastIntentActionActivity" />
         <activity android:name=".activities.ObtainKeysSequenceActivity" />
-        <activity android:name=".activities.ManageActionsActivity" />
+        <activity android:name=".activities.actions.ManageActionsActivity" />
     </application>
 
 </manifest>

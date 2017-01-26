@@ -1,4 +1,4 @@
-package com.f1x.mtcdtools.activities;
+package com.f1x.mtcdtools.activities.actions;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,10 +13,7 @@ import com.f1x.mtcdtools.actions.BroadcastIntentAction;
 import com.f1x.mtcdtools.actions.KeyAction;
 import com.f1x.mtcdtools.actions.LaunchAction;
 import com.f1x.mtcdtools.actions.StartActivityAction;
-import com.f1x.mtcdtools.activities.actions.BroadcastIntentActionActivity;
-import com.f1x.mtcdtools.activities.actions.KeyActionActivity;
-import com.f1x.mtcdtools.activities.actions.LaunchActionActivity;
-import com.f1x.mtcdtools.activities.actions.StartActivityActionActivity;
+import com.f1x.mtcdtools.activities.ServiceActivity;
 import com.f1x.mtcdtools.adapters.ActionsArrayAdapter;
 
 import org.json.JSONException;
