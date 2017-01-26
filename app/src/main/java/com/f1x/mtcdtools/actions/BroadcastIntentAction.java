@@ -1,7 +1,6 @@
 package com.f1x.mtcdtools.actions;
 
 import android.content.Context;
-import android.os.Bundle;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,6 +33,10 @@ public class BroadcastIntentAction extends CustomIntentAction {
         json.put(PERMISSIONS_PROPERTY, mPermissions);
 
         return json;
+    }
+
+    public String getPermissions() {
+        return mPermissions;
     }
 
     private final String mPermissions;

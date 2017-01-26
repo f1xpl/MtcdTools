@@ -50,6 +50,7 @@ public class StartActivityActionTest {
     public void test_construct() throws JSONException {
         PowerMockito.when(ExtrasParser.fromJSON(any(JSONObject.class))).thenReturn(mMockBundle);
         PowerMockito.when(ExtrasParser.toJSON(mMockBundle)).thenReturn(new JSONObject());
+        JSONObject intentExtras = new JSONObject();
 
         StartActivityAction startActivityAction = new StartActivityAction(mActionJson.getString(BroadcastIntentAction.NAME_PROPERTY),
                                                                           mActionJson.getString(BroadcastIntentAction.INTENT_PACKAGE_PROPERTY),
@@ -57,9 +58,17 @@ public class StartActivityActionTest {
                                                                           mActionJson.getString(BroadcastIntentAction.INTENT_CATEGORY_PROPERTY),
                                                                           mActionJson.getString(BroadcastIntentAction.INTENT_DATA_PROPERTY),
                                                                           mActionJson.getString(BroadcastIntentAction.INTENT_TYPE_PROPERTY),
-                                                                          new JSONObject());
+                                                                          intentExtras);
 
         assertEquals(mActionJson.toString(), startActivityAction.toJson().toString());
+        assertEquals(mActionJson.getString(BroadcastIntentAction.NAME_PROPERTY), startActivityAction.getName());
+        assertEquals(mActionJson.getString(BroadcastIntentAction.TYPE_PROPERTY), startActivityAction.getType());
+        assertEquals(mActionJson.getString(BroadcastIntentAction.INTENT_PACKAGE_PROPERTY), startActivityAction.getIntentPackage());
+        assertEquals(mActionJson.getString(BroadcastIntentAction.INTENT_ACTION_PROPERTY), startActivityAction.getIntentAction());
+        assertEquals(mActionJson.getString(BroadcastIntentAction.INTENT_CATEGORY_PROPERTY), startActivityAction.getIntentCategory());
+        assertEquals(mActionJson.getString(BroadcastIntentAction.INTENT_DATA_PROPERTY), startActivityAction.getIntentData());
+        assertEquals(mActionJson.getString(BroadcastIntentAction.INTENT_TYPE_PROPERTY), startActivityAction.getIntentType());
+        assertEquals(intentExtras.toString(), startActivityAction.getIntentExtras().toString());
     }
 
     @Test
@@ -84,10 +93,19 @@ public class StartActivityActionTest {
     @Test
     public void test_toJson() throws JSONException {
         PowerMockito.when(ExtrasParser.fromJSON(any(JSONObject.class))).thenReturn(mMockBundle);
-        PowerMockito.when(ExtrasParser.toJSON(mMockBundle)).thenReturn(new JSONObject());
+        JSONObject intentExtras = new JSONObject();
+        PowerMockito.when(ExtrasParser.toJSON(mMockBundle)).thenReturn(intentExtras);
 
         StartActivityAction startActivityAction = new StartActivityAction(mActionJson);
         assertEquals(mActionJson.toString(), startActivityAction.toJson().toString());
+        assertEquals(mActionJson.getString(BroadcastIntentAction.NAME_PROPERTY), startActivityAction.getName());
+        assertEquals(mActionJson.getString(BroadcastIntentAction.TYPE_PROPERTY), startActivityAction.getType());
+        assertEquals(mActionJson.getString(BroadcastIntentAction.INTENT_PACKAGE_PROPERTY), startActivityAction.getIntentPackage());
+        assertEquals(mActionJson.getString(BroadcastIntentAction.INTENT_ACTION_PROPERTY), startActivityAction.getIntentAction());
+        assertEquals(mActionJson.getString(BroadcastIntentAction.INTENT_CATEGORY_PROPERTY), startActivityAction.getIntentCategory());
+        assertEquals(mActionJson.getString(BroadcastIntentAction.INTENT_DATA_PROPERTY), startActivityAction.getIntentData());
+        assertEquals(mActionJson.getString(BroadcastIntentAction.INTENT_TYPE_PROPERTY), startActivityAction.getIntentType());
+        assertEquals(intentExtras.toString(), startActivityAction.getIntentExtras().toString());
     }
 
     @Mock

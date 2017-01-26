@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.actions.Action;
+import com.f1x.mtcdtools.actions.CustomIntentAction;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,6 +40,30 @@ public abstract class CustomIntentActionActivity extends ActionActivity {
         }
 
         return null;
+    }
+
+    @Override
+    protected void fillControls(Action action) {
+        super.fillControls(action);
+
+        CustomIntentAction customIntentAction = (CustomIntentAction)action;
+
+        if(customIntentAction == null) {
+            Toast.makeText(this, this.getText(R.string.UnknownActionType), Toast.LENGTH_LONG).show();
+            finish();
+        } else {
+            try {
+                mIntentExtrasEditText.setText(customIntentAction.getIntentExtras().toString());
+                mIntentCategoryEditText.setText(customIntentAction.getIntentCategory());
+                mIntentDataEditText.setText(customIntentAction.getIntentData());
+                mIntentPackageEditText.setText(customIntentAction.getIntentPackage());
+                mIntentTypeEditText.setText(customIntentAction.getIntentType());
+            } catch(JSONException e) {
+                e.printStackTrace();
+                Toast.makeText(CustomIntentActionActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                finish();
+            }
+        }
     }
 
     protected abstract Action createAction(String actionName, JSONObject intentExtrasJson) throws JSONException;

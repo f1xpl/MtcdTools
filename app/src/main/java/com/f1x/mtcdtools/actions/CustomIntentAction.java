@@ -60,6 +60,30 @@ public abstract class CustomIntentAction extends Action {
         return intent;
     }
 
+    public String getIntentPackage() {
+        return mIntentPackage;
+    }
+
+    public String getIntentAction() {
+        return mIntentAction;
+    }
+
+    public String getIntentCategory() {
+        return mIntentCategory;
+    }
+
+    public String getIntentData() {
+        return mIntentData;
+    }
+
+    public String getIntentType() {
+        return mIntentType;
+    }
+
+    public JSONObject getIntentExtras() throws JSONException {
+        return ExtrasParser.toJSON(mIntentExtras);
+    }
+
     protected final String mIntentPackage;
     protected final String mIntentAction;
     protected final String mIntentCategory;

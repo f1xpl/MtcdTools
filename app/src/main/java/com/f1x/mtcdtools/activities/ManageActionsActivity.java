@@ -9,10 +9,14 @@ import android.widget.Toast;
 
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.actions.Action;
+import com.f1x.mtcdtools.actions.BroadcastIntentAction;
 import com.f1x.mtcdtools.actions.KeyAction;
 import com.f1x.mtcdtools.actions.LaunchAction;
+import com.f1x.mtcdtools.actions.StartActivityAction;
+import com.f1x.mtcdtools.activities.actions.BroadcastIntentActionActivity;
 import com.f1x.mtcdtools.activities.actions.KeyActionActivity;
 import com.f1x.mtcdtools.activities.actions.LaunchActionActivity;
+import com.f1x.mtcdtools.activities.actions.StartActivityActionActivity;
 import com.f1x.mtcdtools.adapters.ActionsArrayAdapter;
 
 import org.json.JSONException;
@@ -61,6 +65,12 @@ public class ManageActionsActivity extends ServiceActivity {
                         break;
                     case LaunchAction.ACTION_TYPE:
                         intent.setClass(ManageActionsActivity.this, LaunchActionActivity.class);
+                        break;
+                    case BroadcastIntentAction.ACTION_TYPE:
+                        intent.setClass(ManageActionsActivity.this, BroadcastIntentActionActivity.class);
+                        break;
+                    case StartActivityAction.ACTION_TYPE:
+                        intent.setClass(ManageActionsActivity.this, StartActivityActionActivity.class);
                         break;
                     default:
                         Toast.makeText(ManageActionsActivity.this, ManageActionsActivity.this.getText(R.string.UnknownActionType), Toast.LENGTH_LONG).show();

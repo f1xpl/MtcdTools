@@ -6,9 +6,9 @@ import android.widget.Button;
 
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.StartActivityButtonClickListener;
-import com.f1x.mtcdtools.activities.actions.CreateBroadcastIntentActionActivity;
+import com.f1x.mtcdtools.activities.actions.BroadcastIntentActionActivity;
 import com.f1x.mtcdtools.activities.actions.LaunchActionActivity;
-import com.f1x.mtcdtools.activities.actions.CreateStartActivityActionActivity;
+import com.f1x.mtcdtools.activities.actions.StartActivityActionActivity;
 import com.f1x.mtcdtools.activities.actions.KeyActionActivity;
 
 public class CreateActionActivity extends AppCompatActivity {
@@ -25,9 +25,9 @@ public class CreateActionActivity extends AppCompatActivity {
         createLaunchActionButton.setOnClickListener(new StartActivityButtonClickListener(this, LaunchActionActivity.class));
 
         Button createStartActivityActionButton = (Button)findViewById(R.id.buttonCreateNewStartActivityAction);
-        createStartActivityActionButton.setOnClickListener(new StartActivityButtonClickListener(this, CreateStartActivityActionActivity.class));
+        createStartActivityActionButton.setOnClickListener(new StartActivityButtonClickListener(this, StartActivityActionActivity.class));
 
         Button createBroadcastIntentActionButton = (Button)findViewById(R.id.buttonCreateNewBroadcastIntentAction);
-        createBroadcastIntentActionButton.setOnClickListener(new StartActivityButtonClickListener(this, CreateBroadcastIntentActionActivity.class));
+        createBroadcastIntentActionButton.setOnClickListener(new StartActivityButtonClickListener(this, BroadcastIntentActionActivity.class));
     }
 }

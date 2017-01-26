@@ -9,17 +9,12 @@ import com.f1x.mtcdtools.actions.StartActivityAction;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class CreateStartActivityActionActivity extends CustomIntentActionActivity {
+public class StartActivityActionActivity extends CustomIntentActionActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_activity_action_details);
         initControls();
-    }
-
-    @Override
-    protected void onServiceConnected() {
-
     }
 
     @Override

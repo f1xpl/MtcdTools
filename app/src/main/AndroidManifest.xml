@@ -31,8 +31,8 @@
         <activity android:name=".activities.CreateActionsSequenceActivity" />
         <activity android:name=".activities.actions.KeyActionActivity" />
         <activity android:name=".activities.actions.LaunchActionActivity" />
-        <activity android:name=".activities.actions.CreateStartActivityActionActivity" />
-        <activity android:name=".activities.actions.CreateBroadcastIntentActionActivity" />
+        <activity android:name=".activities.actions.StartActivityActionActivity" />
+        <activity android:name=".activities.actions.BroadcastIntentActionActivity" />
         <activity android:name=".activities.ObtainKeysSequenceActivity" />
         <activity android:name=".activities.ManageActionsActivity" />
     </application>
