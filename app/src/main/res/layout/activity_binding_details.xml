@@ -32,10 +32,10 @@
                     android:layout_weight="1" >
 
                     <RadioButton
-                        android:text="@string/ActionsSequence"
+                        android:text="@string/ActionsList"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/radioButtonActionsSequence"
+                        android:id="@+id/radioButtonActionsList"
                         android:layout_weight="1" />
 
                     <RadioButton

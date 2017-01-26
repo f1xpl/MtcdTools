@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.input.PressedKeysSequenceManager;
-import com.f1x.mtcdtools.storage.ActionsSequencesStorage;
+import com.f1x.mtcdtools.storage.ActionsListStorage;
 import com.f1x.mtcdtools.storage.ActionsStorage;
 import com.f1x.mtcdtools.storage.FileReader;
 import com.f1x.mtcdtools.storage.FileWriter;
@@ -34,7 +34,7 @@ public class MtcdService extends android.app.Service {
         FileReader fileReader = new FileReader(this);
         FileWriter fileWriter = new FileWriter(this);
         mActionsStorage = new ActionsStorage(fileReader, fileWriter, this);
-        mActionsSequencesStorage = new ActionsSequencesStorage(fileReader, fileWriter);
+        mActionsListStorage = new ActionsListStorage(fileReader, fileWriter);
         mKeysSequenceBindingsStorage = new KeysSequenceBindingsStorage(fileReader, fileWriter);
         mPressedKeysSequenceManager = new PressedKeysSequenceManager();
     }
@@ -66,7 +66,7 @@ public class MtcdService extends android.app.Service {
         if(!mServiceInitialized) {
             try {
                 mActionsStorage.read();
-                mActionsSequencesStorage.read();
+                mActionsListStorage.read();
                 mKeysSequenceBindingsStorage.read();
                 registerReceiver(mPressedKeysSequenceManager, mPressedKeysSequenceManager.getIntentFilter());
 
@@ -93,7 +93,7 @@ public class MtcdService extends android.app.Service {
     private boolean mForceRestart;
     private boolean mServiceInitialized;
     private ActionsStorage mActionsStorage;
-    private ActionsSequencesStorage mActionsSequencesStorage;
+    private ActionsListStorage mActionsListStorage;
     private KeysSequenceBindingsStorage mKeysSequenceBindingsStorage;
     private PressedKeysSequenceManager mPressedKeysSequenceManager;
 
@@ -109,8 +109,8 @@ public class MtcdService extends android.app.Service {
         }
 
         @Override
-        public ActionsSequencesStorage getActionsSequencesStorage() {
-            return mActionsSequencesStorage;
+        public ActionsListStorage getActionsListStorage() {
+            return mActionsListStorage;
         }
 
         @Override

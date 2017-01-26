@@ -13,8 +13,8 @@ import java.util.List;
  * Created by COMPUTER on 2017-01-16.
  */
 
-public class ActionsSequence {
-    public ActionsSequence(JSONObject json) throws JSONException {
+public class ActionsList {
+    public ActionsList(JSONObject json) throws JSONException {
         mName = json.getString(NAME_PROPERTY);
 
         mActionNames = new ArrayList<>();

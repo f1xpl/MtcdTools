@@ -1,7 +1,5 @@
 package com.f1x.mtcdtools;
 
-import com.f1x.mtcdtools.ActionsSequence;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,52 +14,52 @@ import static junit.framework.Assert.assertEquals;
  * Created by COMPUTER on 2017-01-16.
  */
 
-public class ActionsSequenceTest {
+public class ActionsListTest {
     @Before
     public void init() throws JSONException {
-        mSequenceJson = new JSONObject();
-        mSequenceName = "sequence1";
-        mSequenceJson.put(ActionsSequence.NAME_PROPERTY, mSequenceName);
+        mListJson = new JSONObject();
+        mListName = "sequence1";
+        mListJson.put(ActionsList.NAME_PROPERTY, mListName);
 
         mActionsArray = new JSONArray();
         mActionsArray.put("action1");
         mActionsArray.put("action2");
         mActionsArray.put("action3");
-        mSequenceJson.put(ActionsSequence.ACTIONS_PROPERTY, mActionsArray);
+        mListJson.put(ActionsList.ACTIONS_PROPERTY, mActionsArray);
 
         mKeysSequenceUpArray = new JSONArray();
         mKeysSequenceUpArray.put(1);
         mKeysSequenceUpArray.put(100);
         mKeysSequenceUpArray.put(1000);
-        mSequenceJson.put(ActionsSequence.KEYS_SEQUENCE_UP_PROPERTY, mKeysSequenceUpArray);
+        mListJson.put(ActionsList.KEYS_SEQUENCE_UP_PROPERTY, mKeysSequenceUpArray);
 
         mKeysSequenceDownArray = new JSONArray();
         mKeysSequenceDownArray.put(2);
         mKeysSequenceDownArray.put(300);
         mKeysSequenceDownArray.put(4000);
         mKeysSequenceDownArray.put(50000);
-        mSequenceJson.put(ActionsSequence.KEYS_SEQUENCE_DOWN_PROPERTY, mKeysSequenceDownArray);
+        mListJson.put(ActionsList.KEYS_SEQUENCE_DOWN_PROPERTY, mKeysSequenceDownArray);
     }
 
     @Test
     public void test_Construct() throws JSONException {
-        ActionsSequence actionsSequence = new ActionsSequence(mSequenceJson);
+        ActionsList actionsList = new ActionsList(mListJson);
 
-        assertEquals(mSequenceName, actionsSequence.getName());
+        assertEquals(mListName, actionsList.getName());
 
-        List<String> actionNames = actionsSequence.getActionNames();
+        List<String> actionNames = actionsList.getActionNames();
         assertEquals(mActionsArray.length(), actionNames.size());
         for(int i = 0; i < mActionsArray.length(); ++i) {
             assertEquals(mActionsArray.get(i), actionNames.get(i));
         }
 
-        List<Integer> keysSequenceUp = actionsSequence.getKeysSequenceUp();
+        List<Integer> keysSequenceUp = actionsList.getKeysSequenceUp();
         assertEquals(mKeysSequenceUpArray.length(), keysSequenceUp.size());
         for(int i = 0; i < mKeysSequenceUpArray.length(); ++i) {
             assertEquals(mKeysSequenceUpArray.get(i), keysSequenceUp.get(i));
         }
 
-        List<Integer> keysSequenceDown = actionsSequence.getKeysSequenceDown();
+        List<Integer> keysSequenceDown = actionsList.getKeysSequenceDown();
         assertEquals(mKeysSequenceDownArray.length(), keysSequenceDown.size());
         for(int i = 0; i < mKeysSequenceDownArray.length(); ++i) {
             assertEquals(mKeysSequenceDownArray.get(i), keysSequenceDown.get(i));
@@ -70,12 +68,12 @@ public class ActionsSequenceTest {
 
     @Test
     public void test_toJSON() throws JSONException {
-        ActionsSequence actionsSequence = new ActionsSequence(mSequenceJson);
-        assertEquals(mSequenceJson.toString(), actionsSequence.toJson().toString());
+        ActionsList actionsList = new ActionsList(mListJson);
+        assertEquals(mListJson.toString(), actionsList.toJson().toString());
     }
 
-    String mSequenceName;
-    JSONObject mSequenceJson;
+    String mListName;
+    JSONObject mListJson;
     JSONArray mActionsArray;
     JSONArray mKeysSequenceUpArray;
     JSONArray mKeysSequenceDownArray;

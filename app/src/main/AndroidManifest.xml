@@ -28,7 +28,7 @@
 
         <activity android:name=".activities.actions.CreateActionActivity" />
         <activity android:name=".activities.CreateBindingActivity" />
-        <activity android:name=".activities.CreateActionsSequenceActivity" />
+        <activity android:name=".activities.CreateActionsListActivity" />
         <activity android:name=".activities.actions.KeyActionActivity" />
         <activity android:name=".activities.actions.LaunchActionActivity" />
         <activity android:name=".activities.actions.StartActivityActionActivity" />

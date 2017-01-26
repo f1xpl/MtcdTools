@@ -5,11 +5,11 @@ import android.os.Bundle;
 
 import com.f1x.mtcdtools.R;
 
-public class CreateActionsSequenceActivity extends AppCompatActivity {
+public class CreateActionsListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_actions_sequence_details);
+        setContentView(R.layout.activity_actions_list_details);
     }
 }

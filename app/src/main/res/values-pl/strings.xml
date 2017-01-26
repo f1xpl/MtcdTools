@@ -5,7 +5,7 @@
     <string name="Cancel">Anuluj</string>
     <string name="CreateActionFailed">Nie można utworzyć akcji. Sprawdź parametry.</string>
     <string name="CreateNewAction">Utwórz nową akcję</string>
-    <string name="CreateNewActionsSequence">Utwórz nową sekwencję akcji</string>
+    <string name="CreateNewActionsList">Utwórz nową listę akcji</string>
     <string name="CreateNewBinding">Utwórz nowe powiązanie</string>
     <string name="CreateNewBroadcastIntentAction">Utwórz akcję rozgłoszeniową</string>
     <string name="CreateNewKeyAction">Utwórz akcję klawisza</string>
@@ -16,8 +16,8 @@
     <string name="Action">Akcja</string>
     <string name="ActionName">Nazwa akcji</string>
     <string name="Actions">Akcje</string>
-    <string name="ActionsSequence">Sekwencja akcji</string>
-    <string name="ActionsSequenceName">Nazwa sekwencji akcji</string>
+    <string name="ActionsList">Lista akcji</string>
+    <string name="ActionsListName">Nazwa listy akcji</string>
     <string name="AddAction">Dodaj akcję</string>
     <string name="AddedActions">Dodane akcje</string>
     <string name="ApplicationSettings">Ustawienia</string>
@@ -35,10 +35,10 @@
     <string name="ObtainKeysSequenceDown">Wprowadź sekwencję klawiszy W DÓŁ</string>
     <string name="ObtainKeysSequenceUp">Wprowadź sekwencję klawiszy W GÓRĘ</string>
     <string name="ManageActions">Zarządzaj akcjami</string>
-    <string name="ManageActionsSequences">Zarządzaj sekwencjami akcji</string>
+    <string name="ManageActionsLists">Zarządzaj listami akcji</string>
     <string name="Reset">Resetuj</string>
     <string name="Save">Zapisz</string>
-    <string name="SelectActionOrSequence">Wybierz akcję lub sekwencję akcji</string>
+    <string name="SelectActionOrList">Wybierz akcję lub listę akcji</string>
     <string name="CreatedActions">Utworzone akcje</string>
     <string name="ServiceUnavailable">Serwis jest niedostępny</string>
     <string name="ActionNotFound">Nie znaleziono akcji</string>

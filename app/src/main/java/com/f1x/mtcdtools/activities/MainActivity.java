@@ -23,8 +23,8 @@ public class MainActivity extends AppCompatActivity {
         Button createBindingButton = (Button)findViewById(R.id.buttonCreateNewBinding);
         createBindingButton.setOnClickListener(new StartActivityButtonClickListener(this, CreateBindingActivity.class));
 
-        Button createActionSequencesButton = (Button)findViewById(R.id.buttonCreateNewActionsSequence);
-        createActionSequencesButton.setOnClickListener(new StartActivityButtonClickListener(this, CreateActionsSequenceActivity.class));
+        Button createActionsListButton = (Button)findViewById(R.id.buttonCreateNewActionsList);
+        createActionsListButton.setOnClickListener(new StartActivityButtonClickListener(this, CreateActionsListActivity.class));
 
         Button manageActionsButton = (Button)findViewById(R.id.buttonManageActions);
         manageActionsButton.setOnClickListener(new StartActivityButtonClickListener(this, ManageActionsActivity.class));
