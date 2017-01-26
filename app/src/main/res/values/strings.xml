@@ -49,5 +49,4 @@
     <string name="ServiceUnavailable">Service is unavailable</string>
     <string name="ActionNotFound">Action not found</string>
     <string name="UnknownActionType">Unknown action type</string>
-    <string name="InvalidActionName">Provided action name is invalid</string>
 </resources>

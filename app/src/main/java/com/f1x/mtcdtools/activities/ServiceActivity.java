@@ -35,8 +35,10 @@ public abstract class ServiceActivity extends AppCompatActivity {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             mServiceBinder = (ServiceBinder)service;
+
             if(mServiceBinder == null) {
                 Toast.makeText(ServiceActivity.this, ServiceActivity.this.getText(R.string.ServiceUnavailable), Toast.LENGTH_LONG).show();
+                finish();
             } else {
                 ServiceActivity.this.onServiceConnected();
             }

@@ -10,7 +10,7 @@ import com.f1x.mtcdtools.actions.BroadcastIntentAction;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class CreateBroadcastIntentActionActivity extends StoreCustomIntentActionActivity {
+public class CreateBroadcastIntentActionActivity extends CustomIntentActionActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

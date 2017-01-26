@@ -18,4 +18,17 @@ public class InstalledPackagesArrayAdapter extends PackageEntryArrayAdapter {
             }
         }
     }
+
+    public int getPosition(String packageName) {
+        for(int i = 0; i < getCount(); ++i) {
+            PackageEntry packageEntry = getItem(i);
+            if(packageEntry.getName().equals(packageName)) {
+                return i;
+            }
+        }
+
+        return INVALID_INDEX;
+    }
+
+    public static final int INVALID_INDEX = -1;
 }

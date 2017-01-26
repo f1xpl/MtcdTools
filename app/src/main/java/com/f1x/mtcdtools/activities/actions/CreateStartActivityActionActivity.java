@@ -9,7 +9,7 @@ import com.f1x.mtcdtools.actions.StartActivityAction;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class CreateStartActivityActionActivity extends StoreCustomIntentActionActivity {
+public class CreateStartActivityActionActivity extends CustomIntentActionActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

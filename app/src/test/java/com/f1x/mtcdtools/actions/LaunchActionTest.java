@@ -41,6 +41,9 @@ public class LaunchActionTest {
     public void test_construct() throws JSONException {
         LaunchAction launchAction = new LaunchAction(mActionJson.getString(LaunchAction.NAME_PROPERTY), mActionJson.getString(LaunchAction.PACKAGE_NAME_PROPERTY));
         assertEquals(mActionJson.toString(), launchAction.toJson().toString());
+        assertEquals(mActionJson.getString(LaunchAction.NAME_PROPERTY), launchAction.getName());
+        assertEquals(mActionJson.getString(LaunchAction.TYPE_PROPERTY), launchAction.getType());
+        assertEquals(mActionJson.getString(LaunchAction.PACKAGE_NAME_PROPERTY), launchAction.getPackageName());
     }
 
     @Test
@@ -70,6 +73,9 @@ public class LaunchActionTest {
     public void test_toJson() throws JSONException {
         LaunchAction launchAction = new LaunchAction(mActionJson);
         assertEquals(launchAction.toJson().toString(), mActionJson.toString());
+        assertEquals(mActionJson.getString(LaunchAction.NAME_PROPERTY), launchAction.getName());
+        assertEquals(mActionJson.getString(LaunchAction.TYPE_PROPERTY), launchAction.getType());
+        assertEquals(mActionJson.getString(LaunchAction.PACKAGE_NAME_PROPERTY), launchAction.getPackageName());
     }
 
     @Mock

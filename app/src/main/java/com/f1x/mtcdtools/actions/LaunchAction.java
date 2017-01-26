@@ -39,6 +39,10 @@ public class LaunchAction extends Action {
         return json;
     }
 
+    public String getPackageName() {
+        return mPackageName;
+    }
+
     private final String mPackageName;
 
     static public final String ACTION_TYPE = "LaunchAction";

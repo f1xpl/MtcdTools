@@ -13,7 +13,7 @@ import org.json.JSONObject;
  * Created by COMPUTER on 2017-01-24.
  */
 
-public abstract class StoreCustomIntentActionActivity extends StoreActionActivity {
+public abstract class CustomIntentActionActivity extends ActionActivity {
     @Override
     protected void initControls() {
         super.initControls();
@@ -35,7 +35,7 @@ public abstract class StoreCustomIntentActionActivity extends StoreActionActivit
         }
         catch(JSONException e) {
             e.printStackTrace();
-            Toast.makeText(StoreCustomIntentActionActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(CustomIntentActionActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
 
         return null;
