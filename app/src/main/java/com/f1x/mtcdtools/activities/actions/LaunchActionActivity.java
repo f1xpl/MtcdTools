@@ -10,7 +10,7 @@ import com.f1x.mtcdtools.adapters.InstalledPackagesArrayAdapter;
 import com.f1x.mtcdtools.adapters.PackageEntry;
 
 public class LaunchActionActivity extends ActionActivity {
-    LaunchActionActivity() {
+    public LaunchActionActivity() {
         super(R.layout.activity_launch_action_details);
     }
 

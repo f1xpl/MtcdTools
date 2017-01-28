@@ -14,7 +14,7 @@ import com.f1x.mtcdtools.adapters.KeyCodesArrayAdapter;
  */
 
 public class KeyActionActivity extends ActionActivity {
-    KeyActionActivity() {
+    public KeyActionActivity() {
         super(R.layout.activity_key_action_details);
     }
 

@@ -8,7 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class StartActivityActionActivity extends CustomIntentActionActivity {
-    StartActivityActionActivity() {
+    public StartActivityActionActivity() {
         super(R.layout.activity_start_activity_action_details);
     }
 

@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
@@ -47,7 +48,8 @@ public class ActionsListTest {
 
         assertEquals(mListName, actionsList.getName());
 
-        List<String> actionNames = actionsList.getActionNames();
+        List<String> actionNames = new ArrayList<>(actionsList.getActionNames());
+
         assertEquals(mActionsArray.length(), actionNames.size());
         for(int i = 0; i < mActionsArray.length(); ++i) {
             assertEquals(mActionsArray.get(i), actionNames.get(i));

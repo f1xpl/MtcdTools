@@ -43,4 +43,6 @@
     <string name="ServiceUnavailable">Serwis jest niedostępny</string>
     <string name="ActionNotFound">Nie znaleziono akcji</string>
     <string name="UnknownActionType">Nieznany typ akcji</string>
- </resources>
+    <string name="ActionsListNotFound">Nie znaleziono listy akcji</string>
+    <string name="ActionAlreadyAdded">Akcja jest już dodana</string>
+</resources>

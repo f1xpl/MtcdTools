@@ -34,5 +34,17 @@ public class KeysSequenceConverterTest {
         assertEquals(mKeysSequenceJsonArray.toString(), keysSequenceJsonArray.toString());
     }
 
-    JSONArray mKeysSequenceJsonArray;
+    @Test
+    public void test_Conversion_From_Array() {
+        int array[] = { 1, 2, 3, 4, 5};
+        List<Integer> keysSequence = KeysSequenceConverter.fromArray(array);
+
+        assertEquals(array.length, keysSequence.size());
+
+        for(int i = 0; i < array.length; ++i) {
+            assertEquals(array[i], (int)keysSequence.get(i));
+        }
+    }
+
+    private JSONArray mKeysSequenceJsonArray;
 }

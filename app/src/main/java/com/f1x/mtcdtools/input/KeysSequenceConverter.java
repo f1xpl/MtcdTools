@@ -30,4 +30,14 @@ public class KeysSequenceConverter {
 
         return keysSequence;
     }
+
+    public static List<Integer> fromArray(int array[]) {
+        List<Integer> keysSequence = new ArrayList<>();
+
+        for(int i = 0; i < array.length; ++i) {
+            keysSequence.add(array[i]);
+        }
+
+        return keysSequence;
+    }
 }

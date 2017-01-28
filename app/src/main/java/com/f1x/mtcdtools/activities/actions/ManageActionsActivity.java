@@ -14,7 +14,7 @@ import com.f1x.mtcdtools.actions.KeyAction;
 import com.f1x.mtcdtools.actions.LaunchAction;
 import com.f1x.mtcdtools.actions.StartActivityAction;
 import com.f1x.mtcdtools.activities.ServiceActivity;
-import com.f1x.mtcdtools.adapters.ActionsArrayAdapter;
+import com.f1x.mtcdtools.adapters.ActionsNamesArrayAdapter;
 
 import org.json.JSONException;
 
@@ -28,16 +28,16 @@ public class ManageActionsActivity extends ServiceActivity {
         setContentView(R.layout.activity_manage_actions);
 
         ListView mActionsListView = (ListView)this.findViewById(R.id.listViewActions);
-        mActionsArrayAdapter = new ActionsArrayAdapter(this);
-        mActionsListView.setAdapter(mActionsArrayAdapter);
+        mActionsNamesArrayAdapter = new ActionsNamesArrayAdapter(this);
+        mActionsListView.setAdapter(mActionsNamesArrayAdapter);
 
         mActionsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
                 try {
-                    String actionName = mActionsArrayAdapter.getItem(position);
+                    String actionName = mActionsNamesArrayAdapter.getItem(position);
                     mServiceBinder.getActionsStorage().remove(actionName);
-                    mActionsArrayAdapter.remove(actionName);
+                    mActionsNamesArrayAdapter.remove(actionName);
                 } catch(IOException | JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(ManageActionsActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
@@ -50,7 +50,7 @@ public class ManageActionsActivity extends ServiceActivity {
         mActionsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                String actionName = mActionsArrayAdapter.getItem(position);
+                String actionName = mActionsNamesArrayAdapter.getItem(position);
                 Action action = mServiceBinder.getActionsStorage().getAction(actionName);
 
                 Intent intent = new Intent();
@@ -84,14 +84,14 @@ public class ManageActionsActivity extends ServiceActivity {
         super.onResume();
 
         if(mServiceBinder != null) {
-            mActionsArrayAdapter.reset(mServiceBinder.getActionsStorage().getActions());
+            mActionsNamesArrayAdapter.reset(mServiceBinder.getActionsStorage().getActions().keySet());
         }
     }
 
     @Override
     protected void onServiceConnected() {
-        mActionsArrayAdapter.reset(mServiceBinder.getActionsStorage().getActions());
+        mActionsNamesArrayAdapter.reset(mServiceBinder.getActionsStorage().getActions().keySet());
     }
 
-    ActionsArrayAdapter mActionsArrayAdapter;
+    ActionsNamesArrayAdapter mActionsNamesArrayAdapter;
 }

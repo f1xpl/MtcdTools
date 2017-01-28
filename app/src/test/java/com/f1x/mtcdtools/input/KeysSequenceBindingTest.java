@@ -25,7 +25,7 @@ public class KeysSequenceBindingTest {
         mKeysSequenceArray.put(1000);
         mKeysSequenceBindingJson.put(KeysSequenceBinding.KEYS_SEQUENCE_PROPERTY, mKeysSequenceArray);
 
-        mKeysSequenceBindingJson.put(KeysSequenceBinding.TARGET_TYPE_PROPERTY, KeysSequenceBinding.TARGET_TYPE_ACTIONS_SEQUENCE);
+        mKeysSequenceBindingJson.put(KeysSequenceBinding.TARGET_TYPE_PROPERTY, KeysSequenceBinding.TARGET_TYPE_ACTIONS_LIST);
         mKeysSequenceBindingJson.put(KeysSequenceBinding.TARGET_NAME_PROPERTY, "testSequence");
     }
 

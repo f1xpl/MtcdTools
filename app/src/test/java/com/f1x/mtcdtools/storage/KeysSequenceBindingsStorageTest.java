@@ -43,7 +43,7 @@ public class KeysSequenceBindingsStorageTest {
         initMocks(this);
 
         mKeysSequenceBindings = new ArrayList<>();
-        mKeysSequenceBindings.add(new KeysSequenceBinding(Arrays.asList(1, 2, 5), KeysSequenceBinding.TARGET_TYPE_ACTIONS_SEQUENCE, "binding1"));
+        mKeysSequenceBindings.add(new KeysSequenceBinding(Arrays.asList(1, 2, 5), KeysSequenceBinding.TARGET_TYPE_ACTIONS_LIST, "binding1"));
         mKeysSequenceBindings.add(new KeysSequenceBinding(Arrays.asList(5, 6, 7), KeysSequenceBinding.TARGET_TYPE_ACTION, "binding2"));
 
         mKeysSequenceBindingsArray = new JSONArray();
@@ -81,7 +81,7 @@ public class KeysSequenceBindingsStorageTest {
 
         boolean exceptionCaught = false;
         try {
-            keysSequenceBindingsStorage.insert(new KeysSequenceBinding(Arrays.asList(1, 2, 5), KeysSequenceBinding.TARGET_TYPE_ACTIONS_SEQUENCE, "binding1"));
+            keysSequenceBindingsStorage.insert(new KeysSequenceBinding(Arrays.asList(1, 2, 5), KeysSequenceBinding.TARGET_TYPE_ACTIONS_LIST, "binding1"));
         } catch(DuplicatedEntryException e) {
             exceptionCaught = true;
         }

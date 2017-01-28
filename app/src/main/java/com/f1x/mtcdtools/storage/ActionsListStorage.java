@@ -8,6 +8,7 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by COMPUTER on 2017-01-16.
@@ -17,7 +18,7 @@ public class ActionsListStorage extends Storage {
     public ActionsListStorage(FileReader reader, FileWriter writer) {
         super(reader, writer);
 
-        mActionsLists = new HashMap<>();
+        mActionsLists = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);;
     }
 
     public void read() throws JSONException, IOException {
@@ -37,6 +38,14 @@ public class ActionsListStorage extends Storage {
         }
 
         write(STORAGE_FILE_NAME, ROOT_ARRAY_NAME, actionsSequencesArray);
+    }
+
+    public ActionsList getActionsList(String actionsListName) {
+        return mActionsLists.containsKey(actionsListName) ? mActionsLists.get(actionsListName) : null;
+    }
+
+    public boolean hasActionsList(String actionsListName) {
+        return mActionsLists.containsKey(actionsListName);
     }
 
     private final Map<String, ActionsList> mActionsLists;

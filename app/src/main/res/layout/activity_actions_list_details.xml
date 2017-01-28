@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.f1x.mtcdtools.activities.CreateActionsListActivity">
+    tools:context="com.f1x.mtcdtools.activities.ActionsListActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -38,6 +38,7 @@
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:spinnerMode="dialog"
                 android:id="@+id/spinnerActions" />
 
             <Button

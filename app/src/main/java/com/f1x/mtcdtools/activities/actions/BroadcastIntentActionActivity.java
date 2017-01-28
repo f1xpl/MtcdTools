@@ -11,7 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class BroadcastIntentActionActivity extends CustomIntentActionActivity {
-    BroadcastIntentActionActivity() {
+    public BroadcastIntentActionActivity() {
         super(R.layout.activity_broadcast_intent_action_details);
     }
 

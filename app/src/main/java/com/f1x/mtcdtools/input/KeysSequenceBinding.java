@@ -63,6 +63,6 @@ public class KeysSequenceBinding {
     public static final String TARGET_TYPE_PROPERTY = "targetType";
     public static final String TARGET_NAME_PROPERTY = "targetName";
 
-    public static final String TARGET_TYPE_ACTIONS_SEQUENCE = "ActionsList";
+    public static final String TARGET_TYPE_ACTIONS_LIST = "ActionsList";
     public static final String TARGET_TYPE_ACTION = "Action";
 }

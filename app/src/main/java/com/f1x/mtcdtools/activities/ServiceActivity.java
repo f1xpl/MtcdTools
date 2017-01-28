@@ -1,12 +1,12 @@
 package com.f1x.mtcdtools.activities;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.f1x.mtcdtools.R;
@@ -16,7 +16,7 @@ import com.f1x.mtcdtools.service.ServiceBinder;
 /**
  * Created by COMPUTER on 2016-08-18.
  */
-public abstract class ServiceActivity extends AppCompatActivity {
+public abstract class ServiceActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

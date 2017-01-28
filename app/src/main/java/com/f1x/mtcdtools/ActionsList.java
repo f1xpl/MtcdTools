@@ -8,6 +8,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Created by COMPUTER on 2017-01-16.
@@ -17,8 +19,9 @@ public class ActionsList {
     public ActionsList(JSONObject json) throws JSONException {
         mName = json.getString(NAME_PROPERTY);
 
-        mActionNames = new ArrayList<>();
+        mActionNames = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
         JSONArray actionsArray = json.getJSONArray(ACTIONS_PROPERTY);
+
         for (int i = 0; i < actionsArray.length(); ++i) {
             mActionNames.add(actionsArray.getString(i));
         }
@@ -27,16 +30,16 @@ public class ActionsList {
         mKeysSequenceDown = KeysSequenceConverter.fromJson(json.getJSONArray(KEYS_SEQUENCE_DOWN_PROPERTY));
     }
 
-    List<Integer> getKeysSequenceUp() {
+    public List<Integer> getKeysSequenceUp() {
         return new ArrayList<>(mKeysSequenceUp);
     }
 
-    List<Integer> getKeysSequenceDown() {
+    public List<Integer> getKeysSequenceDown() {
         return new ArrayList<>(mKeysSequenceDown);
     }
 
-    public List<String> getActionNames() {
-        return new ArrayList<>(mActionNames);
+    public Set<String> getActionNames() {
+        return new TreeSet<>(mActionNames);
     }
 
     public JSONObject toJson() throws JSONException {
@@ -48,6 +51,7 @@ public class ActionsList {
         for (String action : mActionNames) {
             actionsArray.put(action);
         }
+
         json.put(ACTIONS_PROPERTY, actionsArray);
         json.put(KEYS_SEQUENCE_UP_PROPERTY, KeysSequenceConverter.toJsonArray(mKeysSequenceUp));
         json.put(KEYS_SEQUENCE_DOWN_PROPERTY, KeysSequenceConverter.toJsonArray(mKeysSequenceDown));
@@ -59,10 +63,10 @@ public class ActionsList {
         return mName;
     }
 
-    String mName;
-    List<Integer> mKeysSequenceUp;
-    List<Integer> mKeysSequenceDown;
-    List<String> mActionNames;
+    private String mName;
+    private List<Integer> mKeysSequenceUp;
+    private List<Integer> mKeysSequenceDown;
+    private Set<String> mActionNames;
 
     static public final String NAME_PROPERTY = "name";
     static public final String ACTIONS_PROPERTY = "actions";

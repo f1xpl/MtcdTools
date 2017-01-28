@@ -62,6 +62,10 @@ public class KeysSequenceBindingsStorage extends Storage {
         }
     }
 
+    public KeysSequenceBinding getKeysSequenceBinding(List<Integer> keysSequence) {
+        return mKeysSequenceBindings.containsKey(keysSequence) ? mKeysSequenceBindings.get(keysSequence) : null;
+    }
+
     Map<List<Integer>, KeysSequenceBinding> getKeysSequenceBindings() {
         return new HashMap<>(mKeysSequenceBindings);
     }

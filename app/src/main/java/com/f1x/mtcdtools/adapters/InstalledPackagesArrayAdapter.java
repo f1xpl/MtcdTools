@@ -22,7 +22,7 @@ public class InstalledPackagesArrayAdapter extends PackageEntryArrayAdapter {
     public int getPosition(String packageName) {
         for(int i = 0; i < getCount(); ++i) {
             PackageEntry packageEntry = getItem(i);
-            if(packageEntry.getName().equals(packageName)) {
+            if(packageEntry != null && packageEntry.getName().equals(packageName)) {
                 return i;
             }
         }
