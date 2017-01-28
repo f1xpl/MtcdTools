@@ -63,13 +63,14 @@ public abstract class ActionActivity extends ServiceActivity {
 
     protected void storeAction(String actionName) {
         try {
-            if(mEditMode) {
-                mServiceBinder.getActionsStorage().remove(mEditActionName);
-            }
-
             Action action = createAction(actionName);
             if(action != null) {
-                mServiceBinder.getActionsStorage().insert(action);
+                if(mEditMode) {
+                    mServiceBinder.getActionsStorage().replace(mEditActionName, action);
+                } else {
+                    mServiceBinder.getActionsStorage().insert(action);
+                }
+
                 finish();
             }
         } catch (IOException | JSONException e) {

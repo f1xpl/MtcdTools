@@ -1,6 +1,5 @@
 package com.f1x.mtcdtools.storage;
 
-import com.f1x.mtcdtools.actions.ActionsFactory;
 import com.f1x.mtcdtools.input.KeysSequenceBinding;
 import com.f1x.mtcdtools.storage.exceptions.DuplicatedEntryException;
 

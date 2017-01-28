@@ -12,8 +12,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by COMPUTER on 2017-01-15.
@@ -23,7 +23,7 @@ public class ActionsStorage extends Storage {
     public ActionsStorage(FileReader reader, FileWriter writer, Context context) {
         super(reader, writer);
 
-        mActions = new HashMap<>();
+        mActions = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
         mContext = context;
     }
 
@@ -69,12 +69,21 @@ public class ActionsStorage extends Storage {
         }
     }
 
+    public void replace(String actionName, Action action) throws JSONException, IOException, DuplicatedEntryException {
+        if(!actionName.equalsIgnoreCase(action.getName()) && mActions.containsKey(action.getName())) {
+            throw new DuplicatedEntryException("action name: " + action.getName() + ", action type: " + action.getType());
+        }
+
+        remove(actionName);
+        insert(action);
+    }
+
     public Action getAction(String actionName) {
         return mActions.containsKey(actionName )? mActions.get(actionName) : null;
     }
 
     public Map<String, Action> getActions() {
-        return new HashMap<>(mActions);
+        return new TreeMap<>(mActions);
     }
 
     private final Map<String, Action> mActions;

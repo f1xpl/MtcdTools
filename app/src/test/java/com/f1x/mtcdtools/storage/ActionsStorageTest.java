@@ -28,10 +28,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.argThat;
-import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -69,6 +68,18 @@ public class ActionsStorageTest {
         return argThat(new JSONMatcher(expected));
     }
 
+    public void mockPreparedDataReading() throws JSONException, IOException {
+        mActionsArray.put(mAction1Json);
+        mActionsArray.put(mAction2Json);
+        mActionsJson.put(ActionsStorage.ROOT_ARRAY_NAME, mActionsArray);
+
+        when(mMockFileReader.read(ActionsStorage.STORAGE_FILE_NAME, "UTF-8")).thenReturn(mActionsJson.toString());
+        PowerMockito.mockStatic(ActionsFactory.class);
+
+        when(ActionsFactory.createAction(jsonEq(mAction1Json))).thenReturn(mMockAction1);
+        when(ActionsFactory.createAction(jsonEq(mAction2Json))).thenReturn(mMockAction2);
+    }
+
     @Before
     public void init() throws JSONException {
         initMocks(this);
@@ -95,22 +106,14 @@ public class ActionsStorageTest {
 
     @Test
     public void test_Read() throws JSONException, IOException, ActionCreationFailed, DuplicatedEntryException {
-        mActionsArray.put(mAction1Json);
-        mActionsArray.put(mAction2Json);
-        mActionsJson.put(ActionsStorage.ROOT_ARRAY_NAME, mActionsArray);
-
-        when(mMockFileReader.read(ActionsStorage.STORAGE_FILE_NAME, "UTF-8")).thenReturn(mActionsJson.toString());
-        PowerMockito.mockStatic(ActionsFactory.class);
-
-        when(ActionsFactory.createAction(jsonEq(mAction1Json))).thenReturn(mMockAction1);
-        when(ActionsFactory.createAction(jsonEq(mAction2Json))).thenReturn(mMockAction2);
+        mockPreparedDataReading();
 
         ActionsStorage actionsStorage = new ActionsStorage(mMockFileReader, mMockFileWriter, mMockContext);
         actionsStorage.read();
     }
 
-    @Test
-    public void test_Read_Duplicated_Name() throws JSONException, IOException, ActionCreationFailed {
+    @Test(expected=DuplicatedEntryException.class)
+    public void test_Read_Duplicated_Name() throws JSONException, IOException, ActionCreationFailed, DuplicatedEntryException {
         mActionsArray.put(mAction1Json);
         mActionsArray.put(mAction2Json);
         mActionsJson.put(ActionsStorage.ROOT_ARRAY_NAME, mActionsArray);
@@ -122,15 +125,7 @@ public class ActionsStorageTest {
         when(ActionsFactory.createAction(jsonEq(mAction2Json))).thenReturn(mMockAction1);
 
         ActionsStorage actionsStorage = new ActionsStorage(mMockFileReader, mMockFileWriter, mMockContext);
-
-        boolean exceptionCaught = false;
-        try {
-            actionsStorage.read();
-        } catch(DuplicatedEntryException e) {
-            exceptionCaught = true;
-        }
-
-        assertTrue(exceptionCaught);
+        actionsStorage.read();
     }
 
     @Test
@@ -143,7 +138,7 @@ public class ActionsStorageTest {
         verify(mMockFileWriter, times(1)).write(mActionsJson.toString(), ActionsStorage.STORAGE_FILE_NAME, "UTF-8");
     }
 
-    @Test
+    @Test(expected=DuplicatedEntryException.class)
     public void test_Insert_Duplicated_Name() throws JSONException, IOException, DuplicatedEntryException {
         mActionsArray.put(mAction1Json);
         mActionsJson.put(ActionsStorage.ROOT_ARRAY_NAME, mActionsArray);
@@ -152,26 +147,39 @@ public class ActionsStorageTest {
         actionsStorage.insert(mMockAction1);
         verify(mMockFileWriter, times(1)).write(mActionsJson.toString(), ActionsStorage.STORAGE_FILE_NAME, "UTF-8");
 
-        boolean exceptionCaught = false;
-        try {
-            actionsStorage.insert(mMockAction1);
-        } catch(DuplicatedEntryException e) {
-            exceptionCaught = true;
-        }
-
-        assertTrue(exceptionCaught);
+        Action anotherAction = mock(Action.class);
+        when(anotherAction.getName()).thenReturn(mAction1Json.getString(Action.NAME_PROPERTY));
+        actionsStorage.insert(anotherAction);
     }
 
-    @Test
-    public void test_Remove() throws JSONException, IOException, DuplicatedEntryException {
-        mActionsArray.put(mAction2Json);
+    @Test(expected=DuplicatedEntryException.class)
+    public void test_Insert_Duplicated_Name_IgnoreCase() throws JSONException, IOException, DuplicatedEntryException {
+        mActionsArray.put(mAction1Json);
         mActionsJson.put(ActionsStorage.ROOT_ARRAY_NAME, mActionsArray);
 
         ActionsStorage actionsStorage = new ActionsStorage(mMockFileReader, mMockFileWriter, mMockContext);
         actionsStorage.insert(mMockAction1);
-        actionsStorage.insert(mMockAction2);
-        actionsStorage.remove(mAction1Json.getString(Action.NAME_PROPERTY));
         verify(mMockFileWriter, times(1)).write(mActionsJson.toString(), ActionsStorage.STORAGE_FILE_NAME, "UTF-8");
+
+        Action anotherAction = mock(Action.class);
+        when(anotherAction.getName()).thenReturn(mAction1Json.getString(Action.NAME_PROPERTY).toUpperCase());
+        actionsStorage.insert(anotherAction);
+    }
+
+    @Test
+    public void test_Remove() throws JSONException, IOException, DuplicatedEntryException, ActionCreationFailed {
+        mockPreparedDataReading();
+
+        ActionsStorage actionsStorage = new ActionsStorage(mMockFileReader, mMockFileWriter, mMockContext);
+        actionsStorage.read();
+        actionsStorage.remove(mAction1Json.getString(Action.NAME_PROPERTY));
+
+        JSONArray actionsArray = new JSONArray();
+        JSONObject actionsJson = new JSONObject();
+        actionsArray.put(mAction2Json);
+        actionsJson.put(ActionsStorage.ROOT_ARRAY_NAME, actionsArray);
+
+        verify(mMockFileWriter, times(1)).write(actionsJson.toString(), ActionsStorage.STORAGE_FILE_NAME, "UTF-8");
     }
 
     @Test
@@ -180,6 +188,77 @@ public class ActionsStorageTest {
         actionsStorage.remove(mAction1Json.getString(Action.NAME_PROPERTY));
         actionsStorage.remove(mAction2Json.getString(Action.NAME_PROPERTY));
         Mockito.verify(mMockFileWriter, never()).write(any(String.class), any(String.class), any(String.class));
+    }
+
+    @Test
+    public void test_Remove_IgnoreCase() throws JSONException, IOException, DuplicatedEntryException, ActionCreationFailed {
+        mockPreparedDataReading();
+
+        ActionsStorage actionsStorage = new ActionsStorage(mMockFileReader, mMockFileWriter, mMockContext);
+        actionsStorage.read();
+
+        actionsStorage.remove(mAction2Json.getString(Action.NAME_PROPERTY).toUpperCase());
+
+        JSONArray actionsArray = new JSONArray();
+        JSONObject actionsJson = new JSONObject();
+        actionsArray.put(mAction1Json);
+        actionsJson.put(ActionsStorage.ROOT_ARRAY_NAME, actionsArray);
+
+        verify(mMockFileWriter, times(1)).write(actionsJson.toString(), ActionsStorage.STORAGE_FILE_NAME, "UTF-8");
+    }
+
+    @Test
+    public void test_Replace() throws JSONException, IOException, ActionCreationFailed, DuplicatedEntryException {
+        mockPreparedDataReading();
+
+        ActionsStorage actionsStorage = new ActionsStorage(mMockFileReader, mMockFileWriter, mMockContext);
+        actionsStorage.read();
+
+        Action replacingAction = mock(Action.class);
+        when(replacingAction.getName()).thenReturn(mAction2Json.getString(Action.NAME_PROPERTY).toUpperCase());
+        actionsStorage.replace(mAction2Json.getString(Action.NAME_PROPERTY), replacingAction);
+
+        assertEquals(replacingAction, actionsStorage.getAction(mAction2Json.getString(Action.NAME_PROPERTY)));
+    }
+
+    @Test
+    public void test_Replace_IgnoreCase() throws JSONException, IOException, ActionCreationFailed, DuplicatedEntryException {
+        mockPreparedDataReading();
+
+        ActionsStorage actionsStorage = new ActionsStorage(mMockFileReader, mMockFileWriter, mMockContext);
+        actionsStorage.read();
+
+        Action replacingAction = mock(Action.class);
+        when(replacingAction.getName()).thenReturn(mAction2Json.getString(Action.NAME_PROPERTY).toUpperCase());
+        actionsStorage.replace(mAction2Json.getString(Action.NAME_PROPERTY).toUpperCase(), replacingAction);
+
+        assertEquals(replacingAction, actionsStorage.getAction(mAction2Json.getString(Action.NAME_PROPERTY)));
+    }
+
+    @Test(expected=DuplicatedEntryException.class)
+    public void test_Replace_ExistentName() throws JSONException, IOException, ActionCreationFailed, DuplicatedEntryException {
+        mockPreparedDataReading();
+
+        ActionsStorage actionsStorage = new ActionsStorage(mMockFileReader, mMockFileWriter, mMockContext);
+        actionsStorage.read();
+
+        Action replacingAction = mock(Action.class);
+        when(replacingAction.getName()).thenReturn(mAction1Json.getString(Action.NAME_PROPERTY));
+        actionsStorage.replace(mAction2Json.getString(Action.NAME_PROPERTY), replacingAction);
+    }
+
+    @Test
+    public void test_Replace_NewName() throws JSONException, IOException, ActionCreationFailed, DuplicatedEntryException {
+        mockPreparedDataReading();
+
+        ActionsStorage actionsStorage = new ActionsStorage(mMockFileReader, mMockFileWriter, mMockContext);
+        actionsStorage.read();
+
+        Action replacingAction = mock(Action.class);
+        String newName = "NewActionName";
+        when(replacingAction.getName()).thenReturn(newName);
+        actionsStorage.replace(mAction2Json.getString(Action.NAME_PROPERTY).toLowerCase(), replacingAction);
+        assertEquals(replacingAction, actionsStorage.getAction(newName));
     }
 
     @Mock
