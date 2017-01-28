@@ -1,6 +1,5 @@
 package com.f1x.mtcdtools.activities.actions;
 
-import android.os.Bundle;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -11,12 +10,13 @@ import com.f1x.mtcdtools.adapters.InstalledPackagesArrayAdapter;
 import com.f1x.mtcdtools.adapters.PackageEntry;
 
 public class LaunchActionActivity extends ActionActivity {
+    LaunchActionActivity() {
+        super(R.layout.activity_launch_action_details);
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_launch_action_details);
-        initControls();
+    protected void initControls() {
+        super.initControls();
 
         mInstalledPackagesSpinner = (Spinner)this.findViewById(R.id.spinnerApplications);
         mInstalledPackagesArrayAdapter = new InstalledPackagesArrayAdapter(this);
@@ -24,7 +24,7 @@ public class LaunchActionActivity extends ActionActivity {
     }
 
     @Override
-    public Action createAction(String actionName) {
+    protected Action createAction(String actionName) {
         PackageEntry packageEntry = (PackageEntry)mInstalledPackagesSpinner.getSelectedItem();
         return new LaunchAction(actionName, packageEntry.getName());
     }

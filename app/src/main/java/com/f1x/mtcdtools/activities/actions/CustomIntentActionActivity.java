@@ -15,6 +15,10 @@ import org.json.JSONObject;
  */
 
 public abstract class CustomIntentActionActivity extends ActionActivity {
+    CustomIntentActionActivity(int layoutResId) {
+        super(layoutResId);
+    }
+
     @Override
     protected void initControls() {
         super.initControls();

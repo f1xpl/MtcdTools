@@ -20,12 +20,19 @@ import java.io.IOException;
  */
 
 public abstract class ActionActivity extends ServiceActivity {
+    ActionActivity(int layoutResId) {
+        mLayoutResId = layoutResId;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(mLayoutResId);
 
         mEditActionName = this.getIntent().getStringExtra(ACTION_NAME_PARAMETER);
         mEditMode = mEditActionName != null;
+
+        initControls();
     }
 
     protected void initControls() {
@@ -97,5 +104,7 @@ public abstract class ActionActivity extends ServiceActivity {
     protected EditText mActionNameEditText;
     protected String mEditActionName;
     protected boolean mEditMode;
+    private int mLayoutResId;
+
     public static final String ACTION_NAME_PARAMETER = "actionName";
 }

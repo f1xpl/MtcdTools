@@ -14,11 +14,13 @@ import com.f1x.mtcdtools.adapters.KeyCodesArrayAdapter;
  */
 
 public class KeyActionActivity extends ActionActivity {
+    KeyActionActivity() {
+        super(R.layout.activity_key_action_details);
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_key_action_details);
-        initControls();
+    protected void initControls() {
+        super.initControls();
 
         mKeyCodesSpinner = (Spinner)this.findViewById(R.id.spinnerKeyCodes);
         mKeyCodesArrayAdapter = new KeyCodesArrayAdapter(this);
@@ -26,7 +28,7 @@ public class KeyActionActivity extends ActionActivity {
     }
 
     @Override
-    public Action createAction(String actionName) {
+    protected Action createAction(String actionName) {
         String keyCodeName = (String)mKeyCodesSpinner.getSelectedItem();
         return new KeyAction(actionName, mKeyCodesArrayAdapter.getKeyCode(keyCodeName));
     }

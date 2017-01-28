@@ -1,6 +1,5 @@
 package com.f1x.mtcdtools.activities.actions;
 
-import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -12,18 +11,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class BroadcastIntentActionActivity extends CustomIntentActionActivity {
+    BroadcastIntentActionActivity() {
+        super(R.layout.activity_broadcast_intent_action_details);
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_broadcast_intent_action_details);
-        initControls();
-
+    protected void initControls() {
+        super.initControls();
         mBroadcastPermissionEditText = (EditText)this.findViewById(R.id.editTextBroadcastPermissions);
     }
 
     @Override
-    public Action createAction(String actionName, JSONObject intentExtrasJson) throws JSONException {
+    protected Action createAction(String actionName, JSONObject intentExtrasJson) throws JSONException {
         return new BroadcastIntentAction(actionName,
                                          mIntentPackageEditText.getEditableText().toString(),
                                          mActionNameEditText.getEditableText().toString(),
