@@ -36,6 +36,8 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
 
     @Override
     protected void onResume() {
+        super.onResume();
+
         if(mServiceBinder != null) {
             mServiceBinder.getPressedKeysSequenceManager().pushListener(this);
         }
@@ -43,6 +45,8 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
 
     @Override
     protected void onPause() {
+        super.onPause();
+
         if(mServiceBinder != null) {
             mServiceBinder.getPressedKeysSequenceManager().popListener(this);
         }
@@ -76,14 +80,15 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
             try {
                 int index;
 
-                if (mActionsList.getKeysSequenceDown() == keysSequence) {
+                if (mActionsList.getKeysSequenceDown().equals(keysSequence)) {
                     index = mListIndexer.down();
-                } else if (mActionsList.getKeysSequenceUp() == keysSequence) {
+                } else if (mActionsList.getKeysSequenceUp().equals(keysSequence)) {
                     index = mListIndexer.up();
                 } else {
                     return;
                 }
 
+                mActionsListView.setItemChecked(index, true);
                 mActionsListView.requestFocusFromTouch();
                 mActionsListView.setSelection(index);
                 mActionExecutionTimer.cancel();
@@ -115,6 +120,8 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
 
                 if(action != null) {
                     action.evaluate(SelectActionActivity.this);
+                } else {
+                    finish();
                 }
             }
         }
