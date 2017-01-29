@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.CountDownTimer;
 
-import com.f1x.mtcdtools.input.KeysSequenceListener;
-
 import java.util.ArrayList;
 import java.util.List;
 

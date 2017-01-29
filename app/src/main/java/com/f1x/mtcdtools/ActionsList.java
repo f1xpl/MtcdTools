@@ -26,8 +26,15 @@ public class ActionsList {
             mActionNames.add(actionsArray.getString(i));
         }
 
-        mKeysSequenceUp = KeysSequenceConverter.fromJson(json.getJSONArray(KEYS_SEQUENCE_UP_PROPERTY));
-        mKeysSequenceDown = KeysSequenceConverter.fromJson(json.getJSONArray(KEYS_SEQUENCE_DOWN_PROPERTY));
+        mKeysSequenceUp = KeysSequenceConverter.fromJsonArray(json.getJSONArray(KEYS_SEQUENCE_UP_PROPERTY));
+        mKeysSequenceDown = KeysSequenceConverter.fromJsonArray(json.getJSONArray(KEYS_SEQUENCE_DOWN_PROPERTY));
+    }
+
+    public ActionsList(String name, List<Integer> keysSequenceUp, List<Integer> keysSequenceDown, Set<String> actionsNames) {
+        mName = name;
+        mKeysSequenceUp = keysSequenceUp;
+        mKeysSequenceDown = keysSequenceDown;
+        mActionNames = actionsNames;
     }
 
     public List<Integer> getKeysSequenceUp() {

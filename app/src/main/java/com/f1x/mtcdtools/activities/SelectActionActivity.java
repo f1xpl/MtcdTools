@@ -10,7 +10,7 @@ import com.f1x.mtcdtools.ActionsList;
 import com.f1x.mtcdtools.ListIndexer;
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.actions.Action;
-import com.f1x.mtcdtools.adapters.ActionsNamesArrayAdapter;
+import com.f1x.mtcdtools.adapters.NamesArrayAdapter;
 import com.f1x.mtcdtools.input.KeysSequenceListener;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
         setContentView(R.layout.activity_select_action);
 
         mActionsListName = this.getIntent().getStringExtra(ACTIONS_LIST_NAME_PARAMETER);
-        mActionsNamesArrayAdapter = new ActionsNamesArrayAdapter(this);
+        mActionsNamesArrayAdapter = new NamesArrayAdapter(this);
 
         mActionsListView = (ListView)this.findViewById(R.id.listViewActions);
         mActionsListView.setAdapter(mActionsNamesArrayAdapter);
@@ -51,7 +51,7 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
     @Override
     protected void onServiceConnected() {
         if(mActionsListName != null) {
-            mActionsList = mServiceBinder.getActionsListStorage().getActionsList(mActionsListName);
+            mActionsList = mServiceBinder.getActionsListsStorage().getItem(mActionsListName);
 
             if(mActionsList != null) {
                 mServiceBinder.getPressedKeysSequenceManager().pushListener(this);
@@ -66,7 +66,7 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
             }
         }
 
-        Toast.makeText(this, this.getText(R.string.ActionsListNotFound), Toast.LENGTH_LONG).show();
+        Toast.makeText(this, this.getText(R.string.UnknownObjectType), Toast.LENGTH_LONG).show();
         finish();
     }
 
@@ -111,7 +111,7 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
             String selectedActionName = (String)mActionsListView.getSelectedItem();
 
             if(selectedActionName != null) {
-                Action action = mServiceBinder.getActionsStorage().getAction(selectedActionName);
+                Action action = mServiceBinder.getActionsStorage().getItem(selectedActionName);
 
                 if(action != null) {
                     action.evaluate(SelectActionActivity.this);
@@ -125,7 +125,7 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
 
     private ActionsList mActionsList;
     private String mActionsListName;
-    private ActionsNamesArrayAdapter mActionsNamesArrayAdapter;
+    private NamesArrayAdapter mActionsNamesArrayAdapter;
     private ListIndexer mListIndexer;
 
     public static final String ACTIONS_LIST_NAME_PARAMETER = "actionsListName";

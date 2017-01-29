@@ -39,16 +39,15 @@
     <string name="ObtainKeysSequenceUp">Obtain UP keys sequence</string>
     <string name="ObtainKeysSequenceDown">Obtain DOWN keys sequence</string>
     <string name="Reset">Reset</string>
-    <string name="CreateActionFailed">Failed to create an action. Please check parameters.</string>
-    <string name="DuplicatedActionNameError">Action with given name already exist</string>
-    <string name="EmptyActionNameError">Please provide action name</string>
+    <string name="CreateObjectFailed">Failed to create an object. Please check parameters.</string>
+    <string name="EmptyNameError">Please provide name</string>
 
     <string name="MtcdServiceDescription">MtcdTools Service is now active</string>
     <string name="CreatedActions">Created actions</string>
     <string name="ServiceUnavailable">Service is unavailable</string>
-    <string name="ActionNotFound">Action not found</string>
-    <string name="UnknownActionType">Unknown action type</string>
+    <string name="ObjectNotFound">Object not found</string>
+    <string name="UnknownObjectType">Unknown object type</string>
     <string name="SelectActionOrList">Select action or list of actions</string>
-    <string name="ActionsListNotFound">Actions list not found</string>
-    <string name="ActionAlreadyAdded">Actions is already added</string>
+    <string name="ObjectAlreadyAdded">Object already added</string>
+    <string name="CreatedActionsLists">Created actions lists</string>
 </resources>

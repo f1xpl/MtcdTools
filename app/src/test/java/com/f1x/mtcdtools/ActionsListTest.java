@@ -1,5 +1,7 @@
 package com.f1x.mtcdtools;
 
+import com.f1x.mtcdtools.input.KeysSequenceConverter;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,6 +10,8 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -74,9 +78,40 @@ public class ActionsListTest {
         assertEquals(mListJson.toString(), actionsList.toJson().toString());
     }
 
-    String mListName;
-    JSONObject mListJson;
-    JSONArray mActionsArray;
-    JSONArray mKeysSequenceUpArray;
-    JSONArray mKeysSequenceDownArray;
+    @Test
+    public void test_ConstructFromParameters() throws JSONException {
+        Set<String> expectedActionsNames = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+        for(int i = 0; i < mActionsArray.length(); ++i) {
+            expectedActionsNames.add(mActionsArray.getString(i));
+        }
+
+        ActionsList actionsList = new ActionsList(mListName,
+                                                  KeysSequenceConverter.fromJsonArray(mKeysSequenceUpArray),
+                                                  KeysSequenceConverter.fromJsonArray(mKeysSequenceDownArray),
+                                                  expectedActionsNames);
+
+        assertEquals(mListName, actionsList.getName());
+
+        Set<String> actualActionNames = actionsList.getActionNames();
+        assertEquals(expectedActionsNames.size(), actualActionNames.size());
+        assertEquals(expectedActionsNames, actualActionNames);
+
+        List<Integer> keysSequenceUp = actionsList.getKeysSequenceUp();
+        assertEquals(mKeysSequenceUpArray.length(), keysSequenceUp.size());
+        for(int i = 0; i < mKeysSequenceUpArray.length(); ++i) {
+            assertEquals(mKeysSequenceUpArray.get(i), keysSequenceUp.get(i));
+        }
+
+        List<Integer> keysSequenceDown = actionsList.getKeysSequenceDown();
+        assertEquals(mKeysSequenceDownArray.length(), keysSequenceDown.size());
+        for(int i = 0; i < mKeysSequenceDownArray.length(); ++i) {
+            assertEquals(mKeysSequenceDownArray.get(i), keysSequenceDown.get(i));
+        }
+    }
+
+    private String mListName;
+    private JSONObject mListJson;
+    private JSONArray mActionsArray;
+    private JSONArray mKeysSequenceUpArray;
+    private JSONArray mKeysSequenceDownArray;
 }

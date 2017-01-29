@@ -3,6 +3,7 @@ package com.f1x.mtcdtools.adapters;
 import android.content.Context;
 import android.widget.ArrayAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,5 +21,15 @@ public class KeysSequenceArrayAdapter extends ArrayAdapter<Integer> {
         for(int i = 0; i < keysSequence.size(); ++i) {
             add(keysSequence.get(i));
         }
+    }
+
+    public List<Integer> getItems() {
+        List<Integer> items = new ArrayList<>();
+
+        for(int i = 0; i < getCount(); ++i) {
+            items.add(getItem(i));
+        }
+
+        return items;
     }
 }

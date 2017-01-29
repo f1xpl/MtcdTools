@@ -3,7 +3,6 @@
     <string name="Applications">Aplikacje</string>
     <string name="BroadcastPermissions">Zezwolenia rozgłaszania</string>
     <string name="Cancel">Anuluj</string>
-    <string name="CreateActionFailed">Nie można utworzyć akcji. Sprawdź parametry.</string>
     <string name="CreateNewAction">Utwórz nową akcję</string>
     <string name="CreateNewActionsList">Utwórz nową listę akcji</string>
     <string name="CreateNewBinding">Utwórz nowe powiązanie</string>
@@ -11,8 +10,6 @@
     <string name="CreateNewKeyAction">Utwórz akcję klawisza</string>
     <string name="CreateNewLaunchAction">Utwórz akcję uruchamiania aplikacji</string>
     <string name="CreateNewStartActivityAction">Utwórz akcję uruchamiania aktywności</string>
-    <string name="DuplicatedActionNameError">Akcja o podanej nazwie już istnieje.</string>
-    <string name="EmptyActionNameError">Podaj nazwę akcji.</string>
     <string name="Action">Akcja</string>
     <string name="ActionName">Nazwa akcji</string>
     <string name="Actions">Akcje</string>
@@ -41,8 +38,10 @@
     <string name="SelectActionOrList">Wybierz akcję lub listę akcji</string>
     <string name="CreatedActions">Utworzone akcje</string>
     <string name="ServiceUnavailable">Serwis jest niedostępny</string>
-    <string name="ActionNotFound">Nie znaleziono akcji</string>
-    <string name="UnknownActionType">Nieznany typ akcji</string>
-    <string name="ActionsListNotFound">Nie znaleziono listy akcji</string>
-    <string name="ActionAlreadyAdded">Akcja jest już dodana</string>
+    <string name="ObjectAlreadyAdded">Obiekt jest już dodany</string>
+    <string name="CreateObjectFailed">Nie można utworzyć obiektu. Sprawdź parametry.</string>
+    <string name="EmptyNameError">Podaj nazwę.</string>
+    <string name="ObjectNotFound">Nie znaleziono obiektu</string>
+    <string name="UnknownObjectType">Nieznany typ obiektu</string>
+    <string name="CreatedActionsLists">Utworzone listy akcji</string>
 </resources>

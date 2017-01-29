@@ -36,7 +36,7 @@ public class LaunchActionActivity extends ActionActivity {
         LaunchAction launchAction = (LaunchAction)action;
 
         if(launchAction == null) {
-            Toast.makeText(this, this.getText(R.string.UnknownActionType), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, this.getText(R.string.UnknownObjectType), Toast.LENGTH_LONG).show();
             finish();
         } else {
             int packagePosition = mInstalledPackagesArrayAdapter.getPosition(launchAction.getPackageName());

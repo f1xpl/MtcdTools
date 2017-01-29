@@ -1,6 +1,5 @@
 package com.f1x.mtcdtools.activities.actions;
 
-import android.os.Bundle;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -40,7 +39,7 @@ public class KeyActionActivity extends ActionActivity {
         KeyAction keyAction = (KeyAction)action;
 
         if(keyAction == null) {
-            Toast.makeText(this, this.getText(R.string.UnknownActionType), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, this.getText(R.string.UnknownObjectType), Toast.LENGTH_LONG).show();
             finish();
         } else {
             int keyCodePosition = mKeyCodesArrayAdapter.getPosition(keyAction.getKeyCode());

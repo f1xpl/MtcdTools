@@ -3,18 +3,15 @@ package com.f1x.mtcdtools.adapters;
 import android.content.Context;
 import android.widget.ArrayAdapter;
 
-import com.f1x.mtcdtools.actions.Action;
-
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Created by COMPUTER on 2017-01-25.
  */
 
-public class ActionsNamesArrayAdapter extends ArrayAdapter<String>  {
-    public ActionsNamesArrayAdapter(Context context) {
+public class NamesArrayAdapter extends ArrayAdapter<String>  {
+    public NamesArrayAdapter(Context context) {
         super(context, android.R.layout.simple_list_item_1);
     }
 
@@ -26,7 +23,7 @@ public class ActionsNamesArrayAdapter extends ArrayAdapter<String>  {
         }
     }
 
-    public boolean containsAction(String actionName) {
+    public boolean containsItem(String actionName) {
         for(int i = 0; i < getCount(); ++i) {
             String name = getItem(i);
 
@@ -36,5 +33,15 @@ public class ActionsNamesArrayAdapter extends ArrayAdapter<String>  {
         }
 
         return false;
+    }
+
+    public Set<String> getItems() {
+        Set<String> items = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+
+        for(int i = 0; i < getCount(); ++i) {
+            items.add(getItem(i));
+        }
+
+        return items;
     }
 }

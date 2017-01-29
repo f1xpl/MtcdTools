@@ -53,7 +53,7 @@ public abstract class CustomIntentActionActivity extends ActionActivity {
         CustomIntentAction customIntentAction = (CustomIntentAction)action;
 
         if(customIntentAction == null) {
-            Toast.makeText(this, this.getText(R.string.UnknownActionType), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, this.getText(R.string.UnknownObjectType), Toast.LENGTH_LONG).show();
             finish();
         } else {
             try {

@@ -3,6 +3,7 @@ package com.f1x.mtcdtools.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -11,16 +12,15 @@ import android.widget.Toast;
 
 import com.f1x.mtcdtools.ActionsList;
 import com.f1x.mtcdtools.R;
-import com.f1x.mtcdtools.adapters.ActionsNamesArrayAdapter;
 import com.f1x.mtcdtools.adapters.KeysSequenceArrayAdapter;
+import com.f1x.mtcdtools.adapters.NamesArrayAdapter;
 import com.f1x.mtcdtools.input.KeysSequenceConverter;
+import com.f1x.mtcdtools.storage.exceptions.DuplicatedEntryException;
 
 import org.json.JSONException;
 
-import java.util.Arrays;
+import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class ActionsListActivity extends ServiceActivity {
 
@@ -29,48 +29,11 @@ public class ActionsListActivity extends ServiceActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actions_list_details);
 
+        // -----------------------------------------------------------------------------------------
+
         mKeysSequenceUpArrayAdapter = new KeysSequenceArrayAdapter(this);
-        ListView mKeysSequenceUpListView = (ListView)this.findViewById(R.id.listViewKeysSequenceUp);
-        mKeysSequenceUpListView.setAdapter(mKeysSequenceUpArrayAdapter);
-
-        mKeysSequenceDownArrayAdapter = new KeysSequenceArrayAdapter(this);
-        ListView mKeysSequenceDownListView = (ListView)this.findViewById(R.id.listViewKeysSequenceDown);
-        mKeysSequenceDownListView.setAdapter(mKeysSequenceDownArrayAdapter);
-
-        ListView addedActionsListView = (ListView)this.findViewById(R.id.listViewActions);
-        mAddedActionsNamesArrayAdapter = new ActionsNamesArrayAdapter(this);
-        addedActionsListView.setAdapter(mAddedActionsNamesArrayAdapter);
-
-        mActionsNamesArrayAdapter = new ActionsNamesArrayAdapter(this);
-        final Spinner mActionsSpinner = (Spinner)this.findViewById(R.id.spinnerActions);
-        mActionsSpinner.setAdapter(mActionsNamesArrayAdapter);
-
-        mEditActionsListName = this.getIntent().getStringExtra(ACTIONS_LIST_NAME_PARAMETER);
-        mEditMode = mEditActionsListName != null;
-
-        mActionsListName = (EditText)this.findViewById(R.id.editTextActionsListName);
-
-        Button cancelButton = (Button)this.findViewById(R.id.buttonCancel);
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ActionsListActivity.this.finish();
-            }
-        });
-
-        Button addActionButton = (Button)this.findViewById(R.id.buttonAddAction);
-        addActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String actionName = (String)mActionsSpinner.getSelectedItem();
-
-                if(!mAddedActionsNamesArrayAdapter.containsAction(actionName)) {
-                    mAddedActionsNamesArrayAdapter.add(actionName);
-                } else {
-                    Toast.makeText(ActionsListActivity.this, ActionsListActivity.this.getText(R.string.ActionAlreadyAdded), Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+        ListView keysSequenceUpListView = (ListView)this.findViewById(R.id.listViewKeysSequenceUp);
+        keysSequenceUpListView.setAdapter(mKeysSequenceUpArrayAdapter);
 
         Button obtainKeysSequenceUpButton = (Button)this.findViewById(R.id.buttonObtainKeysSequenceUp);
         obtainKeysSequenceUpButton.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +43,12 @@ public class ActionsListActivity extends ServiceActivity {
             }
         });
 
+        // -----------------------------------------------------------------------------------------
+
+        mKeysSequenceDownArrayAdapter = new KeysSequenceArrayAdapter(this);
+        ListView keysSequenceDownListView = (ListView)this.findViewById(R.id.listViewKeysSequenceDown);
+        keysSequenceDownListView.setAdapter(mKeysSequenceDownArrayAdapter);
+
         Button obtainKeysSequenceDownButton = (Button)this.findViewById(R.id.buttonObtainKeysSequenceDown);
         obtainKeysSequenceDownButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,23 +56,109 @@ public class ActionsListActivity extends ServiceActivity {
                 startActivityForResult(new Intent(ActionsListActivity.this, ObtainKeysSequenceActivity.class), REQUEST_CODE_KEYS_SEQUENCE_DOWN);
             }
         });
+
+        // -----------------------------------------------------------------------------------------
+
+        mActionsNamesArrayAdapter = new NamesArrayAdapter(this);
+        final Spinner actionsSpinner = (Spinner)this.findViewById(R.id.spinnerActions);
+        actionsSpinner.setAdapter(mActionsNamesArrayAdapter);
+
+        ListView addedActionsListView = (ListView)this.findViewById(R.id.listViewActions);
+        mAddedActionsNamesArrayAdapter = new NamesArrayAdapter(this);
+        addedActionsListView.setAdapter(mAddedActionsNamesArrayAdapter);
+        addedActionsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+                String actionName = mAddedActionsNamesArrayAdapter.getItem(position);
+                mAddedActionsNamesArrayAdapter.remove(actionName);
+
+                return true;
+            }
+        });
+
+        Button addActionButton = (Button)this.findViewById(R.id.buttonAddAction);
+        addActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String actionName = (String)actionsSpinner.getSelectedItem();
+
+                if(!mAddedActionsNamesArrayAdapter.containsItem(actionName)) {
+                    mAddedActionsNamesArrayAdapter.add(actionName);
+                } else {
+                    Toast.makeText(ActionsListActivity.this, ActionsListActivity.this.getText(R.string.ObjectAlreadyAdded), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        // -----------------------------------------------------------------------------------------
+
+        mEditActionsListName = this.getIntent().getStringExtra(ACTIONS_LIST_NAME_PARAMETER);
+        mEditMode = mEditActionsListName != null;
+
+        mActionsListNameEditText = (EditText)this.findViewById(R.id.editTextActionsListName);
+
+        // -----------------------------------------------------------------------------------------
+
+        Button cancelButton = (Button)this.findViewById(R.id.buttonCancel);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ActionsListActivity.this.finish();
+            }
+        });
+
+        Button saveButton = (Button)this.findViewById(R.id.buttonSave);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String actionsListName = mActionsListNameEditText.getText().toString();
+
+                if(!actionsListName.isEmpty()) {
+                    storeActionsList(actionsListName);
+                } else {
+                    Toast.makeText(ActionsListActivity.this, ActionsListActivity.this.getText(R.string.EmptyNameError), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+    private void storeActionsList(String actionsListName) {
+        try {
+            ActionsList actionsList = new ActionsList(actionsListName,
+                    mKeysSequenceUpArrayAdapter.getItems(),
+                    mKeysSequenceDownArrayAdapter.getItems(),
+                    mAddedActionsNamesArrayAdapter.getItems());
+
+            if(mEditMode) {
+                mServiceBinder.getActionsListsStorage().replace(mEditActionsListName, actionsListName, actionsList);
+            } else {
+                mServiceBinder.getActionsListsStorage().insert(actionsListName, actionsList);
+            }
+
+            finish();
+        } catch (DuplicatedEntryException e) {
+            e.printStackTrace();
+            Toast.makeText(this, this.getText(R.string.ObjectAlreadyAdded), Toast.LENGTH_LONG).show();
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
     protected void onServiceConnected() {
         if(mEditMode) {
-            ActionsList actionsList = mServiceBinder.getActionsListStorage().getActionsList(mEditActionsListName);
+            ActionsList actionsList = mServiceBinder.getActionsListsStorage().getItem(mEditActionsListName);
 
             if(actionsList != null) {
                 mAddedActionsNamesArrayAdapter.reset(actionsList.getActionNames());
                 mKeysSequenceDownArrayAdapter.reset(actionsList.getKeysSequenceDown());
                 mKeysSequenceUpArrayAdapter.reset(actionsList.getKeysSequenceUp());
-                mActionsListName.setText(actionsList.getName());
-
+                mActionsListNameEditText.setText(actionsList.getName());
             }
         }
 
-        mActionsNamesArrayAdapter.reset(mServiceBinder.getActionsStorage().getActions().keySet());
+        mActionsNamesArrayAdapter.reset(mServiceBinder.getActionsStorage().getItems().keySet());
     }
 
     @Override
@@ -124,11 +179,11 @@ public class ActionsListActivity extends ServiceActivity {
     private String mEditActionsListName;
     private boolean mEditMode;
 
-    EditText mActionsListName;
+    EditText mActionsListNameEditText;
     KeysSequenceArrayAdapter mKeysSequenceUpArrayAdapter;
     KeysSequenceArrayAdapter mKeysSequenceDownArrayAdapter;
-    ActionsNamesArrayAdapter mActionsNamesArrayAdapter;
-    ActionsNamesArrayAdapter mAddedActionsNamesArrayAdapter;
+    NamesArrayAdapter mActionsNamesArrayAdapter;
+    NamesArrayAdapter mAddedActionsNamesArrayAdapter;
 
     public static final String ACTIONS_LIST_NAME_PARAMETER = "actionName";
     private static int REQUEST_CODE_KEYS_SEQUENCE_UP = 100;

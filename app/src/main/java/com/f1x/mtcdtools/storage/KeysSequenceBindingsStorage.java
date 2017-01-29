@@ -1,8 +1,8 @@
 package com.f1x.mtcdtools.storage;
 
 import com.f1x.mtcdtools.input.KeysSequenceBinding;
-import com.f1x.mtcdtools.input.KeysSequenceConverter;
 import com.f1x.mtcdtools.storage.exceptions.DuplicatedEntryException;
+import com.f1x.mtcdtools.storage.exceptions.EntryCreationFailed;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,64 +13,44 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by COMPUTER on 2017-01-16.
+ * Created by COMPUTER on 2017-01-29.
  */
 
-public class KeysSequenceBindingsStorage extends Storage {
+public class KeysSequenceBindingsStorage extends Storage<List<Integer>, KeysSequenceBinding> {
     public KeysSequenceBindingsStorage(FileReader reader, FileWriter writer) {
         super(reader, writer);
-
-        mKeysSequenceBindings = new HashMap<>();
     }
 
-    public void read() throws JSONException, IOException, DuplicatedEntryException {
+    @Override
+    public void read() throws JSONException, IOException, DuplicatedEntryException, EntryCreationFailed {
         JSONArray keysSequenceBindingsArray = read(STORAGE_FILE_NAME, ROOT_ARRAY_NAME);
 
         for (int i = 0; i < keysSequenceBindingsArray.length(); ++i) {
             KeysSequenceBinding keysSequenceBinding = new KeysSequenceBinding(keysSequenceBindingsArray.getJSONObject(i));
 
-            if(mKeysSequenceBindings.containsKey(keysSequenceBinding.getKeysSequence())) {
-                throw new DuplicatedEntryException(KeysSequenceConverter.toJsonArray(keysSequenceBinding.getKeysSequence()).toString());
-            } else {
-                mKeysSequenceBindings.put(keysSequenceBinding.getKeysSequence(), keysSequenceBinding);
-            }
+            put(keysSequenceBinding.getKeysSequence(), keysSequenceBinding);
         }
     }
 
-    private void write() throws IOException, JSONException {
+    @Override
+    public void write() throws JSONException, IOException {
         JSONArray keysSequenceBindingsArray = new JSONArray();
-        for(Map.Entry<List<Integer>, KeysSequenceBinding> entry : mKeysSequenceBindings.entrySet()) {
+        for(Map.Entry<List<Integer>, KeysSequenceBinding> entry : mItems.entrySet()) {
             keysSequenceBindingsArray.put(entry.getValue().toJson());
         }
 
         write(STORAGE_FILE_NAME, ROOT_ARRAY_NAME, keysSequenceBindingsArray);
     }
 
-    public void insert(KeysSequenceBinding keysSequenceBinding) throws JSONException, IOException, DuplicatedEntryException {
-        if(mKeysSequenceBindings.containsKey(keysSequenceBinding.getKeysSequence())) {
-            throw new DuplicatedEntryException("KeysSequenceBinding");
-        } else {
-            mKeysSequenceBindings.put(keysSequenceBinding.getKeysSequence(), keysSequenceBinding);
-            write();
-        }
+    @Override
+    protected boolean keysEqual(List<Integer> left, List<Integer> right) {
+        return left == right;
     }
 
-    public void remove(KeysSequenceBinding keysSequenceBinding) throws IOException, JSONException {
-        if(mKeysSequenceBindings.containsKey(keysSequenceBinding.getKeysSequence())) {
-            mKeysSequenceBindings.remove(keysSequenceBinding.getKeysSequence());
-            write();
-        }
+    @Override
+    protected Map<List<Integer>, KeysSequenceBinding> createContainer() {
+        return new HashMap<>();
     }
-
-    public KeysSequenceBinding getKeysSequenceBinding(List<Integer> keysSequence) {
-        return mKeysSequenceBindings.containsKey(keysSequence) ? mKeysSequenceBindings.get(keysSequence) : null;
-    }
-
-    Map<List<Integer>, KeysSequenceBinding> getKeysSequenceBindings() {
-        return new HashMap<>(mKeysSequenceBindings);
-    }
-
-    private final Map<List<Integer>, KeysSequenceBinding> mKeysSequenceBindings;
 
     public static final String STORAGE_FILE_NAME = "keysSequenceBindings.json";
     public static final String ROOT_ARRAY_NAME = "keysSequenceBindings";

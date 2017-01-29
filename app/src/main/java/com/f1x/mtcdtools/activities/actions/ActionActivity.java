@@ -51,7 +51,7 @@ public abstract class ActionActivity extends ServiceActivity {
                 String actionName = mActionNameEditText.getText().toString();
 
                 if(actionName.isEmpty()) {
-                    Toast.makeText(ActionActivity.this, ActionActivity.this.getText(R.string.EmptyActionNameError), Toast.LENGTH_LONG).show();
+                    Toast.makeText(ActionActivity.this, ActionActivity.this.getText(R.string.EmptyNameError), Toast.LENGTH_LONG).show();
                 } else {
                     storeAction(actionName);
                 }
@@ -66,9 +66,9 @@ public abstract class ActionActivity extends ServiceActivity {
             Action action = createAction(actionName);
             if(action != null) {
                 if(mEditMode) {
-                    mServiceBinder.getActionsStorage().replace(mEditActionName, action);
+                    mServiceBinder.getActionsStorage().replace(mEditActionName, actionName, action);
                 } else {
-                    mServiceBinder.getActionsStorage().insert(action);
+                    mServiceBinder.getActionsStorage().insert(actionName, action);
                 }
 
                 finish();
@@ -78,19 +78,19 @@ public abstract class ActionActivity extends ServiceActivity {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
         } catch (DuplicatedEntryException e) {
             e.printStackTrace();
-            Toast.makeText(this, this.getText(R.string.DuplicatedActionNameError), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, this.getText(R.string.ObjectAlreadyAdded), Toast.LENGTH_LONG).show();
         }
     }
 
     @Override
     protected void onServiceConnected() {
         if(mEditMode) {
-            Action action = mServiceBinder.getActionsStorage().getAction(mEditActionName);
+            Action action = mServiceBinder.getActionsStorage().getItem(mEditActionName);
 
             if (action != null) {
                 fillControls(action);
             } else {
-                Toast.makeText(this, this.getText(R.string.ActionNotFound), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, this.getText(R.string.ObjectNotFound), Toast.LENGTH_LONG).show();
                 finish();
             }
         }

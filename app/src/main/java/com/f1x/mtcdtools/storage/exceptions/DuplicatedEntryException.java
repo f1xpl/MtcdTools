@@ -5,18 +5,14 @@ package com.f1x.mtcdtools.storage.exceptions;
  */
 
 public class DuplicatedEntryException extends Throwable {
-    public DuplicatedEntryException(String entryDetails) {
-        mEntryDetails = entryDetails;
-    }
-
-    String getEntryDetails() {
-        return mEntryDetails;
+    public DuplicatedEntryException(String entryName) {
+        mEntryName = entryName;
     }
 
     @Override
     public String getMessage() {
-        return "Entry: " + mEntryDetails + " is duplicated.";
+        return "Entry: " + mEntryName + " is duplicated.";
     }
 
-    private final String mEntryDetails;
+    private final String mEntryName;
 }

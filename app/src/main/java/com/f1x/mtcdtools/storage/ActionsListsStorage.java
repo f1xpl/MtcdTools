@@ -1,54 +1,54 @@
 package com.f1x.mtcdtools.storage;
 
 import com.f1x.mtcdtools.ActionsList;
+import com.f1x.mtcdtools.storage.exceptions.DuplicatedEntryException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * Created by COMPUTER on 2017-01-16.
+ * Created by COMPUTER on 2017-01-29.
  */
 
-public class ActionsListStorage extends Storage {
-    public ActionsListStorage(FileReader reader, FileWriter writer) {
+public class ActionsListsStorage extends Storage<String, ActionsList> {
+    public ActionsListsStorage(FileReader reader, FileWriter writer) {
         super(reader, writer);
-
-        mActionsLists = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);;
     }
 
-    public void read() throws JSONException, IOException {
+    @Override
+    public void read() throws JSONException, IOException, DuplicatedEntryException {
         JSONArray actionsSequencesArray = read(STORAGE_FILE_NAME, ROOT_ARRAY_NAME);
 
         for (int i = 0; i < actionsSequencesArray.length(); ++i) {
             ActionsList actionsList = new ActionsList(actionsSequencesArray.getJSONObject(i));
-            mActionsLists.put(actionsList.getName(), actionsList);
+            put(actionsList.getName(), actionsList);
         }
     }
 
-    private void write() throws IOException, JSONException {
+    @Override
+    public void write() throws JSONException, IOException {
         JSONArray actionsSequencesArray = new JSONArray();
 
-        for(Map.Entry<String, ActionsList> entry : mActionsLists.entrySet()) {
+        for(Map.Entry<String, ActionsList> entry : mItems.entrySet()) {
             actionsSequencesArray.put(entry.getValue().toJson());
         }
 
         write(STORAGE_FILE_NAME, ROOT_ARRAY_NAME, actionsSequencesArray);
     }
 
-    public ActionsList getActionsList(String actionsListName) {
-        return mActionsLists.containsKey(actionsListName) ? mActionsLists.get(actionsListName) : null;
+    @Override
+    protected TreeMap<String, ActionsList> createContainer() {
+        return new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     }
 
-    public boolean hasActionsList(String actionsListName) {
-        return mActionsLists.containsKey(actionsListName);
+    @Override
+    protected boolean keysEqual(String left, String right) {
+        return left.equalsIgnoreCase(right);
     }
-
-    private final Map<String, ActionsList> mActionsLists;
 
     public static final String STORAGE_FILE_NAME = "actionsSequences.json";
     public static final String ROOT_ARRAY_NAME = "actionsSequences";

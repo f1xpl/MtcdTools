@@ -1,7 +1,5 @@
 package com.f1x.mtcdtools.actions;
 
-import android.content.Context;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 

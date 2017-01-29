@@ -14,7 +14,7 @@ import com.f1x.mtcdtools.actions.KeyAction;
 import com.f1x.mtcdtools.actions.LaunchAction;
 import com.f1x.mtcdtools.actions.StartActivityAction;
 import com.f1x.mtcdtools.activities.ServiceActivity;
-import com.f1x.mtcdtools.adapters.ActionsNamesArrayAdapter;
+import com.f1x.mtcdtools.adapters.NamesArrayAdapter;
 
 import org.json.JSONException;
 
@@ -28,7 +28,7 @@ public class ManageActionsActivity extends ServiceActivity {
         setContentView(R.layout.activity_manage_actions);
 
         ListView mActionsListView = (ListView)this.findViewById(R.id.listViewActions);
-        mActionsNamesArrayAdapter = new ActionsNamesArrayAdapter(this);
+        mActionsNamesArrayAdapter = new NamesArrayAdapter(this);
         mActionsListView.setAdapter(mActionsNamesArrayAdapter);
 
         mActionsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -51,10 +51,10 @@ public class ManageActionsActivity extends ServiceActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 String actionName = mActionsNamesArrayAdapter.getItem(position);
-                Action action = mServiceBinder.getActionsStorage().getAction(actionName);
+                Action action = mServiceBinder.getActionsStorage().getItem(actionName);
 
                 Intent intent = new Intent();
-                intent.putExtra(KeyActionActivity.ACTION_NAME_PARAMETER, actionName);
+                intent.putExtra(ActionActivity.ACTION_NAME_PARAMETER, actionName);
 
                 switch(action.getType()) {
                     case KeyAction.ACTION_TYPE:
@@ -70,7 +70,7 @@ public class ManageActionsActivity extends ServiceActivity {
                         intent.setClass(ManageActionsActivity.this, StartActivityActionActivity.class);
                         break;
                     default:
-                        Toast.makeText(ManageActionsActivity.this, ManageActionsActivity.this.getText(R.string.UnknownActionType), Toast.LENGTH_LONG).show();
+                        Toast.makeText(ManageActionsActivity.this, ManageActionsActivity.this.getText(R.string.UnknownObjectType), Toast.LENGTH_LONG).show();
                         return;
                 }
 
@@ -84,14 +84,14 @@ public class ManageActionsActivity extends ServiceActivity {
         super.onResume();
 
         if(mServiceBinder != null) {
-            mActionsNamesArrayAdapter.reset(mServiceBinder.getActionsStorage().getActions().keySet());
+            mActionsNamesArrayAdapter.reset(mServiceBinder.getActionsStorage().getItems().keySet());
         }
     }
 
     @Override
     protected void onServiceConnected() {
-        mActionsNamesArrayAdapter.reset(mServiceBinder.getActionsStorage().getActions().keySet());
+        mActionsNamesArrayAdapter.reset(mServiceBinder.getActionsStorage().getItems().keySet());
     }
 
-    ActionsNamesArrayAdapter mActionsNamesArrayAdapter;
+    NamesArrayAdapter mActionsNamesArrayAdapter;
 }

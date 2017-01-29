@@ -24,7 +24,7 @@ public class KeysSequenceConverterTest {
 
     @Test
     public void test_Conversion() throws JSONException {
-        List<Integer> keysSequence = KeysSequenceConverter.fromJson(mKeysSequenceJsonArray);
+        List<Integer> keysSequence = KeysSequenceConverter.fromJsonArray(mKeysSequenceJsonArray);
         assertEquals(mKeysSequenceJsonArray.length(), keysSequence.size());
         for(int i = 0; i < mKeysSequenceJsonArray.length(); ++i) {
             assertEquals(mKeysSequenceJsonArray.get(i), keysSequence.get(i));

@@ -1,7 +1,6 @@
 package com.f1x.mtcdtools.actions;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import org.json.JSONException;

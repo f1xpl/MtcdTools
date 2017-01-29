@@ -8,13 +8,13 @@ import android.widget.Toast;
 
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.input.PressedKeysSequenceManager;
-import com.f1x.mtcdtools.storage.ActionsListStorage;
+import com.f1x.mtcdtools.storage.ActionsListsStorage;
 import com.f1x.mtcdtools.storage.ActionsStorage;
 import com.f1x.mtcdtools.storage.FileReader;
 import com.f1x.mtcdtools.storage.FileWriter;
 import com.f1x.mtcdtools.storage.KeysSequenceBindingsStorage;
 import com.f1x.mtcdtools.storage.exceptions.DuplicatedEntryException;
-import com.f1x.mtcdtools.storage.exceptions.ActionCreationFailed;
+import com.f1x.mtcdtools.storage.exceptions.EntryCreationFailed;
 
 import org.json.JSONException;
 
@@ -33,8 +33,8 @@ public class MtcdService extends android.app.Service {
 
         FileReader fileReader = new FileReader(this);
         FileWriter fileWriter = new FileWriter(this);
-        mActionsStorage = new ActionsStorage(fileReader, fileWriter, this);
-        mActionsListStorage = new ActionsListStorage(fileReader, fileWriter);
+        mActionsStorage = new ActionsStorage(fileReader, fileWriter);
+        mActionsListsStorage = new ActionsListsStorage(fileReader, fileWriter);
         mKeysSequenceBindingsStorage = new KeysSequenceBindingsStorage(fileReader, fileWriter);
         mPressedKeysSequenceManager = new PressedKeysSequenceManager();
     }
@@ -66,13 +66,13 @@ public class MtcdService extends android.app.Service {
         if(!mServiceInitialized) {
             try {
                 mActionsStorage.read();
-                mActionsListStorage.read();
+                mActionsListsStorage.read();
                 mKeysSequenceBindingsStorage.read();
                 registerReceiver(mPressedKeysSequenceManager, mPressedKeysSequenceManager.getIntentFilter());
 
                 mServiceInitialized = true;
                 startForeground(1555, createNotification());
-            } catch (JSONException | IOException | DuplicatedEntryException | ActionCreationFailed e) {
+            } catch (JSONException | IOException | DuplicatedEntryException | EntryCreationFailed e) {
                 e.printStackTrace();
                 Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
             }
@@ -93,7 +93,7 @@ public class MtcdService extends android.app.Service {
     private boolean mForceRestart;
     private boolean mServiceInitialized;
     private ActionsStorage mActionsStorage;
-    private ActionsListStorage mActionsListStorage;
+    private ActionsListsStorage mActionsListsStorage;
     private KeysSequenceBindingsStorage mKeysSequenceBindingsStorage;
     private PressedKeysSequenceManager mPressedKeysSequenceManager;
 
@@ -109,8 +109,8 @@ public class MtcdService extends android.app.Service {
         }
 
         @Override
-        public ActionsListStorage getActionsListStorage() {
-            return mActionsListStorage;
+        public ActionsListsStorage getActionsListsStorage() {
+            return mActionsListsStorage;
         }
 
         @Override

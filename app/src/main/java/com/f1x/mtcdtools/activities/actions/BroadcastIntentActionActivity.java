@@ -40,7 +40,7 @@ public class BroadcastIntentActionActivity extends CustomIntentActionActivity {
         BroadcastIntentAction broadcastIntentAction = (BroadcastIntentAction)action;
 
         if(broadcastIntentAction == null) {
-            Toast.makeText(this, this.getText(R.string.UnknownActionType), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, this.getText(R.string.UnknownObjectType), Toast.LENGTH_LONG).show();
             finish();
         } else {
             mBroadcastPermissionEditText.setText(broadcastIntentAction.getPermissions());

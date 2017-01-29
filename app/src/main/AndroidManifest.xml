@@ -35,7 +35,11 @@
         <activity android:name=".activities.actions.BroadcastIntentActionActivity" />
         <activity android:name=".activities.ObtainKeysSequenceActivity" />
         <activity android:name=".activities.actions.ManageActionsActivity" />
-        <activity android:name=".activities.SelectActionActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" android:screenOrientation="landscape" />
+        <activity
+            android:name=".activities.SelectActionActivity"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name=".activities.ManageActionsListsActivity"></activity>
     </application>
 
 </manifest>

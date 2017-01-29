@@ -1,15 +1,11 @@
 package com.f1x.mtcdtools.activities.actions;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.StartActivityButtonClickListener;
-import com.f1x.mtcdtools.activities.actions.BroadcastIntentActionActivity;
-import com.f1x.mtcdtools.activities.actions.LaunchActionActivity;
-import com.f1x.mtcdtools.activities.actions.StartActivityActionActivity;
-import com.f1x.mtcdtools.activities.actions.KeyActionActivity;
 
 public class CreateActionActivity extends AppCompatActivity {
 

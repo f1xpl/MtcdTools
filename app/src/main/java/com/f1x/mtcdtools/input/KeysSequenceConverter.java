@@ -21,7 +21,7 @@ public class KeysSequenceConverter {
         return jsonArray;
     }
 
-    public static List<Integer> fromJson(JSONArray array) throws JSONException {
+    public static List<Integer> fromJsonArray(JSONArray array) throws JSONException {
         List<Integer> keysSequence = new ArrayList<>();
 
         for(int i = 0; i < array.length(); ++i) {
