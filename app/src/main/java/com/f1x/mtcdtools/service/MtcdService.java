@@ -74,7 +74,7 @@ public class MtcdService extends android.app.Service {
 
                 mPressedKeysSequenceManager.pushListener(mDispatcher);
                 mServiceInitialized = true;
-                //startForeground(1555, createNotification());
+                startForeground(1555, createNotification());
             } catch (JSONException | IOException | DuplicatedEntryException | EntryCreationFailed e) {
                 e.printStackTrace();
                 Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
@@ -88,7 +88,7 @@ public class MtcdService extends android.app.Service {
         return new NotificationCompat.Builder(this)
                 .setContentTitle(getString(R.string.app_name))
                 .setContentText(getString(R.string.MtcdServiceDescription))
-                .setSmallIcon(R.drawable.notificationicon)
+                .setSmallIcon(R.drawable.service_notification_icon)
                 .setOngoing(true)
                 .build();
     }

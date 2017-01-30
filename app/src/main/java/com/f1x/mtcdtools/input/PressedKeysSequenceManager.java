@@ -73,5 +73,5 @@ public class PressedKeysSequenceManager extends BroadcastReceiver {
     private static final int DEFAULT_KEY_CODE = -1;
     private static final String KEYCODE_PARAM_NAME = "keyCode";
     private static final String KEY_DOWN_ACTION_NAME = "com.microntek.irkeyDown";
-    private static final int WAIT_PRESS_DURATION_MS = 300;
+    private static final int WAIT_PRESS_DURATION_MS = 150;
 }

@@ -28,10 +28,11 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
         mActionsListView = (ListView)this.findViewById(R.id.listViewActions);
         mActionsListView.setAdapter(mActionsNamesArrayAdapter);
 
-        mActionExecutionProgressBar = (ProgressBar)this.findViewById(R.id.progressBarActionExecution);
-        mActionExecutionProgressBar.setMax(5);
+        //mActionExecutionProgressBar = (ProgressBar)this.findViewById(R.id.progressBarActionExecution);
+        //mActionExecutionProgressBar.setMax(5);
 
         mListIndexer = new ListIndexer();
+        mActionExecutionTimer.start();
     }
 
     @Override
@@ -62,9 +63,7 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
                 mActionsNamesArrayAdapter.reset(mActionsList.getActionNames());
                 mActionsNamesArrayAdapter.insert(this.getText(R.string.Cancel).toString(), 0);
                 mListIndexer.reset(mActionsNamesArrayAdapter.getCount());
-
-                mActionsListView.requestFocusFromTouch();
-                mActionsListView.setSelection(0);
+                mActionsListView.setItemChecked(0, true);
 
                 return;
             }
@@ -89,8 +88,7 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
                 }
 
                 mActionsListView.setItemChecked(index, true);
-                mActionsListView.requestFocusFromTouch();
-                mActionsListView.setSelection(index);
+
                 mActionExecutionTimer.cancel();
                 mActionExecutionTimer.start();
             }
@@ -108,7 +106,7 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
     CountDownTimer mActionExecutionTimer = new CountDownTimer(5000, 1000) {
         @Override
         public void onTick(long l) {
-            mActionExecutionProgressBar.incrementProgressBy((int)(l / 1000));
+            //mActionExecutionProgressBar.incrementProgressBy((int)(l / 1000));
         }
 
         @Override
@@ -120,15 +118,15 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
 
                 if(action != null) {
                     action.evaluate(SelectActionActivity.this);
-                } else {
-                    finish();
                 }
             }
+
+            finish();
         }
     };
 
     private ListView mActionsListView;
-    private ProgressBar mActionExecutionProgressBar;
+    //private ProgressBar mActionExecutionProgressBar;
 
     private ActionsList mActionsList;
     private String mActionsListName;

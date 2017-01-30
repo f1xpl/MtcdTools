@@ -1,13 +1,13 @@
 package com.f1x.mtcdtools.activities.actions;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.StartActivityButtonClickListener;
 
-public class CreateActionActivity extends AppCompatActivity {
+public class CreateActionActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

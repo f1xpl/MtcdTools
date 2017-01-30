@@ -44,4 +44,5 @@
     <string name="ObjectNotFound">Nie znaleziono obiektu</string>
     <string name="UnknownObjectType">Nieznany typ obiektu</string>
     <string name="CreatedActionsLists">Utworzone listy akcji</string>
+    <string name="ProvideKeysSequence">Wprowadź sekwencję klawiszy</string>
 </resources>

@@ -50,4 +50,5 @@
     <string name="SelectActionOrList">Select action or list of actions</string>
     <string name="ObjectAlreadyAdded">Object already added</string>
     <string name="CreatedActionsLists">Created actions lists</string>
+    <string name="ProvideKeysSequence">Please provide keys sequence</string>
 </resources>

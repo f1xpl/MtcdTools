@@ -45,7 +45,7 @@ public class Dispatcher implements KeysSequenceListener {
 
             if(actionsList != null) {
                 Intent intent = new Intent(mContext, SelectActionActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 intent.putExtra(SelectActionActivity.ACTIONS_LIST_NAME_PARAMETER, actionsList.getName());
                 mContext.startActivity(intent);
             }

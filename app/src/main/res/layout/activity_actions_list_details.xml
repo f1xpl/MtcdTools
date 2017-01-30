@@ -55,7 +55,7 @@
 
             <ListView
                 android:layout_width="match_parent"
-                android:layout_height="183dp"
+                android:layout_height="@dimen/min_list_view_height"
                 android:id="@+id/listViewActions" />
 
             <TextView
@@ -66,7 +66,7 @@
 
             <ListView
                 android:layout_width="match_parent"
-                android:layout_height="185dp"
+                android:layout_height="@dimen/min_list_view_height"
                 android:id="@+id/listViewKeysSequenceUp"
                 android:layout_weight="0.47" />
 
@@ -74,8 +74,7 @@
                 android:text="@string/ObtainKeysSequenceUp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/buttonObtainKeysSequenceUp"
-                android:layout_weight="1" />
+                android:id="@+id/buttonObtainKeysSequenceUp" />
 
             <TextView
                 android:text="@string/KeysSequenceDown"
@@ -85,15 +84,14 @@
 
             <ListView
                 android:layout_width="match_parent"
-                android:layout_height="185dp"
+                android:layout_height="@dimen/min_list_view_height"
                 android:id="@+id/listViewKeysSequenceDown" />
 
             <Button
                 android:text="@string/ObtainKeysSequenceDown"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/buttonObtainKeysSequenceDown"
-                android:layout_weight="1" />
+                android:id="@+id/buttonObtainKeysSequenceDown" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -113,7 +111,6 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/buttonSave"
                     android:layout_weight="1" />
-
             </LinearLayout>
 
         </LinearLayout>

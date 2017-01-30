@@ -6,7 +6,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/appicon"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -27,7 +27,7 @@
         </receiver>
 
         <activity android:name=".activities.actions.CreateActionActivity" />
-        <activity android:name=".activities.CreateBindingActivity" />
+        <activity android:name=".activities.BindingActivity" />
         <activity android:name=".activities.ActionsListActivity" />
         <activity android:name=".activities.actions.KeyActionActivity" />
         <activity android:name=".activities.actions.LaunchActionActivity" />
@@ -35,11 +35,10 @@
         <activity android:name=".activities.actions.BroadcastIntentActionActivity" />
         <activity android:name=".activities.ObtainKeysSequenceActivity" />
         <activity android:name=".activities.actions.ManageActionsActivity" />
-        <activity
-            android:name=".activities.SelectActionActivity"
-            android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name=".activities.ManageActionsListsActivity"></activity>
+        <activity android:name=".activities.SelectActionActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="landscape" />
+        <activity android:name=".activities.ManageActionsListsActivity" />
     </application>
 
 </manifest>
