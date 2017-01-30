@@ -37,6 +37,7 @@
         <activity android:name=".activities.actions.ManageActionsActivity" />
         <activity android:name=".activities.SelectActionActivity"
             android:launchMode="singleInstance"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:screenOrientation="landscape" />
         <activity android:name=".activities.ManageActionsListsActivity" />
     </application>

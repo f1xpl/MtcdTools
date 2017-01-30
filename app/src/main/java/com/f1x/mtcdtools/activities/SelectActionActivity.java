@@ -2,6 +2,8 @@ package com.f1x.mtcdtools.activities;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -10,7 +12,6 @@ import com.f1x.mtcdtools.ActionsList;
 import com.f1x.mtcdtools.ListIndexer;
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.actions.Action;
-import com.f1x.mtcdtools.adapters.NamesArrayAdapter;
 import com.f1x.mtcdtools.input.KeysSequenceListener;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
         setContentView(R.layout.activity_select_action);
 
         mActionsListName = this.getIntent().getStringExtra(ACTIONS_LIST_NAME_PARAMETER);
-        mActionsNamesArrayAdapter = new NamesArrayAdapter(this);
+        mActionsNamesArrayAdapter = new ArrayAdapter<String>(this, R.layout.action_name_row);
 
         mActionsListView = (ListView)this.findViewById(R.id.listViewActions);
         mActionsListView.setAdapter(mActionsNamesArrayAdapter);
@@ -60,10 +61,20 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
 
             if(mActionsList != null) {
                 mServiceBinder.getPressedKeysSequenceManager().pushListener(this);
-                mActionsNamesArrayAdapter.reset(mActionsList.getActionNames());
+                mActionsNamesArrayAdapter.clear();
+                mActionsNamesArrayAdapter.addAll(mActionsList.getActionNames());
                 mActionsNamesArrayAdapter.insert(this.getText(R.string.Cancel).toString(), 0);
                 mListIndexer.reset(mActionsNamesArrayAdapter.getCount());
-                mActionsListView.setItemChecked(0, true);
+
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mActionsListView.clearFocus();
+                        mActionsListView.requestFocusFromTouch();
+                        mActionsListView.setSelection(0);
+                    }
+                }, 200); //that is insane... Sometimes the listview is not yet drawed.
 
                 return;
             }
@@ -87,7 +98,8 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
                     return;
                 }
 
-                mActionsListView.setItemChecked(index, true);
+                mActionsListView.requestFocusFromTouch();
+                mActionsListView.setSelection(index);
 
                 mActionExecutionTimer.cancel();
                 mActionExecutionTimer.start();
@@ -130,7 +142,7 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
 
     private ActionsList mActionsList;
     private String mActionsListName;
-    private NamesArrayAdapter mActionsNamesArrayAdapter;
+    private ArrayAdapter<String> mActionsNamesArrayAdapter;
     private ListIndexer mListIndexer;
 
     public static final String ACTIONS_LIST_NAME_PARAMETER = "actionsListName";
