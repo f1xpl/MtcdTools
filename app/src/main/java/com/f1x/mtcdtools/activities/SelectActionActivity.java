@@ -5,7 +5,6 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.f1x.mtcdtools.ActionsList;
@@ -24,13 +23,10 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
         setContentView(R.layout.activity_select_action);
 
         mActionsListName = this.getIntent().getStringExtra(ACTIONS_LIST_NAME_PARAMETER);
-        mActionsNamesArrayAdapter = new ArrayAdapter<String>(this, R.layout.action_name_row);
+        mActionsNamesArrayAdapter = new ArrayAdapter<>(this, R.layout.action_name_row);
 
         mActionsListView = (ListView)this.findViewById(R.id.listViewActions);
         mActionsListView.setAdapter(mActionsNamesArrayAdapter);
-
-        //mActionExecutionProgressBar = (ProgressBar)this.findViewById(R.id.progressBarActionExecution);
-        //mActionExecutionProgressBar.setMax(5);
 
         mListIndexer = new ListIndexer();
         mActionExecutionTimer.start();
@@ -115,10 +111,9 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
 
     }
 
-    CountDownTimer mActionExecutionTimer = new CountDownTimer(5000, 1000) {
+    CountDownTimer mActionExecutionTimer = new CountDownTimer(5000, 5000) {
         @Override
         public void onTick(long l) {
-            //mActionExecutionProgressBar.incrementProgressBy((int)(l / 1000));
         }
 
         @Override
@@ -138,8 +133,6 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
     };
 
     private ListView mActionsListView;
-    //private ProgressBar mActionExecutionProgressBar;
-
     private ActionsList mActionsList;
     private String mActionsListName;
     private ArrayAdapter<String> mActionsNamesArrayAdapter;

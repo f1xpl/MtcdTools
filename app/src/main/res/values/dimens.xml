@@ -5,6 +5,4 @@
 
     <dimen name="action_name_padding">4dp</dimen>
     <dimen name="action_name_text_size">32dp</dimen>
-
-    <dimen name="min_list_view_height">172dp</dimen>
 </resources>

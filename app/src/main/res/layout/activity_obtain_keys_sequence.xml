@@ -28,7 +28,7 @@
 
             <ListView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/min_list_view_height"
+                android:layout_height="wrap_content"
                 android:id="@+id/listViewKeysSequence" />
 
             <LinearLayout

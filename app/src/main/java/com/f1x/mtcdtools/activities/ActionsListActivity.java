@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TabHost;
 import android.widget.Toast;
 
 import com.f1x.mtcdtools.ActionsList;
@@ -22,15 +23,42 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.List;
 
-public class ActionsListActivity extends ServiceActivity {
+/**
+ * Created by COMPUTER on 2017-01-31.
+ */
 
+public class ActionsListActivity extends ServiceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actions_list_details);
 
         // -----------------------------------------------------------------------------------------
+        TabHost tabHost = (TabHost)findViewById(R.id.tabHost);
+        tabHost.setup();
 
+        TabHost.TabSpec addActionsTab = tabHost.newTabSpec(this.getString(R.string.Actions));
+        addActionsTab.setContent(R.id.tabAddActions);
+        addActionsTab.setIndicator(this.getString(R.string.Actions));
+        tabHost.addTab(addActionsTab);
+
+        TabHost.TabSpec obtainKeysSequenceUpTab = tabHost.newTabSpec(this.getString(R.string.KeysSequenceUp));
+        obtainKeysSequenceUpTab.setContent(R.id.tabObtainKeysSequenceUp);
+        obtainKeysSequenceUpTab.setIndicator(this.getString(R.string.KeysSequenceUp));
+        tabHost.addTab(obtainKeysSequenceUpTab);
+
+        TabHost.TabSpec obtainKeysSequenceDownTab = tabHost.newTabSpec(this.getString(R.string.KeysSequenceDown));
+        obtainKeysSequenceDownTab.setContent(R.id.tabObtainKeysSequenceDown);
+        obtainKeysSequenceDownTab.setIndicator(this.getString(R.string.KeysSequenceDown));
+        tabHost.addTab(obtainKeysSequenceDownTab);
+
+        TabHost.TabSpec storeActionsListTab = tabHost.newTabSpec(this.getString(R.string.Name));
+        storeActionsListTab.setContent(R.id.tabSave);
+        storeActionsListTab.setIndicator(this.getString(R.string.Name));
+        tabHost.addTab(storeActionsListTab);
+        // -----------------------------------------------------------------------------------------
+
+        // -----------------------------------------------------------------------------------------
         mKeysSequenceUpArrayAdapter = new KeysSequenceArrayAdapter(this);
         ListView keysSequenceUpListView = (ListView)this.findViewById(R.id.listViewKeysSequenceUp);
         keysSequenceUpListView.setAdapter(mKeysSequenceUpArrayAdapter);
@@ -42,9 +70,9 @@ public class ActionsListActivity extends ServiceActivity {
                 startActivityForResult(new Intent(ActionsListActivity.this, ObtainKeysSequenceActivity.class), REQUEST_CODE_KEYS_SEQUENCE_UP);
             }
         });
-
         // -----------------------------------------------------------------------------------------
 
+        // -----------------------------------------------------------------------------------------
         mKeysSequenceDownArrayAdapter = new KeysSequenceArrayAdapter(this);
         ListView keysSequenceDownListView = (ListView)this.findViewById(R.id.listViewKeysSequenceDown);
         keysSequenceDownListView.setAdapter(mKeysSequenceDownArrayAdapter);
@@ -56,9 +84,9 @@ public class ActionsListActivity extends ServiceActivity {
                 startActivityForResult(new Intent(ActionsListActivity.this, ObtainKeysSequenceActivity.class), REQUEST_CODE_KEYS_SEQUENCE_DOWN);
             }
         });
-
         // -----------------------------------------------------------------------------------------
 
+        // -----------------------------------------------------------------------------------------
         mActionsNamesArrayAdapter = new NamesArrayAdapter(this);
         final Spinner actionsSpinner = (Spinner)this.findViewById(R.id.spinnerActions);
         actionsSpinner.setAdapter(mActionsNamesArrayAdapter);
@@ -89,15 +117,13 @@ public class ActionsListActivity extends ServiceActivity {
                 }
             }
         });
-
         // -----------------------------------------------------------------------------------------
 
+        // -----------------------------------------------------------------------------------------
         mEditActionsListName = this.getIntent().getStringExtra(ACTIONS_LIST_NAME_PARAMETER);
         mEditMode = mEditActionsListName != null;
 
-        mActionsListNameEditText = (EditText)this.findViewById(R.id.editTextActionsListName);
-
-        // -----------------------------------------------------------------------------------------
+        mActionsListNameEditText = (EditText)this.findViewById(R.id.editTextName);
 
         Button cancelButton = (Button)this.findViewById(R.id.buttonCancel);
         cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -120,6 +146,7 @@ public class ActionsListActivity extends ServiceActivity {
                 }
             }
         });
+        // -----------------------------------------------------------------------------------------
     }
 
     private void storeActionsList(String actionsListName) {
@@ -179,11 +206,11 @@ public class ActionsListActivity extends ServiceActivity {
     private String mEditActionsListName;
     private boolean mEditMode;
 
-    EditText mActionsListNameEditText;
-    KeysSequenceArrayAdapter mKeysSequenceUpArrayAdapter;
-    KeysSequenceArrayAdapter mKeysSequenceDownArrayAdapter;
-    NamesArrayAdapter mActionsNamesArrayAdapter;
-    NamesArrayAdapter mAddedActionsNamesArrayAdapter;
+    private EditText mActionsListNameEditText;
+    private KeysSequenceArrayAdapter mKeysSequenceUpArrayAdapter;
+    private KeysSequenceArrayAdapter mKeysSequenceDownArrayAdapter;
+    private NamesArrayAdapter mActionsNamesArrayAdapter;
+    private NamesArrayAdapter mAddedActionsNamesArrayAdapter;
 
     public static final String ACTIONS_LIST_NAME_PARAMETER = "actionName";
     private static int REQUEST_CODE_KEYS_SEQUENCE_UP = 100;

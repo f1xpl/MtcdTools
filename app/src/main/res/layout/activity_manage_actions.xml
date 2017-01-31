@@ -20,7 +20,7 @@
                     android:text="@string/CreatedActions" />
                 <ListView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/min_list_view_height"
+                    android:layout_height="match_parent"
                     android:id="@+id/listViewActions" />
         </LinearLayout>
 </RelativeLayout>

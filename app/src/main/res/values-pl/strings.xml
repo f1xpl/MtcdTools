@@ -45,4 +45,5 @@
     <string name="UnknownObjectType">Nieznany typ obiektu</string>
     <string name="CreatedActionsLists">Utworzone listy akcji</string>
     <string name="ProvideKeysSequence">Wprowadź sekwencję klawiszy</string>
+    <string name="Name">Nazwa</string>
 </resources>
