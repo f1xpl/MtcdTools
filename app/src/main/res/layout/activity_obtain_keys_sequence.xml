@@ -1,62 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_obtain_keys_sequence"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.f1x.mtcdtools.activities.ObtainKeysSequenceActivity">
-
-    <ScrollView
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="@dimen/layout_spacing">
+    <TextView
+        android:layout_marginBottom="@dimen/element_spacing"
+        android:text="@string/KeysSequence"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewKeysSequence" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+    <ListView
+        android:layout_marginBottom="@dimen/element_spacing"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/listViewKeysSequence" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:text="@string/Cancel"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:id="@+id/buttonCancel"
+            android:layout_weight="1" />
 
-            <TextView
-                android:text="@string/KeysSequence"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textViewKeysSequence" />
+        <Button
+            android:text="@string/Reset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonReset"
+            android:layout_weight="1" />
 
-            <ListView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/listViewKeysSequence" />
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <Button
-                    android:text="@string/Cancel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/buttonCancel"
-                    android:layout_weight="1" />
-
-                <Button
-                    android:text="@string/Reset"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/buttonReset"
-                    android:layout_weight="1" />
-
-                <Button
-                    android:text="@string/Save"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/buttonSave"
-                    android:layout_weight="1" />
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
-</RelativeLayout>
+        <Button
+            android:text="@string/Save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonSave"
+            android:layout_weight="1" />
+    </LinearLayout>
+</LinearLayout>

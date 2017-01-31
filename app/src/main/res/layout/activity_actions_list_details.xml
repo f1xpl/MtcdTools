@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_margin="@dimen/layout_spacing"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <TabHost
         android:id="@+id/tabHost"
@@ -34,12 +36,14 @@
                     android:orientation="vertical">
 
                     <Spinner
+                        android:layout_marginBottom="@dimen/element_spacing"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:spinnerMode="dialog"
                         android:id="@+id/spinnerActions" />
 
                     <Button
+                        android:layout_marginBottom="@dimen/element_spacing"
                         android:text="@string/AddAction"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -59,6 +63,7 @@
                     android:orientation="vertical">
 
                     <ListView
+                        android:layout_marginBottom="@dimen/element_spacing"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -78,6 +83,7 @@
                     android:orientation="vertical">
 
                     <ListView
+                        android:layout_marginBottom="@dimen/element_spacing"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -97,6 +103,7 @@
                     android:orientation="vertical">
 
                     <EditText
+                        android:layout_marginBottom="@dimen/element_spacing"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
@@ -128,4 +135,4 @@
             </FrameLayout>
         </LinearLayout>
     </TabHost>
-</RelativeLayout>
+</LinearLayout>

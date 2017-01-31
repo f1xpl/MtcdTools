@@ -1,104 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/activity_create_new_binding"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.f1x.mtcdtools.activities.BindingActivity">
+    android:layout_margin="@dimen/layout_spacing"
+    android:orientation="vertical">
 
-    <ScrollView
+    <RadioGroup
+        android:layout_marginBottom="@dimen/element_spacing"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <LinearLayout
+        <RadioButton
+            android:text="@string/ActionsList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_weight="1"
+            android:id="@+id/radioButtonActionsList"/>
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+        <RadioButton
+            android:text="@string/Action"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/radioButtonAction"/>
+    </RadioGroup>
 
-                <RadioGroup
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_weight="1" >
+    <Spinner
+        android:layout_marginBottom="@dimen/element_spacing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dialog"
+        android:id="@+id/spinnerNames" />
 
-                    <RadioButton
-                        android:text="@string/ActionsList"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/radioButtonActionsList"
-                        android:layout_weight="1" />
+    <TextView
+        android:layout_marginBottom="@dimen/element_spacing"
+        android:text="@string/KeysSequence"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewKeysSequence" />
 
-                    <RadioButton
-                        android:text="@string/Action"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/radioButtonAction"
-                        android:layout_weight="1" />
-                </RadioGroup>
+    <ListView
+        android:layout_marginBottom="@dimen/element_spacing"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/listViewKeysSequence" />
 
-            </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+        <Button
+            android:text="@string/Cancel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/buttonCancel"/>
 
-                <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:spinnerMode="dialog"
-                    android:id="@+id/spinnerNames" />
+        <Button
+            android:text="@string/ObtainKeysSequence"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/buttonObtainKeysSequence"/>
 
-            </LinearLayout>
+        <Button
+            android:text="@string/Save"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/buttonSave"/>
+    </LinearLayout>
 
-            <TextView
-                android:text="@string/KeysSequence"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textViewKeysSequence" />
-
-            <ListView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/listViewKeysSequence" />
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <Button
-                    android:text="@string/Cancel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/buttonCancel"
-                    android:layout_weight="1" />
-
-                <Button
-                    android:text="@string/ObtainKeysSequence"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/buttonObtainKeysSequence"
-                    android:layout_weight="1" />
-
-                <Button
-                    android:text="@string/Save"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/buttonSave"
-                    android:layout_weight="1" />
-            </LinearLayout>
-
-        </LinearLayout>
-    </ScrollView>
-</RelativeLayout>
+</LinearLayout>

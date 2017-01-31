@@ -5,4 +5,7 @@
     <dimen name="activity_horizontal_margin">64dp</dimen>
     <dimen name="action_name_text_size">64dp</dimen>
     <dimen name="action_name_padding">8dp</dimen>
+
+    <dimen name="layout_spacing">16dp</dimen>
+    <dimen name="element_spacing">16dp</dimen>
 </resources>

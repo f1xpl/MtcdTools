@@ -1,73 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".activities.MainActivity">
+    android:layout_margin="@dimen/layout_spacing"
+    android:fillViewport="true">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
-        <LinearLayout
+        <Button
+            android:text="@string/CreateNewAction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:id="@+id/buttonCreateNewAction"/>
 
-            <Button
-                android:text="@string/CreateNewAction"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true"
-                android:id="@+id/buttonCreateNewAction"
-                android:layout_alignParentEnd="true" />
+        <Button
+            android:text="@string/CreateNewActionsList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonCreateNewActionsList" />
 
-            <Button
-                android:text="@string/CreateNewActionsList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/buttonCreateNewAction"
-                android:layout_alignParentStart="true"
-                android:id="@+id/buttonCreateNewActionsList"
-                android:layout_alignParentEnd="true" />
+        <Button
+            android:text="@string/CreateNewBinding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonCreateNewBinding"/>
 
-            <Button
-                android:text="@string/CreateNewBinding"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_alignEnd="@+id/buttonCreateNewActionsList"
-                android:id="@+id/buttonCreateNewBinding"
-                android:layout_alignParentStart="true" />
+        <Button
+            android:text="@string/ManageActions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonManageActions" />
 
-            <Button
-                android:text="@string/ManageActions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/buttonManageActions" />
+        <Button
+            android:text="@string/ManageActionsLists"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonManageActionsLists" />
 
-            <Button
-                android:text="@string/ManageActionsLists"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/buttonManageActionsLists" />
-
-            <Button
-                android:text="@string/ApplicationSettings"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/buttonCreateNewBinding"
-                android:layout_alignParentStart="true"
-                android:id="@+id/buttonApplicationSettings"
-                android:layout_alignParentEnd="true" />
-
-        </LinearLayout>
-    </ScrollView>
-
-</RelativeLayout>
+        <Button
+            android:text="@string/ApplicationSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonApplicationSettings"/>
+    </LinearLayout>
+</ScrollView>
