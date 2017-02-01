@@ -45,9 +45,12 @@ public class ActionsListsStorage extends Storage<String, ActionsList> {
         return new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     }
 
-    @Override
-    protected boolean keysEqual(String left, String right) {
-        return left.equalsIgnoreCase(right);
+    public void removeActionFromActionsList(String actionName) throws IOException, JSONException {
+        for(Map.Entry<String, ActionsList> entry : mItems.entrySet()) {
+            entry.getValue().removeAction(actionName);
+        }
+
+        write();
     }
 
     public static final String STORAGE_FILE_NAME = "actionsSequences.json";

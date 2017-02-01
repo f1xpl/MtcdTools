@@ -9,6 +9,7 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -43,13 +44,31 @@ public class KeysSequenceBindingsStorage extends Storage<List<Integer>, KeysSequ
     }
 
     @Override
-    protected boolean keysEqual(List<Integer> left, List<Integer> right) {
-        return left.equals(right);
-    }
-
-    @Override
     protected Map<List<Integer>, KeysSequenceBinding> createContainer() {
         return new HashMap<>();
+    }
+
+    public void removeBindingsWithAction(String actionName) throws IOException, JSONException {
+        removeBindingWithTarget(KeysSequenceBinding.TARGET_TYPE_ACTION, actionName);
+    }
+
+    public void removeBindingsWithActionsList(String actionsListName) throws IOException, JSONException {
+        removeBindingWithTarget(KeysSequenceBinding.TARGET_TYPE_ACTIONS_LIST, actionsListName);
+    }
+
+    private void removeBindingWithTarget(String targetType, String targetName) throws IOException, JSONException {
+        Iterator<Map.Entry<List<Integer>, KeysSequenceBinding>> iter = mItems.entrySet().iterator();
+
+        while(iter.hasNext()) {
+            Map.Entry<List<Integer>, KeysSequenceBinding> entry = iter.next();
+
+            KeysSequenceBinding keysSequenceBinding = entry.getValue();
+            if(keysSequenceBinding.getTargetType().equals(targetType) && keysSequenceBinding.getTargetName().equals(targetName)) {
+                iter.remove();
+            }
+        }
+
+        write();
     }
 
     public static final String STORAGE_FILE_NAME = "keysSequenceBindings.json";

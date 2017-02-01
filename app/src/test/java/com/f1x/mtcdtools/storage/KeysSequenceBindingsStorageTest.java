@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -73,6 +75,26 @@ public class KeysSequenceBindingsStorageTest {
         storage.read();
         storage.write();
         verify(mMockFileWriter, times(1)).write(mKeysSequenceBindingsJson.toString(), KeysSequenceBindingsStorage.STORAGE_FILE_NAME, "UTF-8");
+    }
+
+    @Test
+    public void test_RemoveBindingWithTarget() throws IOException, JSONException, EntryCreationFailed, DuplicatedEntryException {
+        useDefaultData();
+
+        KeysSequenceBindingsStorage storage = new KeysSequenceBindingsStorage(mMockFileReader, mMockFileWriter);
+        storage.read();
+
+        storage.removeBindingsWithAction(mKeysSequenceBindings.get(0).getTargetName());
+        assertNotNull(storage.getItem(mKeysSequenceBindings.get(0).getKeysSequence()));
+
+        storage.removeBindingsWithActionsList(mKeysSequenceBindings.get(0).getTargetName());
+        assertNull(storage.getItem(mKeysSequenceBindings.get(0).getKeysSequence()));
+
+        storage.removeBindingsWithActionsList(mKeysSequenceBindings.get(1).getTargetName());
+        assertNotNull(storage.getItem(mKeysSequenceBindings.get(1).getKeysSequence()));
+
+        storage.removeBindingsWithAction(mKeysSequenceBindings.get(1).getTargetName());
+        assertNull(storage.getItem(mKeysSequenceBindings.get(1).getKeysSequence()));
     }
 
     @Mock

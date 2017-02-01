@@ -17,6 +17,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.TreeSet;
 
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -50,7 +53,7 @@ public class ActionsListsStorageTest {
         mActionsLists.add(new ActionsList("List2",
                 Arrays.asList(7, 8, 9),
                 Arrays.asList(0, 3, 9),
-                new TreeSet<>(Arrays.asList("action5", "action6", "action7"))));
+                new TreeSet<>(Arrays.asList("action5", "action6", "action7", "action2"))));
 
         mActionsListsArray = new JSONArray();
         mActionsListsJson = new JSONObject();
@@ -94,6 +97,24 @@ public class ActionsListsStorageTest {
 
         ActionsList anotherActionsList = mock(ActionsList.class);
         storage.insert(mActionsLists.get(0).getName().toUpperCase(), anotherActionsList);
+    }
+
+    @Test
+    public void test_RemoveActionFromActionsList() throws IOException, JSONException, EntryCreationFailed, DuplicatedEntryException {
+        useDefaultData();
+
+        ActionsListsStorage storage = new ActionsListsStorage(mMockFileReader, mMockFileWriter);
+        storage.read();
+
+        storage.removeActionFromActionsList("action2");
+        assertFalse(storage.getItem(mActionsLists.get(0).getName()).getActionNames().contains("action2"));
+        assertTrue(storage.getItem(mActionsLists.get(0).getName()).getActionNames().contains("action1"));
+        assertTrue(storage.getItem(mActionsLists.get(0).getName()).getActionNames().contains("action3"));
+
+        assertFalse(storage.getItem(mActionsLists.get(1).getName()).getActionNames().contains("action2"));
+        assertTrue(storage.getItem(mActionsLists.get(1).getName()).getActionNames().contains("action5"));
+        assertTrue(storage.getItem(mActionsLists.get(1).getName()).getActionNames().contains("action6"));
+        assertTrue(storage.getItem(mActionsLists.get(1).getName()).getActionNames().contains("action7"));
     }
 
     @Mock

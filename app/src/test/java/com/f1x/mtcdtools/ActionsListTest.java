@@ -14,6 +14,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 
 /**
  * Created by COMPUTER on 2017-01-16.
@@ -107,6 +109,16 @@ public class ActionsListTest {
         for(int i = 0; i < mKeysSequenceDownArray.length(); ++i) {
             assertEquals(mKeysSequenceDownArray.get(i), keysSequenceDown.get(i));
         }
+    }
+
+    @Test
+    public void test_RemoveAction() throws JSONException {
+        ActionsList actionsList = new ActionsList(mListJson);
+        actionsList.removeAction(mActionsArray.getString(1));
+
+        assertFalse(actionsList.getActionNames().contains(mActionsArray.getString(1)));
+        assertTrue(actionsList.getActionNames().contains(mActionsArray.getString(0)));
+        assertTrue(actionsList.getActionNames().contains(mActionsArray.getString(2)));
     }
 
     private String mListName;

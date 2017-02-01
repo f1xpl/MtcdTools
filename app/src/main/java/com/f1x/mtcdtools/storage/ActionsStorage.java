@@ -27,11 +27,6 @@ public class ActionsStorage extends Storage<String, Action> {
         return new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     }
 
-    @Override
-    protected boolean keysEqual(String left, String right) {
-        return left.equalsIgnoreCase(right);
-    }
-
     public void read() throws JSONException, IOException, DuplicatedEntryException, EntryCreationFailed {
         JSONArray actionsArray = read(STORAGE_FILE_NAME, ROOT_ARRAY_NAME);
 

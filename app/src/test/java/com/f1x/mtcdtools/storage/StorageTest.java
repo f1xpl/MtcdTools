@@ -36,11 +36,6 @@ public class StorageTest {
         }
 
         @Override
-        protected boolean keysEqual(Integer left, Integer right) {
-            return left == right;
-        }
-
-        @Override
         protected Map<Integer, Integer> createContainer() {
             return new HashMap<>();
         }

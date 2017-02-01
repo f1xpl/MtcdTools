@@ -79,7 +79,6 @@ public abstract class Storage<Key, Value> {
         }
     }
 
-    protected abstract boolean keysEqual(Key left, Key right);
     protected abstract Map<Key, Value> createContainer();
 
     protected final FileReader mReader;

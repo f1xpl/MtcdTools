@@ -31,6 +31,7 @@ public class ManageActionsListsActivity extends ServiceActivity {
                 try {
                     String actionName = mActionsListsNamesArrayAdapter.getItem(position);
                     mServiceBinder.getActionsListsStorage().remove(actionName);
+                    mServiceBinder.getKeysSequenceBindingsStorage().removeBindingsWithActionsList(actionName);
                     mActionsListsNamesArrayAdapter.remove(actionName);
                 } catch(IOException | JSONException e) {
                     e.printStackTrace();

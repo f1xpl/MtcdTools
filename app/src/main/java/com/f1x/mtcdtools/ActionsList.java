@@ -70,6 +70,11 @@ public class ActionsList {
         return mName;
     }
 
+    public void removeAction(String name) {
+        mActionNames.remove(name);
+
+    }
+
     private String mName;
     private List<Integer> mKeysSequenceUp;
     private List<Integer> mKeysSequenceDown;
