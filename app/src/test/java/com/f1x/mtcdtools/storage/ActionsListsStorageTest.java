@@ -20,6 +20,8 @@ import java.util.TreeSet;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -115,6 +117,43 @@ public class ActionsListsStorageTest {
         assertTrue(storage.getItem(mActionsLists.get(1).getName()).getActionNames().contains("action5"));
         assertTrue(storage.getItem(mActionsLists.get(1).getName()).getActionNames().contains("action6"));
         assertTrue(storage.getItem(mActionsLists.get(1).getName()).getActionNames().contains("action7"));
+
+        verify(mMockFileWriter, times(1)).write(any(String.class), eq(ActionsListsStorage.STORAGE_FILE_NAME), eq("UTF-8"));
+    }
+
+    @Test
+    public void test_ReplaceActionName() throws IOException, JSONException, EntryCreationFailed, DuplicatedEntryException {
+        useDefaultData();
+
+        ActionsListsStorage storage = new ActionsListsStorage(mMockFileReader, mMockFileWriter);
+        storage.read();
+
+        String newActionName = "newAction2";
+        storage.replaceActionName("action2", newActionName);
+        assertFalse(storage.getItem(mActionsLists.get(0).getName()).getActionNames().contains("action2"));
+        assertTrue(storage.getItem(mActionsLists.get(0).getName()).getActionNames().contains(newActionName));
+
+        assertFalse(storage.getItem(mActionsLists.get(1).getName()).getActionNames().contains("action2"));
+        assertTrue(storage.getItem(mActionsLists.get(1).getName()).getActionNames().contains(newActionName));
+
+        verify(mMockFileWriter, times(1)).write(any(String.class), eq(ActionsListsStorage.STORAGE_FILE_NAME), eq("UTF-8"));
+    }
+
+    @Test
+    public void test_ReplaceActionName_NonExistent() throws IOException, JSONException, EntryCreationFailed, DuplicatedEntryException {
+        useDefaultData();
+
+        ActionsListsStorage storage = new ActionsListsStorage(mMockFileReader, mMockFileWriter);
+        storage.read();
+
+        String nonExistentActionName = "nonExistentAction";
+        String newActionName = "newAction2";
+        storage.replaceActionName(newActionName, nonExistentActionName);
+
+        assertFalse(storage.getItem(mActionsLists.get(0).getName()).getActionNames().contains(nonExistentActionName));
+        assertFalse(storage.getItem(mActionsLists.get(1).getName()).getActionNames().contains(nonExistentActionName));
+
+        verify(mMockFileWriter, times(1)).write(any(String.class), eq(ActionsListsStorage.STORAGE_FILE_NAME), eq("UTF-8"));
     }
 
     @Mock

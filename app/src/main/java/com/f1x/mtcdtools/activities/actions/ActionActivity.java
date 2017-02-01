@@ -67,6 +67,8 @@ public abstract class ActionActivity extends ServiceActivity {
             if(action != null) {
                 if(mEditMode) {
                     mServiceBinder.getActionsStorage().replace(mEditActionName, actionName, action);
+                    mServiceBinder.getActionsListsStorage().replaceActionName(mEditActionName, actionName);
+                    mServiceBinder.getKeysSequenceBindingsStorage().replaceActionName(mEditActionName, actionName);
                 } else {
                     mServiceBinder.getActionsStorage().insert(actionName, action);
                 }
@@ -105,7 +107,7 @@ public abstract class ActionActivity extends ServiceActivity {
     protected EditText mActionNameEditText;
     protected String mEditActionName;
     protected boolean mEditMode;
-    private int mLayoutResId;
+    private final int mLayoutResId;
 
     public static final String ACTION_NAME_PARAMETER = "actionName";
 }

@@ -70,9 +70,16 @@ public class ActionsList {
         return mName;
     }
 
-    public void removeAction(String name) {
+    public void removeActionName(String name) {
         mActionNames.remove(name);
 
+    }
+
+    public void replaceActionName(String oldName, String newName) {
+        if(mActionNames.contains(oldName)) {
+            mActionNames.remove(oldName);
+            mActionNames.add(newName);
+        }
     }
 
     private String mName;

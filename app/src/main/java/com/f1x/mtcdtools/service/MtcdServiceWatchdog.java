@@ -10,7 +10,7 @@ import android.os.SystemClock;
  * Created by COMPUTER on 2016-08-16.
  */
 public class MtcdServiceWatchdog {
-    public static final void scheduleServiceRestart(Context context) {
+    public static void scheduleServiceRestart(Context context) {
         // WORKAROUND: Do not know why MTCD Android does not respect START_STICKY
 
         Intent restartServiceIntent = new Intent(context, MtcdService.class);

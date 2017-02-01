@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/activity_create_new_binding"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/layout_spacing"
@@ -38,8 +37,7 @@
         android:layout_marginBottom="@dimen/element_spacing"
         android:text="@string/KeysSequence"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textViewKeysSequence" />
+        android:layout_height="wrap_content" />
 
     <ListView
         android:layout_marginBottom="@dimen/element_spacing"

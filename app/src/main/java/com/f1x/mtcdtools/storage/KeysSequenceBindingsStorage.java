@@ -71,6 +71,26 @@ public class KeysSequenceBindingsStorage extends Storage<List<Integer>, KeysSequ
         write();
     }
 
+    public void replaceActionName(String oldName, String newName) throws IOException, JSONException {
+        replaceBindingTarget(KeysSequenceBinding.TARGET_TYPE_ACTION, oldName, newName);
+    }
+
+    public void replaceActionsListName(String oldName, String newName) throws IOException, JSONException {
+        replaceBindingTarget(KeysSequenceBinding.TARGET_TYPE_ACTIONS_LIST, oldName, newName);
+    }
+
+    private void replaceBindingTarget(String targetType, String oldName, String newName) throws IOException, JSONException {
+        for(Map.Entry<List<Integer>, KeysSequenceBinding> entry : mItems.entrySet()) {
+            KeysSequenceBinding keysSequenceBinding = entry.getValue();
+
+            if(keysSequenceBinding.getTargetType().equals(targetType) && keysSequenceBinding.getTargetName().equals(oldName)) {
+                keysSequenceBinding.setTargetName(newName);
+            }
+        }
+
+        write();
+    }
+
     public static final String STORAGE_FILE_NAME = "keysSequenceBindings.json";
     public static final String ROOT_ARRAY_NAME = "keysSequenceBindings";
 }

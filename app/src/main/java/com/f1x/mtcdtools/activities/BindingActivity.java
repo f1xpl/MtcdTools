@@ -173,5 +173,5 @@ public class BindingActivity extends ServiceActivity {
     private NamesArrayAdapter mNamesArrayAdapter;
     KeysSequenceArrayAdapter mKeysSequenceArrayAdapter;
 
-    public static String KEYS_SEQUENCE_NAME_PARAMETER = "keysSequence";
+    public static final String KEYS_SEQUENCE_NAME_PARAMETER = "keysSequence";
 }

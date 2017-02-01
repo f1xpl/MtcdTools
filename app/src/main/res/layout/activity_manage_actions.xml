@@ -9,7 +9,6 @@
             android:layout_marginBottom="@dimen/element_spacing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textViewActions"
             android:text="@string/CreatedActions" />
         <ListView
             android:layout_width="match_parent"

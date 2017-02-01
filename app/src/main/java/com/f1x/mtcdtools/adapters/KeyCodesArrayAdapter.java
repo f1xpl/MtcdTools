@@ -49,5 +49,5 @@ public class KeyCodesArrayAdapter extends ArrayAdapter<String> {
     }
 
     private final Map<String, Integer> mKeyCodesMap = new HashMap<>();
-    public static int INVALID_KEY = -1;
+    public static final int INVALID_KEY = -1;
 }

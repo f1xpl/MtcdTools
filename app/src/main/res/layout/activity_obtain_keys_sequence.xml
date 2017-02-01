@@ -8,8 +8,7 @@
         android:layout_marginBottom="@dimen/element_spacing"
         android:text="@string/KeysSequence"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textViewKeysSequence" />
+        android:layout_height="wrap_content" />
 
     <ListView
         android:layout_marginBottom="@dimen/element_spacing"

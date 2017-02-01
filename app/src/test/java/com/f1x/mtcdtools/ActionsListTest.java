@@ -112,13 +112,35 @@ public class ActionsListTest {
     }
 
     @Test
-    public void test_RemoveAction() throws JSONException {
+    public void test_RemoveActionName() throws JSONException {
         ActionsList actionsList = new ActionsList(mListJson);
-        actionsList.removeAction(mActionsArray.getString(1));
+        actionsList.removeActionName(mActionsArray.getString(1));
 
         assertFalse(actionsList.getActionNames().contains(mActionsArray.getString(1)));
         assertTrue(actionsList.getActionNames().contains(mActionsArray.getString(0)));
         assertTrue(actionsList.getActionNames().contains(mActionsArray.getString(2)));
+    }
+
+    @Test
+    public void test_ReplaceActionName() throws JSONException {
+        ActionsList actionsList = new ActionsList(mListJson);
+
+        String newActionName = "actionNewName";
+        actionsList.replaceActionName(mActionsArray.getString(1), newActionName);
+
+        assertFalse(actionsList.getActionNames().contains(mActionsArray.getString(1)));
+        assertTrue(actionsList.getActionNames().contains(newActionName));
+    }
+
+    @Test
+    public void test_ReplaceActionName_NonExistent() throws JSONException {
+        ActionsList actionsList = new ActionsList(mListJson);
+
+        String nonExistentActionName = "nonExistentAction";
+        String newActionName = "actionNewName";
+        actionsList.replaceActionName(nonExistentActionName, newActionName);
+
+        assertFalse(actionsList.getActionNames().contains(newActionName));
     }
 
     private String mListName;

@@ -86,7 +86,7 @@ public class ObtainKeysSequenceActivity extends ServiceActivity {
         super.onBackPressed();
     }
 
-    KeysSequenceListener mKeysSequenceListener = new KeysSequenceListener() {
+    private final KeysSequenceListener mKeysSequenceListener = new KeysSequenceListener() {
         @Override
         public void handleKeysSequence(List<Integer> keysSequence) {
         }

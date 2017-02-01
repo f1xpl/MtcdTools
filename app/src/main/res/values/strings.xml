@@ -19,7 +19,6 @@
     <string name="Save">Save</string>
     <string name="Cancel">Cancel</string>
 
-    <string name="ActionsListName">Actions list name</string>
     <string name="AddAction">Add action</string>
 
     <string name="Actions">Actions</string>
@@ -34,13 +33,9 @@
     <string name="BroadcastPermissions">Broadcast permissions</string>
     <string name="IntentPackage">Intent package</string>
     <string name="KeysSequence">Keys sequence</string>
-    <string name="AddedActions">Added actions</string>
     <string name="KeysSequenceUp">UP keys sequence</string>
     <string name="KeysSequenceDown">DOWN keys sequence</string>
-    <string name="ObtainKeysSequenceUp">Obtain UP keys sequence</string>
-    <string name="ObtainKeysSequenceDown">Obtain DOWN keys sequence</string>
     <string name="Reset">Reset</string>
-    <string name="CreateObjectFailed">Failed to create an object. Please check parameters.</string>
     <string name="EmptyNameError">Please provide name</string>
 
     <string name="MtcdServiceDescription">MtcdTools Service is now active</string>
@@ -48,7 +43,6 @@
     <string name="ServiceUnavailable">Service is unavailable</string>
     <string name="ObjectNotFound">Object not found</string>
     <string name="UnknownObjectType">Unknown object type</string>
-    <string name="SelectActionOrList">Select action or list of actions</string>
     <string name="ObjectAlreadyAdded">Object already added</string>
     <string name="CreatedActionsLists">Created actions lists</string>
     <string name="ProvideKeysSequence">Please provide keys sequence</string>

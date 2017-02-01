@@ -111,7 +111,7 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
 
     }
 
-    CountDownTimer mActionExecutionTimer = new CountDownTimer(5000, 5000) {
+    private final CountDownTimer mActionExecutionTimer = new CountDownTimer(5000, 5000) {
         @Override
         public void onTick(long l) {
         }

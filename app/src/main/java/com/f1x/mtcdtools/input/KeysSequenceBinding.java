@@ -29,6 +29,10 @@ public class KeysSequenceBinding {
         mTargetType = targetType;
     }
 
+    public void setTargetName(String name) {
+        mTargetName = name;
+    }
+
     public String getTargetType() {
         return mTargetType;
     }
@@ -57,7 +61,7 @@ public class KeysSequenceBinding {
 
     private final List<Integer> mKeysSequence;
     private final String mTargetType;
-    private final String mTargetName;
+    private String mTargetName;
 
     public static final String KEYS_SEQUENCE_PROPERTY = "keysSequence";
     public static final String TARGET_TYPE_PROPERTY = "targetType";

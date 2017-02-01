@@ -47,7 +47,15 @@ public class ActionsListsStorage extends Storage<String, ActionsList> {
 
     public void removeActionFromActionsList(String actionName) throws IOException, JSONException {
         for(Map.Entry<String, ActionsList> entry : mItems.entrySet()) {
-            entry.getValue().removeAction(actionName);
+            entry.getValue().removeActionName(actionName);
+        }
+
+        write();
+    }
+
+    public void replaceActionName(String oldName, String newName) throws IOException, JSONException {
+        for(Map.Entry<String, ActionsList> entry : mItems.entrySet()) {
+            entry.getValue().replaceActionName(oldName, newName);
         }
 
         write();

@@ -16,8 +16,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNotSame;
 import static junit.framework.Assert.assertNull;
+import static org.junit.Assert.assertNotEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -78,7 +83,33 @@ public class KeysSequenceBindingsStorageTest {
     }
 
     @Test
-    public void test_RemoveBindingWithTarget() throws IOException, JSONException, EntryCreationFailed, DuplicatedEntryException {
+    public void test_RemoveAction() throws IOException, JSONException, EntryCreationFailed, DuplicatedEntryException {
+        useDefaultData();
+
+        KeysSequenceBindingsStorage storage = new KeysSequenceBindingsStorage(mMockFileReader, mMockFileWriter);
+        storage.read();
+
+        storage.removeBindingsWithAction(mKeysSequenceBindings.get(1).getTargetName());
+        assertNull(storage.getItem(mKeysSequenceBindings.get(1).getKeysSequence()));
+
+        verify(mMockFileWriter, times(1)).write(any(String.class), eq(KeysSequenceBindingsStorage.STORAGE_FILE_NAME), eq("UTF-8"));
+    }
+
+    @Test
+    public void test_RemoveActionsList() throws IOException, JSONException, EntryCreationFailed, DuplicatedEntryException {
+        useDefaultData();
+
+        KeysSequenceBindingsStorage storage = new KeysSequenceBindingsStorage(mMockFileReader, mMockFileWriter);
+        storage.read();
+
+        storage.removeBindingsWithActionsList(mKeysSequenceBindings.get(0).getTargetName());
+        assertNull(storage.getItem(mKeysSequenceBindings.get(0).getKeysSequence()));
+
+        verify(mMockFileWriter, times(1)).write(any(String.class), eq(KeysSequenceBindingsStorage.STORAGE_FILE_NAME), eq("UTF-8"));
+    }
+
+    @Test
+    public void test_RemoveBindingWithTarget_WrongTargetType() throws IOException, JSONException, EntryCreationFailed, DuplicatedEntryException {
         useDefaultData();
 
         KeysSequenceBindingsStorage storage = new KeysSequenceBindingsStorage(mMockFileReader, mMockFileWriter);
@@ -87,14 +118,102 @@ public class KeysSequenceBindingsStorageTest {
         storage.removeBindingsWithAction(mKeysSequenceBindings.get(0).getTargetName());
         assertNotNull(storage.getItem(mKeysSequenceBindings.get(0).getKeysSequence()));
 
-        storage.removeBindingsWithActionsList(mKeysSequenceBindings.get(0).getTargetName());
-        assertNull(storage.getItem(mKeysSequenceBindings.get(0).getKeysSequence()));
-
         storage.removeBindingsWithActionsList(mKeysSequenceBindings.get(1).getTargetName());
         assertNotNull(storage.getItem(mKeysSequenceBindings.get(1).getKeysSequence()));
 
-        storage.removeBindingsWithAction(mKeysSequenceBindings.get(1).getTargetName());
-        assertNull(storage.getItem(mKeysSequenceBindings.get(1).getKeysSequence()));
+        verify(mMockFileWriter, times(2)).write(any(String.class), eq(KeysSequenceBindingsStorage.STORAGE_FILE_NAME), eq("UTF-8"));
+    }
+
+    @Test
+    public void test_ReplaceActionName() throws IOException, JSONException, EntryCreationFailed, DuplicatedEntryException {
+        useDefaultData();
+
+        KeysSequenceBindingsStorage storage = new KeysSequenceBindingsStorage(mMockFileReader, mMockFileWriter);
+        storage.read();
+
+        String newActionName = "actionNewName";
+        storage.replaceActionName(mKeysSequenceBindings.get(1).getTargetName(), newActionName);
+        assertEquals(newActionName, storage.getItem(mKeysSequenceBindings.get(1).getKeysSequence()).getTargetName());
+
+        verify(mMockFileWriter, times(1)).write(any(String.class), eq(KeysSequenceBindingsStorage.STORAGE_FILE_NAME), eq("UTF-8"));
+    }
+
+    @Test
+    public void test_ReplaceActionName_WrongTargetType() throws IOException, JSONException, EntryCreationFailed, DuplicatedEntryException {
+        useDefaultData();
+
+        KeysSequenceBindingsStorage storage = new KeysSequenceBindingsStorage(mMockFileReader, mMockFileWriter);
+        storage.read();
+
+        String newActionName = "actionNewName";
+        storage.replaceActionName(mKeysSequenceBindings.get(0).getTargetName(), newActionName);
+        assertNotEquals(newActionName, storage.getItem(mKeysSequenceBindings.get(0).getKeysSequence()).getTargetName());
+
+        verify(mMockFileWriter, times(1)).write(any(String.class), eq(KeysSequenceBindingsStorage.STORAGE_FILE_NAME), eq("UTF-8"));
+    }
+
+    @Test
+    public void test_ReplaceActionName_NonExistentName() throws IOException, JSONException, EntryCreationFailed, DuplicatedEntryException {
+        useDefaultData();
+
+        KeysSequenceBindingsStorage storage = new KeysSequenceBindingsStorage(mMockFileReader, mMockFileWriter);
+        storage.read();
+
+        String nonExistentActionName = "nonExistentAction";
+        String newActionName = "actionNewName";
+        storage.replaceActionName(nonExistentActionName, newActionName);
+
+        for(int i = 0; i < mKeysSequenceBindings.size(); ++i){
+            assertNotSame(newActionName, storage.getItem(mKeysSequenceBindings.get(i).getKeysSequence()).getTargetName());
+        }
+
+        verify(mMockFileWriter, times(1)).write(any(String.class), eq(KeysSequenceBindingsStorage.STORAGE_FILE_NAME), eq("UTF-8"));
+    }
+
+    @Test
+    public void test_ReplaceActionsListName() throws IOException, JSONException, EntryCreationFailed, DuplicatedEntryException {
+        useDefaultData();
+
+        KeysSequenceBindingsStorage storage = new KeysSequenceBindingsStorage(mMockFileReader, mMockFileWriter);
+        storage.read();
+
+        String newActionsListName = "actionsListNewName";
+        storage.replaceActionsListName(mKeysSequenceBindings.get(0).getTargetName(), newActionsListName);
+        assertEquals(newActionsListName, storage.getItem(mKeysSequenceBindings.get(0).getKeysSequence()).getTargetName());
+
+        verify(mMockFileWriter, times(1)).write(any(String.class), eq(KeysSequenceBindingsStorage.STORAGE_FILE_NAME), eq("UTF-8"));
+    }
+
+    @Test
+    public void test_ReplaceActionsListName_WrongTargetType() throws IOException, JSONException, EntryCreationFailed, DuplicatedEntryException {
+        useDefaultData();
+
+        KeysSequenceBindingsStorage storage = new KeysSequenceBindingsStorage(mMockFileReader, mMockFileWriter);
+        storage.read();
+
+        String newActionsListName = "actionsListNewName";
+        storage.replaceActionsListName(mKeysSequenceBindings.get(1).getTargetName(), newActionsListName);
+        assertNotEquals(newActionsListName, storage.getItem(mKeysSequenceBindings.get(1).getKeysSequence()).getTargetName());
+
+        verify(mMockFileWriter, times(1)).write(any(String.class), eq(KeysSequenceBindingsStorage.STORAGE_FILE_NAME), eq("UTF-8"));
+    }
+
+    @Test
+    public void test_ReplaceActionsListName_NonExistentName() throws IOException, JSONException, EntryCreationFailed, DuplicatedEntryException {
+        useDefaultData();
+
+        KeysSequenceBindingsStorage storage = new KeysSequenceBindingsStorage(mMockFileReader, mMockFileWriter);
+        storage.read();
+
+        String nonExistentActionsListName = "nonExistentActionsList";
+        String newActionsListName = "actionsListNewName";
+        storage.replaceActionsListName(nonExistentActionsListName, newActionsListName);
+
+        for(int i = 0; i < mKeysSequenceBindings.size(); ++i){
+            assertNotSame(newActionsListName, storage.getItem(mKeysSequenceBindings.get(i).getKeysSequence()).getTargetName());
+        }
+
+        verify(mMockFileWriter, times(1)).write(any(String.class), eq(KeysSequenceBindingsStorage.STORAGE_FILE_NAME), eq("UTF-8"));
     }
 
     @Mock

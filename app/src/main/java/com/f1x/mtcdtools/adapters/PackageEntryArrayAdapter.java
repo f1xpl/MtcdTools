@@ -12,8 +12,6 @@ import android.widget.TextView;
 
 import com.f1x.mtcdtools.R;
 
-import java.util.List;
-
 /**
  * Created by COMPUTER on 2016-08-08.
  */
@@ -21,18 +19,6 @@ public class PackageEntryArrayAdapter extends ArrayAdapter<PackageEntry> {
     public PackageEntryArrayAdapter(Context context) {
         super(context, R.layout.layout_package_row, R.id.packageName);
         mPackageManager = context.getPackageManager();
-    }
-
-    public void reset(List<String> packageNames) {
-        clear();
-
-        for(String packageName : packageNames) {
-            PackageEntry packageEntry = getPackageEntry(packageName);
-
-            if(packageEntry != null) {
-                add(packageEntry);
-            }
-        }
     }
 
     @Override

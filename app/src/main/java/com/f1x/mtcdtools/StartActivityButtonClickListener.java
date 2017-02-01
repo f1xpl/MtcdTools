@@ -22,5 +22,5 @@ public class StartActivityButtonClickListener implements Button.OnClickListener 
     }
 
     private final Class<? extends Activity> mActivity;
-    Context mContext;
+    private final Context mContext;
 }

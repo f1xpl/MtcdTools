@@ -7,7 +7,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textViewActionsLists"
         android:layout_marginBottom="@dimen/element_spacing"
         android:text="@string/CreatedActionsLists" />
     <ListView

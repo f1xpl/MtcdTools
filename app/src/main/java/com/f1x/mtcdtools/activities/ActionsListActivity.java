@@ -158,6 +158,7 @@ public class ActionsListActivity extends ServiceActivity {
 
             if(mEditMode) {
                 mServiceBinder.getActionsListsStorage().replace(mEditActionsListName, actionsListName, actionsList);
+                mServiceBinder.getKeysSequenceBindingsStorage().replaceActionsListName(mEditActionsListName, actionsListName);
             } else {
                 mServiceBinder.getActionsListsStorage().insert(actionsListName, actionsList);
             }
@@ -213,6 +214,6 @@ public class ActionsListActivity extends ServiceActivity {
     private NamesArrayAdapter mAddedActionsNamesArrayAdapter;
 
     public static final String ACTIONS_LIST_NAME_PARAMETER = "actionName";
-    private static int REQUEST_CODE_KEYS_SEQUENCE_UP = 100;
-    private static int REQUEST_CODE_KEYS_SEQUENCE_DOWN = 101;
+    private static final int REQUEST_CODE_KEYS_SEQUENCE_UP = 100;
+    private static final int REQUEST_CODE_KEYS_SEQUENCE_DOWN = 101;
 }

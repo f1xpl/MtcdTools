@@ -23,8 +23,7 @@
             android:layout_marginBottom="@dimen/element_spacing"
             android:text="@string/KeyCodes"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textViewKeyCodes" />
+            android:layout_height="wrap_content" />
 
         <Spinner
             android:layout_marginBottom="@dimen/element_spacing"
