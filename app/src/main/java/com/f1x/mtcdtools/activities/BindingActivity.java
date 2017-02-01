@@ -17,6 +17,7 @@ import com.f1x.mtcdtools.input.KeysSequenceBinding;
 import com.f1x.mtcdtools.input.KeysSequenceConverter;
 import com.f1x.mtcdtools.storage.exceptions.DuplicatedEntryException;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.IOException;
@@ -28,6 +29,19 @@ public class BindingActivity extends ServiceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_binding_details);
+
+        String keysSequenceString = this.getIntent().getStringExtra(KEYS_SEQUENCE_NAME_PARAMETER);
+        mEditMode = keysSequenceString != null;
+
+        if(mEditMode) {
+            try {
+                mEditKeysSequence = KeysSequenceConverter.fromJsonArray(new JSONArray(keysSequenceString));
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+                finish();
+            }
+        }
 
         mNamesSpinner = (Spinner)this.findViewById(R.id.spinnerNames);
         mNamesArrayAdapter = new NamesArrayAdapter(this);
@@ -95,7 +109,13 @@ public class BindingActivity extends ServiceActivity {
             String targetType = mActionRadioButton.isChecked() ? KeysSequenceBinding.TARGET_TYPE_ACTION : KeysSequenceBinding.TARGET_TYPE_ACTIONS_LIST;
             String targetName = (String)mNamesSpinner.getSelectedItem();
             KeysSequenceBinding keysSequenceBinding = new KeysSequenceBinding(keysSequence, targetType, targetName);
-            mServiceBinder.getKeysSequenceBindingsStorage().insert(keysSequence, keysSequenceBinding);
+
+            if(mEditMode) {
+                mServiceBinder.getKeysSequenceBindingsStorage().replace(mEditKeysSequence, keysSequence, keysSequenceBinding);
+            } else {
+                mServiceBinder.getKeysSequenceBindingsStorage().insert(keysSequence, keysSequenceBinding);
+            }
+
             finish();
         } catch (JSONException | IOException e) {
             e.printStackTrace();
@@ -108,10 +128,29 @@ public class BindingActivity extends ServiceActivity {
 
     @Override
     protected void onServiceConnected() {
+        KeysSequenceBinding binding = null;
+
+        if(mEditMode) {
+            binding = mServiceBinder.getKeysSequenceBindingsStorage().getItem(mEditKeysSequence);
+
+            if(binding != null) {
+                mActionsListRadioButton.setChecked(binding.getTargetType().equals(KeysSequenceBinding.TARGET_TYPE_ACTIONS_LIST));
+                mActionRadioButton.setChecked(binding.getTargetType().equals(KeysSequenceBinding.TARGET_TYPE_ACTION));
+                mKeysSequenceArrayAdapter.reset(binding.getKeysSequence());
+            } else {
+                Toast.makeText(this, this.getText(R.string.ObjectNotFound), Toast.LENGTH_LONG).show();
+                finish();
+            }
+        }
+
         if(mActionsListRadioButton.isChecked()) {
             mNamesArrayAdapter.reset(mServiceBinder.getActionsListsStorage().getItems().keySet());
         } else if(mActionRadioButton.isChecked()) {
             mNamesArrayAdapter.reset(mServiceBinder.getActionsStorage().getItems().keySet());
+        }
+
+        if(binding != null) {
+            mNamesSpinner.setSelection(mNamesArrayAdapter.getPosition(binding.getTargetName()));
         }
     }
 
@@ -125,9 +164,14 @@ public class BindingActivity extends ServiceActivity {
         mKeysSequenceArrayAdapter.reset(keysSequence);
     }
 
+    private List<Integer> mEditKeysSequence;
+    private boolean mEditMode;
+
     private RadioButton mActionRadioButton;
     private RadioButton mActionsListRadioButton;
     private Spinner mNamesSpinner;
     private NamesArrayAdapter mNamesArrayAdapter;
     KeysSequenceArrayAdapter mKeysSequenceArrayAdapter;
+
+    public static String KEYS_SEQUENCE_NAME_PARAMETER = "keysSequence";
 }

@@ -35,6 +35,7 @@
         <activity android:name=".activities.actions.BroadcastIntentActionActivity" />
         <activity android:name=".activities.ObtainKeysSequenceActivity" />
         <activity android:name=".activities.actions.ManageActionsActivity" />
+        <activity android:name=".activities.ManageBindingsActivity" />
         <activity android:name=".activities.SelectActionActivity"
             android:launchMode="singleInstance"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"

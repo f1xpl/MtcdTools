@@ -41,6 +41,12 @@
             android:id="@+id/buttonManageActionsLists" />
 
         <Button
+            android:text="@string/ManageBindings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonManageBindings" />
+
+        <Button
             android:text="@string/ApplicationSettings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

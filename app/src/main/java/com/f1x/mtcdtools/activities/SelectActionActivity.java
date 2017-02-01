@@ -23,7 +23,7 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
         setContentView(R.layout.activity_select_action);
 
         mActionsListName = this.getIntent().getStringExtra(ACTIONS_LIST_NAME_PARAMETER);
-        mActionsNamesArrayAdapter = new ArrayAdapter<>(this, R.layout.action_name_row);
+        mActionsNamesArrayAdapter = new ArrayAdapter<>(this, R.layout.layout_action_name_row);
 
         mActionsListView = (ListView)this.findViewById(R.id.listViewActions);
         mActionsListView.setAdapter(mActionsNamesArrayAdapter);

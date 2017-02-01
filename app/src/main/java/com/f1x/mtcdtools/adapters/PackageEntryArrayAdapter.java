@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class PackageEntryArrayAdapter extends ArrayAdapter<PackageEntry> {
     public PackageEntryArrayAdapter(Context context) {
-        super(context, R.layout.package_row, R.id.packageName);
+        super(context, R.layout.layout_package_row, R.id.packageName);
         mPackageManager = context.getPackageManager();
     }
 

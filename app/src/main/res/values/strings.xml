@@ -6,6 +6,7 @@
     <string name="ApplicationSettings">Settings</string>
     <string name="ManageActions">Manage actions</string>
     <string name="ManageActionsLists">Manage actions lists</string>
+    <string name="ManageBindings">Manage bindings</string>
 
     <string name="CreateNewBroadcastIntentAction">Create a new Broadcast Intent action</string>
     <string name="CreateNewKeyAction">Create a new key action</string>
@@ -51,5 +52,6 @@
     <string name="ObjectAlreadyAdded">Object already added</string>
     <string name="CreatedActionsLists">Created actions lists</string>
     <string name="ProvideKeysSequence">Please provide keys sequence</string>
+    <string name="CreatedBindings">Created bindings</string>
     <string name="Name">Name</string>
 </resources>

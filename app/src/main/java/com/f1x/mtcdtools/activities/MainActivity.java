@@ -32,6 +32,9 @@ public class MainActivity extends Activity {
         Button manageActionsListsButton = (Button)findViewById(R.id.buttonManageActionsLists);
         manageActionsListsButton.setOnClickListener(new StartActivityButtonClickListener(this, ManageActionsListsActivity.class));
 
+        Button manageBindingsButton = (Button)findViewById(R.id.buttonManageBindings);
+        manageBindingsButton.setOnClickListener(new StartActivityButtonClickListener(this, ManageBindingsActivity.class));
+
         this.startService(new Intent(this, MtcdService.class));
     }
 }

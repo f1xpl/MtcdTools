@@ -33,6 +33,7 @@
     <string name="ObtainKeysSequenceUp">Wprowadź sekwencję klawiszy W GÓRĘ</string>
     <string name="ManageActions">Zarządzaj akcjami</string>
     <string name="ManageActionsLists">Zarządzaj listami akcji</string>
+    <string name="ManageBindings">Zarządzaj powiązaniami</string>
     <string name="Reset">Resetuj</string>
     <string name="Save">Zapisz</string>
     <string name="SelectActionOrList">Wybierz akcję lub listę akcji</string>
@@ -46,4 +47,5 @@
     <string name="CreatedActionsLists">Utworzone listy akcji</string>
     <string name="ProvideKeysSequence">Wprowadź sekwencję klawiszy</string>
     <string name="Name">Nazwa</string>
+    <string name="CreatedBindings">Utworzone powiązania</string>
 </resources>

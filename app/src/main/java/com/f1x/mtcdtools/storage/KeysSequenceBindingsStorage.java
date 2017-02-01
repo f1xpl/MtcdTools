@@ -44,7 +44,7 @@ public class KeysSequenceBindingsStorage extends Storage<List<Integer>, KeysSequ
 
     @Override
     protected boolean keysEqual(List<Integer> left, List<Integer> right) {
-        return left == right;
+        return left.equals(right);
     }
 
     @Override
