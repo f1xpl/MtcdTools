@@ -6,6 +6,12 @@
     android:background="#cc000000"
     android:layout_margin="@dimen/layout_spacing">
 
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBarExecuteAction" />
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

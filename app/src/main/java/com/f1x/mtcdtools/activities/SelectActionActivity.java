@@ -5,6 +5,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.f1x.mtcdtools.ActionsList;
@@ -30,6 +31,9 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
 
         mListIndexer = new ListIndexer();
         mActionExecutionTimer.start();
+
+        mExecuteActionProgressBar = (ProgressBar)this.findViewById(R.id.progressBarExecuteAction);
+        mExecuteActionProgressBar.setMax(5000);
     }
 
     @Override
@@ -99,6 +103,7 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
 
                 mActionExecutionTimer.cancel();
                 mActionExecutionTimer.start();
+                mExecuteActionProgressBar.setProgress(0);
             }
             catch(IndexOutOfBoundsException e) {
                 e.printStackTrace();
@@ -111,13 +116,16 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
 
     }
 
-    private final CountDownTimer mActionExecutionTimer = new CountDownTimer(5000, 5000) {
+    private final CountDownTimer mActionExecutionTimer = new CountDownTimer(5000, PROGRESS_BAR_DELTA) {
         @Override
         public void onTick(long l) {
+            mExecuteActionProgressBar.incrementProgressBy(PROGRESS_BAR_DELTA);
         }
 
         @Override
         public void onFinish() {
+            mExecuteActionProgressBar.incrementProgressBy(PROGRESS_BAR_DELTA);
+
             String selectedActionName = (String)mActionsListView.getSelectedItem();
 
             if(selectedActionName != null) {
@@ -137,6 +145,9 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
     private String mActionsListName;
     private ArrayAdapter<String> mActionsNamesArrayAdapter;
     private ListIndexer mListIndexer;
+    private ProgressBar mExecuteActionProgressBar;
+
+    private static final int PROGRESS_BAR_DELTA = 100;
 
     public static final String ACTIONS_LIST_NAME_PARAMETER = "actionsListName";
 }
