@@ -38,7 +38,7 @@ public abstract class ServiceActivity extends Activity {
 
             if(mServiceBinder == null) {
                 Toast.makeText(ServiceActivity.this, ServiceActivity.this.getText(R.string.ServiceUnavailable), Toast.LENGTH_LONG).show();
-                finish();
+                ServiceActivity.this.finish();
             } else {
                 ServiceActivity.this.onServiceConnected();
             }

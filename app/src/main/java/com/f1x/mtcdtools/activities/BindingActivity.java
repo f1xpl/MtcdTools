@@ -40,6 +40,7 @@ public class BindingActivity extends ServiceActivity {
                 e.printStackTrace();
                 Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
                 finish();
+                return;
             }
         }
 
@@ -140,6 +141,7 @@ public class BindingActivity extends ServiceActivity {
             } else {
                 Toast.makeText(this, this.getText(R.string.ObjectNotFound), Toast.LENGTH_LONG).show();
                 finish();
+                return;
             }
         }
 

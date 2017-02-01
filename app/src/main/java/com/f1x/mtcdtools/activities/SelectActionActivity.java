@@ -128,7 +128,7 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
                 }
             }
 
-            finish();
+            SelectActionActivity.this.finish();
         }
     };
 
