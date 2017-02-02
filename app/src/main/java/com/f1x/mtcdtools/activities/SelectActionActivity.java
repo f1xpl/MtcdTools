@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.f1x.mtcdtools.ActionsList;
@@ -65,16 +66,13 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
                 mActionsNamesArrayAdapter.addAll(mActionsList.getActionNames());
                 mActionsNamesArrayAdapter.insert(this.getText(R.string.Cancel).toString(), 0);
                 mListIndexer.reset(mActionsNamesArrayAdapter.getCount());
-
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
+                mActionsListView.setItemChecked(0, true);
+                mActionsListView.post(new Runnable() {
                     @Override
                     public void run() {
-                        mActionsListView.clearFocus();
-                        mActionsListView.requestFocusFromTouch();
-                        mActionsListView.setSelection(0);
+                        mExecuteActionProgressBar.setLayoutParams(new RelativeLayout.LayoutParams(mActionsListView.getWidth(), mActionsListView.getHeight()));
                     }
-                }, 200); //that is insane... Sometimes the listview is not yet drawed.
+                });
 
                 return;
             }
@@ -98,8 +96,7 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
                     return;
                 }
 
-                mActionsListView.requestFocusFromTouch();
-                mActionsListView.setSelection(index);
+                mActionsListView.setItemChecked(index, true);
 
                 mActionExecutionTimer.cancel();
                 mActionExecutionTimer.start();
