@@ -70,6 +70,8 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
         if(mServiceBinder != null) {
             mServiceBinder.getPressedKeysSequenceManager().popListener(this);
         }
+
+        mActionExecutionTimer.cancel();
     }
 
     @Override
