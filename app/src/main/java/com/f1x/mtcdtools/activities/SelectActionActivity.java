@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -28,14 +30,17 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
 
         mSharedPreferences = getSharedPreferences(MainActivity.APP_NAME, Context.MODE_PRIVATE);
         int actionExecutionDelay = mSharedPreferences.getInt(SettingsActivity.ACTION_EXECUTION_DELAY_PROPERTY_NAME, SettingsActivity.ACTION_EXECUTION_DELAY_DEFAULT_VALUE_MS);
-        mActionExecutionTimer = createActionExecutionTimer(actionExecutionDelay);
 
         mSharedPreferences.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String prefixName) {
                 if(prefixName.equals(SettingsActivity.ACTION_EXECUTION_DELAY_PROPERTY_NAME)) {
                     int actionExecutionDelay = sharedPreferences.getInt(SettingsActivity.ACTION_EXECUTION_DELAY_PROPERTY_NAME, SettingsActivity.ACTION_EXECUTION_DELAY_DEFAULT_VALUE_MS);
-                    mActionExecutionTimer = createActionExecutionTimer(actionExecutionDelay);
+
+                    if(actionExecutionDelay >= SettingsActivity.ACTION_EXECUTION_DELAY_MIN_VALUE_MS) {
+                        mActionExecutionTimer = createActionExecutionTimer(actionExecutionDelay);
+                    }
+
                     mExecuteActionProgressBar.setMax(actionExecutionDelay);
                 }
             }
@@ -46,9 +51,26 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
 
         mActionsListView = (ListView)this.findViewById(R.id.listViewActions);
         mActionsListView.setAdapter(mActionsNamesArrayAdapter);
+        mActionsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                String actionName = mActionsNamesArrayAdapter.getItem(position);
+                Action action = mServiceBinder.getActionsStorage().getItem(actionName);
+
+                if(action != null) {
+                    action.evaluate(SelectActionActivity.this);
+                }
+
+                SelectActionActivity.this.finish();
+            }
+        });
 
         mListIndexer = new ListIndexer();
-        mActionExecutionTimer.start();
+
+        if(actionExecutionDelay >= SettingsActivity.ACTION_EXECUTION_DELAY_MIN_VALUE_MS) {
+            mActionExecutionTimer = createActionExecutionTimer(actionExecutionDelay);
+            mActionExecutionTimer.start();
+        }
 
         mExecuteActionProgressBar = (ProgressBar)this.findViewById(R.id.progressBarExecuteAction);
         mExecuteActionProgressBar.setMax(actionExecutionDelay);
@@ -71,7 +93,9 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
             mServiceBinder.getPressedKeysSequenceManager().popListener(this);
         }
 
-        mActionExecutionTimer.cancel();
+        if(mActionExecutionTimer != null) {
+            mActionExecutionTimer.cancel();
+        }
     }
 
     @Override
@@ -146,17 +170,11 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
                     @Override
                     public void run() {
                         int checkedActionPosition = mActionsListView.getCheckedItemPosition();
-                        String checkedActionName = checkedActionPosition != ListView.INVALID_POSITION ? (String)mActionsListView.getItemAtPosition(checkedActionPosition) : null;
-
-                        if(checkedActionName != null) {
-                            Action action = mServiceBinder.getActionsStorage().getItem(checkedActionName);
-
-                            if(action != null) {
-                                action.evaluate(SelectActionActivity.this);
-                            }
+                        if(checkedActionPosition != ListView.INVALID_POSITION) {
+                            mActionsListView.performItemClick(mActionsListView.getAdapter().getView(checkedActionPosition, null, null), checkedActionPosition, checkedActionPosition);
+                        } else {
+                            SelectActionActivity.this.finish();
                         }
-
-                        SelectActionActivity.this.finish();
                     }
                 });
             }

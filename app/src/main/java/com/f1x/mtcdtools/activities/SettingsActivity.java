@@ -94,6 +94,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     public static String ACTION_EXECUTION_DELAY_PROPERTY_NAME = "ActionExecutionDelay";
     public static int ACTION_EXECUTION_DELAY_DEFAULT_VALUE_MS = 3000;
+    public static int ACTION_EXECUTION_DELAY_MIN_VALUE_MS = 1000;
 
     public static String KEY_PRESS_SPEED_PROPERTY_NAME = "KeySpeedPropertyName";
     public static int KEY_PRESS_SPEED_DEFAULT_VALUE_MS = 200;
