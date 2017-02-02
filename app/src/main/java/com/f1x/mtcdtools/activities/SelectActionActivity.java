@@ -121,12 +121,13 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
 
         @Override
         public void onFinish() {
-            mExecuteActionProgressBar.incrementProgressBy(PROGRESS_BAR_DELTA);
+            mExecuteActionProgressBar.setProgress(mExecuteActionProgressBar.getMax());
 
-            String selectedActionName = (String)mActionsListView.getSelectedItem();
+            int checkedActionPosition = mActionsListView.getCheckedItemPosition();
+            String checkedActionName = checkedActionPosition != ListView.INVALID_POSITION ? (String)mActionsListView.getItemAtPosition(checkedActionPosition) : null;
 
-            if(selectedActionName != null) {
-                Action action = mServiceBinder.getActionsStorage().getItem(selectedActionName);
+            if(checkedActionName != null) {
+                Action action = mServiceBinder.getActionsStorage().getItem(checkedActionName);
 
                 if(action != null) {
                     action.evaluate(SelectActionActivity.this);
@@ -144,7 +145,7 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
     private ListIndexer mListIndexer;
     private ProgressBar mExecuteActionProgressBar;
 
-    private static final int PROGRESS_BAR_DELTA = 100;
+    private static final int PROGRESS_BAR_DELTA = 50;
 
     public static final String ACTIONS_LIST_NAME_PARAMETER = "actionsListName";
 }
