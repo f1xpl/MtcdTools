@@ -142,19 +142,23 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
             @Override
             public void onFinish() {
                 mExecuteActionProgressBar.setProgress(mExecuteActionProgressBar.getMax());
+                mExecuteActionProgressBar.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        int checkedActionPosition = mActionsListView.getCheckedItemPosition();
+                        String checkedActionName = checkedActionPosition != ListView.INVALID_POSITION ? (String)mActionsListView.getItemAtPosition(checkedActionPosition) : null;
 
-                int checkedActionPosition = mActionsListView.getCheckedItemPosition();
-                String checkedActionName = checkedActionPosition != ListView.INVALID_POSITION ? (String)mActionsListView.getItemAtPosition(checkedActionPosition) : null;
+                        if(checkedActionName != null) {
+                            Action action = mServiceBinder.getActionsStorage().getItem(checkedActionName);
 
-                if(checkedActionName != null) {
-                    Action action = mServiceBinder.getActionsStorage().getItem(checkedActionName);
+                            if(action != null) {
+                                action.evaluate(SelectActionActivity.this);
+                            }
+                        }
 
-                    if(action != null) {
-                        action.evaluate(SelectActionActivity.this);
+                        SelectActionActivity.this.finish();
                     }
-                }
-
-                SelectActionActivity.this.finish();
+                });
             }
         };
     }
