@@ -23,6 +23,14 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
+            android:id="@+id/editTextIntentAction"
+            android:hint="@string/IntentAction" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
             android:id="@+id/editTextIntentCategory"
             android:hint="@string/IntentCategory" />
 

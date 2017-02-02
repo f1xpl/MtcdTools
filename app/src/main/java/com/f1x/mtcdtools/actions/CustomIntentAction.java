@@ -50,11 +50,30 @@ public abstract class CustomIntentAction extends Action {
 
     protected Intent getIntent() {
         Intent intent = new Intent();
-        intent.setPackage(mIntentPackage);
-        intent.setAction(mIntentAction);
-        intent.addCategory(mIntentCategory);
-        intent.setDataAndType(UriParser.fromString(mIntentData), mIntentType);
-        intent.putExtras(mIntentExtras);
+
+        if(!mIntentPackage.isEmpty()) {
+            intent.setPackage(mIntentPackage);
+        }
+
+        if(!mIntentAction.isEmpty()) {
+            intent.setAction(mIntentAction);
+        }
+
+        if(!mIntentCategory.isEmpty()) {
+            intent.addCategory(mIntentCategory);
+        }
+
+        if(!mIntentData.isEmpty()) {
+            intent.setData(UriParser.fromString(mIntentData));
+        }
+
+        if(!mIntentType.isEmpty()) {
+            intent.setType(mIntentType);
+        }
+
+        if(!mIntentExtras.isEmpty()) {
+            intent.putExtras(mIntentExtras);
+        }
 
         return intent;
     }

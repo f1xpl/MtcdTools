@@ -45,4 +45,5 @@
     <string name="ActionExecutionDelay">Opóźnienie uruchomienia akcji [s]</string>
     <string name="KeyPressSpeed">Szybkość wciśnięcia przycisku [ms]</string>
     <string name="SaveSettingsFailed">Nie można zapisać ustawień</string>
+    <string name="IntentAction">Akcja intencji</string>
 </resources>

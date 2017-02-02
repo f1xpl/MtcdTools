@@ -25,7 +25,7 @@ public class BroadcastIntentActionActivity extends CustomIntentActionActivity {
     protected Action createAction(String actionName, JSONObject intentExtrasJson) throws JSONException {
         return new BroadcastIntentAction(actionName,
                                          mIntentPackageEditText.getEditableText().toString(),
-                                         mActionNameEditText.getEditableText().toString(),
+                                         mIntentActionEditText.getEditableText().toString(),
                                          mIntentCategoryEditText.getEditableText().toString(),
                                          mIntentDataEditText.getEditableText().toString(),
                                          mIntentTypeEditText.getEditableText().toString(),

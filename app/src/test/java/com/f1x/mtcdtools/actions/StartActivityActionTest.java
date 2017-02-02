@@ -18,6 +18,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -83,7 +84,8 @@ public class StartActivityActionTest {
         startActivityAction.evaluate(mMockContext);
 
         verify(mMockContext).startActivity(mMockStartActivityIntent);
-        verify(mMockStartActivityIntent).setDataAndType(mMockUri, mActionJson.getString(StartActivityAction.INTENT_TYPE_PROPERTY));
+        verify(mMockStartActivityIntent).setType(mActionJson.getString(StartActivityAction.INTENT_TYPE_PROPERTY));
+        verify(mMockStartActivityIntent).setData(mMockUri);
         verify(mMockStartActivityIntent).addCategory(mActionJson.getString(StartActivityAction.INTENT_CATEGORY_PROPERTY));
         verify(mMockStartActivityIntent).setAction(mActionJson.getString(StartActivityAction.INTENT_ACTION_PROPERTY));
         verify(mMockStartActivityIntent).setPackage(mActionJson.getString(BroadcastIntentAction.INTENT_PACKAGE_PROPERTY));
@@ -106,6 +108,22 @@ public class StartActivityActionTest {
         assertEquals(mActionJson.getString(BroadcastIntentAction.INTENT_DATA_PROPERTY), startActivityAction.getIntentData());
         assertEquals(mActionJson.getString(BroadcastIntentAction.INTENT_TYPE_PROPERTY), startActivityAction.getIntentType());
         assertEquals(intentExtras.toString(), startActivityAction.getIntentExtras().toString());
+    }
+
+    @Test
+    public void test_evaluate_empty_parameters() throws Exception {
+        PowerMockito.when(ExtrasParser.fromJSON(any(JSONObject.class))).thenReturn(mMockBundle);
+        PowerMockito.when(mMockBundle.isEmpty()).thenReturn(true);
+
+        StartActivityAction startActivityAction = new StartActivityAction("testAction", "", "", "", "", "", new JSONObject());
+        startActivityAction.evaluate(mMockContext);
+
+        verify(mMockStartActivityIntent, times(0)).setType(any(String.class));
+        verify(mMockStartActivityIntent, times(0)).setData(any(Uri.class));
+        verify(mMockStartActivityIntent, times(0)).addCategory(any(String.class));
+        verify(mMockStartActivityIntent, times(0)).setPackage(any(String.class));
+        verify(mMockStartActivityIntent, times(0)).setAction(any(String.class));
+        verify(mMockStartActivityIntent, times(0)).putExtras(any(Bundle.class));
     }
 
     @Mock

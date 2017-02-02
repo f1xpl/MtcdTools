@@ -18,6 +18,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -86,11 +87,42 @@ public class BroadcastIntentActionTest {
         broadcastIntentAction.evaluate(mMockContext);
 
         verify(mMockContext).sendOrderedBroadcast(mBroadcastIntent, mActionJson.getString(BroadcastIntentAction.PERMISSIONS_PROPERTY));
-        verify(mBroadcastIntent).setDataAndType(mMockUri, mActionJson.getString(BroadcastIntentAction.INTENT_TYPE_PROPERTY));
+        verify(mBroadcastIntent).setType(mActionJson.getString(BroadcastIntentAction.INTENT_TYPE_PROPERTY));
+        verify(mBroadcastIntent).setData(mMockUri);
         verify(mBroadcastIntent).addCategory(mActionJson.getString(BroadcastIntentAction.INTENT_CATEGORY_PROPERTY));
         verify(mBroadcastIntent).setPackage(mActionJson.getString(BroadcastIntentAction.INTENT_PACKAGE_PROPERTY));
         verify(mBroadcastIntent).setAction(mActionJson.getString(BroadcastIntentAction.INTENT_ACTION_PROPERTY));
         verify(mBroadcastIntent).putExtras(mMockBundle);
+    }
+
+    @Test
+    public void test_evaluate_empty_permissions() throws Exception {
+        PowerMockito.whenNew(Intent.class).withAnyArguments().thenReturn(mBroadcastIntent);
+
+        PowerMockito.mockStatic(UriParser.class);
+        PowerMockito.when(UriParser.fromString(any(String.class))).thenReturn(mMockUri);
+        PowerMockito.when(ExtrasParser.fromJSON(any(JSONObject.class))).thenReturn(mMockBundle);
+
+        BroadcastIntentAction broadcastIntentAction = new BroadcastIntentAction("testAction", "com.package", "intentAction", "intentCategory", "intentData", "intentType", new JSONObject(), "");
+        broadcastIntentAction.evaluate(mMockContext);
+
+        verify(mMockContext).sendBroadcast(mBroadcastIntent);
+    }
+
+    @Test
+    public void test_evaluate_empty_parameters() throws Exception {
+        PowerMockito.when(ExtrasParser.fromJSON(any(JSONObject.class))).thenReturn(mMockBundle);
+        PowerMockito.when(mMockBundle.isEmpty()).thenReturn(true);
+
+        BroadcastIntentAction broadcastIntentAction = new BroadcastIntentAction("testAction", "", "", "", "", "", new JSONObject(), "");
+        broadcastIntentAction.evaluate(mMockContext);
+
+        verify(mBroadcastIntent, times(0)).setType(any(String.class));
+        verify(mBroadcastIntent, times(0)).setData(any(Uri.class));
+        verify(mBroadcastIntent, times(0)).addCategory(any(String.class));
+        verify(mBroadcastIntent, times(0)).setPackage(any(String.class));
+        verify(mBroadcastIntent, times(0)).setAction(any(String.class));
+        verify(mBroadcastIntent, times(0)).putExtras(any(Bundle.class));
     }
 
     @Test

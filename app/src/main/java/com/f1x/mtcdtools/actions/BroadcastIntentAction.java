@@ -24,7 +24,11 @@ public class BroadcastIntentAction extends CustomIntentAction {
 
     @Override
     public void evaluate(Context context) {
-        context.sendOrderedBroadcast(getIntent(), mPermissions);
+        if(mPermissions.isEmpty()) {
+            context.sendBroadcast(getIntent());
+        } else {
+            context.sendOrderedBroadcast(getIntent(), mPermissions);
+        }
     }
 
     @Override

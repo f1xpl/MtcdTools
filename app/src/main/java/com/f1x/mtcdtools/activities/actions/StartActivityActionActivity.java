@@ -16,7 +16,7 @@ public class StartActivityActionActivity extends CustomIntentActionActivity {
     protected Action createAction(String actionName, JSONObject intentExtrasJson) throws JSONException {
         return new StartActivityAction(actionName,
                 mIntentPackageEditText.getEditableText().toString(),
-                mActionNameEditText.getEditableText().toString(),
+                mIntentActionEditText.getEditableText().toString(),
                 mIntentCategoryEditText.getEditableText().toString(),
                 mIntentDataEditText.getEditableText().toString(),
                 mIntentTypeEditText.getEditableText().toString(),

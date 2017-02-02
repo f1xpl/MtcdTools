@@ -24,6 +24,7 @@ public abstract class CustomIntentActionActivity extends ActionActivity {
         super.initControls();
 
         mActionNameEditText = (EditText)this.findViewById(R.id.editTextActionName);
+        mIntentActionEditText = (EditText)this.findViewById(R.id.editTextIntentAction);
         mIntentCategoryEditText = (EditText)this.findViewById(R.id.editTextIntentCategory);
         mIntentDataEditText = (EditText)this.findViewById(R.id.editTextIntentData);
         mIntentPackageEditText = (EditText)this.findViewById(R.id.editTextIntentPackage);
@@ -57,6 +58,7 @@ public abstract class CustomIntentActionActivity extends ActionActivity {
             finish();
         } else {
             try {
+                mIntentActionEditText.setText(customIntentAction.getIntentAction());
                 mIntentExtrasEditText.setText(customIntentAction.getIntentExtras().toString());
                 mIntentCategoryEditText.setText(customIntentAction.getIntentCategory());
                 mIntentDataEditText.setText(customIntentAction.getIntentData());
@@ -73,6 +75,7 @@ public abstract class CustomIntentActionActivity extends ActionActivity {
     protected abstract Action createAction(String actionName, JSONObject intentExtrasJson) throws JSONException;
 
     protected EditText mActionNameEditText;
+    protected EditText mIntentActionEditText;
     protected EditText mIntentCategoryEditText;
     protected EditText mIntentDataEditText;
     protected EditText mIntentPackageEditText;
