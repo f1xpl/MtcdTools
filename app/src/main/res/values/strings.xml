@@ -48,4 +48,7 @@
     <string name="ProvideKeysSequence">Please provide keys sequence</string>
     <string name="CreatedBindings">Created bindings</string>
     <string name="Name">Name</string>
+    <string name="ActionExecutionDelay">Action execution delay [s]</string>
+    <string name="KeyPressSpeed">Key press speed [ms]</string>
+    <string name="SaveSettingsFailed">Could not save settings</string>
 </resources>

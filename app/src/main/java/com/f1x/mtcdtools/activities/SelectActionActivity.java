@@ -1,5 +1,7 @@
 package com.f1x.mtcdtools.activities;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -24,6 +26,21 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_action);
 
+        mSharedPreferences = getSharedPreferences(MainActivity.APP_NAME, Context.MODE_PRIVATE);
+        int actionExecutionDelay = mSharedPreferences.getInt(SettingsActivity.ACTION_EXECUTION_DELAY_PROPERTY_NAME, SettingsActivity.ACTION_EXECUTION_DELAY_DEFAULT_VALUE_MS);
+        mActionExecutionTimer = createActionExecutionTimer(actionExecutionDelay);
+
+        mSharedPreferences.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String prefixName) {
+                if(prefixName.equals(SettingsActivity.ACTION_EXECUTION_DELAY_PROPERTY_NAME)) {
+                    int actionExecutionDelay = sharedPreferences.getInt(SettingsActivity.ACTION_EXECUTION_DELAY_PROPERTY_NAME, SettingsActivity.ACTION_EXECUTION_DELAY_DEFAULT_VALUE_MS);
+                    mActionExecutionTimer = createActionExecutionTimer(actionExecutionDelay);
+                    mExecuteActionProgressBar.setMax(actionExecutionDelay);
+                }
+            }
+        });
+
         mActionsListName = this.getIntent().getStringExtra(ACTIONS_LIST_NAME_PARAMETER);
         mActionsNamesArrayAdapter = new ArrayAdapter<>(this, R.layout.layout_action_name_row);
 
@@ -34,7 +51,7 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
         mActionExecutionTimer.start();
 
         mExecuteActionProgressBar = (ProgressBar)this.findViewById(R.id.progressBarExecuteAction);
-        mExecuteActionProgressBar.setMax(5000);
+        mExecuteActionProgressBar.setMax(actionExecutionDelay);
     }
 
     @Override
@@ -113,30 +130,34 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
 
     }
 
-    private final CountDownTimer mActionExecutionTimer = new CountDownTimer(5000, PROGRESS_BAR_DELTA) {
-        @Override
-        public void onTick(long l) {
-            mExecuteActionProgressBar.incrementProgressBy(PROGRESS_BAR_DELTA);
-        }
-
-        @Override
-        public void onFinish() {
-            mExecuteActionProgressBar.setProgress(mExecuteActionProgressBar.getMax());
-
-            int checkedActionPosition = mActionsListView.getCheckedItemPosition();
-            String checkedActionName = checkedActionPosition != ListView.INVALID_POSITION ? (String)mActionsListView.getItemAtPosition(checkedActionPosition) : null;
-
-            if(checkedActionName != null) {
-                Action action = mServiceBinder.getActionsStorage().getItem(checkedActionName);
-
-                if(action != null) {
-                    action.evaluate(SelectActionActivity.this);
-                }
+    CountDownTimer createActionExecutionTimer(int delayMs) {
+        return new CountDownTimer(delayMs, PROGRESS_BAR_DELTA) {
+            @Override
+            public void onTick(long l) {
+                mExecuteActionProgressBar.incrementProgressBy(PROGRESS_BAR_DELTA);
             }
 
-            SelectActionActivity.this.finish();
-        }
-    };
+            @Override
+            public void onFinish() {
+                mExecuteActionProgressBar.setProgress(mExecuteActionProgressBar.getMax());
+
+                int checkedActionPosition = mActionsListView.getCheckedItemPosition();
+                String checkedActionName = checkedActionPosition != ListView.INVALID_POSITION ? (String)mActionsListView.getItemAtPosition(checkedActionPosition) : null;
+
+                if(checkedActionName != null) {
+                    Action action = mServiceBinder.getActionsStorage().getItem(checkedActionName);
+
+                    if(action != null) {
+                        action.evaluate(SelectActionActivity.this);
+                    }
+                }
+
+                SelectActionActivity.this.finish();
+            }
+        };
+    }
+
+    private CountDownTimer mActionExecutionTimer;
 
     private ListView mActionsListView;
     private ActionsList mActionsList;
@@ -144,6 +165,7 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
     private ArrayAdapter<String> mActionsNamesArrayAdapter;
     private ListIndexer mListIndexer;
     private ProgressBar mExecuteActionProgressBar;
+    private SharedPreferences mSharedPreferences;
 
     private static final int PROGRESS_BAR_DELTA = 50;
 

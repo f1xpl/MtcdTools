@@ -42,4 +42,7 @@
     <string name="ProvideKeysSequence">Wprowadź sekwencję klawiszy</string>
     <string name="Name">Nazwa</string>
     <string name="CreatedBindings">Utworzone powiązania</string>
+    <string name="ActionExecutionDelay">Opóźnienie uruchomienia akcji [s]</string>
+    <string name="KeyPressSpeed">Szybkość wciśnięcia przycisku [ms]</string>
+    <string name="SaveSettingsFailed">Nie można zapisać ustawień</string>
 </resources>

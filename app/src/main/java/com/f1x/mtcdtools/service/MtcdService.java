@@ -1,12 +1,14 @@
 package com.f1x.mtcdtools.service;
 
 import android.app.Notification;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
 import com.f1x.mtcdtools.R;
+import com.f1x.mtcdtools.activities.MainActivity;
 import com.f1x.mtcdtools.input.PressedKeysSequenceManager;
 import com.f1x.mtcdtools.storage.ActionsListsStorage;
 import com.f1x.mtcdtools.storage.ActionsStorage;
@@ -37,7 +39,7 @@ public class MtcdService extends android.app.Service {
         mActionsListsStorage = new ActionsListsStorage(fileReader, fileWriter);
         mKeysSequenceBindingsStorage = new KeysSequenceBindingsStorage(fileReader, fileWriter);
         mDispatcher = new Dispatcher(this, mActionsStorage, mActionsListsStorage, mKeysSequenceBindingsStorage);
-        mPressedKeysSequenceManager = new PressedKeysSequenceManager();
+        mPressedKeysSequenceManager = new PressedKeysSequenceManager(this.getSharedPreferences(MainActivity.APP_NAME, Context.MODE_PRIVATE));
     }
 
     @Override
