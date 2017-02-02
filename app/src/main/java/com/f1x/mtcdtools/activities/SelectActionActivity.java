@@ -110,6 +110,7 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
                 mActionsNamesArrayAdapter.insert(this.getText(R.string.Cancel).toString(), 0);
                 mListIndexer.reset(mActionsNamesArrayAdapter.getCount());
                 mActionsListView.setItemChecked(0, true);
+                mActionsListView.setSelection(0);
                 mActionsListView.post(new Runnable() {
                     @Override
                     public void run() {
@@ -140,6 +141,7 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
                 }
 
                 mActionsListView.setItemChecked(index, true);
+                mActionsListView.setSelection(index);
 
                 mActionExecutionTimer.cancel();
                 mActionExecutionTimer.start();
