@@ -46,4 +46,5 @@
     <string name="KeyPressSpeed">Szybkość wciśnięcia przycisku [ms]</string>
     <string name="SaveSettingsFailed">Nie można zapisać ustawień</string>
     <string name="IntentAction">Akcja intencji</string>
+    <string name="NotRecognizedCommand">Nierozpoznana komenda</string>
 </resources>

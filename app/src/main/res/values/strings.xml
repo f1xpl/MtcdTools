@@ -52,4 +52,5 @@
     <string name="KeyPressSpeed">Key press speed [ms]</string>
     <string name="SaveSettingsFailed">Could not save settings</string>
     <string name="IntentAction">Intent action</string>
+    <string name="NotRecognizedCommand">Not recognized command</string>
 </resources>

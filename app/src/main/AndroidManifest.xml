@@ -42,7 +42,11 @@
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".activities.ManageActionsListsActivity" />
-        <activity android:name=".activities.SettingsActivity"></activity>
+        <activity android:name=".activities.SettingsActivity"/>
+        <activity android:name=".activities.VoiceDispatchActionActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="landscape"
+            android:theme="@style/AlertDialogTheme"/>
     </application>
 
 </manifest>
