@@ -2,6 +2,7 @@ package com.f1x.mtcdtools.service;
 
 import android.os.Binder;
 
+import com.f1x.mtcdtools.configuration.Configuration;
 import com.f1x.mtcdtools.input.PressedKeysSequenceManager;
 import com.f1x.mtcdtools.storage.ActionsListsStorage;
 import com.f1x.mtcdtools.storage.ActionsStorage;
@@ -16,4 +17,5 @@ public abstract class ServiceBinder extends Binder {
     public abstract ActionsStorage getActionsStorage();
     public abstract ActionsListsStorage getActionsListsStorage();
     public abstract PressedKeysSequenceManager getPressedKeysSequenceManager();
+    public abstract Configuration getConfiguration();
 }

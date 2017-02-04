@@ -4,11 +4,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 
-import com.f1x.mtcdtools.activities.MainActivity;
-import com.f1x.mtcdtools.activities.SettingsActivity;
+import com.f1x.mtcdtools.configuration.Configuration;
+import com.f1x.mtcdtools.configuration.ConfigurationChangeListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,24 +16,20 @@ import java.util.List;
  * Created by COMPUTER on 2017-01-09.
  */
 
-public class PressedKeysSequenceManager extends BroadcastReceiver {
-    public PressedKeysSequenceManager(SharedPreferences sharedPreferences) {
-        mSharedPreferences = sharedPreferences;
+public class PressedKeysSequenceManager extends BroadcastReceiver implements ConfigurationChangeListener {
+    public PressedKeysSequenceManager(Configuration configuration) {
+        mConfiguration = configuration;
         mListeners = new ArrayList<>();
         mPressedKeysSequence = new ArrayList<>();
 
-        int keyPressSpeed = mSharedPreferences.getInt(SettingsActivity.KEY_PRESS_SPEED_PROPERTY_NAME, SettingsActivity.KEY_PRESS_SPEED_DEFAULT_VALUE_MS);
-        mKeysCollectingTimer = createKeyCollectingTimer(keyPressSpeed);
+        mKeysCollectingTimer = createKeyCollectingTimer(mConfiguration.getKeyPressSpeed());
+        configuration.addChangeListener(this);
+    }
 
-        mSharedPreferences.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
-            @Override
-            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String prefixName) {
-                if(prefixName.equals(SettingsActivity.KEY_PRESS_SPEED_PROPERTY_NAME)) {
-                    int keyPressSpeed = sharedPreferences.getInt(SettingsActivity.KEY_PRESS_SPEED_PROPERTY_NAME, SettingsActivity.KEY_PRESS_SPEED_DEFAULT_VALUE_MS);
-                    mKeysCollectingTimer = createKeyCollectingTimer(keyPressSpeed);
-                }
-            }
-        });
+    public void destroy() {
+        mListeners.clear();
+        mKeysCollectingTimer.cancel();
+        mConfiguration.removeChangeListener(this);
     }
 
     public void pushListener(KeysSequenceListener listener) {
@@ -75,6 +70,14 @@ public class PressedKeysSequenceManager extends BroadcastReceiver {
         }
     }
 
+    @Override
+    public void onParameterChanged(String parameterName, Configuration configuration) {
+        if(parameterName.equals(Configuration.KEY_PRESS_SPEED_PROPERTY_NAME)) {
+            mKeysCollectingTimer.cancel();
+            mKeysCollectingTimer = createKeyCollectingTimer(configuration.getKeyPressSpeed());
+        }
+    }
+
     private CountDownTimer createKeyCollectingTimer(int delayMs) {
         return new CountDownTimer(delayMs, delayMs) {
             @Override
@@ -87,7 +90,7 @@ public class PressedKeysSequenceManager extends BroadcastReceiver {
         };
     }
 
-    private final SharedPreferences mSharedPreferences;
+    private final Configuration mConfiguration;
     private CountDownTimer mKeysCollectingTimer;
 
     private final List<KeysSequenceListener> mListeners;

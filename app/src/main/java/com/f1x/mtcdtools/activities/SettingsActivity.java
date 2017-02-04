@@ -1,36 +1,28 @@
 package com.f1x.mtcdtools.activities;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.f1x.mtcdtools.R;
 
 import java.util.Locale;
 
-public class SettingsActivity extends Activity {
+public class SettingsActivity extends ServiceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        mSharedPreferences = getSharedPreferences(MainActivity.APP_NAME, Context.MODE_PRIVATE);
-
-        final SeekBar actionExecutionDelaySeekBar = (SeekBar)this.findViewById(R.id.seekBarActionExecutionDelay);
-        actionExecutionDelaySeekBar.setProgress(mSharedPreferences.getInt(ACTION_EXECUTION_DELAY_PROPERTY_NAME, ACTION_EXECUTION_DELAY_DEFAULT_VALUE_MS) / 1000);
-        final TextView actionExecutionDelayValue = (TextView)this.findViewById(R.id.textViewActionExecutionDelayValue);
-        actionExecutionDelayValue.setText(String.format(Locale.getDefault(), "%d", actionExecutionDelaySeekBar.getProgress()));
-        actionExecutionDelaySeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        mActionExecutionDelaySeekBar = (SeekBar)this.findViewById(R.id.seekBarActionExecutionDelay);
+        mActionExecutionDelayValue = (TextView)this.findViewById(R.id.textViewActionExecutionDelayValue);
+        mActionExecutionDelaySeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
-                actionExecutionDelayValue.setText(String.format(Locale.getDefault(), "%d", progress));
+                mActionExecutionDelayValue.setText(String.format(Locale.getDefault(), "%d", progress));
             }
 
             @Override
@@ -44,14 +36,13 @@ public class SettingsActivity extends Activity {
             }
         });
 
-        final SeekBar keyPressSpeedSeekBar = (SeekBar)this.findViewById(R.id.seekBarKeyPressSpeed);
-        keyPressSpeedSeekBar.setProgress(mSharedPreferences.getInt(KEY_PRESS_SPEED_PROPERTY_NAME, KEY_PRESS_SPEED_DEFAULT_VALUE_MS));
-        final TextView keyPressSpeedValue = (TextView)this.findViewById(R.id.textViewKeyPressSpeedValue);
-        keyPressSpeedValue.setText(String.format(Locale.getDefault(), "%d", keyPressSpeedSeekBar.getProgress()));
-        keyPressSpeedSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        mKeyPressSpeedSeekBar = (SeekBar)this.findViewById(R.id.seekBarKeyPressSpeed);
+        mKeyPressSpeedValue = (TextView)this.findViewById(R.id.textViewKeyPressSpeedValue);
+
+        mKeyPressSpeedSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
-                keyPressSpeedValue.setText(String.format(Locale.getDefault(), "%d", progress));
+                mKeyPressSpeedValue.setText(String.format(Locale.getDefault(), "%d", progress));
             }
 
             @Override
@@ -77,25 +68,38 @@ public class SettingsActivity extends Activity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences.Editor editor = mSharedPreferences.edit();
-                editor.putInt(ACTION_EXECUTION_DELAY_PROPERTY_NAME, actionExecutionDelaySeekBar.getProgress() * 1000);
-                editor.putInt(KEY_PRESS_SPEED_PROPERTY_NAME, keyPressSpeedSeekBar.getProgress());
-
-                if(!editor.commit()) {
-                    Toast.makeText(SettingsActivity.this, SettingsActivity.this.getText(R.string.SaveSettingsFailed), Toast.LENGTH_LONG).show();
-                } else {
-                    SettingsActivity.this.finish();
-                }
+                mServiceBinder.getConfiguration().setActionExecutionDelay(mActionExecutionDelaySeekBar.getProgress() * 1000);
+                mServiceBinder.getConfiguration().setKeyPressSpeed(mKeyPressSpeedSeekBar.getProgress());
+                SettingsActivity.this.finish();
             }
         });
     }
 
-     SharedPreferences mSharedPreferences;
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-    public static String ACTION_EXECUTION_DELAY_PROPERTY_NAME = "ActionExecutionDelay";
-    public static int ACTION_EXECUTION_DELAY_DEFAULT_VALUE_MS = 3000;
-    public static int ACTION_EXECUTION_DELAY_MIN_VALUE_MS = 1000;
+        if(mServiceBinder != null) {
+            mActionExecutionDelaySeekBar.setProgress(mServiceBinder.getConfiguration().getActionExecutionDelay() / 1000);
+            mActionExecutionDelayValue.setText(String.format(Locale.getDefault(), "%d", mActionExecutionDelaySeekBar.getProgress()));
 
-    public static String KEY_PRESS_SPEED_PROPERTY_NAME = "KeySpeedPropertyName";
-    public static int KEY_PRESS_SPEED_DEFAULT_VALUE_MS = 200;
+            mKeyPressSpeedSeekBar.setProgress(mServiceBinder.getConfiguration().getKeyPressSpeed());
+            mKeyPressSpeedValue.setText(String.format(Locale.getDefault(), "%d", mKeyPressSpeedSeekBar.getProgress()));
+        }
+    }
+
+    @Override
+    protected void onServiceConnected() {
+        mActionExecutionDelaySeekBar.setProgress(mServiceBinder.getConfiguration().getActionExecutionDelay() / 1000);
+        mActionExecutionDelayValue.setText(String.format(Locale.getDefault(), "%d", mActionExecutionDelaySeekBar.getProgress()));
+
+        mKeyPressSpeedSeekBar.setProgress(mServiceBinder.getConfiguration().getKeyPressSpeed());
+        mKeyPressSpeedValue.setText(String.format(Locale.getDefault(), "%d", mKeyPressSpeedSeekBar.getProgress()));
+    }
+
+    private SeekBar mActionExecutionDelaySeekBar;
+    TextView mActionExecutionDelayValue;
+
+    private SeekBar mKeyPressSpeedSeekBar;
+    TextView mKeyPressSpeedValue;
 }

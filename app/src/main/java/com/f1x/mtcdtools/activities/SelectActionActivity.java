@@ -1,10 +1,7 @@
 package com.f1x.mtcdtools.activities;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,34 +14,20 @@ import com.f1x.mtcdtools.ActionsList;
 import com.f1x.mtcdtools.ListIndexer;
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.actions.Action;
+import com.f1x.mtcdtools.configuration.Configuration;
+import com.f1x.mtcdtools.configuration.ConfigurationChangeListener;
 import com.f1x.mtcdtools.input.KeysSequenceListener;
 
 import java.util.List;
 
-public class SelectActionActivity extends ServiceActivity implements KeysSequenceListener {
+public class SelectActionActivity extends ServiceActivity implements KeysSequenceListener, ConfigurationChangeListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_action);
 
-        mSharedPreferences = getSharedPreferences(MainActivity.APP_NAME, Context.MODE_PRIVATE);
-        int actionExecutionDelay = mSharedPreferences.getInt(SettingsActivity.ACTION_EXECUTION_DELAY_PROPERTY_NAME, SettingsActivity.ACTION_EXECUTION_DELAY_DEFAULT_VALUE_MS);
-
-        mSharedPreferences.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
-            @Override
-            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String prefixName) {
-                if(prefixName.equals(SettingsActivity.ACTION_EXECUTION_DELAY_PROPERTY_NAME)) {
-                    int actionExecutionDelay = sharedPreferences.getInt(SettingsActivity.ACTION_EXECUTION_DELAY_PROPERTY_NAME, SettingsActivity.ACTION_EXECUTION_DELAY_DEFAULT_VALUE_MS);
-
-                    if(actionExecutionDelay >= SettingsActivity.ACTION_EXECUTION_DELAY_MIN_VALUE_MS) {
-                        mActionExecutionTimer = createActionExecutionTimer(actionExecutionDelay);
-                    }
-
-                    mExecuteActionProgressBar.setMax(actionExecutionDelay);
-                }
-            }
-        });
+        mExecuteActionProgressBar = (ProgressBar)this.findViewById(R.id.progressBarExecuteAction);
 
         mActionsListName = this.getIntent().getStringExtra(ACTIONS_LIST_NAME_PARAMETER);
         mActionsNamesArrayAdapter = new ArrayAdapter<>(this, R.layout.layout_action_name_row);
@@ -66,14 +49,6 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
         });
 
         mListIndexer = new ListIndexer();
-
-        if(actionExecutionDelay >= SettingsActivity.ACTION_EXECUTION_DELAY_MIN_VALUE_MS) {
-            mActionExecutionTimer = createActionExecutionTimer(actionExecutionDelay);
-            mActionExecutionTimer.start();
-        }
-
-        mExecuteActionProgressBar = (ProgressBar)this.findViewById(R.id.progressBarExecuteAction);
-        mExecuteActionProgressBar.setMax(actionExecutionDelay);
     }
 
     @Override
@@ -91,6 +66,7 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
 
         if(mServiceBinder != null) {
             mServiceBinder.getPressedKeysSequenceManager().popListener(this);
+            mServiceBinder.getConfiguration().removeChangeListener(this);
         }
 
         if(mActionExecutionTimer != null) {
@@ -100,6 +76,11 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
 
     @Override
     protected void onServiceConnected() {
+        mServiceBinder.getConfiguration().addChangeListener(this);
+        mActionExecutionTimer = createActionExecutionTimer(mServiceBinder.getConfiguration().getActionExecutionDelay());
+        mActionExecutionTimer.start();
+        mExecuteActionProgressBar.setMax(mServiceBinder.getConfiguration().getActionExecutionDelay());
+
         if(mActionsListName != null) {
             mActionsList = mServiceBinder.getActionsListsStorage().getItem(mActionsListName);
 
@@ -158,6 +139,15 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
 
     }
 
+    @Override
+    public void onParameterChanged(String parameterName, Configuration configuration) {
+        if(parameterName.equals(Configuration.ACTION_EXECUTION_DELAY_PROPERTY_NAME)) {
+            mActionExecutionTimer = createActionExecutionTimer(mServiceBinder.getConfiguration().getActionExecutionDelay());
+            mActionExecutionTimer.start();
+            mExecuteActionProgressBar.setMax(mServiceBinder.getConfiguration().getActionExecutionDelay());
+        }
+    }
+
     CountDownTimer createActionExecutionTimer(int delayMs) {
         return new CountDownTimer(delayMs, PROGRESS_BAR_DELTA) {
             @Override
@@ -191,7 +181,6 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
     private ArrayAdapter<String> mActionsNamesArrayAdapter;
     private ListIndexer mListIndexer;
     private ProgressBar mExecuteActionProgressBar;
-    private SharedPreferences mSharedPreferences;
 
     private static final int PROGRESS_BAR_DELTA = 50;
 
