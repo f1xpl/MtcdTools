@@ -2,6 +2,7 @@ package com.f1x.mtcdtools.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.RecognizerIntent;
 import android.widget.Toast;
 
@@ -30,33 +31,14 @@ public class VoiceDispatchActionActivity extends ServiceActivity {
         startActivityForResult(intent, 1);
     }
 
-    String[] splitCommand(ArrayList<String> text) {
-        return text == null ? null : (text.isEmpty() ? null : text.get(0).split("\\s+"));
-    }
-
-    void launchAction(String actionName) {
-        Action action = mServiceBinder.getActionsStorage().getItem(actionName);
-
-        if(action != null) {
-            action.evaluate(this);
-        } else {
-            Toast.makeText(this, this.getText(R.string.ObjectNotFound), Toast.LENGTH_LONG).show();
-        }
-    }
-
-    boolean executeCommand(String text) {
+    Action findCommandAction(String text) {
         String[] commandWords = text.split("\\s+");
 
         if (commandWords.length > 1 && commandWords[0].equalsIgnoreCase("włącz")) {
-            Action action = mServiceBinder.getActionsStorage().getItem(commandWords[1]);
-
-            if(action != null) {
-                action.evaluate(this);
-                return true;
-            }
+            return mServiceBinder.getActionsStorage().getItem(commandWords[1]);
         }
 
-        return false;
+        return null;
     }
 
     @Override
@@ -68,7 +50,16 @@ public class VoiceDispatchActionActivity extends ServiceActivity {
 
             boolean commandExecuted = false;
             for (int i = 0; i < text.size() && !commandExecuted; ++i) {
-                commandExecuted = executeCommand(text.get(i));
+                final Action action = findCommandAction(text.get(i));
+
+                if(action != null) {
+                    commandExecuted = true;
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override public void run() { action.evaluate(VoiceDispatchActionActivity.this); }
+                    }, ACTION_EXECUTION_DELAY_MS);
+
+                }
             }
 
             if (!commandExecuted) {
@@ -78,4 +69,9 @@ public class VoiceDispatchActionActivity extends ServiceActivity {
 
         finish();
     }
+
+    // Recognizer will pause playback during speech recognition
+    // If user wants to execute any media button action, it can
+    // collides and overlaps with recognizer
+    private final int ACTION_EXECUTION_DELAY_MS = 1000;
 }
