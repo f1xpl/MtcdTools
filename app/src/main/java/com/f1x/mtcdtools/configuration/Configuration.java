@@ -21,7 +21,7 @@ public class Configuration implements SharedPreferences.OnSharedPreferenceChange
         mActionExecutionDelay = sharedPreferences.getInt(ACTION_EXECUTION_DELAY_PROPERTY_NAME, ACTION_EXECUTION_DELAY_DEFAULT_VALUE);
         mKeyPressSpeed = sharedPreferences.getInt(KEY_PRESS_SPEED_PROPERTY_NAME, KEY_PRESS_SPEED_DEFAULT_VALUE);
         mActionExecutionVoiceCommandText = sharedPreferences.getString(EXECUTE_ACTION_VOICE_COMMAND_PROPERTY_NAME, EXECUTE_ACTION_VOICE_COMMAND_DEFAULT_VALUE);
-        mCallVoiceCommandText = sharedPreferences.getString(EXECUTE_ACTION_VOICE_COMMAND_PROPERTY_NAME, EXECUTE_ACTION_VOICE_COMMAND_DEFAULT_VALUE);
+        mCallVoiceCommandText = sharedPreferences.getString(CALL_VOICE_COMMAND_PROPERTY_NAME, EXECUTE_ACTION_VOICE_COMMAND_DEFAULT_VALUE);
         mVoiceCommandKeysSequence = readVoiceCommandKeySequence(sharedPreferences.getString(SPEECH_KEYS_SEQUENCE_PROPERTY_NAME, ""));
 
         mSharedPreferences.registerOnSharedPreferenceChangeListener(this);

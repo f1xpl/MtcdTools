@@ -32,10 +32,11 @@ public class VoiceDispatchActionActivity extends ServiceActivity {
     }
 
     Action findCommandAction(String text) {
-        String[] commandWords = text.split("\\s+");
+        String actionExecutionCommand = mServiceBinder.getConfiguration().getExecuteActionVoiceCommandText();
 
-        if (commandWords.length > 1 && commandWords[0].equalsIgnoreCase(mServiceBinder.getConfiguration().getExecuteActionVoiceCommandText())) {
-            return mServiceBinder.getActionsStorage().getItem(commandWords[1]);
+        if (text.contains(actionExecutionCommand)) {
+            String actionName = text.replace(actionExecutionCommand , "").trim();
+            return mServiceBinder.getActionsStorage().getItem(actionName);
         }
 
         return null;
