@@ -54,4 +54,5 @@
     <string name="CallCommand">Komenda \"Zadzwoń\"</string>
     <string name="ExecuteActionCommand">Komenda uruchomienia akcji</string>
     <string name="Donate">Lubisz korzystać z tej aplikacji? Przekaż darowiznę autorowi (PayPal): michal.szwaj [at] o2 [dot] pl</string>
+    <string name="ClassName">Nazwa klasy</string>
 </resources>

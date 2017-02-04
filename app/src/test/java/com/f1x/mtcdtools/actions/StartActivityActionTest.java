@@ -39,12 +39,13 @@ public class StartActivityActionTest {
         mActionJson = new JSONObject();
         mActionJson.put(StartActivityAction.NAME_PROPERTY, "TestStartActivityAction");
         mActionJson.put(StartActivityAction.TYPE_PROPERTY, StartActivityAction.ACTION_TYPE);
-        mActionJson.put(BroadcastIntentAction.INTENT_PACKAGE_PROPERTY, "com.test.package");
+        mActionJson.put(StartActivityAction.INTENT_PACKAGE_PROPERTY, "com.test.package");
         mActionJson.put(StartActivityAction.INTENT_CATEGORY_PROPERTY, "intentCategory");
         mActionJson.put(StartActivityAction.INTENT_TYPE_PROPERTY, "intentType");
         mActionJson.put(StartActivityAction.INTENT_DATA_PROPERTY, "intentData");
         mActionJson.put(StartActivityAction.INTENT_ACTION_PROPERTY, "intentAction");
         mActionJson.put(StartActivityAction.INTENT_EXTRAS_PROPERTY, new JSONObject());
+        mActionJson.put(StartActivityAction.CLASS_NAME_PROPERTY, "className");
     }
 
     @Test
@@ -53,23 +54,25 @@ public class StartActivityActionTest {
         PowerMockito.when(ExtrasParser.toJSON(mMockBundle)).thenReturn(new JSONObject());
         JSONObject intentExtras = new JSONObject();
 
-        StartActivityAction startActivityAction = new StartActivityAction(mActionJson.getString(BroadcastIntentAction.NAME_PROPERTY),
-                                                                          mActionJson.getString(BroadcastIntentAction.INTENT_PACKAGE_PROPERTY),
-                                                                          mActionJson.getString(BroadcastIntentAction.INTENT_ACTION_PROPERTY),
-                                                                          mActionJson.getString(BroadcastIntentAction.INTENT_CATEGORY_PROPERTY),
-                                                                          mActionJson.getString(BroadcastIntentAction.INTENT_DATA_PROPERTY),
-                                                                          mActionJson.getString(BroadcastIntentAction.INTENT_TYPE_PROPERTY),
-                                                                          intentExtras);
+        StartActivityAction startActivityAction = new StartActivityAction(mActionJson.getString(StartActivityAction.NAME_PROPERTY),
+                                                                          mActionJson.getString(StartActivityAction.INTENT_PACKAGE_PROPERTY),
+                                                                          mActionJson.getString(StartActivityAction.INTENT_ACTION_PROPERTY),
+                                                                          mActionJson.getString(StartActivityAction.INTENT_CATEGORY_PROPERTY),
+                                                                          mActionJson.getString(StartActivityAction.INTENT_DATA_PROPERTY),
+                                                                          mActionJson.getString(StartActivityAction.INTENT_TYPE_PROPERTY),
+                                                                          intentExtras,
+                                                                          mActionJson.getString(StartActivityAction.CLASS_NAME_PROPERTY));
 
         assertEquals(mActionJson.toString(), startActivityAction.toJson().toString());
-        assertEquals(mActionJson.getString(BroadcastIntentAction.NAME_PROPERTY), startActivityAction.getName());
-        assertEquals(mActionJson.getString(BroadcastIntentAction.TYPE_PROPERTY), startActivityAction.getType());
-        assertEquals(mActionJson.getString(BroadcastIntentAction.INTENT_PACKAGE_PROPERTY), startActivityAction.getIntentPackage());
-        assertEquals(mActionJson.getString(BroadcastIntentAction.INTENT_ACTION_PROPERTY), startActivityAction.getIntentAction());
-        assertEquals(mActionJson.getString(BroadcastIntentAction.INTENT_CATEGORY_PROPERTY), startActivityAction.getIntentCategory());
-        assertEquals(mActionJson.getString(BroadcastIntentAction.INTENT_DATA_PROPERTY), startActivityAction.getIntentData());
-        assertEquals(mActionJson.getString(BroadcastIntentAction.INTENT_TYPE_PROPERTY), startActivityAction.getIntentType());
+        assertEquals(mActionJson.getString(StartActivityAction.NAME_PROPERTY), startActivityAction.getName());
+        assertEquals(mActionJson.getString(StartActivityAction.TYPE_PROPERTY), startActivityAction.getType());
+        assertEquals(mActionJson.getString(StartActivityAction.INTENT_PACKAGE_PROPERTY), startActivityAction.getIntentPackage());
+        assertEquals(mActionJson.getString(StartActivityAction.INTENT_ACTION_PROPERTY), startActivityAction.getIntentAction());
+        assertEquals(mActionJson.getString(StartActivityAction.INTENT_CATEGORY_PROPERTY), startActivityAction.getIntentCategory());
+        assertEquals(mActionJson.getString(StartActivityAction.INTENT_DATA_PROPERTY), startActivityAction.getIntentData());
+        assertEquals(mActionJson.getString(StartActivityAction.INTENT_TYPE_PROPERTY), startActivityAction.getIntentType());
         assertEquals(intentExtras.toString(), startActivityAction.getIntentExtras().toString());
+        assertEquals(mActionJson.getString(StartActivityAction.CLASS_NAME_PROPERTY), startActivityAction.getClassName());
     }
 
     @Test
@@ -88,8 +91,9 @@ public class StartActivityActionTest {
         verify(mMockStartActivityIntent).setData(mMockUri);
         verify(mMockStartActivityIntent).addCategory(mActionJson.getString(StartActivityAction.INTENT_CATEGORY_PROPERTY));
         verify(mMockStartActivityIntent).setAction(mActionJson.getString(StartActivityAction.INTENT_ACTION_PROPERTY));
-        verify(mMockStartActivityIntent).setPackage(mActionJson.getString(BroadcastIntentAction.INTENT_PACKAGE_PROPERTY));
+        verify(mMockStartActivityIntent).setPackage(mActionJson.getString(StartActivityAction.INTENT_PACKAGE_PROPERTY));
         verify(mMockStartActivityIntent).putExtras(mMockBundle);
+        verify(mMockStartActivityIntent).setClassName(mActionJson.getString(StartActivityAction.INTENT_PACKAGE_PROPERTY), mActionJson.getString(StartActivityAction.CLASS_NAME_PROPERTY));
     }
 
     @Test
@@ -100,14 +104,15 @@ public class StartActivityActionTest {
 
         StartActivityAction startActivityAction = new StartActivityAction(mActionJson);
         assertEquals(mActionJson.toString(), startActivityAction.toJson().toString());
-        assertEquals(mActionJson.getString(BroadcastIntentAction.NAME_PROPERTY), startActivityAction.getName());
-        assertEquals(mActionJson.getString(BroadcastIntentAction.TYPE_PROPERTY), startActivityAction.getType());
-        assertEquals(mActionJson.getString(BroadcastIntentAction.INTENT_PACKAGE_PROPERTY), startActivityAction.getIntentPackage());
-        assertEquals(mActionJson.getString(BroadcastIntentAction.INTENT_ACTION_PROPERTY), startActivityAction.getIntentAction());
-        assertEquals(mActionJson.getString(BroadcastIntentAction.INTENT_CATEGORY_PROPERTY), startActivityAction.getIntentCategory());
-        assertEquals(mActionJson.getString(BroadcastIntentAction.INTENT_DATA_PROPERTY), startActivityAction.getIntentData());
-        assertEquals(mActionJson.getString(BroadcastIntentAction.INTENT_TYPE_PROPERTY), startActivityAction.getIntentType());
+        assertEquals(mActionJson.getString(StartActivityAction.NAME_PROPERTY), startActivityAction.getName());
+        assertEquals(mActionJson.getString(StartActivityAction.TYPE_PROPERTY), startActivityAction.getType());
+        assertEquals(mActionJson.getString(StartActivityAction.INTENT_PACKAGE_PROPERTY), startActivityAction.getIntentPackage());
+        assertEquals(mActionJson.getString(StartActivityAction.INTENT_ACTION_PROPERTY), startActivityAction.getIntentAction());
+        assertEquals(mActionJson.getString(StartActivityAction.INTENT_CATEGORY_PROPERTY), startActivityAction.getIntentCategory());
+        assertEquals(mActionJson.getString(StartActivityAction.INTENT_DATA_PROPERTY), startActivityAction.getIntentData());
+        assertEquals(mActionJson.getString(StartActivityAction.INTENT_TYPE_PROPERTY), startActivityAction.getIntentType());
         assertEquals(intentExtras.toString(), startActivityAction.getIntentExtras().toString());
+        assertEquals(mActionJson.getString(StartActivityAction.CLASS_NAME_PROPERTY), startActivityAction.getClassName());
     }
 
     @Test
@@ -115,7 +120,7 @@ public class StartActivityActionTest {
         PowerMockito.when(ExtrasParser.fromJSON(any(JSONObject.class))).thenReturn(mMockBundle);
         PowerMockito.when(mMockBundle.isEmpty()).thenReturn(true);
 
-        StartActivityAction startActivityAction = new StartActivityAction("testAction", "", "", "", "", "", new JSONObject());
+        StartActivityAction startActivityAction = new StartActivityAction("testAction", "", "", "", "", "", new JSONObject(), "");
         startActivityAction.evaluate(mMockContext);
 
         verify(mMockStartActivityIntent, times(0)).setType(any(String.class));
@@ -124,6 +129,7 @@ public class StartActivityActionTest {
         verify(mMockStartActivityIntent, times(0)).setPackage(any(String.class));
         verify(mMockStartActivityIntent, times(0)).setAction(any(String.class));
         verify(mMockStartActivityIntent, times(0)).putExtras(any(Bundle.class));
+        verify(mMockStartActivityIntent, times(0)).setClassName(any(String.class), any(String.class));
     }
 
     @Mock
