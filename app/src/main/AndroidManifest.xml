@@ -44,7 +44,7 @@
         <activity android:name=".activities.ManageActionsListsActivity" />
         <activity android:name=".activities.SettingsActivity"/>
         <activity android:name=".activities.VoiceDispatchActionActivity"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTask"
             android:screenOrientation="landscape"
             android:theme="@style/AlertDialogTheme"/>
     </application>

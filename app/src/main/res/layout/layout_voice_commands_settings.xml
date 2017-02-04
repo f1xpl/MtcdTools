@@ -19,5 +19,6 @@
         android:layout_marginBottom="@dimen/element_spacing"
         android:ems="10"
         android:id="@+id/editTextCallCommand"
+        android:enabled="false"
         android:hint="@string/CallCommand" />
 </LinearLayout>

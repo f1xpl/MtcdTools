@@ -44,31 +44,30 @@ public class VoiceDispatchActionActivity extends ServiceActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(data == null) {
-            Toast.makeText(this, this.getText(R.string.NotRecognizedCommand), Toast.LENGTH_LONG).show();
-        } else {
+        boolean commandExecuted = false;
+
+        if(data != null) {
             ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 
-            boolean commandExecuted = false;
             for (int i = 0; i < text.size() && !commandExecuted; ++i) {
                 final Action action = findCommandAction(text.get(i));
 
                 if(action != null) {
                     commandExecuted = true;
-
                     new Handler().postDelayed(new Runnable() {
-                        @Override public void run() { action.evaluate(VoiceDispatchActionActivity.this); }
+                        @Override public void run() {
+                            action.evaluate(VoiceDispatchActionActivity.this);
+                            VoiceDispatchActionActivity.this.finish();
+                        }
                     }, ACTION_EXECUTION_DELAY_MS);
-
                 }
-            }
-
-            if (!commandExecuted) {
-                Toast.makeText(this, this.getText(R.string.NotRecognizedCommand), Toast.LENGTH_LONG).show();
             }
         }
 
-        finish();
+        if (!commandExecuted) {
+            Toast.makeText(this, this.getText(R.string.NotRecognizedCommand), Toast.LENGTH_LONG).show();
+            finish();
+        }
     }
 
     // Recognizer will pause playback during speech recognition
