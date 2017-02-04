@@ -4,13 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.f1x.mtcdtools.R;
-import com.f1x.mtcdtools.adapters.NamesArrayAdapter;
 import com.f1x.mtcdtools.input.KeysSequenceBinding;
 import com.f1x.mtcdtools.input.KeysSequenceConverter;
+import com.f1x.mtcdtools.input.KeysSequenceListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,18 +26,17 @@ import java.util.Set;
  * Created by COMPUTER on 2017-02-01.
  */
 
-public class ManageBindingsActivity extends ServiceActivity {
-
+public class ManageBindingsActivity extends ServiceActivity  implements KeysSequenceListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_bindings);
 
-        mBindingsArrayAdapter = new NamesArrayAdapter(this);
-        ListView bindingsListView = (ListView)this.findViewById(R.id.listViewBindings);
-        bindingsListView.setAdapter(mBindingsArrayAdapter);
+        mBindingsArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_checked);
+        mBindingsListView = (ListView)this.findViewById(R.id.listViewBindings);
+        mBindingsListView.setAdapter(mBindingsArrayAdapter);
 
-        bindingsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        mBindingsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
                 try {
@@ -54,7 +54,7 @@ public class ManageBindingsActivity extends ServiceActivity {
             }
         });
 
-        bindingsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mBindingsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 String keysSequenceString = mBindingsArrayAdapter.getItem(position);
@@ -71,13 +71,27 @@ public class ManageBindingsActivity extends ServiceActivity {
         super.onResume();
 
         if(mServiceBinder != null) {
-            mBindingsArrayAdapter.reset(bindingsToStringList(mServiceBinder.getKeysSequenceBindingsStorage().getItems()));
+            mServiceBinder.getPressedKeysSequenceManager().pushListener(this);
+            mBindingsArrayAdapter.clear();
+            mBindingsArrayAdapter.addAll(bindingsToStringList(mServiceBinder.getKeysSequenceBindingsStorage().getItems()));
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if(mServiceBinder != null) {
+            mServiceBinder.getPressedKeysSequenceManager().popListener(this);
         }
     }
 
     @Override
     protected void onServiceConnected() {
-        mBindingsArrayAdapter.reset(bindingsToStringList(mServiceBinder.getKeysSequenceBindingsStorage().getItems()));
+        mServiceBinder.getPressedKeysSequenceManager().pushListener(this);
+
+        mBindingsArrayAdapter.clear();
+        mBindingsArrayAdapter.addAll(bindingsToStringList(mServiceBinder.getKeysSequenceBindingsStorage().getItems()));
     }
 
     Set<String> bindingsToStringList(Map<List<Integer>, KeysSequenceBinding> bindings) {
@@ -91,5 +105,24 @@ public class ManageBindingsActivity extends ServiceActivity {
         return bindingsList;
     }
 
-    NamesArrayAdapter mBindingsArrayAdapter;
+    @Override
+    public void handleKeysSequence(List<Integer> keysSequence) {
+        mBindingsListView.clearChoices();
+        mBindingsListView.requestLayout();
+        int position = mBindingsArrayAdapter.getPosition(KeysSequenceConverter.toJsonArray(keysSequence).toString());
+
+        if(position != -1) {
+            mBindingsListView.requestFocusFromTouch();
+            mBindingsListView.setSelection(position);
+            mBindingsListView.setItemChecked(position, true);
+        }
+    }
+
+    @Override
+    public void handleSingleKey(int keyCode) {
+
+    }
+
+    ListView mBindingsListView;
+    ArrayAdapter<String> mBindingsArrayAdapter;
 }
