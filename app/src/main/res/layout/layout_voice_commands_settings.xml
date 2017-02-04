@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/element_spacing"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editTextExecuteActionCommand"
+        android:hint="@string/ExecuteActionCommand" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:layout_marginBottom="@dimen/element_spacing"
+        android:ems="10"
+        android:id="@+id/editTextCallCommand"
+        android:hint="@string/CallCommand" />
+</LinearLayout>

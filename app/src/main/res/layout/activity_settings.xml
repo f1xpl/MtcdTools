@@ -8,75 +8,62 @@
     android:orientation="vertical"
     tools:context="com.f1x.mtcdtools.activities.SettingsActivity">
 
-    <TextView
-        android:text="@string/ActionExecutionDelay"
+    <TabHost
+        android:id="@+id/tabHost"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/element_spacing"
-        android:id="@+id/textViewActionExecutionDelay" />
+        android:layout_height="match_parent">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textViewActionExecutionDelayValue" />
-
-        <SeekBar
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/element_spacing"
-            android:id="@+id/seekBarActionExecutionDelay"
-            android:max="10" />
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <TextView
-        android:text="@string/KeyPressSpeed"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/element_spacing"
-        android:id="@+id/TextViewKeyPressSpeed" />
+            <HorizontalScrollView
+                android:scrollbarStyle="insideInset"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TabWidget
+                    android:id="@android:id/tabs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </HorizontalScrollView>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textViewKeyPressSpeedValue" />
+                <include layout="@layout/layout_misc_settings"
+                            android:id="@+id/tabMiscSettings"/>
 
-        <SeekBar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/element_spacing"
-            android:id="@+id/seekBarKeyPressSpeed"
-            android:max="3000" />
+                <include layout="@layout/layout_voice_commands_settings"
+                    android:id="@+id/tabVoiceCommandsSettings"/>
 
-    </LinearLayout>
+                <include layout="@layout/layout_speech_keys_sequence_settings"
+                    android:id="@+id/tabSpeechKeysSequenceSettings"/>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+                <LinearLayout
+                    android:id="@+id/tabStoreSettings"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-        <Button
-            android:text="@string/Cancel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/buttonCancel"
-            android:layout_weight="1" />
+                    <Button
+                        android:text="@string/Cancel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/buttonCancel"
+                        android:layout_weight="1" />
 
-        <Button
-            android:text="@string/Save"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/buttonSave"
-            android:layout_weight="1" />
-    </LinearLayout>
+                    <Button
+                        android:text="@string/Save"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/buttonSave"
+                        android:layout_weight="1" />
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+    </TabHost>
 
 </LinearLayout>

@@ -47,4 +47,10 @@
     <string name="SaveSettingsFailed">Nie można zapisać ustawień</string>
     <string name="IntentAction">Akcja intencji</string>
     <string name="NotRecognizedCommand">Nierozpoznana komenda</string>
+    <string name="Misc">Różne</string>
+    <string name="VoiceCommands">Komendy głosowe</string>
+    <string name="SpeechKeysSequence">Sekwencja klawiszy mowy</string>
+    <string name="StoreSettings">Zapisz ustawienia</string>
+    <string name="CallCommand">Komenda \"Zadzwoń\"</string>
+    <string name="ExecuteActionCommand">Komenda uruchomienia akcji</string>
 </resources>

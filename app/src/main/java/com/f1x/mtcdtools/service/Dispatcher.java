@@ -7,6 +7,7 @@ import com.f1x.mtcdtools.ActionsList;
 import com.f1x.mtcdtools.actions.Action;
 import com.f1x.mtcdtools.activities.SelectActionActivity;
 import com.f1x.mtcdtools.activities.VoiceDispatchActionActivity;
+import com.f1x.mtcdtools.configuration.Configuration;
 import com.f1x.mtcdtools.input.KeysSequenceBinding;
 import com.f1x.mtcdtools.input.KeysSequenceListener;
 import com.f1x.mtcdtools.storage.ActionsListsStorage;
@@ -21,7 +22,8 @@ import java.util.List;
  */
 
 public class Dispatcher implements KeysSequenceListener {
-    public Dispatcher(Context context, ActionsStorage actionsStorage, ActionsListsStorage actionsListsStorage, KeysSequenceBindingsStorage keysSequenceBindingsStorage) {
+    public Dispatcher(Configuration configuration, Context context, ActionsStorage actionsStorage, ActionsListsStorage actionsListsStorage, KeysSequenceBindingsStorage keysSequenceBindingsStorage) {
+        mConfiguration = configuration;
         mContext = context;
         mActionsStorage = actionsStorage;
         mActionsListsStorage = actionsListsStorage;
@@ -30,9 +32,7 @@ public class Dispatcher implements KeysSequenceListener {
 
     @Override
     public void handleKeysSequence(List<Integer> keysSequence) {
-        List<Integer> voiceKeysSequence = Arrays.asList(17);
-
-        if(voiceKeysSequence.equals(keysSequence)) {
+        if(mConfiguration.getSpeechKeysSequence().equals(keysSequence)) {
             Intent intent = new Intent(mContext, VoiceDispatchActionActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_FROM_BACKGROUND);
             mContext.startActivity(intent);
@@ -67,6 +67,7 @@ public class Dispatcher implements KeysSequenceListener {
 
     }
 
+    private final Configuration mConfiguration;
     private final Context mContext;
     private final ActionsStorage mActionsStorage;
     private final ActionsListsStorage mActionsListsStorage;

@@ -34,7 +34,7 @@ public class VoiceDispatchActionActivity extends ServiceActivity {
     Action findCommandAction(String text) {
         String[] commandWords = text.split("\\s+");
 
-        if (commandWords.length > 1 && commandWords[0].equalsIgnoreCase("włącz")) {
+        if (commandWords.length > 1 && commandWords[0].equalsIgnoreCase(mServiceBinder.getConfiguration().getExecuteActionVoiceCommandText())) {
             return mServiceBinder.getActionsStorage().getItem(commandWords[1]);
         }
 

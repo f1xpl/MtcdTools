@@ -53,4 +53,10 @@
     <string name="SaveSettingsFailed">Could not save settings</string>
     <string name="IntentAction">Intent action</string>
     <string name="NotRecognizedCommand">Not recognized command</string>
+    <string name="Misc">Misc</string>
+    <string name="VoiceCommands">Voice commands</string>
+    <string name="SpeechKeysSequence">Speech keys sequence</string>
+    <string name="StoreSettings">Store settings</string>
+    <string name="ExecuteActionCommand">Execute action command</string>
+    <string name="CallCommand">Call command</string>
 </resources>
