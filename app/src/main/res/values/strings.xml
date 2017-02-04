@@ -59,4 +59,5 @@
     <string name="StoreSettings">Store settings</string>
     <string name="ExecuteActionCommand">Execute action command</string>
     <string name="CallCommand">Call command</string>
+    <string name="Donate">Have you enjoyed MtcdTools? Donate author (PayPal): michal.szwaj [at] o2 [dot] pl</string>
 </resources>
