@@ -2,8 +2,6 @@ package com.f1x.mtcdtools.configuration;
 
 import android.content.SharedPreferences;
 
-import org.json.JSONException;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,8 +16,8 @@ public class Configuration implements SharedPreferences.OnSharedPreferenceChange
         mActionExecutionDelay = sharedPreferences.getInt(ACTION_EXECUTION_DELAY_PROPERTY_NAME, ACTION_EXECUTION_DELAY_DEFAULT_VALUE);
         mActionsSequenceDelay = sharedPreferences.getInt(ACTIONS_SEQUENCE_DELAY_PROPERTY_NAME, ACTIONS_SEQUENCE_DELAY_DEFAULT_VALUE);
         mKeyPressSpeed = sharedPreferences.getInt(KEY_PRESS_SPEED_PROPERTY_NAME, KEY_PRESS_SPEED_DEFAULT_VALUE);
-        mActionExecutionVoiceCommandText = sharedPreferences.getString(EXECUTE_ACTION_VOICE_COMMAND_PROPERTY_NAME, EXECUTE_ACTION_VOICE_COMMAND_DEFAULT_VALUE);
-        mCallVoiceCommandText = sharedPreferences.getString(CALL_VOICE_COMMAND_PROPERTY_NAME, EXECUTE_ACTION_VOICE_COMMAND_DEFAULT_VALUE);
+        mLaunchVoiceCommandText = sharedPreferences.getString(LAUNCH_VOICE_COMMAND_PROPERTY_NAME, LAUNCH_VOICE_COMMAND_DEFAULT_VALUE);
+        mCallVoiceCommandText = sharedPreferences.getString(CALL_VOICE_COMMAND_PROPERTY_NAME, LAUNCH_VOICE_COMMAND_DEFAULT_VALUE);
 
         mSharedPreferences.registerOnSharedPreferenceChangeListener(this);
         mConfigurationChangeListeners = new ArrayList<>();
@@ -55,15 +53,15 @@ public class Configuration implements SharedPreferences.OnSharedPreferenceChange
         notifyListeners(KEY_PRESS_SPEED_PROPERTY_NAME);
     }
 
-    public String getExecuteActionVoiceCommandText() {
-        return mActionExecutionVoiceCommandText;
+    public String getLaunchVoiceCommandText() {
+        return mLaunchVoiceCommandText;
     }
-    public void setExecuteActionVoiceCommandText(String value) {
+    public void setLaunchVoiceCommandText(String value) {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
-        editor.putString(EXECUTE_ACTION_VOICE_COMMAND_PROPERTY_NAME, value);
+        editor.putString(LAUNCH_VOICE_COMMAND_PROPERTY_NAME, value);
         editor.apply();
 
-        notifyListeners(EXECUTE_ACTION_VOICE_COMMAND_PROPERTY_NAME);
+        notifyListeners(LAUNCH_VOICE_COMMAND_PROPERTY_NAME);
     }
 
     public String getCallVoiceCommandText() {
@@ -104,8 +102,8 @@ public class Configuration implements SharedPreferences.OnSharedPreferenceChange
             case KEY_PRESS_SPEED_PROPERTY_NAME:
                 mKeyPressSpeed = sharedPreferences.getInt(KEY_PRESS_SPEED_PROPERTY_NAME, KEY_PRESS_SPEED_DEFAULT_VALUE);
                 break;
-            case EXECUTE_ACTION_VOICE_COMMAND_PROPERTY_NAME:
-                mActionExecutionVoiceCommandText = sharedPreferences.getString(EXECUTE_ACTION_VOICE_COMMAND_PROPERTY_NAME, EXECUTE_ACTION_VOICE_COMMAND_DEFAULT_VALUE);
+            case LAUNCH_VOICE_COMMAND_PROPERTY_NAME:
+                mLaunchVoiceCommandText = sharedPreferences.getString(LAUNCH_VOICE_COMMAND_PROPERTY_NAME, LAUNCH_VOICE_COMMAND_DEFAULT_VALUE);
                 break;
             case CALL_VOICE_COMMAND_PROPERTY_NAME:
                 mCallVoiceCommandText = sharedPreferences.getString(CALL_VOICE_COMMAND_PROPERTY_NAME, CALL_VOICE_COMMAND_DEFAULT_VALUE);
@@ -120,7 +118,7 @@ public class Configuration implements SharedPreferences.OnSharedPreferenceChange
     private int mActionExecutionDelay;
     private int mActionsSequenceDelay;
     private int mKeyPressSpeed;
-    private String mActionExecutionVoiceCommandText;
+    private String mLaunchVoiceCommandText;
     private String mCallVoiceCommandText;
     private List<ConfigurationChangeListener> mConfigurationChangeListeners;
 
@@ -133,8 +131,8 @@ public class Configuration implements SharedPreferences.OnSharedPreferenceChange
     public static final String KEY_PRESS_SPEED_PROPERTY_NAME = "KeySpeedPropertyName";
     private static int KEY_PRESS_SPEED_DEFAULT_VALUE = 200;
 
-    public static final String EXECUTE_ACTION_VOICE_COMMAND_PROPERTY_NAME = "LaunchVoiceCommand";
-    private static String EXECUTE_ACTION_VOICE_COMMAND_DEFAULT_VALUE = "";
+    public static final String LAUNCH_VOICE_COMMAND_PROPERTY_NAME = "LaunchVoiceCommand";
+    private static String LAUNCH_VOICE_COMMAND_DEFAULT_VALUE = "";
 
     public static final String CALL_VOICE_COMMAND_PROPERTY_NAME = "CallVoiceCommand";
     private static String CALL_VOICE_COMMAND_DEFAULT_VALUE = "";

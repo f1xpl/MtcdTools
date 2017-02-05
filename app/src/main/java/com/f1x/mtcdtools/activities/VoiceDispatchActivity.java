@@ -34,7 +34,7 @@ public class VoiceDispatchActivity extends ServiceActivity {
     }
 
     String extractNamedObjectName(String text) {
-        String actionExecutionCommand = mServiceBinder.getConfiguration().getExecuteActionVoiceCommandText();
+        String actionExecutionCommand = mServiceBinder.getConfiguration().getLaunchVoiceCommandText();
 
         if (text.contains(actionExecutionCommand)) {
             return text.replace(actionExecutionCommand , "").trim();

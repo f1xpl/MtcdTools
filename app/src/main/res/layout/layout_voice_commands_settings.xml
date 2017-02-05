@@ -9,8 +9,8 @@
         android:layout_marginBottom="@dimen/element_spacing"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/editTextExecuteActionCommand"
-        android:hint="@string/ExecuteActionCommand" />
+        android:id="@+id/editTextLaunchVoiceCommand"
+        android:hint="@string/LaunchVoiceCommand" />
 
     <EditText
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
         android:inputType="textPersonName"
         android:layout_marginBottom="@dimen/element_spacing"
         android:ems="10"
-        android:id="@+id/editTextCallCommand"
+        android:id="@+id/editTextCallVoiceCommand"
         android:enabled="false"
-        android:hint="@string/CallCommand" />
+        android:hint="@string/CalVoicelCommand" />
 </LinearLayout>
