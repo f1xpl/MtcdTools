@@ -55,6 +55,9 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
     protected void onResume() {
         super.onResume();
 
+        mActionsListView.clearChoices();
+        mActionsListView.requestLayout();
+
         if(mServiceBinder != null) {
             mServiceBinder.getPressedKeysSequenceManager().pushListener(this);
         }

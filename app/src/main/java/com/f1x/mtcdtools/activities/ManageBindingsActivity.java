@@ -70,6 +70,9 @@ public class ManageBindingsActivity extends ServiceActivity  implements KeysSequ
     protected void onResume() {
         super.onResume();
 
+        mBindingsListView.clearChoices();
+        mBindingsListView.requestLayout();
+
         if(mServiceBinder != null) {
             mServiceBinder.getPressedKeysSequenceManager().pushListener(this);
             mBindingsArrayAdapter.clear();
