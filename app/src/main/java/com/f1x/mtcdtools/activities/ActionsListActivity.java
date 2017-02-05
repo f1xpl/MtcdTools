@@ -52,9 +52,9 @@ public class ActionsListActivity extends ServiceActivity {
         obtainKeysSequenceDownTab.setIndicator(this.getString(R.string.KeysSequenceDown));
         tabHost.addTab(obtainKeysSequenceDownTab);
 
-        TabHost.TabSpec storeActionsListTab = tabHost.newTabSpec(this.getString(R.string.Name));
+        TabHost.TabSpec storeActionsListTab = tabHost.newTabSpec(this.getString(R.string.Save));
         storeActionsListTab.setContent(R.id.tabSave);
-        storeActionsListTab.setIndicator(this.getString(R.string.Name));
+        storeActionsListTab.setIndicator(this.getString(R.string.Save));
         tabHost.addTab(storeActionsListTab);
         // -----------------------------------------------------------------------------------------
 
