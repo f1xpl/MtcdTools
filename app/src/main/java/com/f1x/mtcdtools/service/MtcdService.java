@@ -40,7 +40,7 @@ public class MtcdService extends android.app.Service {
         FileWriter fileWriter = new FileWriter(this);
         mNamedObjectsStorage = new NamedObjectsStorage(fileReader, fileWriter);
         mKeysSequenceBindingsStorage = new KeysSequenceBindingsStorage(fileReader, fileWriter);
-        mKeysSequenceDispatcher = new KeysSequenceDispatcher(this, mNamedObjectsStorage, mKeysSequenceBindingsStorage);
+        mKeysSequenceDispatcher = new KeysSequenceDispatcher(this, mConfiguration, mNamedObjectsStorage, mKeysSequenceBindingsStorage);
         mPressedKeysSequenceManager = new PressedKeysSequenceManager(mConfiguration);
     }
 

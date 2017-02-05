@@ -66,7 +66,7 @@ public class SelectNamedObjectActivity extends ServiceActivity implements KeysSe
         mExecuteActionProgressBar.setMax(mServiceBinder.getConfiguration().getActionExecutionDelay());
         mActionsList = mActionsListName == null ? null : (ActionsList)mServiceBinder.getNamedObjectsStorage().getItem(mActionsListName);
         mServiceBinder.getPressedKeysSequenceManager().pushListener(this);
-        mDispatcher = new NamedObjectDispatcher(mServiceBinder.getNamedObjectsStorage());
+        mDispatcher = new NamedObjectDispatcher(mServiceBinder.getNamedObjectsStorage(), mServiceBinder.getConfiguration());
 
         if(mActionsList != null) {
             fillControls();

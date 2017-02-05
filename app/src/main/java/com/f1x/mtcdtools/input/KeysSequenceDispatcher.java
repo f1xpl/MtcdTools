@@ -2,6 +2,7 @@ package com.f1x.mtcdtools.input;
 
 import android.content.Context;
 
+import com.f1x.mtcdtools.configuration.Configuration;
 import com.f1x.mtcdtools.input.KeysSequenceBinding;
 import com.f1x.mtcdtools.input.KeysSequenceListener;
 import com.f1x.mtcdtools.named.objects.NamedObjectDispatcher;
@@ -16,8 +17,8 @@ import java.util.List;
  */
 
 public class KeysSequenceDispatcher extends NamedObjectDispatcher implements KeysSequenceListener {
-    public KeysSequenceDispatcher(Context context, NamedObjectsStorage namedObjectsStorage, KeysSequenceBindingsStorage keysSequenceBindingsStorage) {
-        super(namedObjectsStorage);
+    public KeysSequenceDispatcher(Context context, Configuration configuration, NamedObjectsStorage namedObjectsStorage, KeysSequenceBindingsStorage keysSequenceBindingsStorage) {
+        super(namedObjectsStorage, configuration);
 
         mContext = context;
         mKeysSequenceBindingsStorage = keysSequenceBindingsStorage;

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 
+import com.f1x.mtcdtools.configuration.Configuration;
 import com.f1x.mtcdtools.named.objects.NamedObjectDispatcher;
 import com.f1x.mtcdtools.named.objects.actions.Action;
 import com.f1x.mtcdtools.named.objects.actions.KeyAction;
@@ -52,7 +53,7 @@ public class NamedObjectDispatcherTest {
 
         when(mMockNamedObjectsStorage.getItem(actionName)).thenReturn(action);
 
-        NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage);
+        NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage, mMockConfiguration);
         dispatcher.dispatch(actionName, mMockContext);
         verify(action, times(1)).evaluate(mMockContext);
     }
@@ -68,7 +69,7 @@ public class NamedObjectDispatcherTest {
 
         when(mMockNamedObjectsStorage.getItem(actionsListName)).thenReturn(actionsList);
 
-        NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage);
+        NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage, mMockConfiguration);
         dispatcher.dispatch(actionsListName, mMockContext);
         verify(mMockContext, times(1)).startActivity(mMockIntent);
     }
@@ -93,15 +94,18 @@ public class NamedObjectDispatcherTest {
         ActionsSequenceDispatchTask actionsSequenceDispatchTask = mock(ActionsSequenceDispatchTask.class);
         PowerMockito.whenNew(ActionsSequenceDispatchTask.class).withArguments(actionsNames, mMockContext, mMockNamedObjectsStorage).thenReturn(actionsSequenceDispatchTask);
 
-        NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage);
+        int executionDelay = 1234;
+        when(mMockConfiguration.getActionsSequenceDelay()).thenReturn(executionDelay);
+
+        NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage, mMockConfiguration);
         dispatcher.dispatch(actionsSequenceName, mMockContext);
 
-        verify(actionsSequenceDispatchTask, times(1)).execute(3000);
+        verify(actionsSequenceDispatchTask, times(1)).execute(executionDelay);
     }
 
     @Test
     public void test_Dispatch_NullObject() {
-        NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage);
+        NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage, mMockConfiguration);
 
         String namedObjectName = "namedObjectName";
         when(mMockNamedObjectsStorage.getItem(namedObjectName)).thenReturn(null);
@@ -110,7 +114,7 @@ public class NamedObjectDispatcherTest {
 
     @Test
     public void test_Dispatch_WrongObjectType() {
-        NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage);
+        NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage, mMockConfiguration);
 
         String actionsSequenceName = "actionsSequenceName";
         ActionsSequence actionsSequence = mock(ActionsSequence.class);
@@ -120,6 +124,9 @@ public class NamedObjectDispatcherTest {
         when(mMockNamedObjectsStorage.getItem(actionsSequenceName)).thenReturn(actionsSequence);
         dispatcher.dispatch(actionsSequenceName, mMockContext);
     }
+
+    @Mock
+    Configuration mMockConfiguration;
 
     @Mock
     NamedObjectsStorage mMockNamedObjectsStorage;

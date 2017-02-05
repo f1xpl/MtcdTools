@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
 
+import com.f1x.mtcdtools.configuration.Configuration;
 import com.f1x.mtcdtools.named.objects.actions.Action;
 import com.f1x.mtcdtools.activities.SelectNamedObjectActivity;
 import com.f1x.mtcdtools.storage.NamedObjectsStorage;
@@ -16,8 +17,9 @@ import java.util.List;
  */
 
 public class NamedObjectDispatcher {
-    public NamedObjectDispatcher(NamedObjectsStorage namedObjectsStorage) {
+    public NamedObjectDispatcher(NamedObjectsStorage namedObjectsStorage, Configuration configuration) {
         mNamedObjectsStorage = namedObjectsStorage;
+        mConfiguration = configuration;
     }
 
     public void dispatch(String namedObjectName, Context context) {
@@ -53,7 +55,7 @@ public class NamedObjectDispatcher {
 
     private void dispatchActionsSequence(NamedObject namedObject, Context context) {
         ActionsSequence actionsSequence = (ActionsSequence)namedObject;
-        new ActionsSequenceDispatchTask(actionsSequence.getActionNames(), context, mNamedObjectsStorage).execute(3000);
+        new ActionsSequenceDispatchTask(actionsSequence.getActionNames(), context, mNamedObjectsStorage).execute(mConfiguration.getActionsSequenceDelay());
     }
 
     private void dispatchAction(NamedObject namedObject, Context context) {
@@ -62,4 +64,5 @@ public class NamedObjectDispatcher {
     }
 
     private final NamedObjectsStorage mNamedObjectsStorage;
+    private final Configuration mConfiguration;
 }

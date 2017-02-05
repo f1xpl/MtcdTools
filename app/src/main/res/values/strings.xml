@@ -53,4 +53,5 @@
     <string name="Objects">Objects</string>
     <string name="AddObject">Add object</string>
     <string name="CreateNewActionsSequence">Create a new actions sequence</string>
+    <string name="ActionsSequenceDelay">Delay action execution in sequence [ms]</string>
 </resources>

@@ -26,7 +26,7 @@ public class VoiceDispatchActivity extends ServiceActivity {
 
     @Override
     protected void onServiceConnected() {
-        mDispatcher = new NamedObjectDispatcher(mServiceBinder.getNamedObjectsStorage());
+        mDispatcher = new NamedObjectDispatcher(mServiceBinder.getNamedObjectsStorage(), mServiceBinder.getConfiguration());
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault().toString());
 
