@@ -50,15 +50,14 @@
     <string name="Name">Name</string>
     <string name="ActionExecutionDelay">Action execution delay [s]</string>
     <string name="KeyPressSpeed">Key press speed [ms]</string>
-    <string name="SaveSettingsFailed">Could not save settings</string>
     <string name="IntentAction">Intent action</string>
     <string name="NotRecognizedCommand">Not recognized command</string>
     <string name="Misc">Misc</string>
     <string name="VoiceCommands">Voice commands</string>
-    <string name="SpeechKeysSequence">Speech keys sequence</string>
     <string name="StoreSettings">Store settings</string>
     <string name="ExecuteActionCommand">Execute action command</string>
     <string name="CallCommand">Call command</string>
     <string name="Donate">Have you enjoyed MtcdTools? Donate author (PayPal): michal.szwaj [at] o2 [dot] pl</string>
     <string name="ClassName">Class name</string>
+    <string name="Flags">Flags</string>
 </resources>

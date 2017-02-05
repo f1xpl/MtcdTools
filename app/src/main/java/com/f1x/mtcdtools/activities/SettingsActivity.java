@@ -37,11 +37,6 @@ public class SettingsActivity extends ServiceActivity {
         voiceCommandsTab.setIndicator(this.getString(R.string.VoiceCommands));
         tabHost.addTab(voiceCommandsTab);
 
-        TabHost.TabSpec speechKeysSequenceTab = tabHost.newTabSpec(this.getString(R.string.SpeechKeysSequence));
-        speechKeysSequenceTab.setContent(R.id.tabSpeechKeysSequenceSettings);
-        speechKeysSequenceTab.setIndicator(this.getString(R.string.SpeechKeysSequence));
-        tabHost.addTab(speechKeysSequenceTab);
-
         TabHost.TabSpec storeSettingsTab = tabHost.newTabSpec(this.getString(R.string.StoreSettings));
         storeSettingsTab.setContent(R.id.tabStoreSettings);
         storeSettingsTab.setIndicator(this.getString(R.string.StoreSettings));
@@ -102,25 +97,12 @@ public class SettingsActivity extends ServiceActivity {
                 mServiceBinder.getConfiguration().setKeyPressSpeed(mKeyPressSpeedSeekBar.getProgress());
                 mServiceBinder.getConfiguration().setExecuteActionVoiceCommandText(mExecuteActionCommandEditText.getText().toString());
                 mServiceBinder.getConfiguration().setCallVoiceCommandText(mCallCommandEditText.getText().toString());
-                mServiceBinder.getConfiguration().setSpeechKeysSequence(mSpeechKeysSequenceArrayAdapter.getItems());
                 SettingsActivity.this.finish();
-            }
-        });
-
-        Button obtainKeysSequenceButton = (Button)this.findViewById(R.id.buttonObtainKeysSequence);
-        obtainKeysSequenceButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivityForResult(new Intent(SettingsActivity.this, ObtainKeysSequenceActivity.class), 1);
             }
         });
 
         mExecuteActionCommandEditText = (EditText)this.findViewById(R.id.editTextExecuteActionCommand);
         mCallCommandEditText = (EditText)this.findViewById(R.id.editTextCallCommand);
-
-        mSpeechKeysSequenceArrayAdapter = new KeysSequenceArrayAdapter(this);
-        mSpeechKeysSequenceListView = (ListView)this.findViewById(R.id.listViewSpeechKeysSequence);
-        mSpeechKeysSequenceListView.setAdapter(mSpeechKeysSequenceArrayAdapter);
     }
 
     @Override
@@ -144,19 +126,8 @@ public class SettingsActivity extends ServiceActivity {
         mKeyPressSpeedSeekBar.setProgress(mServiceBinder.getConfiguration().getKeyPressSpeed());
         mKeyPressSpeedValue.setText(String.format(Locale.getDefault(), "%d", mKeyPressSpeedSeekBar.getProgress()));
 
-        mSpeechKeysSequenceArrayAdapter.reset(mServiceBinder.getConfiguration().getSpeechKeysSequence());
         mExecuteActionCommandEditText.setText(mServiceBinder.getConfiguration().getExecuteActionVoiceCommandText());
         mCallCommandEditText.setText(mServiceBinder.getConfiguration().getCallVoiceCommandText());
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == ObtainKeysSequenceActivity.RESULT_CANCELED) {
-            return;
-        }
-
-        List<Integer> keysSequence = KeysSequenceConverter.fromArray(data.getIntArrayExtra(ObtainKeysSequenceActivity.RESULT_NAME));
-        mSpeechKeysSequenceArrayAdapter.reset(keysSequence);
     }
 
     private SeekBar mActionExecutionDelaySeekBar;
@@ -167,6 +138,4 @@ public class SettingsActivity extends ServiceActivity {
 
     private EditText mExecuteActionCommandEditText;
     private EditText mCallCommandEditText;
-    private KeysSequenceArrayAdapter mSpeechKeysSequenceArrayAdapter;
-    private ListView mSpeechKeysSequenceListView;
 }

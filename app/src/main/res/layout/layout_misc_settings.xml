@@ -6,8 +6,7 @@
         android:text="@string/ActionExecutionDelay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/element_spacing"
-        android:id="@+id/textViewActionExecutionDelay" />
+        android:layout_marginBottom="@dimen/element_spacing" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -31,8 +30,7 @@
         android:text="@string/KeyPressSpeed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/element_spacing"
-        android:id="@+id/TextViewKeyPressSpeed" />
+        android:layout_marginBottom="@dimen/element_spacing" />
 
     <LinearLayout
         android:orientation="horizontal"

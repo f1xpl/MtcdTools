@@ -46,6 +46,7 @@ public class StartActivityActionTest {
         mActionJson.put(StartActivityAction.INTENT_ACTION_PROPERTY, "intentAction");
         mActionJson.put(StartActivityAction.INTENT_EXTRAS_PROPERTY, new JSONObject());
         mActionJson.put(StartActivityAction.CLASS_NAME_PROPERTY, "className");
+        mActionJson.put(StartActivityAction.FLAGS_PROPERTY, 554);
     }
 
     @Test
@@ -61,7 +62,8 @@ public class StartActivityActionTest {
                                                                           mActionJson.getString(StartActivityAction.INTENT_DATA_PROPERTY),
                                                                           mActionJson.getString(StartActivityAction.INTENT_TYPE_PROPERTY),
                                                                           intentExtras,
-                                                                          mActionJson.getString(StartActivityAction.CLASS_NAME_PROPERTY));
+                                                                          mActionJson.getString(StartActivityAction.CLASS_NAME_PROPERTY),
+                                                                          mActionJson.getInt(StartActivityAction.FLAGS_PROPERTY));
 
         assertEquals(mActionJson.toString(), startActivityAction.toJson().toString());
         assertEquals(mActionJson.getString(StartActivityAction.NAME_PROPERTY), startActivityAction.getName());
@@ -73,6 +75,7 @@ public class StartActivityActionTest {
         assertEquals(mActionJson.getString(StartActivityAction.INTENT_TYPE_PROPERTY), startActivityAction.getIntentType());
         assertEquals(intentExtras.toString(), startActivityAction.getIntentExtras().toString());
         assertEquals(mActionJson.getString(StartActivityAction.CLASS_NAME_PROPERTY), startActivityAction.getClassName());
+        assertEquals(mActionJson.getInt(StartActivityAction.FLAGS_PROPERTY), startActivityAction.getFlags());
     }
 
     @Test
@@ -94,6 +97,7 @@ public class StartActivityActionTest {
         verify(mMockStartActivityIntent).setPackage(mActionJson.getString(StartActivityAction.INTENT_PACKAGE_PROPERTY));
         verify(mMockStartActivityIntent).putExtras(mMockBundle);
         verify(mMockStartActivityIntent).setClassName(mActionJson.getString(StartActivityAction.INTENT_PACKAGE_PROPERTY), mActionJson.getString(StartActivityAction.CLASS_NAME_PROPERTY));
+        verify(mMockStartActivityIntent).setFlags(mActionJson.getInt(StartActivityAction.FLAGS_PROPERTY));
     }
 
     @Test
@@ -113,14 +117,16 @@ public class StartActivityActionTest {
         assertEquals(mActionJson.getString(StartActivityAction.INTENT_TYPE_PROPERTY), startActivityAction.getIntentType());
         assertEquals(intentExtras.toString(), startActivityAction.getIntentExtras().toString());
         assertEquals(mActionJson.getString(StartActivityAction.CLASS_NAME_PROPERTY), startActivityAction.getClassName());
+        assertEquals(mActionJson.getInt(StartActivityAction.FLAGS_PROPERTY), startActivityAction.getFlags());
     }
 
     @Test
     public void test_evaluate_empty_parameters() throws Exception {
+        PowerMockito.whenNew(Intent.class).withAnyArguments().thenReturn(mMockStartActivityIntent);
         PowerMockito.when(ExtrasParser.fromJSON(any(JSONObject.class))).thenReturn(mMockBundle);
         PowerMockito.when(mMockBundle.isEmpty()).thenReturn(true);
 
-        StartActivityAction startActivityAction = new StartActivityAction("testAction", "", "", "", "", "", new JSONObject(), "");
+        StartActivityAction startActivityAction = new StartActivityAction("testAction", "", "", "", "", "", new JSONObject(), "", 5);
         startActivityAction.evaluate(mMockContext);
 
         verify(mMockStartActivityIntent, times(0)).setType(any(String.class));
@@ -130,6 +136,7 @@ public class StartActivityActionTest {
         verify(mMockStartActivityIntent, times(0)).setAction(any(String.class));
         verify(mMockStartActivityIntent, times(0)).putExtras(any(Bundle.class));
         verify(mMockStartActivityIntent, times(0)).setClassName(any(String.class), any(String.class));
+        verify(mMockStartActivityIntent, times(1)).setFlags(5);
     }
 
     @Mock
@@ -144,5 +151,5 @@ public class StartActivityActionTest {
     @Mock
     Bundle mMockBundle;
 
-    JSONObject mActionJson;
+    private JSONObject mActionJson;
 }

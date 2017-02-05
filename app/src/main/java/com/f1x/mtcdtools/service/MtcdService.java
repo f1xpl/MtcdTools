@@ -42,7 +42,7 @@ public class MtcdService extends android.app.Service {
             mActionsStorage = new ActionsStorage(fileReader, fileWriter);
             mActionsListsStorage = new ActionsListsStorage(fileReader, fileWriter);
             mKeysSequenceBindingsStorage = new KeysSequenceBindingsStorage(fileReader, fileWriter);
-            mDispatcher = new Dispatcher(mConfiguration, this, mActionsStorage, mActionsListsStorage, mKeysSequenceBindingsStorage);
+            mDispatcher = new Dispatcher(this, mActionsStorage, mActionsListsStorage, mKeysSequenceBindingsStorage);
             mPressedKeysSequenceManager = new PressedKeysSequenceManager(mConfiguration);
         } catch (JSONException e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();

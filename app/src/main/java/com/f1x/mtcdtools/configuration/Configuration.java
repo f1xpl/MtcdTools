@@ -22,7 +22,6 @@ public class Configuration implements SharedPreferences.OnSharedPreferenceChange
         mKeyPressSpeed = sharedPreferences.getInt(KEY_PRESS_SPEED_PROPERTY_NAME, KEY_PRESS_SPEED_DEFAULT_VALUE);
         mActionExecutionVoiceCommandText = sharedPreferences.getString(EXECUTE_ACTION_VOICE_COMMAND_PROPERTY_NAME, EXECUTE_ACTION_VOICE_COMMAND_DEFAULT_VALUE);
         mCallVoiceCommandText = sharedPreferences.getString(CALL_VOICE_COMMAND_PROPERTY_NAME, EXECUTE_ACTION_VOICE_COMMAND_DEFAULT_VALUE);
-        mVoiceCommandKeysSequence = readVoiceCommandKeySequence(sharedPreferences.getString(SPEECH_KEYS_SEQUENCE_PROPERTY_NAME, ""));
 
         mSharedPreferences.registerOnSharedPreferenceChangeListener(this);
         mConfigurationChangeListeners = new ArrayList<>();
@@ -80,21 +79,6 @@ public class Configuration implements SharedPreferences.OnSharedPreferenceChange
         notifyListeners(CALL_VOICE_COMMAND_PROPERTY_NAME);
     }
 
-    public List<Integer> getSpeechKeysSequence() {
-        return new ArrayList<>(mVoiceCommandKeysSequence);
-    }
-    public void setSpeechKeysSequence(List<Integer> value) {
-        SharedPreferences.Editor editor = mSharedPreferences.edit();
-        editor.putString(SPEECH_KEYS_SEQUENCE_PROPERTY_NAME, KeysSequenceConverter.toJsonArray(value).toString());
-        editor.apply();
-
-        notifyListeners(SPEECH_KEYS_SEQUENCE_PROPERTY_NAME);
-    }
-
-    private List<Integer> readVoiceCommandKeySequence(String json) throws JSONException {
-        return json.isEmpty() ? new ArrayList<Integer>() : KeysSequenceConverter.fromJsonArray(new JSONArray(json));
-    }
-
     private void notifyListeners(String parameterName) {
         for(ConfigurationChangeListener listener : mConfigurationChangeListeners) {
             listener.onParameterChanged(parameterName, this);
@@ -116,13 +100,6 @@ public class Configuration implements SharedPreferences.OnSharedPreferenceChange
             case CALL_VOICE_COMMAND_PROPERTY_NAME:
                 mCallVoiceCommandText = sharedPreferences.getString(CALL_VOICE_COMMAND_PROPERTY_NAME, CALL_VOICE_COMMAND_DEFAULT_VALUE);
                 break;
-            case SPEECH_KEYS_SEQUENCE_PROPERTY_NAME:
-                try {
-                    mVoiceCommandKeysSequence = readVoiceCommandKeySequence(sharedPreferences.getString(SPEECH_KEYS_SEQUENCE_PROPERTY_NAME, ""));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                break;
             default:
         }
     }
@@ -132,7 +109,6 @@ public class Configuration implements SharedPreferences.OnSharedPreferenceChange
     private int mKeyPressSpeed;
     private String mActionExecutionVoiceCommandText;
     private String mCallVoiceCommandText;
-    private List<Integer> mVoiceCommandKeysSequence;
     private List<ConfigurationChangeListener> mConfigurationChangeListeners;
 
     public static final String ACTION_EXECUTION_DELAY_PROPERTY_NAME = "ActionExecutionDelay";
@@ -146,6 +122,4 @@ public class Configuration implements SharedPreferences.OnSharedPreferenceChange
 
     public static final String CALL_VOICE_COMMAND_PROPERTY_NAME = "CallVoiceCommand";
     private static String CALL_VOICE_COMMAND_DEFAULT_VALUE = "";
-
-    public static final String SPEECH_KEYS_SEQUENCE_PROPERTY_NAME = "VoiceCommandKeysSequence";
 }

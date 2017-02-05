@@ -11,6 +11,8 @@ import com.f1x.mtcdtools.actions.StartActivityAction;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Locale;
+
 public class StartActivityActionActivity extends CustomIntentActionActivity {
     public StartActivityActionActivity() {
         super(R.layout.activity_start_activity_action_details);
@@ -20,6 +22,7 @@ public class StartActivityActionActivity extends CustomIntentActionActivity {
     protected void initControls() {
         super.initControls();
         mClassNameEditText = (EditText)this.findViewById(R.id.editTextClassName);
+        mFlagsNameEditText = (EditText)this.findViewById(R.id.editTextFlags);
     }
 
     @Override
@@ -33,11 +36,15 @@ public class StartActivityActionActivity extends CustomIntentActionActivity {
             finish();
         } else {
             mClassNameEditText.setText(startActivityAction.getClassName());
+            mFlagsNameEditText.setText(String.format(Locale.getDefault(), "%d", startActivityAction.getFlags()));
         }
     }
 
     @Override
     protected Action createAction(String actionName, JSONObject intentExtrasJson) throws JSONException {
+        String flagsString = mFlagsNameEditText.getText().toString();
+        int flags = flagsString.isEmpty() ? 0 : Integer.parseInt(flagsString);
+
         return new StartActivityAction(actionName,
                 mIntentPackageEditText.getEditableText().toString(),
                 mIntentActionEditText.getEditableText().toString(),
@@ -45,8 +52,10 @@ public class StartActivityActionActivity extends CustomIntentActionActivity {
                 mIntentDataEditText.getEditableText().toString(),
                 mIntentTypeEditText.getEditableText().toString(),
                 intentExtrasJson,
-                mClassNameEditText.getEditableText().toString());
+                mClassNameEditText.getEditableText().toString(),
+                flags);
     }
 
     private EditText mClassNameEditText;
+    private EditText mFlagsNameEditText;
 }

@@ -69,6 +69,14 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ems="10"
+            android:id="@+id/editTextFlags"
+            android:inputType="number"
+            android:hint="@string/Flags" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:inputType="textMultiLine"
             android:ems="10"
             android:id="@+id/editTextIntentExtras"
