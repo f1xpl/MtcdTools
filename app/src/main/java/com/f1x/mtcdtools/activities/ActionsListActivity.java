@@ -1,21 +1,16 @@
 package com.f1x.mtcdtools.activities;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TabHost;
-import android.widget.Toast;
 
-import com.f1x.mtcdtools.ActionsList;
+import com.f1x.mtcdtools.named.objects.ActionsList;
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.adapters.KeysSequenceArrayAdapter;
-import com.f1x.mtcdtools.adapters.NamesArrayAdapter;
 import com.f1x.mtcdtools.input.KeysSequenceConverter;
-import com.f1x.mtcdtools.storage.NamedObject;
+import com.f1x.mtcdtools.named.objects.NamedObject;
 
 import java.util.List;
 
@@ -23,14 +18,14 @@ import java.util.List;
  * Created by COMPUTER on 2017-01-31.
  */
 
-public class ActionsListActivity extends NamedObjectActivity {
+public class ActionsListActivity extends NamedObjectsContainerActivity {
     public ActionsListActivity() {
         super(R.layout.activity_actions_list_details);
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void initControls() {
+        super.initControls();
 
         // -----------------------------------------------------------------------------------------
         TabHost tabHost = (TabHost)findViewById(R.id.tabHost);
@@ -56,11 +51,6 @@ public class ActionsListActivity extends NamedObjectActivity {
         storeActionsListTab.setIndicator(this.getString(R.string.Save));
         tabHost.addTab(storeActionsListTab);
         // -----------------------------------------------------------------------------------------
-    }
-
-    @Override
-    protected void initControls() {
-        super.initControls();
 
         // -----------------------------------------------------------------------------------------
         mKeysSequenceUpArrayAdapter = new KeysSequenceArrayAdapter(this);
@@ -89,39 +79,6 @@ public class ActionsListActivity extends NamedObjectActivity {
             }
         });
         // -----------------------------------------------------------------------------------------
-
-        // -----------------------------------------------------------------------------------------
-        mNamesArrayAdapter = new NamesArrayAdapter(this);
-        final Spinner actionsSpinner = (Spinner)this.findViewById(R.id.spinnerNamedObjects);
-        actionsSpinner.setAdapter(mNamesArrayAdapter);
-
-        ListView addedActionsListView = (ListView)this.findViewById(R.id.listViewAddedNamedObjects);
-        mAddedNamesArrayAdapter = new NamesArrayAdapter(this);
-        addedActionsListView.setAdapter(mAddedNamesArrayAdapter);
-        addedActionsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-                String actionName = mAddedNamesArrayAdapter.getItem(position);
-                mAddedNamesArrayAdapter.remove(actionName);
-
-                return true;
-            }
-        });
-
-        Button addActionButton = (Button)this.findViewById(R.id.buttonAddNamedObject);
-        addActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String actionName = (String)actionsSpinner.getSelectedItem();
-
-                if(!mAddedNamesArrayAdapter.containsItem(actionName)) {
-                    mAddedNamesArrayAdapter.add(actionName);
-                } else {
-                    Toast.makeText(ActionsListActivity.this, ActionsListActivity.this.getText(R.string.ObjectAlreadyAdded), Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-        // -----------------------------------------------------------------------------------------
     }
 
     @Override
@@ -130,7 +87,6 @@ public class ActionsListActivity extends NamedObjectActivity {
 
         ActionsList actionsList = (ActionsList)namedObject;
 
-        mAddedNamesArrayAdapter.reset(actionsList.getActionNames());
         mKeysSequenceDownArrayAdapter.reset(actionsList.getKeysSequenceDown());
         mKeysSequenceUpArrayAdapter.reset(actionsList.getKeysSequenceUp());
     }
@@ -141,12 +97,6 @@ public class ActionsListActivity extends NamedObjectActivity {
                 mKeysSequenceUpArrayAdapter.getItems(),
                 mKeysSequenceDownArrayAdapter.getItems(),
                 mAddedNamesArrayAdapter.getItems());
-    }
-
-    @Override
-    protected void onServiceConnected() {
-        super.onServiceConnected();
-        mNamesArrayAdapter.reset(mServiceBinder.getNamedObjectsStorage().getItems().keySet());
     }
 
     @Override
@@ -166,8 +116,6 @@ public class ActionsListActivity extends NamedObjectActivity {
 
     private KeysSequenceArrayAdapter mKeysSequenceUpArrayAdapter;
     private KeysSequenceArrayAdapter mKeysSequenceDownArrayAdapter;
-    private NamesArrayAdapter mNamesArrayAdapter;
-    private NamesArrayAdapter mAddedNamesArrayAdapter;
 
     private static final int REQUEST_CODE_KEYS_SEQUENCE_UP = 100;
     private static final int REQUEST_CODE_KEYS_SEQUENCE_DOWN = 101;

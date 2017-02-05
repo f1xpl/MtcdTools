@@ -4,10 +4,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.f1x.mtcdtools.R;
-import com.f1x.mtcdtools.actions.Action;
-import com.f1x.mtcdtools.actions.CustomIntentAction;
+import com.f1x.mtcdtools.named.objects.actions.Action;
+import com.f1x.mtcdtools.named.objects.actions.CustomIntentAction;
 import com.f1x.mtcdtools.activities.NamedObjectActivity;
-import com.f1x.mtcdtools.storage.NamedObject;
+import com.f1x.mtcdtools.named.objects.NamedObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;

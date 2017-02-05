@@ -10,14 +10,14 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.f1x.mtcdtools.ActionsList;
+import com.f1x.mtcdtools.named.objects.ActionsList;
 import com.f1x.mtcdtools.ListIndexer;
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.configuration.Configuration;
 import com.f1x.mtcdtools.configuration.ConfigurationChangeListener;
 import com.f1x.mtcdtools.input.KeysSequenceListener;
-import com.f1x.mtcdtools.NamedObjectDispatcher;
-import com.f1x.mtcdtools.storage.NamedObject;
+import com.f1x.mtcdtools.named.objects.NamedObjectDispatcher;
+import com.f1x.mtcdtools.named.objects.NamedObject;
 
 import java.util.List;
 
@@ -28,7 +28,6 @@ public class SelectNamedObjectActivity extends ServiceActivity implements KeysSe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_named_object);
 
-        mDispatcher = new NamedObjectDispatcher();
         mExecuteActionProgressBar = (ProgressBar)this.findViewById(R.id.progressBarExecuteAction);
         mActionsListName = this.getIntent().getStringExtra(ACTIONS_LIST_NAME_PARAMETER);
         mActionsNamesArrayAdapter = new ArrayAdapter<>(this, R.layout.layout_action_name_row);
@@ -39,19 +38,8 @@ public class SelectNamedObjectActivity extends ServiceActivity implements KeysSe
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 String namedObjectName = mActionsNamesArrayAdapter.getItem(position);
-                NamedObject namedObject = mServiceBinder.getNamedObjectsStorage().getItem(namedObjectName);
-
-                if(namedObject == null) {
-                    SelectNamedObjectActivity.this.finish();
-                } else if(namedObject.getObjectType().equals(ActionsList.OBJECT_TYPE)) {
-                    mActionsList = (ActionsList)namedObject;
-                    mActionsListName = namedObjectName;
-
-                    fillControls();
-                    restartTimer();
-                } else {
-                    mDispatcher.dispatch(namedObject, SelectNamedObjectActivity.this);
-                }
+                mDispatcher.dispatch(namedObjectName, SelectNamedObjectActivity.this);
+                SelectNamedObjectActivity.this.finish();
             }
         });
 
@@ -78,6 +66,7 @@ public class SelectNamedObjectActivity extends ServiceActivity implements KeysSe
         mExecuteActionProgressBar.setMax(mServiceBinder.getConfiguration().getActionExecutionDelay());
         mActionsList = mActionsListName == null ? null : (ActionsList)mServiceBinder.getNamedObjectsStorage().getItem(mActionsListName);
         mServiceBinder.getPressedKeysSequenceManager().pushListener(this);
+        mDispatcher = new NamedObjectDispatcher(mServiceBinder.getNamedObjectsStorage());
 
         if(mActionsList != null) {
             fillControls();

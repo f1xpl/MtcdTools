@@ -37,6 +37,12 @@
             android:id="@+id/buttonCreateNewActionsList" />
 
         <Button
+            android:text="@string/CreateNewActionsSequence"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonCreateNewActionsSequence" />
+
+        <Button
             android:text="@string/CreateNewBinding"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

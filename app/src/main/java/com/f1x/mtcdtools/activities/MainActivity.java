@@ -25,6 +25,9 @@ public class MainActivity extends Activity {
         Button createActionsListButton = (Button)this.findViewById(R.id.buttonCreateNewActionsList);
         createActionsListButton.setOnClickListener(new StartActivityButtonClickListener(this, ActionsListActivity.class));
 
+        Button createActionsSequenceButton = (Button)this.findViewById(R.id.buttonCreateNewActionsSequence);
+        createActionsSequenceButton.setOnClickListener(new StartActivityButtonClickListener(this, ActionsSequenceActivity.class));
+
         Button manageNamedObjectsButton = (Button)this.findViewById(R.id.buttonManageNamedObjects);
         manageNamedObjectsButton.setOnClickListener(new StartActivityButtonClickListener(this, ManageNamedObjectsActivity.class));
 

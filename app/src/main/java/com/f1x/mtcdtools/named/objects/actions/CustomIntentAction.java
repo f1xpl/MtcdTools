@@ -1,4 +1,4 @@
-package com.f1x.mtcdtools.actions;
+package com.f1x.mtcdtools.named.objects.actions;
 
 import android.content.Intent;
 import android.os.Bundle;

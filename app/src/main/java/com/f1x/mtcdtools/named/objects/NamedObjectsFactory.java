@@ -1,11 +1,10 @@
-package com.f1x.mtcdtools.storage;
+package com.f1x.mtcdtools.named.objects;
 
-import com.f1x.mtcdtools.ActionsList;
-import com.f1x.mtcdtools.actions.Action;
-import com.f1x.mtcdtools.actions.BroadcastIntentAction;
-import com.f1x.mtcdtools.actions.KeyAction;
-import com.f1x.mtcdtools.actions.LaunchAction;
-import com.f1x.mtcdtools.actions.StartActivityAction;
+import com.f1x.mtcdtools.named.objects.actions.Action;
+import com.f1x.mtcdtools.named.objects.actions.BroadcastIntentAction;
+import com.f1x.mtcdtools.named.objects.actions.KeyAction;
+import com.f1x.mtcdtools.named.objects.actions.LaunchAction;
+import com.f1x.mtcdtools.named.objects.actions.StartActivityAction;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,6 +28,8 @@ public class NamedObjectsFactory {
                 return new BroadcastIntentAction(json);
             case ActionsList.OBJECT_TYPE:
                 return new ActionsList(json);
+            case ActionsSequence.OBJECT_TYPE:
+                return new ActionsSequence(json);
             default:
                 return null;
         }

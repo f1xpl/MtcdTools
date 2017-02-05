@@ -1,13 +1,12 @@
 package com.f1x.mtcdtools.activities.actions;
 
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.f1x.mtcdtools.R;
-import com.f1x.mtcdtools.actions.KeyAction;
+import com.f1x.mtcdtools.named.objects.actions.KeyAction;
 import com.f1x.mtcdtools.activities.NamedObjectActivity;
 import com.f1x.mtcdtools.adapters.KeyCodesArrayAdapter;
-import com.f1x.mtcdtools.storage.NamedObject;
+import com.f1x.mtcdtools.named.objects.NamedObject;
 
 /**
  * Created by COMPUTER on 2017-01-25.

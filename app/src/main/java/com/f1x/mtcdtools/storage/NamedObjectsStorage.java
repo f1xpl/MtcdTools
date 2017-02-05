@@ -1,5 +1,7 @@
 package com.f1x.mtcdtools.storage;
 
+import com.f1x.mtcdtools.named.objects.NamedObject;
+import com.f1x.mtcdtools.named.objects.NamedObjectsFactory;
 import com.f1x.mtcdtools.storage.exceptions.DuplicatedEntryException;
 import com.f1x.mtcdtools.storage.exceptions.EntryCreationFailed;
 

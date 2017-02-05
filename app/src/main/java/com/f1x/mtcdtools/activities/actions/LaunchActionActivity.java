@@ -1,15 +1,17 @@
 package com.f1x.mtcdtools.activities.actions;
 
+import android.content.pm.PackageManager;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.f1x.mtcdtools.R;
-import com.f1x.mtcdtools.actions.Action;
-import com.f1x.mtcdtools.actions.LaunchAction;
+import com.f1x.mtcdtools.named.objects.actions.Action;
+import com.f1x.mtcdtools.named.objects.actions.LaunchAction;
 import com.f1x.mtcdtools.activities.NamedObjectActivity;
 import com.f1x.mtcdtools.adapters.InstalledPackagesArrayAdapter;
 import com.f1x.mtcdtools.adapters.PackageEntry;
-import com.f1x.mtcdtools.storage.NamedObject;
+import com.f1x.mtcdtools.named.objects.NamedObject;
 
 public class LaunchActionActivity extends NamedObjectActivity {
     public LaunchActionActivity() {
@@ -23,6 +25,19 @@ public class LaunchActionActivity extends NamedObjectActivity {
         mInstalledPackagesSpinner = (Spinner)this.findViewById(R.id.spinnerApplications);
         mInstalledPackagesArrayAdapter = new InstalledPackagesArrayAdapter(this);
         mInstalledPackagesSpinner.setAdapter(mInstalledPackagesArrayAdapter);
+
+        mInstalledPackagesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                PackageEntry packageEntry = mInstalledPackagesArrayAdapter.getItem(position);
+                mNameEditText.setText(packageEntry.getLabel());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                mNameEditText.setText("");
+            }
+        });
     }
 
     @Override

@@ -23,6 +23,6 @@
             android:spinnerMode="dialog"
             android:id="@+id/spinnerApplications" />
 
-        <include layout="@layout/layout_named_object_details" />
+        <include layout="@layout/layout_store_named_object" />
     </LinearLayout>
 </ScrollView>

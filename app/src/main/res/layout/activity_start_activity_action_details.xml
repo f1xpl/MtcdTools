@@ -27,7 +27,7 @@
             android:hint="@string/Flags" />
 
         <include layout="@layout/layout_cutom_intent_action_details" />
-        <include layout="@layout/layout_named_object_details" />
+        <include layout="@layout/layout_store_named_object" />
 
     </LinearLayout>
 </ScrollView>

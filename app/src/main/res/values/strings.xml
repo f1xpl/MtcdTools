@@ -6,7 +6,7 @@
     <string name="ApplicationSettings">Settings</string>
     <string name="ManageBindings">Manage bindings</string>
 
-    <string name="CreateNewBroadcastIntentAction">Create a new Broadcast Intent action</string>
+    <string name="CreateNewBroadcastIntentAction">Create a new broadcast Intent action</string>
     <string name="CreateNewKeyAction">Create a new key action</string>
     <string name="CreateNewLaunchAction">Create a new launch action</string>
     <string name="CreateNewStartActivityAction">Create a new start activity action</string>
@@ -52,4 +52,5 @@
     <string name="ManageObjects">Manage objects</string>
     <string name="Objects">Objects</string>
     <string name="AddObject">Add object</string>
+    <string name="CreateNewActionsSequence">Create a new actions sequence</string>
 </resources>

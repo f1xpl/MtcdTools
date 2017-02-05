@@ -1,8 +1,9 @@
 package com.f1x.mtcdtools.storage;
 
-import com.f1x.mtcdtools.ActionsList;
-import com.f1x.mtcdtools.actions.KeyAction;
-import com.f1x.mtcdtools.actions.LaunchAction;
+import com.f1x.mtcdtools.named.objects.ActionsList;
+import com.f1x.mtcdtools.named.objects.NamedObject;
+import com.f1x.mtcdtools.named.objects.actions.KeyAction;
+import com.f1x.mtcdtools.named.objects.actions.LaunchAction;
 import com.f1x.mtcdtools.storage.exceptions.DuplicatedEntryException;
 import com.f1x.mtcdtools.storage.exceptions.EntryCreationFailed;
 
@@ -43,9 +44,9 @@ public class NamedObjectsStorageTest {
         mNamedObjectsLists.add(new LaunchAction("LaunchActionName", "com.test.package"));
 
         mNamedObjectsLists.add(new ActionsList("ZActionsListName", Arrays.asList(7, 8, 9), Arrays.asList(0, 3, 9),
-                new TreeSet<>(Arrays.asList(mNamedObjectsLists.get(0).getName(), mNamedObjectsLists.get(1).getName()))));
+                Arrays.asList(mNamedObjectsLists.get(0).getName(), mNamedObjectsLists.get(1).getName())));
         mNamedObjectsLists.add(new ActionsList("ZActionsListName2", Arrays.asList(5, 9, 1), Arrays.asList(7, 7, 3),
-                new TreeSet<>(Arrays.asList(mNamedObjectsLists.get(0).getName(), mNamedObjectsLists.get(1).getName(), mNamedObjectsLists.get(2).getName()))));
+                Arrays.asList(mNamedObjectsLists.get(0).getName(), mNamedObjectsLists.get(1).getName(), mNamedObjectsLists.get(2).getName())));
     }
 
     public void useDefaultData() throws JSONException, IOException {

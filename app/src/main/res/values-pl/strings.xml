@@ -47,4 +47,5 @@
     <string name="ManageObjects">Zarządzaj obiektami</string>
     <string name="Objects">Obiekty</string>
     <string name="AddObject">Dodaj obiekt</string>
+    <string name="CreateNewActionsSequence">Utwórz nową sekwencję akcji</string>
 </resources>

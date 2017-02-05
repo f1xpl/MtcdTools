@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.adapters.KeysSequenceArrayAdapter;
-import com.f1x.mtcdtools.adapters.NamesArrayAdapter;
+import com.f1x.mtcdtools.adapters.NamedObjectsArrayAdapter;
 import com.f1x.mtcdtools.input.KeysSequenceBinding;
 import com.f1x.mtcdtools.input.KeysSequenceConverter;
 import com.f1x.mtcdtools.storage.exceptions.DuplicatedEntryException;
@@ -43,8 +43,8 @@ public class BindingActivity extends ServiceActivity {
         }
 
         mNamesSpinner = (Spinner)this.findViewById(R.id.spinnerNames);
-        mNamesArrayAdapter = new NamesArrayAdapter(this);
-        mNamesSpinner.setAdapter(mNamesArrayAdapter);
+        mNamedObjectsArrayAdapter = new NamedObjectsArrayAdapter(this);
+        mNamesSpinner.setAdapter(mNamedObjectsArrayAdapter);
 
         ListView keysSequenceListView = (ListView)this.findViewById(R.id.listViewKeysSequence);
         mKeysSequenceArrayAdapter = new KeysSequenceArrayAdapter(this);
@@ -119,10 +119,10 @@ public class BindingActivity extends ServiceActivity {
             }
         }
 
-        mNamesArrayAdapter.reset(mServiceBinder.getNamedObjectsStorage().getItems().keySet());
+        mNamedObjectsArrayAdapter.reset(mServiceBinder.getNamedObjectsStorage().getItems());
 
         if(binding != null) {
-            mNamesSpinner.setSelection(mNamesArrayAdapter.getPosition(binding.getTargetName()));
+            mNamesSpinner.setSelection(mNamedObjectsArrayAdapter.getPosition(binding.getTargetName()));
         }
     }
 
@@ -140,7 +140,7 @@ public class BindingActivity extends ServiceActivity {
     private boolean mEditMode;
 
     private Spinner mNamesSpinner;
-    private NamesArrayAdapter mNamesArrayAdapter;
+    private NamedObjectsArrayAdapter mNamedObjectsArrayAdapter;
     KeysSequenceArrayAdapter mKeysSequenceArrayAdapter;
 
     public static final String KEYS_SEQUENCE_NAME_PARAMETER = "keysSequence";

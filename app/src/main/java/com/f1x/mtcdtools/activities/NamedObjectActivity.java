@@ -7,7 +7,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.f1x.mtcdtools.R;
-import com.f1x.mtcdtools.storage.NamedObject;
+import com.f1x.mtcdtools.named.objects.NamedObject;
 import com.f1x.mtcdtools.storage.exceptions.DuplicatedEntryException;
 
 import org.json.JSONException;

@@ -29,32 +29,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <LinearLayout
-                    android:id="@+id/tabAddNamedObjects"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <Spinner
-                        android:layout_marginBottom="@dimen/element_spacing"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:spinnerMode="dialog"
-                        android:id="@+id/spinnerNamedObjects" />
-
-                    <Button
-                        android:layout_marginBottom="@dimen/element_spacing"
-                        android:text="@string/AddObject"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/buttonAddNamedObject" />
-
-                    <ListView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:id="@+id/listViewAddedNamedObjects"
-                        android:layout_weight="1"/>
-                </LinearLayout>
+                <include layout="@layout/layout_named_objects_container_details"
+                    android:id="@+id/tabAddNamedObjects"/>
 
                 <LinearLayout
                     android:id="@+id/tabObtainKeysSequenceUp"
@@ -96,7 +72,7 @@
                         android:id="@+id/buttonObtainKeysSequenceDown" />
                 </LinearLayout>
 
-                <include layout="@layout/layout_named_object_details"
+                <include layout="@layout/layout_store_named_object"
                     android:id="@+id/tabSave"/>
 
             </FrameLayout>

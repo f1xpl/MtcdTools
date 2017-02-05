@@ -7,8 +7,7 @@ import android.speech.RecognizerIntent;
 import android.widget.Toast;
 
 import com.f1x.mtcdtools.R;
-import com.f1x.mtcdtools.NamedObjectDispatcher;
-import com.f1x.mtcdtools.storage.NamedObject;
+import com.f1x.mtcdtools.named.objects.NamedObjectDispatcher;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -23,26 +22,25 @@ public class VoiceDispatchActivity extends ServiceActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_voice_dispatch_action);
 
-        mDispatcher = new NamedObjectDispatcher();
     }
 
     @Override
     protected void onServiceConnected() {
+        mDispatcher = new NamedObjectDispatcher(mServiceBinder.getNamedObjectsStorage());
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault().toString());
 
         startActivityForResult(intent, 1);
     }
 
-    NamedObject findNamedObject(String text) {
+    String extractNamedObjectName(String text) {
         String actionExecutionCommand = mServiceBinder.getConfiguration().getExecuteActionVoiceCommandText();
 
         if (text.contains(actionExecutionCommand)) {
-            String actionName = text.replace(actionExecutionCommand , "").trim();
-            return mServiceBinder.getNamedObjectsStorage().getItem(actionName);
+            return text.replace(actionExecutionCommand , "").trim();
         }
 
-        return null;
+        return "";
     }
 
     @Override
@@ -53,13 +51,13 @@ public class VoiceDispatchActivity extends ServiceActivity {
             ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 
             for (int i = 0; i < text.size() && !commandExecuted; ++i) {
-                final NamedObject namedObject = findNamedObject(text.get(i));
+                final String namedObjectName = extractNamedObjectName(text.get(i));
 
-                if(namedObject != null) {
+                if(!namedObjectName.isEmpty()) {
                     commandExecuted = true;
                     new Handler().postDelayed(new Runnable() {
                         @Override public void run() {
-                            mDispatcher.dispatch(namedObject, VoiceDispatchActivity.this);
+                            mDispatcher.dispatch(namedObjectName, VoiceDispatchActivity.this);
                             VoiceDispatchActivity.this.finish();
                         }
                     }, ACTION_EXECUTION_DELAY_MS);

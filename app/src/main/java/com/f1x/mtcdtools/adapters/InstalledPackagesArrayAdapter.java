@@ -3,6 +3,8 @@ package com.f1x.mtcdtools.adapters;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 
+import java.util.Comparator;
+
 /**
  * Created by COMPUTER on 2016-08-19.
  */
@@ -17,6 +19,13 @@ public class InstalledPackagesArrayAdapter extends PackageEntryArrayAdapter {
                 add(packageEntry);
             }
         }
+
+        sort(new Comparator<PackageEntry>() {
+            @Override
+            public int compare(PackageEntry left, PackageEntry right) {
+                return left.getLabel().compareTo(right.getLabel());
+            }
+        });
     }
 
     public int getPosition(String packageName) {

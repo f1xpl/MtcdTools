@@ -1,11 +1,12 @@
-package com.f1x.mtcdtools;
+package com.f1x.mtcdtools.input;
 
 import android.content.Context;
 
 import com.f1x.mtcdtools.input.KeysSequenceBinding;
 import com.f1x.mtcdtools.input.KeysSequenceListener;
+import com.f1x.mtcdtools.named.objects.NamedObjectDispatcher;
 import com.f1x.mtcdtools.storage.KeysSequenceBindingsStorage;
-import com.f1x.mtcdtools.storage.NamedObject;
+import com.f1x.mtcdtools.named.objects.NamedObject;
 import com.f1x.mtcdtools.storage.NamedObjectsStorage;
 
 import java.util.List;
@@ -16,8 +17,9 @@ import java.util.List;
 
 public class KeysSequenceDispatcher extends NamedObjectDispatcher implements KeysSequenceListener {
     public KeysSequenceDispatcher(Context context, NamedObjectsStorage namedObjectsStorage, KeysSequenceBindingsStorage keysSequenceBindingsStorage) {
+        super(namedObjectsStorage);
+
         mContext = context;
-        mNamedObjectsStorage = namedObjectsStorage;
         mKeysSequenceBindingsStorage = keysSequenceBindingsStorage;
     }
 
@@ -26,11 +28,7 @@ public class KeysSequenceDispatcher extends NamedObjectDispatcher implements Key
         KeysSequenceBinding keysSequenceBinding = mKeysSequenceBindingsStorage.getItem(keysSequence);
 
         if(keysSequenceBinding != null) {
-            NamedObject namedObject = mNamedObjectsStorage.getItem(keysSequenceBinding.getTargetName());
-
-            if (namedObject != null) {
-                dispatch(namedObject, mContext);
-            }
+            dispatch(keysSequenceBinding.getTargetName(), mContext);
         }
     }
 
@@ -40,6 +38,5 @@ public class KeysSequenceDispatcher extends NamedObjectDispatcher implements Key
     }
 
     private final Context mContext;
-    private final NamedObjectsStorage mNamedObjectsStorage;
     private final KeysSequenceBindingsStorage mKeysSequenceBindingsStorage;
 }

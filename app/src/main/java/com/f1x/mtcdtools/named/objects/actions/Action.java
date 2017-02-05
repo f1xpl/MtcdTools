@@ -1,8 +1,8 @@
-package com.f1x.mtcdtools.actions;
+package com.f1x.mtcdtools.named.objects.actions;
 
 import android.content.Context;
 
-import com.f1x.mtcdtools.storage.NamedObject;
+import com.f1x.mtcdtools.named.objects.NamedObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;

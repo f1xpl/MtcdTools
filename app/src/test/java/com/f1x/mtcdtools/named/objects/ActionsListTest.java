@@ -1,4 +1,4 @@
-package com.f1x.mtcdtools;
+package com.f1x.mtcdtools.named.objects;
 
 import com.f1x.mtcdtools.input.KeysSequenceConverter;
 
@@ -83,7 +83,7 @@ public class ActionsListTest {
 
     @Test
     public void test_ConstructFromParameters() throws JSONException {
-        Set<String> expectedActionsNames = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+        List<String> expectedActionsNames = new ArrayList<>();
         for(int i = 0; i < mActionsArray.length(); ++i) {
             expectedActionsNames.add(mActionsArray.getString(i));
         }
@@ -95,7 +95,7 @@ public class ActionsListTest {
 
         assertEquals(mListName, actionsList.getName());
 
-        Set<String> actualActionNames = actionsList.getActionNames();
+        List<String> actualActionNames = actionsList.getActionNames();
         assertEquals(expectedActionsNames.size(), actualActionNames.size());
         assertEquals(expectedActionsNames, actualActionNames);
 
