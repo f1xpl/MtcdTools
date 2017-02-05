@@ -6,10 +6,12 @@ import android.widget.Toast;
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.actions.Action;
 import com.f1x.mtcdtools.actions.LaunchAction;
+import com.f1x.mtcdtools.activities.NamedObjectActivity;
 import com.f1x.mtcdtools.adapters.InstalledPackagesArrayAdapter;
 import com.f1x.mtcdtools.adapters.PackageEntry;
+import com.f1x.mtcdtools.storage.NamedObject;
 
-public class LaunchActionActivity extends ActionActivity {
+public class LaunchActionActivity extends NamedObjectActivity {
     public LaunchActionActivity() {
         super(R.layout.activity_launch_action_details);
     }
@@ -24,16 +26,16 @@ public class LaunchActionActivity extends ActionActivity {
     }
 
     @Override
-    protected Action createAction(String actionName) {
+    protected Action createNamedObject(String namedObjectName) {
         PackageEntry packageEntry = (PackageEntry)mInstalledPackagesSpinner.getSelectedItem();
-        return new LaunchAction(actionName, packageEntry.getName());
+        return new LaunchAction(namedObjectName, packageEntry.getName());
     }
 
     @Override
-    protected void fillControls(Action action) {
-        super.fillControls(action);
+    protected void fillControls(NamedObject namedObject) {
+        super.fillControls(namedObject);
 
-        LaunchAction launchAction = (LaunchAction)action;
+        LaunchAction launchAction = (LaunchAction)namedObject;
 
         if(launchAction == null) {
             Toast.makeText(this, this.getText(R.string.UnknownObjectType), Toast.LENGTH_LONG).show();

@@ -5,27 +5,6 @@
     android:layout_margin="@dimen/layout_spacing"
     android:orientation="vertical">
 
-    <RadioGroup
-        android:layout_marginBottom="@dimen/element_spacing"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <RadioButton
-            android:text="@string/ActionsList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/radioButtonActionsList"/>
-
-        <RadioButton
-            android:text="@string/Action"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/radioButtonAction"/>
-    </RadioGroup>
-
     <Spinner
         android:layout_marginBottom="@dimen/element_spacing"
         android:layout_width="match_parent"

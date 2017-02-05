@@ -19,22 +19,16 @@ public class KeysSequenceBinding {
             mKeysSequence.add(keysSequenceArray.getInt(i));
         }
 
-        mTargetType = json.getString(TARGET_TYPE_PROPERTY);
         mTargetName = json.getString(TARGET_NAME_PROPERTY);
     }
 
-    public KeysSequenceBinding(List<Integer> keysSequence, String targetType, String targetName) {
+    public KeysSequenceBinding(List<Integer> keysSequence, String targetName) {
         mKeysSequence = keysSequence;
         mTargetName = targetName;
-        mTargetType = targetType;
     }
 
     public void setTargetName(String name) {
         mTargetName = name;
-    }
-
-    public String getTargetType() {
-        return mTargetType;
     }
 
     public String getTargetName() {
@@ -53,20 +47,14 @@ public class KeysSequenceBinding {
         }
         json.put(KEYS_SEQUENCE_PROPERTY, keysSequenceArray);
 
-        json.put(TARGET_TYPE_PROPERTY, mTargetType);
         json.put(TARGET_NAME_PROPERTY, mTargetName);
 
         return json;
     }
 
     private final List<Integer> mKeysSequence;
-    private final String mTargetType;
     private String mTargetName;
 
     public static final String KEYS_SEQUENCE_PROPERTY = "keysSequence";
-    public static final String TARGET_TYPE_PROPERTY = "targetType";
     public static final String TARGET_NAME_PROPERTY = "targetName";
-
-    public static final String TARGET_TYPE_ACTIONS_LIST = "ActionsList";
-    public static final String TARGET_TYPE_ACTION = "Action";
 }

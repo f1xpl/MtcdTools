@@ -6,6 +6,7 @@ import android.widget.Toast;
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.actions.Action;
 import com.f1x.mtcdtools.actions.BroadcastIntentAction;
+import com.f1x.mtcdtools.storage.NamedObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,10 +35,10 @@ public class BroadcastIntentActionActivity extends CustomIntentActionActivity {
     }
 
     @Override
-    protected void fillControls(Action action) {
-        super.fillControls(action);
+    protected void fillControls(NamedObject namedObject) {
+        super.fillControls(namedObject);
 
-        BroadcastIntentAction broadcastIntentAction = (BroadcastIntentAction)action;
+        BroadcastIntentAction broadcastIntentAction = (BroadcastIntentAction)namedObject;
 
         if(broadcastIntentAction == null) {
             Toast.makeText(this, this.getText(R.string.UnknownObjectType), Toast.LENGTH_LONG).show();

@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -52,27 +50,6 @@ public class BindingActivity extends ServiceActivity {
         mKeysSequenceArrayAdapter = new KeysSequenceArrayAdapter(this);
         keysSequenceListView.setAdapter(mKeysSequenceArrayAdapter);
 
-        mActionRadioButton = (RadioButton)this.findViewById(R.id.radioButtonAction);
-        mActionRadioButton.setChecked(true);
-        mActionRadioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                if(checked && mServiceBinder != null) {
-                    mNamesArrayAdapter.reset(mServiceBinder.getActionsStorage().getItems().keySet());
-                }
-            }
-        });
-
-        mActionsListRadioButton = (RadioButton)this.findViewById(R.id.radioButtonActionsList);
-        mActionsListRadioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                if(checked && mServiceBinder != null) {
-                    mNamesArrayAdapter.reset(mServiceBinder.getActionsListsStorage().getItems().keySet());
-                }
-            }
-        });
-
         Button cancelButton = (Button)this.findViewById(R.id.buttonCancel);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,9 +84,8 @@ public class BindingActivity extends ServiceActivity {
         }
 
         try {
-            String targetType = mActionRadioButton.isChecked() ? KeysSequenceBinding.TARGET_TYPE_ACTION : KeysSequenceBinding.TARGET_TYPE_ACTIONS_LIST;
             String targetName = (String)mNamesSpinner.getSelectedItem();
-            KeysSequenceBinding keysSequenceBinding = new KeysSequenceBinding(keysSequence, targetType, targetName);
+            KeysSequenceBinding keysSequenceBinding = new KeysSequenceBinding(keysSequence, targetName);
 
             if(mEditMode) {
                 mServiceBinder.getKeysSequenceBindingsStorage().replace(mEditKeysSequence, keysSequence, keysSequenceBinding);
@@ -135,8 +111,6 @@ public class BindingActivity extends ServiceActivity {
             binding = mServiceBinder.getKeysSequenceBindingsStorage().getItem(mEditKeysSequence);
 
             if(binding != null) {
-                mActionsListRadioButton.setChecked(binding.getTargetType().equals(KeysSequenceBinding.TARGET_TYPE_ACTIONS_LIST));
-                mActionRadioButton.setChecked(binding.getTargetType().equals(KeysSequenceBinding.TARGET_TYPE_ACTION));
                 mKeysSequenceArrayAdapter.reset(binding.getKeysSequence());
             } else {
                 Toast.makeText(this, this.getText(R.string.ObjectNotFound), Toast.LENGTH_LONG).show();
@@ -145,11 +119,7 @@ public class BindingActivity extends ServiceActivity {
             }
         }
 
-        if(mActionsListRadioButton.isChecked()) {
-            mNamesArrayAdapter.reset(mServiceBinder.getActionsListsStorage().getItems().keySet());
-        } else if(mActionRadioButton.isChecked()) {
-            mNamesArrayAdapter.reset(mServiceBinder.getActionsStorage().getItems().keySet());
-        }
+        mNamesArrayAdapter.reset(mServiceBinder.getNamedObjectsStorage().getItems().keySet());
 
         if(binding != null) {
             mNamesSpinner.setSelection(mNamesArrayAdapter.getPosition(binding.getTargetName()));
@@ -169,8 +139,6 @@ public class BindingActivity extends ServiceActivity {
     private List<Integer> mEditKeysSequence;
     private boolean mEditMode;
 
-    private RadioButton mActionRadioButton;
-    private RadioButton mActionsListRadioButton;
     private Spinner mNamesSpinner;
     private NamesArrayAdapter mNamesArrayAdapter;
     KeysSequenceArrayAdapter mKeysSequenceArrayAdapter;

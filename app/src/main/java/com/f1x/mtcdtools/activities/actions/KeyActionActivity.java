@@ -4,15 +4,16 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.f1x.mtcdtools.R;
-import com.f1x.mtcdtools.actions.Action;
 import com.f1x.mtcdtools.actions.KeyAction;
+import com.f1x.mtcdtools.activities.NamedObjectActivity;
 import com.f1x.mtcdtools.adapters.KeyCodesArrayAdapter;
+import com.f1x.mtcdtools.storage.NamedObject;
 
 /**
  * Created by COMPUTER on 2017-01-25.
  */
 
-public class KeyActionActivity extends ActionActivity {
+public class KeyActionActivity extends NamedObjectActivity {
     public KeyActionActivity() {
         super(R.layout.activity_key_action_details);
     }
@@ -27,16 +28,16 @@ public class KeyActionActivity extends ActionActivity {
     }
 
     @Override
-    protected Action createAction(String actionName) {
+    protected NamedObject createNamedObject(String namedObjectName) {
         String keyCodeName = (String)mKeyCodesSpinner.getSelectedItem();
-        return new KeyAction(actionName, mKeyCodesArrayAdapter.getKeyCode(keyCodeName));
+        return new KeyAction(namedObjectName, mKeyCodesArrayAdapter.getKeyCode(keyCodeName));
     }
 
     @Override
-    protected void fillControls(Action action) {
-        super.fillControls(action);
+    protected void fillControls(NamedObject namedObject) {
+        super.fillControls(namedObject);
 
-        KeyAction keyAction = (KeyAction)action;
+        KeyAction keyAction = (KeyAction)namedObject;
 
         if(keyAction == null) {
             Toast.makeText(this, this.getText(R.string.UnknownObjectType), Toast.LENGTH_LONG).show();

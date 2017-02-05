@@ -18,7 +18,7 @@ public class BroadcastIntentAction extends CustomIntentAction {
     public BroadcastIntentAction(String actionName, String intentPackage, String intentAction,
                                  String intentCategory, String intentData, String intentType,
                                  JSONObject intentExtras, String intentPermissions) throws JSONException {
-        super(actionName, ACTION_TYPE, intentPackage, intentAction, intentCategory, intentData, intentType, intentExtras);
+        super(actionName, OBJECT_TYPE, intentPackage, intentAction, intentCategory, intentData, intentType, intentExtras);
         mPermissions = intentPermissions;
     }
 
@@ -45,6 +45,6 @@ public class BroadcastIntentAction extends CustomIntentAction {
 
     private final String mPermissions;
 
-    static public final String ACTION_TYPE = "BroadcastIntentAction";
+    static public final String OBJECT_TYPE = "BroadcastIntentAction";
     static public final String PERMISSIONS_PROPERTY = "permissions";
 }

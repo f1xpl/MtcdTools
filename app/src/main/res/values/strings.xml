@@ -4,8 +4,6 @@
     <string name="CreateNewAction">Create a new action</string>
     <string name="CreateNewActionsList">Create a new actions list</string>
     <string name="ApplicationSettings">Settings</string>
-    <string name="ManageActions">Manage actions</string>
-    <string name="ManageActionsLists">Manage actions lists</string>
     <string name="ManageBindings">Manage bindings</string>
 
     <string name="CreateNewBroadcastIntentAction">Create a new Broadcast Intent action</string>
@@ -13,16 +11,10 @@
     <string name="CreateNewLaunchAction">Create a new launch action</string>
     <string name="CreateNewStartActivityAction">Create a new start activity action</string>
 
-    <string name="Action">Action</string>
-    <string name="ActionsList">Actions list</string>
     <string name="ObtainKeysSequence">Obtain keys sequence</string>
     <string name="Save">Save</string>
     <string name="Cancel">Cancel</string>
 
-    <string name="AddAction">Add action</string>
-
-    <string name="Actions">Actions</string>
-    <string name="ActionName">Action name</string>
     <string name="KeyCodes">Key codes</string>
     <string name="Applications">Applications</string>
 
@@ -39,14 +31,11 @@
     <string name="EmptyNameError">Please provide name</string>
 
     <string name="MtcdServiceDescription">MtcdTools Service is now active</string>
-    <string name="CreatedActions">Created actions</string>
     <string name="ServiceUnavailable">Service is unavailable</string>
     <string name="ObjectNotFound">Object not found</string>
     <string name="UnknownObjectType">Unknown object type</string>
     <string name="ObjectAlreadyAdded">Object already added</string>
-    <string name="CreatedActionsLists">Created actions lists</string>
     <string name="ProvideKeysSequence">Please provide keys sequence</string>
-    <string name="CreatedBindings">Created bindings</string>
     <string name="Name">Name</string>
     <string name="ActionExecutionDelay">Action execution delay [s]</string>
     <string name="KeyPressSpeed">Key press speed [ms]</string>
@@ -60,4 +49,7 @@
     <string name="Donate">Have you enjoyed MtcdTools? Donate author (PayPal): michal.szwaj [at] o2 [dot] pl</string>
     <string name="ClassName">Class name</string>
     <string name="Flags">Flags</string>
+    <string name="ManageObjects">Manage objects</string>
+    <string name="Objects">Objects</string>
+    <string name="AddObject">Add object</string>
 </resources>

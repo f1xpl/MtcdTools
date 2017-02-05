@@ -16,7 +16,7 @@ import java.util.Locale;
  * Created by COMPUTER on 2017-02-03.
  */
 
-public class VoiceDispatchActionActivity extends ServiceActivity {
+public class VoiceDispatchActivity extends ServiceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +36,7 @@ public class VoiceDispatchActionActivity extends ServiceActivity {
 
         if (text.contains(actionExecutionCommand)) {
             String actionName = text.replace(actionExecutionCommand , "").trim();
-            return mServiceBinder.getActionsStorage().getItem(actionName);
+            return (Action)mServiceBinder.getNamedObjectsStorage().getItem(actionName);
         }
 
         return null;
@@ -56,8 +56,8 @@ public class VoiceDispatchActionActivity extends ServiceActivity {
                     commandExecuted = true;
                     new Handler().postDelayed(new Runnable() {
                         @Override public void run() {
-                            action.evaluate(VoiceDispatchActionActivity.this);
-                            VoiceDispatchActionActivity.this.finish();
+                            action.evaluate(VoiceDispatchActivity.this);
+                            VoiceDispatchActivity.this.finish();
                         }
                     }, ACTION_EXECUTION_DELAY_MS);
                 }

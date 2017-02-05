@@ -30,7 +30,7 @@
                 android:layout_height="match_parent">
 
                 <LinearLayout
-                    android:id="@+id/tabAddActions"
+                    android:id="@+id/tabAddNamedObjects"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
@@ -40,19 +40,19 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:spinnerMode="dialog"
-                        android:id="@+id/spinnerActions" />
+                        android:id="@+id/spinnerNamedObjects" />
 
                     <Button
                         android:layout_marginBottom="@dimen/element_spacing"
-                        android:text="@string/AddAction"
+                        android:text="@string/AddObject"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/buttonAddAction" />
+                        android:id="@+id/buttonAddNamedObject" />
 
                     <ListView
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:id="@+id/listViewActions"
+                        android:id="@+id/listViewAddedNamedObjects"
                         android:layout_weight="1"/>
                 </LinearLayout>
 
@@ -96,41 +96,8 @@
                         android:id="@+id/buttonObtainKeysSequenceDown" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/tabSave"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <EditText
-                        android:layout_marginBottom="@dimen/element_spacing"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text"
-                        android:ems="10"
-                        android:id="@+id/editTextName"
-                        android:hint="@string/Name" />
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <Button
-                            android:text="@string/Cancel"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/buttonCancel"
-                            android:layout_weight="1" />
-
-                        <Button
-                            android:text="@string/Save"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/buttonSave"
-                            android:layout_weight="1" />
-                    </LinearLayout>
-                </LinearLayout>
+                <include layout="@layout/layout_named_object_details"
+                    android:id="@+id/tabSave"/>
 
             </FrameLayout>
         </LinearLayout>

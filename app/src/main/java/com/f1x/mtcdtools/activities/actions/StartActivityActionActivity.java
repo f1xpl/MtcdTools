@@ -5,8 +5,8 @@ import android.widget.Toast;
 
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.actions.Action;
-import com.f1x.mtcdtools.actions.BroadcastIntentAction;
 import com.f1x.mtcdtools.actions.StartActivityAction;
+import com.f1x.mtcdtools.storage.NamedObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,10 +26,10 @@ public class StartActivityActionActivity extends CustomIntentActionActivity {
     }
 
     @Override
-    protected void fillControls(Action action) {
-        super.fillControls(action);
+    protected void fillControls(NamedObject namedObject) {
+        super.fillControls(namedObject);
 
-        StartActivityAction startActivityAction = (StartActivityAction)action;
+        StartActivityAction startActivityAction = (StartActivityAction)namedObject;
 
         if(startActivityAction == null) {
             Toast.makeText(this, this.getText(R.string.UnknownObjectType), Toast.LENGTH_LONG).show();

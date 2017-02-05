@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TabHost;
@@ -16,30 +15,30 @@ import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.adapters.KeysSequenceArrayAdapter;
 import com.f1x.mtcdtools.adapters.NamesArrayAdapter;
 import com.f1x.mtcdtools.input.KeysSequenceConverter;
-import com.f1x.mtcdtools.storage.exceptions.DuplicatedEntryException;
+import com.f1x.mtcdtools.storage.NamedObject;
 
-import org.json.JSONException;
-
-import java.io.IOException;
 import java.util.List;
 
 /**
  * Created by COMPUTER on 2017-01-31.
  */
 
-public class ActionsListActivity extends ServiceActivity {
+public class ActionsListActivity extends NamedObjectActivity {
+    public ActionsListActivity() {
+        super(R.layout.activity_actions_list_details);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_actions_list_details);
 
         // -----------------------------------------------------------------------------------------
         TabHost tabHost = (TabHost)findViewById(R.id.tabHost);
         tabHost.setup();
 
-        TabHost.TabSpec addActionsTab = tabHost.newTabSpec(this.getString(R.string.Actions));
-        addActionsTab.setContent(R.id.tabAddActions);
-        addActionsTab.setIndicator(this.getString(R.string.Actions));
+        TabHost.TabSpec addActionsTab = tabHost.newTabSpec(this.getString(R.string.Objects));
+        addActionsTab.setContent(R.id.tabAddNamedObjects);
+        addActionsTab.setIndicator(this.getString(R.string.Objects));
         tabHost.addTab(addActionsTab);
 
         TabHost.TabSpec obtainKeysSequenceUpTab = tabHost.newTabSpec(this.getString(R.string.KeysSequenceUp));
@@ -57,6 +56,11 @@ public class ActionsListActivity extends ServiceActivity {
         storeActionsListTab.setIndicator(this.getString(R.string.Save));
         tabHost.addTab(storeActionsListTab);
         // -----------------------------------------------------------------------------------------
+    }
+
+    @Override
+    protected void initControls() {
+        super.initControls();
 
         // -----------------------------------------------------------------------------------------
         mKeysSequenceUpArrayAdapter = new KeysSequenceArrayAdapter(this);
@@ -87,106 +91,64 @@ public class ActionsListActivity extends ServiceActivity {
         // -----------------------------------------------------------------------------------------
 
         // -----------------------------------------------------------------------------------------
-        mActionsNamesArrayAdapter = new NamesArrayAdapter(this);
-        final Spinner actionsSpinner = (Spinner)this.findViewById(R.id.spinnerActions);
-        actionsSpinner.setAdapter(mActionsNamesArrayAdapter);
+        mNamesArrayAdapter = new NamesArrayAdapter(this);
+        final Spinner actionsSpinner = (Spinner)this.findViewById(R.id.spinnerNamedObjects);
+        actionsSpinner.setAdapter(mNamesArrayAdapter);
 
-        ListView addedActionsListView = (ListView)this.findViewById(R.id.listViewActions);
-        mAddedActionsNamesArrayAdapter = new NamesArrayAdapter(this);
-        addedActionsListView.setAdapter(mAddedActionsNamesArrayAdapter);
+        ListView addedActionsListView = (ListView)this.findViewById(R.id.listViewAddedNamedObjects);
+        mAddedNamesArrayAdapter = new NamesArrayAdapter(this);
+        addedActionsListView.setAdapter(mAddedNamesArrayAdapter);
         addedActionsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-                String actionName = mAddedActionsNamesArrayAdapter.getItem(position);
-                mAddedActionsNamesArrayAdapter.remove(actionName);
+                String actionName = mAddedNamesArrayAdapter.getItem(position);
+                mAddedNamesArrayAdapter.remove(actionName);
 
                 return true;
             }
         });
 
-        Button addActionButton = (Button)this.findViewById(R.id.buttonAddAction);
+        Button addActionButton = (Button)this.findViewById(R.id.buttonAddNamedObject);
         addActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String actionName = (String)actionsSpinner.getSelectedItem();
 
-                if(!mAddedActionsNamesArrayAdapter.containsItem(actionName)) {
-                    mAddedActionsNamesArrayAdapter.add(actionName);
+                if(!mAddedNamesArrayAdapter.containsItem(actionName)) {
+                    mAddedNamesArrayAdapter.add(actionName);
                 } else {
                     Toast.makeText(ActionsListActivity.this, ActionsListActivity.this.getText(R.string.ObjectAlreadyAdded), Toast.LENGTH_LONG).show();
                 }
             }
         });
         // -----------------------------------------------------------------------------------------
-
-        // -----------------------------------------------------------------------------------------
-        mEditActionsListName = this.getIntent().getStringExtra(ACTIONS_LIST_NAME_PARAMETER);
-        mEditMode = mEditActionsListName != null;
-
-        mActionsListNameEditText = (EditText)this.findViewById(R.id.editTextName);
-
-        Button cancelButton = (Button)this.findViewById(R.id.buttonCancel);
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ActionsListActivity.this.finish();
-            }
-        });
-
-        Button saveButton = (Button)this.findViewById(R.id.buttonSave);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String actionsListName = mActionsListNameEditText.getText().toString();
-
-                if(!actionsListName.isEmpty()) {
-                    storeActionsList(actionsListName);
-                } else {
-                    Toast.makeText(ActionsListActivity.this, ActionsListActivity.this.getText(R.string.EmptyNameError), Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-        // -----------------------------------------------------------------------------------------
     }
 
-    private void storeActionsList(String actionsListName) {
-        try {
-            ActionsList actionsList = new ActionsList(actionsListName,
-                    mKeysSequenceUpArrayAdapter.getItems(),
-                    mKeysSequenceDownArrayAdapter.getItems(),
-                    mAddedActionsNamesArrayAdapter.getItems());
+    @Override
+    protected void fillControls(NamedObject namedObject) {
+        super.fillControls(namedObject);
 
-            if(mEditMode) {
-                mServiceBinder.getActionsListsStorage().replace(mEditActionsListName, actionsListName, actionsList);
-                mServiceBinder.getKeysSequenceBindingsStorage().replaceActionsListName(mEditActionsListName, actionsListName);
-            } else {
-                mServiceBinder.getActionsListsStorage().insert(actionsListName, actionsList);
-            }
+        ActionsList actionsList = (ActionsList)namedObject;
 
-            finish();
-        } catch (DuplicatedEntryException e) {
-            e.printStackTrace();
-            Toast.makeText(this, this.getText(R.string.ObjectAlreadyAdded), Toast.LENGTH_LONG).show();
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+        if(actionsList != null) {
+            mAddedNamesArrayAdapter.reset(actionsList.getActionNames());
+            mKeysSequenceDownArrayAdapter.reset(actionsList.getKeysSequenceDown());
+            mKeysSequenceUpArrayAdapter.reset(actionsList.getKeysSequenceUp());
         }
     }
 
     @Override
+    protected NamedObject createNamedObject(String namedObjectName) {
+        return new ActionsList(namedObjectName,
+                mKeysSequenceUpArrayAdapter.getItems(),
+                mKeysSequenceDownArrayAdapter.getItems(),
+                mAddedNamesArrayAdapter.getItems());
+    }
+
+    @Override
     protected void onServiceConnected() {
-        if(mEditMode) {
-            ActionsList actionsList = mServiceBinder.getActionsListsStorage().getItem(mEditActionsListName);
-
-            if(actionsList != null) {
-                mAddedActionsNamesArrayAdapter.reset(actionsList.getActionNames());
-                mKeysSequenceDownArrayAdapter.reset(actionsList.getKeysSequenceDown());
-                mKeysSequenceUpArrayAdapter.reset(actionsList.getKeysSequenceUp());
-                mActionsListNameEditText.setText(actionsList.getName());
-            }
-        }
-
-        mActionsNamesArrayAdapter.reset(mServiceBinder.getActionsStorage().getItems().keySet());
+        super.onServiceConnected();
+        mNamesArrayAdapter.reset(mServiceBinder.getNamedObjectsStorage().getItems().keySet());
     }
 
     @Override
@@ -204,16 +166,11 @@ public class ActionsListActivity extends ServiceActivity {
         }
     }
 
-    private String mEditActionsListName;
-    private boolean mEditMode;
-
-    private EditText mActionsListNameEditText;
     private KeysSequenceArrayAdapter mKeysSequenceUpArrayAdapter;
     private KeysSequenceArrayAdapter mKeysSequenceDownArrayAdapter;
-    private NamesArrayAdapter mActionsNamesArrayAdapter;
-    private NamesArrayAdapter mAddedActionsNamesArrayAdapter;
+    private NamesArrayAdapter mNamesArrayAdapter;
+    private NamesArrayAdapter mAddedNamesArrayAdapter;
 
-    public static final String ACTIONS_LIST_NAME_PARAMETER = "actionName";
     private static final int REQUEST_CODE_KEYS_SEQUENCE_UP = 100;
     private static final int REQUEST_CODE_KEYS_SEQUENCE_DOWN = 101;
 }

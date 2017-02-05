@@ -25,7 +25,6 @@ public class KeysSequenceBindingTest {
         mKeysSequenceArray.put(1000);
         mKeysSequenceBindingJson.put(KeysSequenceBinding.KEYS_SEQUENCE_PROPERTY, mKeysSequenceArray);
 
-        mKeysSequenceBindingJson.put(KeysSequenceBinding.TARGET_TYPE_PROPERTY, KeysSequenceBinding.TARGET_TYPE_ACTIONS_LIST);
         mKeysSequenceBindingJson.put(KeysSequenceBinding.TARGET_NAME_PROPERTY, "testSequence");
     }
 
@@ -39,7 +38,6 @@ public class KeysSequenceBindingTest {
             assertEquals(mKeysSequenceArray.get(i), keysSequence.get(i));
         }
 
-        assertEquals(mKeysSequenceBindingJson.get(KeysSequenceBinding.TARGET_TYPE_PROPERTY), keysSequenceBinding.getTargetType());
         assertEquals(mKeysSequenceBindingJson.get(KeysSequenceBinding.TARGET_NAME_PROPERTY), keysSequenceBinding.getTargetName());
     }
 

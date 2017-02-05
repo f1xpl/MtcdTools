@@ -10,15 +10,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <EditText
-            android:layout_marginBottom="@dimen/element_spacing"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/editTextActionName"
-            android:hint="@string/ActionName" />
-
         <TextView
             android:layout_marginBottom="@dimen/element_spacing"
             android:text="@string/Applications"
@@ -32,24 +23,6 @@
             android:spinnerMode="dialog"
             android:id="@+id/spinnerApplications" />
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:text="@string/Cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/buttonCancel"
-                android:layout_weight="1" />
-
-            <Button
-                android:text="@string/Save"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/buttonSave"
-                android:layout_weight="1" />
-        </LinearLayout>
+        <include layout="@layout/layout_named_object_details" />
     </LinearLayout>
 </ScrollView>

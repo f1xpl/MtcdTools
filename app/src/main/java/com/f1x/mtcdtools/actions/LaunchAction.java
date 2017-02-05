@@ -17,7 +17,7 @@ public class LaunchAction extends Action {
     }
 
     public LaunchAction(String actionName, String packageName) {
-        super(actionName, ACTION_TYPE);
+        super(actionName, OBJECT_TYPE);
         mPackageName = packageName;
     }
 
@@ -45,6 +45,6 @@ public class LaunchAction extends Action {
 
     private final String mPackageName;
 
-    static public final String ACTION_TYPE = "LaunchAction";
+    static public final String OBJECT_TYPE = "LaunchAction";
     static public final String PACKAGE_NAME_PROPERTY = "packageName";
 }

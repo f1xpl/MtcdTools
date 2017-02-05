@@ -38,7 +38,7 @@ public class BroadcastIntentActionTest {
 
         mActionJson = new JSONObject();
         mActionJson.put(BroadcastIntentAction.NAME_PROPERTY, "TestBroadcastIntentAction");
-        mActionJson.put(BroadcastIntentAction.TYPE_PROPERTY, BroadcastIntentAction.ACTION_TYPE);
+        mActionJson.put(BroadcastIntentAction.OBJECT_TYPE_PROPERTY, BroadcastIntentAction.OBJECT_TYPE);
         mActionJson.put(BroadcastIntentAction.INTENT_PACKAGE_PROPERTY, "com.test.package");
         mActionJson.put(BroadcastIntentAction.INTENT_CATEGORY_PROPERTY, "intentCategory");
         mActionJson.put(BroadcastIntentAction.INTENT_TYPE_PROPERTY, "intentType");
@@ -65,7 +65,7 @@ public class BroadcastIntentActionTest {
 
         assertEquals(mActionJson.toString(), broadcastIntentAction.toJson().toString());
         assertEquals(mActionJson.getString(BroadcastIntentAction.NAME_PROPERTY), broadcastIntentAction.getName());
-        assertEquals(mActionJson.getString(BroadcastIntentAction.TYPE_PROPERTY), broadcastIntentAction.getType());
+        assertEquals(mActionJson.getString(BroadcastIntentAction.OBJECT_TYPE_PROPERTY), broadcastIntentAction.getObjectType());
         assertEquals(mActionJson.getString(BroadcastIntentAction.INTENT_PACKAGE_PROPERTY), broadcastIntentAction.getIntentPackage());
         assertEquals(mActionJson.getString(BroadcastIntentAction.INTENT_ACTION_PROPERTY), broadcastIntentAction.getIntentAction());
         assertEquals(mActionJson.getString(BroadcastIntentAction.INTENT_CATEGORY_PROPERTY), broadcastIntentAction.getIntentCategory());
@@ -134,7 +134,7 @@ public class BroadcastIntentActionTest {
         BroadcastIntentAction broadcastIntentAction = new BroadcastIntentAction(mActionJson);
         assertEquals(mActionJson.toString(), broadcastIntentAction.toJson().toString());
         assertEquals(mActionJson.getString(BroadcastIntentAction.NAME_PROPERTY), broadcastIntentAction.getName());
-        assertEquals(mActionJson.getString(BroadcastIntentAction.TYPE_PROPERTY), broadcastIntentAction.getType());
+        assertEquals(mActionJson.getString(BroadcastIntentAction.OBJECT_TYPE_PROPERTY), broadcastIntentAction.getObjectType());
         assertEquals(mActionJson.getString(BroadcastIntentAction.INTENT_PACKAGE_PROPERTY), broadcastIntentAction.getIntentPackage());
         assertEquals(mActionJson.getString(BroadcastIntentAction.INTENT_ACTION_PROPERTY), broadcastIntentAction.getIntentAction());
         assertEquals(mActionJson.getString(BroadcastIntentAction.INTENT_CATEGORY_PROPERTY), broadcastIntentAction.getIntentCategory());

@@ -34,12 +34,15 @@ public abstract class Storage<Key, Value> {
     }
 
     public void replace(Key oldKey, Key newKey, Value newItem) throws JSONException, IOException, DuplicatedEntryException {
-        if(!oldKey.equals(newKey) && mItems.containsKey(newKey)) {
-            throw new DuplicatedEntryException(newKey.toString());
-        }
+        if(mItems.containsKey(oldKey)) {
+            if (!oldKey.equals(newKey) && mItems.containsKey(newKey)) {
+                throw new DuplicatedEntryException(newKey.toString());
+            }
 
-        remove(oldKey);
-        insert(newKey, newItem);
+            mItems.remove(oldKey);
+            mItems.put(newKey, newItem);
+            write();
+        }
     }
 
     public Value getItem(Key key) {

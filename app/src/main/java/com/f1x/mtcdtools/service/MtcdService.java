@@ -11,11 +11,10 @@ import com.f1x.mtcdtools.configuration.Configuration;
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.activities.MainActivity;
 import com.f1x.mtcdtools.input.PressedKeysSequenceManager;
-import com.f1x.mtcdtools.storage.ActionsListsStorage;
-import com.f1x.mtcdtools.storage.ActionsStorage;
 import com.f1x.mtcdtools.storage.FileReader;
 import com.f1x.mtcdtools.storage.FileWriter;
 import com.f1x.mtcdtools.storage.KeysSequenceBindingsStorage;
+import com.f1x.mtcdtools.storage.NamedObjectsStorage;
 import com.f1x.mtcdtools.storage.exceptions.DuplicatedEntryException;
 import com.f1x.mtcdtools.storage.exceptions.EntryCreationFailed;
 
@@ -34,20 +33,14 @@ public class MtcdService extends android.app.Service {
         mForceRestart = false;
         mServiceInitialized = false;
 
-        try {
-            mConfiguration = new Configuration(this.getSharedPreferences(MainActivity.APP_NAME, Context.MODE_PRIVATE));
+        mConfiguration = new Configuration(this.getSharedPreferences(MainActivity.APP_NAME, Context.MODE_PRIVATE));
 
-            FileReader fileReader = new FileReader(this);
-            FileWriter fileWriter = new FileWriter(this);
-            mActionsStorage = new ActionsStorage(fileReader, fileWriter);
-            mActionsListsStorage = new ActionsListsStorage(fileReader, fileWriter);
-            mKeysSequenceBindingsStorage = new KeysSequenceBindingsStorage(fileReader, fileWriter);
-            mDispatcher = new Dispatcher(this, mActionsStorage, mActionsListsStorage, mKeysSequenceBindingsStorage);
-            mPressedKeysSequenceManager = new PressedKeysSequenceManager(mConfiguration);
-        } catch (JSONException e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-            stopSelf();
-        }
+        FileReader fileReader = new FileReader(this);
+        FileWriter fileWriter = new FileWriter(this);
+        mNamedObjectsStorage = new NamedObjectsStorage(fileReader, fileWriter);
+        mKeysSequenceBindingsStorage = new KeysSequenceBindingsStorage(fileReader, fileWriter);
+        mDispatcher = new Dispatcher(this, mNamedObjectsStorage, mKeysSequenceBindingsStorage);
+        mPressedKeysSequenceManager = new PressedKeysSequenceManager(mConfiguration);
     }
 
     @Override
@@ -78,8 +71,7 @@ public class MtcdService extends android.app.Service {
 
         if(!mServiceInitialized) {
             try {
-                mActionsStorage.read();
-                mActionsListsStorage.read();
+                mNamedObjectsStorage.read();
                 mKeysSequenceBindingsStorage.read();
                 registerReceiver(mPressedKeysSequenceManager, mPressedKeysSequenceManager.getIntentFilter());
 
@@ -107,8 +99,7 @@ public class MtcdService extends android.app.Service {
 
     private boolean mForceRestart;
     private boolean mServiceInitialized;
-    private ActionsStorage mActionsStorage;
-    private ActionsListsStorage mActionsListsStorage;
+    private NamedObjectsStorage mNamedObjectsStorage;
     private KeysSequenceBindingsStorage mKeysSequenceBindingsStorage;
     private PressedKeysSequenceManager mPressedKeysSequenceManager;
     private Dispatcher mDispatcher;
@@ -121,13 +112,8 @@ public class MtcdService extends android.app.Service {
         }
 
         @Override
-        public ActionsStorage getActionsStorage() {
-            return mActionsStorage;
-        }
-
-        @Override
-        public ActionsListsStorage getActionsListsStorage() {
-            return mActionsListsStorage;
+        public NamedObjectsStorage getNamedObjectsStorage() {
+            return mNamedObjectsStorage;
         }
 
         @Override

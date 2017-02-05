@@ -5,12 +5,16 @@ import android.content.Intent;
 
 import com.f1x.mtcdtools.ActionsList;
 import com.f1x.mtcdtools.actions.Action;
+import com.f1x.mtcdtools.actions.BroadcastIntentAction;
+import com.f1x.mtcdtools.actions.KeyAction;
+import com.f1x.mtcdtools.actions.LaunchAction;
+import com.f1x.mtcdtools.actions.StartActivityAction;
 import com.f1x.mtcdtools.activities.SelectActionActivity;
 import com.f1x.mtcdtools.input.KeysSequenceBinding;
 import com.f1x.mtcdtools.input.KeysSequenceListener;
-import com.f1x.mtcdtools.storage.ActionsListsStorage;
-import com.f1x.mtcdtools.storage.ActionsStorage;
 import com.f1x.mtcdtools.storage.KeysSequenceBindingsStorage;
+import com.f1x.mtcdtools.storage.NamedObject;
+import com.f1x.mtcdtools.storage.NamedObjectsStorage;
 
 import java.util.List;
 
@@ -19,10 +23,9 @@ import java.util.List;
  */
 
 class Dispatcher implements KeysSequenceListener {
-    public Dispatcher(Context context, ActionsStorage actionsStorage, ActionsListsStorage actionsListsStorage, KeysSequenceBindingsStorage keysSequenceBindingsStorage) {
+    public Dispatcher(Context context, NamedObjectsStorage namedObjectsStorage, KeysSequenceBindingsStorage keysSequenceBindingsStorage) {
         mContext = context;
-        mActionsStorage = actionsStorage;
-        mActionsListsStorage = actionsListsStorage;
+        mNamedObjectsStorage = namedObjectsStorage;
         mKeysSequenceBindingsStorage = keysSequenceBindingsStorage;
     }
 
@@ -30,24 +33,21 @@ class Dispatcher implements KeysSequenceListener {
     public void handleKeysSequence(List<Integer> keysSequence) {
         KeysSequenceBinding keysSequenceBinding = mKeysSequenceBindingsStorage.getItem(keysSequence);
 
-        if(keysSequenceBinding == null) {
-            return;
-        }
+        if(keysSequenceBinding != null) {
+            NamedObject namedObject = mNamedObjectsStorage.getItem(keysSequenceBinding.getTargetName());
 
-        if(keysSequenceBinding.getTargetType().equalsIgnoreCase(KeysSequenceBinding.TARGET_TYPE_ACTION)) {
-            Action action = mActionsStorage.getItem(keysSequenceBinding.getTargetName());
+            if (namedObject != null) {
+                if (this.isAction(namedObject)) {
+                    Action action = (Action) namedObject;
+                    action.evaluate(mContext);
+                } else if (namedObject.getObjectType().equals(ActionsList.OBJECT_TYPE)) {
+                    ActionsList actionsList = (ActionsList) namedObject;
 
-            if(action != null) {
-                action.evaluate(mContext);
-            }
-        } else if(keysSequenceBinding.getTargetType().equalsIgnoreCase(KeysSequenceBinding.TARGET_TYPE_ACTIONS_LIST)) {
-            ActionsList actionsList = mActionsListsStorage.getItem(keysSequenceBinding.getTargetName());
-
-            if(actionsList != null) {
-                Intent intent = new Intent(mContext, SelectActionActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_FROM_BACKGROUND);
-                intent.putExtra(SelectActionActivity.ACTIONS_LIST_NAME_PARAMETER, actionsList.getName());
-                mContext.startActivity(intent);
+                    Intent intent = new Intent(mContext, SelectActionActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_FROM_BACKGROUND);
+                    intent.putExtra(SelectActionActivity.ACTIONS_LIST_NAME_PARAMETER, actionsList.getName());
+                    mContext.startActivity(intent);
+                }
             }
         }
     }
@@ -57,8 +57,14 @@ class Dispatcher implements KeysSequenceListener {
 
     }
 
+    private boolean isAction(NamedObject namedObject) {
+        return namedObject.getObjectType().equals(KeyAction.OBJECT_TYPE) ||
+                namedObject.getObjectType().equals(LaunchAction.OBJECT_TYPE) ||
+                namedObject.getObjectType().equals(BroadcastIntentAction.OBJECT_TYPE) ||
+                namedObject.getObjectType().equals(StartActivityAction.OBJECT_TYPE);
+    }
+
     private final Context mContext;
-    private final ActionsStorage mActionsStorage;
-    private final ActionsListsStorage mActionsListsStorage;
+    private final NamedObjectsStorage mNamedObjectsStorage;
     private final KeysSequenceBindingsStorage mKeysSequenceBindingsStorage;
 }

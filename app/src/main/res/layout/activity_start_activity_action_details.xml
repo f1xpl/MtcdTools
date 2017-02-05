@@ -15,54 +15,6 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/editTextActionName"
-            android:hint="@string/ActionName" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/editTextIntentAction"
-            android:hint="@string/IntentAction" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/editTextIntentCategory"
-            android:hint="@string/IntentCategory" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/editTextIntentData"
-            android:hint="@string/IntentData" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/editTextIntentType"
-            android:hint="@string/IntentType" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/editTextIntentPackage"
-            android:hint="@string/IntentPackage" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
             android:id="@+id/editTextClassName"
             android:hint="@string/ClassName" />
 
@@ -74,32 +26,8 @@
             android:inputType="number"
             android:hint="@string/Flags" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:ems="10"
-            android:id="@+id/editTextIntentExtras"
-            android:hint="@string/IntentExtras" />
+        <include layout="@layout/layout_cutom_intent_action_details" />
+        <include layout="@layout/layout_named_object_details" />
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:text="@string/Cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/buttonCancel"
-                android:layout_weight="1" />
-
-            <Button
-                android:text="@string/Save"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/buttonSave"
-                android:layout_weight="1" />
-        </LinearLayout>
     </LinearLayout>
 </ScrollView>

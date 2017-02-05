@@ -27,6 +27,7 @@ public class ActionsListTest {
         mListJson = new JSONObject();
         mListName = "sequence1";
         mListJson.put(ActionsList.NAME_PROPERTY, mListName);
+        mListJson.put(ActionsList.OBJECT_TYPE_PROPERTY, ActionsList.OBJECT_TYPE);
 
         mActionsArray = new JSONArray();
         mActionsArray.put("action1");
@@ -114,7 +115,7 @@ public class ActionsListTest {
     @Test
     public void test_RemoveActionName() throws JSONException {
         ActionsList actionsList = new ActionsList(mListJson);
-        actionsList.removeActionName(mActionsArray.getString(1));
+        actionsList.removeDependency(mActionsArray.getString(1));
 
         assertFalse(actionsList.getActionNames().contains(mActionsArray.getString(1)));
         assertTrue(actionsList.getActionNames().contains(mActionsArray.getString(0)));
@@ -126,7 +127,7 @@ public class ActionsListTest {
         ActionsList actionsList = new ActionsList(mListJson);
 
         String newActionName = "actionNewName";
-        actionsList.replaceActionName(mActionsArray.getString(1), newActionName);
+        actionsList.replaceDependency(mActionsArray.getString(1), newActionName);
 
         assertFalse(actionsList.getActionNames().contains(mActionsArray.getString(1)));
         assertTrue(actionsList.getActionNames().contains(newActionName));
@@ -138,7 +139,7 @@ public class ActionsListTest {
 
         String nonExistentActionName = "nonExistentAction";
         String newActionName = "actionNewName";
-        actionsList.replaceActionName(nonExistentActionName, newActionName);
+        actionsList.replaceDependency(nonExistentActionName, newActionName);
 
         assertFalse(actionsList.getActionNames().contains(newActionName));
     }

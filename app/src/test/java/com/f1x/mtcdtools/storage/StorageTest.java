@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNull;
 
 /**
  * Created by COMPUTER on 2017-01-29.
@@ -97,9 +98,11 @@ public class StorageTest {
 
         SimpleStorage storage = new SimpleStorage();
         storage.read();
-        storage.replace(3, 3, 100);
+        storage.replace(3, 3, 132);
+        testItems.put(3, 132);
 
         assertEquals(testItems, storage.getItems());
+        assertEquals(Integer.valueOf(132), storage.getItem(3));
     }
 
     @Test
@@ -120,6 +123,15 @@ public class StorageTest {
         SimpleStorage storage = new SimpleStorage();
         storage.read();
         storage.replace(2, 3, 1000);
+    }
+
+    @Test
+    public void test_Replace_NonExistentKey() throws IOException, JSONException, DuplicatedEntryException, EntryCreationFailed {
+        SimpleStorage storage = new SimpleStorage();
+        storage.read();
+        storage.replace(11, 33, 1000);
+
+        assertNull(storage.getItem(33));
     }
 
     @Test

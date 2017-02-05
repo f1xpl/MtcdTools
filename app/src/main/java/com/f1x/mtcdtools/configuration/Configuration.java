@@ -2,9 +2,6 @@ package com.f1x.mtcdtools.configuration;
 
 import android.content.SharedPreferences;
 
-import com.f1x.mtcdtools.input.KeysSequenceConverter;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
@@ -15,7 +12,7 @@ import java.util.List;
  */
 
 public class Configuration implements SharedPreferences.OnSharedPreferenceChangeListener {
-    public Configuration(SharedPreferences sharedPreferences) throws JSONException {
+    public Configuration(SharedPreferences sharedPreferences) {
         mSharedPreferences = sharedPreferences;
 
         mActionExecutionDelay = sharedPreferences.getInt(ACTION_EXECUTION_DELAY_PROPERTY_NAME, ACTION_EXECUTION_DELAY_DEFAULT_VALUE);

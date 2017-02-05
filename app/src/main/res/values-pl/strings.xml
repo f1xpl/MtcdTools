@@ -10,11 +10,6 @@
     <string name="CreateNewKeyAction">Utwórz akcję klawisza</string>
     <string name="CreateNewLaunchAction">Utwórz akcję uruchamiania aplikacji</string>
     <string name="CreateNewStartActivityAction">Utwórz akcję uruchamiania aktywności</string>
-    <string name="Action">Akcja</string>
-    <string name="ActionName">Nazwa akcji</string>
-    <string name="Actions">Akcje</string>
-    <string name="ActionsList">Lista akcji</string>
-    <string name="AddAction">Dodaj akcję</string>
     <string name="ApplicationSettings">Ustawienia</string>
     <string name="IntentCategory">Kategoria intencji</string>
     <string name="IntentData">Dane intencji</string>
@@ -27,21 +22,16 @@
     <string name="KeysSequenceUp">Sekwencja klawiszy W GÓRĘ</string>
     <string name="MtcdServiceDescription">Serwis MtcdTools jest aktywny</string>
     <string name="ObtainKeysSequence">Wprowadź sekwencję klawiszy</string>
-    <string name="ManageActions">Zarządzaj akcjami</string>
-    <string name="ManageActionsLists">Zarządzaj listami akcji</string>
     <string name="ManageBindings">Zarządzaj powiązaniami</string>
     <string name="Reset">Resetuj</string>
     <string name="Save">Zapisz</string>
-    <string name="CreatedActions">Utworzone akcje</string>
     <string name="ServiceUnavailable">Serwis jest niedostępny</string>
     <string name="ObjectAlreadyAdded">Obiekt jest już dodany</string>
     <string name="EmptyNameError">Podaj nazwę.</string>
     <string name="ObjectNotFound">Nie znaleziono obiektu</string>
     <string name="UnknownObjectType">Nieznany typ obiektu</string>
-    <string name="CreatedActionsLists">Utworzone listy akcji</string>
     <string name="ProvideKeysSequence">Wprowadź sekwencję klawiszy</string>
     <string name="Name">Nazwa</string>
-    <string name="CreatedBindings">Utworzone powiązania</string>
     <string name="ActionExecutionDelay">Opóźnienie uruchomienia akcji [s]</string>
     <string name="KeyPressSpeed">Szybkość wciśnięcia przycisku [ms]</string>
     <string name="IntentAction">Akcja intencji</string>
@@ -54,4 +44,7 @@
     <string name="Donate">Lubisz korzystać z tej aplikacji? Przekaż darowiznę autorowi (PayPal): michal.szwaj [at] o2 [dot] pl</string>
     <string name="ClassName">Nazwa klasy</string>
     <string name="Flags">Flagi</string>
+    <string name="ManageObjects">Zarządzaj obiektami</string>
+    <string name="Objects">Obiekty</string>
+    <string name="AddObject">Dodaj obiekt</string>
 </resources>

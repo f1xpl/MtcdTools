@@ -20,7 +20,6 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="gravity"
                 android:gravity="center"
-                android:paddingRight="@dimen/element_spacing"
                 android:text="@string/Donate"
                 android:textColor="@android:color/holo_green_dark" />
         </LinearLayout>
@@ -44,16 +43,10 @@
             android:id="@+id/buttonCreateNewBinding"/>
 
         <Button
-            android:text="@string/ManageActions"
+            android:text="@string/ManageObjects"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/buttonManageActions" />
-
-        <Button
-            android:text="@string/ManageActionsLists"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/buttonManageActionsLists" />
+            android:id="@+id/buttonManageNamedObjects" />
 
         <Button
             android:text="@string/ManageBindings"

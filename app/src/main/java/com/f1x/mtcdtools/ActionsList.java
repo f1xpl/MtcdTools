@@ -1,6 +1,7 @@
 package com.f1x.mtcdtools;
 
 import com.f1x.mtcdtools.input.KeysSequenceConverter;
+import com.f1x.mtcdtools.storage.NamedObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,9 +16,9 @@ import java.util.TreeSet;
  * Created by COMPUTER on 2017-01-16.
  */
 
-public class ActionsList {
+public class ActionsList extends NamedObject {
     public ActionsList(JSONObject json) throws JSONException {
-        mName = json.getString(NAME_PROPERTY);
+        super(json);
 
         mActionNames = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
         JSONArray actionsArray = json.getJSONArray(ACTIONS_PROPERTY);
@@ -31,7 +32,8 @@ public class ActionsList {
     }
 
     public ActionsList(String name, List<Integer> keysSequenceUp, List<Integer> keysSequenceDown, Set<String> actionsNames) {
-        mName = name;
+        super(name, OBJECT_TYPE);
+
         mKeysSequenceUp = keysSequenceUp;
         mKeysSequenceDown = keysSequenceDown;
         mActionNames = actionsNames;
@@ -49,10 +51,9 @@ public class ActionsList {
         return new TreeSet<>(mActionNames);
     }
 
+    @Override
     public JSONObject toJson() throws JSONException {
-        JSONObject json = new JSONObject();
-
-        json.put(NAME_PROPERTY, mName);
+        JSONObject json = super.toJson();
 
         JSONArray actionsArray = new JSONArray();
         for (String action : mActionNames) {
@@ -66,29 +67,25 @@ public class ActionsList {
         return json;
     }
 
-    public String getName() {
-        return mName;
+    @Override
+    public void removeDependency(String dependencyName) {
+        mActionNames.remove(dependencyName);
     }
 
-    public void removeActionName(String name) {
-        mActionNames.remove(name);
-
-    }
-
-    public void replaceActionName(String oldName, String newName) {
-        if(mActionNames.contains(oldName)) {
-            mActionNames.remove(oldName);
-            mActionNames.add(newName);
+    @Override
+    public void replaceDependency(String oldDependencyName, String newDependencyName) {
+        if(mActionNames.contains(oldDependencyName)) {
+            mActionNames.remove(oldDependencyName);
+            mActionNames.add(newDependencyName);
         }
     }
 
-    private String mName;
     private List<Integer> mKeysSequenceUp;
     private List<Integer> mKeysSequenceDown;
     private Set<String> mActionNames;
 
-    static public final String NAME_PROPERTY = "name";
     static public final String ACTIONS_PROPERTY = "actions";
     static public final String KEYS_SEQUENCE_UP_PROPERTY = "keysSequenceUp";
     static public final String KEYS_SEQUENCE_DOWN_PROPERTY = "keysSequenceDown";
+    static public final String OBJECT_TYPE = "ActionsList";
 }

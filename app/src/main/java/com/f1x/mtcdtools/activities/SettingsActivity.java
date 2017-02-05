@@ -1,20 +1,15 @@
 package com.f1x.mtcdtools.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.f1x.mtcdtools.R;
-import com.f1x.mtcdtools.adapters.KeysSequenceArrayAdapter;
-import com.f1x.mtcdtools.input.KeysSequenceConverter;
 
-import java.util.List;
 import java.util.Locale;
 
 public class SettingsActivity extends ServiceActivity {

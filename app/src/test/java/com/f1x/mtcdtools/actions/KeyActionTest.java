@@ -37,7 +37,7 @@ public class KeyActionTest {
 
         mActionJson = new JSONObject();
         mActionJson.put(KeyAction.NAME_PROPERTY, "TestKeyAction");
-        mActionJson.put(KeyAction.TYPE_PROPERTY, KeyAction.ACTION_TYPE);
+        mActionJson.put(KeyAction.OBJECT_TYPE_PROPERTY, KeyAction.OBJECT_TYPE);
         mActionJson.put(KeyAction.KEYCODE_PROPERTY, 123);
     }
 
@@ -61,7 +61,7 @@ public class KeyActionTest {
 
         assertEquals(keyAction.toJson().toString(), mActionJson.toString());
         assertEquals(mActionJson.getString(KeyAction.NAME_PROPERTY), keyAction.getName());
-        assertEquals(mActionJson.getString(KeyAction.TYPE_PROPERTY), keyAction.getType());
+        assertEquals(mActionJson.getString(KeyAction.OBJECT_TYPE_PROPERTY), keyAction.getObjectType());
         assertEquals(mActionJson.getInt(KeyAction.KEYCODE_PROPERTY), keyAction.getKeyCode());
     }
 
@@ -70,7 +70,7 @@ public class KeyActionTest {
         KeyAction keyAction = new KeyAction(mActionJson);
         assertEquals(keyAction.toJson().toString(), mActionJson.toString());
         assertEquals(mActionJson.getString(KeyAction.NAME_PROPERTY), keyAction.getName());
-        assertEquals(mActionJson.getString(KeyAction.TYPE_PROPERTY), keyAction.getType());
+        assertEquals(mActionJson.getString(KeyAction.OBJECT_TYPE_PROPERTY), keyAction.getObjectType());
         assertEquals(mActionJson.getInt(KeyAction.KEYCODE_PROPERTY), keyAction.getKeyCode());
     }
 

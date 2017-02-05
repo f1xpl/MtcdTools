@@ -18,7 +18,7 @@ public class KeyAction extends Action {
     }
 
     public KeyAction(String actionName, int keyCode) {
-        super(actionName, ACTION_TYPE);
+        super(actionName, OBJECT_TYPE);
         mKeyCode = keyCode;
     }
 
@@ -47,6 +47,6 @@ public class KeyAction extends Action {
 
     private final int mKeyCode;
 
-    static public final String ACTION_TYPE = "KeyAction";
+    static public final String OBJECT_TYPE = "KeyAction";
     static public final String KEYCODE_PROPERTY = "keycode";
 }

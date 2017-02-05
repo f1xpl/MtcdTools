@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:choiceMode="singleChoice"
-        android:id="@+id/listViewActions">
+        android:id="@+id/listViewAddedNamedObjects">
 
     </ListView>
 

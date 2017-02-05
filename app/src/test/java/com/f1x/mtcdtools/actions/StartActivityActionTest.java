@@ -38,7 +38,7 @@ public class StartActivityActionTest {
 
         mActionJson = new JSONObject();
         mActionJson.put(StartActivityAction.NAME_PROPERTY, "TestStartActivityAction");
-        mActionJson.put(StartActivityAction.TYPE_PROPERTY, StartActivityAction.ACTION_TYPE);
+        mActionJson.put(StartActivityAction.OBJECT_TYPE_PROPERTY, StartActivityAction.OBJECT_TYPE);
         mActionJson.put(StartActivityAction.INTENT_PACKAGE_PROPERTY, "com.test.package");
         mActionJson.put(StartActivityAction.INTENT_CATEGORY_PROPERTY, "intentCategory");
         mActionJson.put(StartActivityAction.INTENT_TYPE_PROPERTY, "intentType");
@@ -67,7 +67,7 @@ public class StartActivityActionTest {
 
         assertEquals(mActionJson.toString(), startActivityAction.toJson().toString());
         assertEquals(mActionJson.getString(StartActivityAction.NAME_PROPERTY), startActivityAction.getName());
-        assertEquals(mActionJson.getString(StartActivityAction.TYPE_PROPERTY), startActivityAction.getType());
+        assertEquals(mActionJson.getString(StartActivityAction.OBJECT_TYPE_PROPERTY), startActivityAction.getObjectType());
         assertEquals(mActionJson.getString(StartActivityAction.INTENT_PACKAGE_PROPERTY), startActivityAction.getIntentPackage());
         assertEquals(mActionJson.getString(StartActivityAction.INTENT_ACTION_PROPERTY), startActivityAction.getIntentAction());
         assertEquals(mActionJson.getString(StartActivityAction.INTENT_CATEGORY_PROPERTY), startActivityAction.getIntentCategory());
@@ -109,7 +109,7 @@ public class StartActivityActionTest {
         StartActivityAction startActivityAction = new StartActivityAction(mActionJson);
         assertEquals(mActionJson.toString(), startActivityAction.toJson().toString());
         assertEquals(mActionJson.getString(StartActivityAction.NAME_PROPERTY), startActivityAction.getName());
-        assertEquals(mActionJson.getString(StartActivityAction.TYPE_PROPERTY), startActivityAction.getType());
+        assertEquals(mActionJson.getString(StartActivityAction.OBJECT_TYPE_PROPERTY), startActivityAction.getObjectType());
         assertEquals(mActionJson.getString(StartActivityAction.INTENT_PACKAGE_PROPERTY), startActivityAction.getIntentPackage());
         assertEquals(mActionJson.getString(StartActivityAction.INTENT_ACTION_PROPERTY), startActivityAction.getIntentAction());
         assertEquals(mActionJson.getString(StartActivityAction.INTENT_CATEGORY_PROPERTY), startActivityAction.getIntentCategory());

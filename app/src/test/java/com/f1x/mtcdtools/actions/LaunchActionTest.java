@@ -33,7 +33,7 @@ public class LaunchActionTest {
 
         mActionJson = new JSONObject();
         mActionJson.put(LaunchAction.NAME_PROPERTY, "TestLaunchAction");
-        mActionJson.put(LaunchAction.TYPE_PROPERTY, LaunchAction.ACTION_TYPE);
+        mActionJson.put(LaunchAction.OBJECT_TYPE_PROPERTY, LaunchAction.OBJECT_TYPE);
         mActionJson.put(LaunchAction.PACKAGE_NAME_PROPERTY, "com.test.package.to.launch");
     }
 
@@ -42,7 +42,7 @@ public class LaunchActionTest {
         LaunchAction launchAction = new LaunchAction(mActionJson.getString(LaunchAction.NAME_PROPERTY), mActionJson.getString(LaunchAction.PACKAGE_NAME_PROPERTY));
         assertEquals(mActionJson.toString(), launchAction.toJson().toString());
         assertEquals(mActionJson.getString(LaunchAction.NAME_PROPERTY), launchAction.getName());
-        assertEquals(mActionJson.getString(LaunchAction.TYPE_PROPERTY), launchAction.getType());
+        assertEquals(mActionJson.getString(LaunchAction.OBJECT_TYPE_PROPERTY), launchAction.getObjectType());
         assertEquals(mActionJson.getString(LaunchAction.PACKAGE_NAME_PROPERTY), launchAction.getPackageName());
     }
 
@@ -74,7 +74,7 @@ public class LaunchActionTest {
         LaunchAction launchAction = new LaunchAction(mActionJson);
         assertEquals(launchAction.toJson().toString(), mActionJson.toString());
         assertEquals(mActionJson.getString(LaunchAction.NAME_PROPERTY), launchAction.getName());
-        assertEquals(mActionJson.getString(LaunchAction.TYPE_PROPERTY), launchAction.getType());
+        assertEquals(mActionJson.getString(LaunchAction.OBJECT_TYPE_PROPERTY), launchAction.getObjectType());
         assertEquals(mActionJson.getString(LaunchAction.PACKAGE_NAME_PROPERTY), launchAction.getPackageName());
     }
 

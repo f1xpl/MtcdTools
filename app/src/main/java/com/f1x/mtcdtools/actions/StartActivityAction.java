@@ -21,7 +21,7 @@ public class StartActivityAction extends CustomIntentAction {
     public StartActivityAction(String actionName, String intentPackage, String intentAction,
                                  String intentCategory, String intentData, String intentType,
                                  JSONObject intentExtras, String className, int flags) throws JSONException {
-        super(actionName, ACTION_TYPE, intentPackage, intentAction, intentCategory, intentData, intentType, intentExtras);
+        super(actionName, OBJECT_TYPE, intentPackage, intentAction, intentCategory, intentData, intentType, intentExtras);
         mClassName = className;
         mFlags = flags;
     }
@@ -60,7 +60,7 @@ public class StartActivityAction extends CustomIntentAction {
     private final String mClassName;
     private final int mFlags;
 
-    static public final String ACTION_TYPE = "StartActivityAction";
+    static public final String OBJECT_TYPE = "StartActivityAction";
     static public final String CLASS_NAME_PROPERTY = "className";
     static public final String FLAGS_PROPERTY = "flags";
 }
