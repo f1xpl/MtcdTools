@@ -125,16 +125,14 @@ public class ActionsListActivity extends NamedObjectActivity {
     }
 
     @Override
-    protected void fillControls(NamedObject namedObject) {
+    protected void fillControls(NamedObject namedObject) throws ClassCastException {
         super.fillControls(namedObject);
 
         ActionsList actionsList = (ActionsList)namedObject;
 
-        if(actionsList != null) {
-            mAddedNamesArrayAdapter.reset(actionsList.getActionNames());
-            mKeysSequenceDownArrayAdapter.reset(actionsList.getKeysSequenceDown());
-            mKeysSequenceUpArrayAdapter.reset(actionsList.getKeysSequenceUp());
-        }
+        mAddedNamesArrayAdapter.reset(actionsList.getActionNames());
+        mKeysSequenceDownArrayAdapter.reset(actionsList.getKeysSequenceDown());
+        mKeysSequenceUpArrayAdapter.reset(actionsList.getKeysSequenceUp());
     }
 
     @Override

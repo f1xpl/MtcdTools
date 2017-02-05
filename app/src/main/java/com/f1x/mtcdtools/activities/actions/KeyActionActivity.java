@@ -34,18 +34,12 @@ public class KeyActionActivity extends NamedObjectActivity {
     }
 
     @Override
-    protected void fillControls(NamedObject namedObject) {
+    protected void fillControls(NamedObject namedObject) throws ClassCastException {
         super.fillControls(namedObject);
 
         KeyAction keyAction = (KeyAction)namedObject;
-
-        if(keyAction == null) {
-            Toast.makeText(this, this.getText(R.string.UnknownObjectType), Toast.LENGTH_LONG).show();
-            finish();
-        } else {
-            int keyCodePosition = mKeyCodesArrayAdapter.getPosition(keyAction.getKeyCode());
-            mKeyCodesSpinner.setSelection(keyCodePosition);
-        }
+        int keyCodePosition = mKeyCodesArrayAdapter.getPosition(keyAction.getKeyCode());
+        mKeyCodesSpinner.setSelection(keyCodePosition);
     }
 
     protected KeyCodesArrayAdapter mKeyCodesArrayAdapter;

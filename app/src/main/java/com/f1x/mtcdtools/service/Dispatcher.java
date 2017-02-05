@@ -37,16 +37,16 @@ class Dispatcher implements KeysSequenceListener {
             NamedObject namedObject = mNamedObjectsStorage.getItem(keysSequenceBinding.getTargetName());
 
             if (namedObject != null) {
-                if (this.isAction(namedObject)) {
-                    Action action = (Action) namedObject;
-                    action.evaluate(mContext);
-                } else if (namedObject.getObjectType().equals(ActionsList.OBJECT_TYPE)) {
+                if (namedObject.getObjectType().equals(ActionsList.OBJECT_TYPE)) {
                     ActionsList actionsList = (ActionsList) namedObject;
 
                     Intent intent = new Intent(mContext, SelectActionActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_FROM_BACKGROUND);
                     intent.putExtra(SelectActionActivity.ACTIONS_LIST_NAME_PARAMETER, actionsList.getName());
                     mContext.startActivity(intent);
+                } else {
+                    Action action = (Action) namedObject;
+                    action.evaluate(mContext);
                 }
             }
         }
@@ -55,13 +55,6 @@ class Dispatcher implements KeysSequenceListener {
     @Override
     public void handleSingleKey(int keyCode) {
 
-    }
-
-    private boolean isAction(NamedObject namedObject) {
-        return namedObject.getObjectType().equals(KeyAction.OBJECT_TYPE) ||
-                namedObject.getObjectType().equals(LaunchAction.OBJECT_TYPE) ||
-                namedObject.getObjectType().equals(BroadcastIntentAction.OBJECT_TYPE) ||
-                namedObject.getObjectType().equals(StartActivityAction.OBJECT_TYPE);
     }
 
     private final Context mContext;

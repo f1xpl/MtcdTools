@@ -49,27 +49,22 @@ public abstract class CustomIntentActionActivity extends NamedObjectActivity {
     }
 
     @Override
-    protected void fillControls(NamedObject namedObject) {
+    protected void fillControls(NamedObject namedObject) throws ClassCastException {
         super.fillControls(namedObject);
 
-        CustomIntentAction customIntentAction = (CustomIntentAction)namedObject;
+        try {
+            CustomIntentAction customIntentAction = (CustomIntentAction)namedObject;
 
-        if(customIntentAction == null) {
-            Toast.makeText(this, this.getText(R.string.UnknownObjectType), Toast.LENGTH_LONG).show();
+            mIntentActionEditText.setText(customIntentAction.getIntentAction());
+            mIntentExtrasEditText.setText(customIntentAction.getIntentExtras().toString());
+            mIntentCategoryEditText.setText(customIntentAction.getIntentCategory());
+            mIntentDataEditText.setText(customIntentAction.getIntentData());
+            mIntentPackageEditText.setText(customIntentAction.getIntentPackage());
+            mIntentTypeEditText.setText(customIntentAction.getIntentType());
+        } catch(JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(CustomIntentActionActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
             finish();
-        } else {
-            try {
-                mIntentActionEditText.setText(customIntentAction.getIntentAction());
-                mIntentExtrasEditText.setText(customIntentAction.getIntentExtras().toString());
-                mIntentCategoryEditText.setText(customIntentAction.getIntentCategory());
-                mIntentDataEditText.setText(customIntentAction.getIntentData());
-                mIntentPackageEditText.setText(customIntentAction.getIntentPackage());
-                mIntentTypeEditText.setText(customIntentAction.getIntentType());
-            } catch(JSONException e) {
-                e.printStackTrace();
-                Toast.makeText(CustomIntentActionActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
-                finish();
-            }
         }
     }
 

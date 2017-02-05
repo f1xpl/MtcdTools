@@ -35,17 +35,11 @@ public class BroadcastIntentActionActivity extends CustomIntentActionActivity {
     }
 
     @Override
-    protected void fillControls(NamedObject namedObject) {
+    protected void fillControls(NamedObject namedObject) throws ClassCastException {
         super.fillControls(namedObject);
 
         BroadcastIntentAction broadcastIntentAction = (BroadcastIntentAction)namedObject;
-
-        if(broadcastIntentAction == null) {
-            Toast.makeText(this, this.getText(R.string.UnknownObjectType), Toast.LENGTH_LONG).show();
-            finish();
-        } else {
-            mBroadcastPermissionEditText.setText(broadcastIntentAction.getPermissions());
-        }
+        mBroadcastPermissionEditText.setText(broadcastIntentAction.getPermissions());
     }
 
 

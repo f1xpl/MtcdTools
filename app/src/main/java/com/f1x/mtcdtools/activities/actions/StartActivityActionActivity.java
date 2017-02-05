@@ -26,18 +26,12 @@ public class StartActivityActionActivity extends CustomIntentActionActivity {
     }
 
     @Override
-    protected void fillControls(NamedObject namedObject) {
+    protected void fillControls(NamedObject namedObject) throws ClassCastException {
         super.fillControls(namedObject);
 
         StartActivityAction startActivityAction = (StartActivityAction)namedObject;
-
-        if(startActivityAction == null) {
-            Toast.makeText(this, this.getText(R.string.UnknownObjectType), Toast.LENGTH_LONG).show();
-            finish();
-        } else {
-            mClassNameEditText.setText(startActivityAction.getClassName());
-            mFlagsNameEditText.setText(String.format(Locale.getDefault(), "%d", startActivityAction.getFlags()));
-        }
+        mClassNameEditText.setText(startActivityAction.getClassName());
+        mFlagsNameEditText.setText(String.format(Locale.getDefault(), "%d", startActivityAction.getFlags()));
     }
 
     @Override

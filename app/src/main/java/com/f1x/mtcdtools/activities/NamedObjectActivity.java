@@ -39,10 +39,17 @@ public abstract class NamedObjectActivity extends ServiceActivity {
         if(mEditMode) {
             NamedObject namedObject = mServiceBinder.getNamedObjectsStorage().getItem(mEditName);
 
-            if (namedObject != null) {
-                fillControls(namedObject);
-            } else {
+            if (namedObject == null) {
                 Toast.makeText(this, this.getText(R.string.ObjectNotFound), Toast.LENGTH_LONG).show();
+                finish();
+                return;
+            }
+
+            try {
+                fillControls(namedObject);
+            } catch(ClassCastException e) {
+                e.printStackTrace();
+                Toast.makeText(this, this.getText(R.string.UnknownObjectType), Toast.LENGTH_LONG).show();
                 finish();
             }
         }
@@ -74,7 +81,7 @@ public abstract class NamedObjectActivity extends ServiceActivity {
         mNameEditText = (EditText)this.findViewById(R.id.editTextNamedObjectName);
     }
 
-    protected void fillControls(NamedObject namedObject) {
+    protected void fillControls(NamedObject namedObject) throws ClassCastException {
         mNameEditText.setText(mEditMode ? namedObject.getName() : "");
     }
 

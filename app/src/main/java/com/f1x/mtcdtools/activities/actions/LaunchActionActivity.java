@@ -32,18 +32,12 @@ public class LaunchActionActivity extends NamedObjectActivity {
     }
 
     @Override
-    protected void fillControls(NamedObject namedObject) {
+    protected void fillControls(NamedObject namedObject) throws ClassCastException {
         super.fillControls(namedObject);
 
-        LaunchAction launchAction = (LaunchAction)namedObject;
-
-        if(launchAction == null) {
-            Toast.makeText(this, this.getText(R.string.UnknownObjectType), Toast.LENGTH_LONG).show();
-            finish();
-        } else {
-            int packagePosition = mInstalledPackagesArrayAdapter.getPosition(launchAction.getPackageName());
-            mInstalledPackagesSpinner.setSelection(packagePosition);
-        }
+        LaunchAction launchAction = (LaunchAction) namedObject;
+        int packagePosition = mInstalledPackagesArrayAdapter.getPosition(launchAction.getPackageName());
+        mInstalledPackagesSpinner.setSelection(packagePosition);
     }
 
     private Spinner mInstalledPackagesSpinner;
