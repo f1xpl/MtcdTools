@@ -1,6 +1,5 @@
 package com.f1x.mtcdtools.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -14,21 +13,22 @@ import android.widget.Toast;
 import com.f1x.mtcdtools.ActionsList;
 import com.f1x.mtcdtools.ListIndexer;
 import com.f1x.mtcdtools.R;
-import com.f1x.mtcdtools.actions.Action;
 import com.f1x.mtcdtools.configuration.Configuration;
 import com.f1x.mtcdtools.configuration.ConfigurationChangeListener;
 import com.f1x.mtcdtools.input.KeysSequenceListener;
+import com.f1x.mtcdtools.NamedObjectDispatcher;
 import com.f1x.mtcdtools.storage.NamedObject;
 
 import java.util.List;
 
-public class SelectActionActivity extends ServiceActivity implements KeysSequenceListener, ConfigurationChangeListener {
+public class SelectNamedObjectActivity extends ServiceActivity implements KeysSequenceListener, ConfigurationChangeListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select_action);
+        setContentView(R.layout.activity_select_named_object);
 
+        mDispatcher = new NamedObjectDispatcher();
         mExecuteActionProgressBar = (ProgressBar)this.findViewById(R.id.progressBarExecuteAction);
         mActionsListName = this.getIntent().getStringExtra(ACTIONS_LIST_NAME_PARAMETER);
         mActionsNamesArrayAdapter = new ArrayAdapter<>(this, R.layout.layout_action_name_row);
@@ -42,7 +42,7 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
                 NamedObject namedObject = mServiceBinder.getNamedObjectsStorage().getItem(namedObjectName);
 
                 if(namedObject == null) {
-                    SelectActionActivity.this.finish();
+                    SelectNamedObjectActivity.this.finish();
                 } else if(namedObject.getObjectType().equals(ActionsList.OBJECT_TYPE)) {
                     mActionsList = (ActionsList)namedObject;
                     mActionsListName = namedObjectName;
@@ -50,9 +50,7 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
                     fillControls();
                     restartTimer();
                 } else {
-                    Action action = (Action)namedObject;
-                    action.evaluate(SelectActionActivity.this);
-                    SelectActionActivity.this.finish();
+                    mDispatcher.dispatch(namedObject, SelectNamedObjectActivity.this);
                 }
             }
         });
@@ -147,7 +145,7 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
                         if(checkedActionPosition != ListView.INVALID_POSITION) {
                             mActionsListView.performItemClick(mActionsListView.getAdapter().getView(checkedActionPosition, null, null), checkedActionPosition, checkedActionPosition);
                         } else {
-                            SelectActionActivity.this.finish();
+                            SelectNamedObjectActivity.this.finish();
                         }
                     }
                 });
@@ -191,6 +189,7 @@ public class SelectActionActivity extends ServiceActivity implements KeysSequenc
     private ArrayAdapter<String> mActionsNamesArrayAdapter;
     private ListIndexer mListIndexer;
     private ProgressBar mExecuteActionProgressBar;
+    private NamedObjectDispatcher mDispatcher;
 
     private static final int PROGRESS_BAR_DELTA = 50;
     public static final String ACTIONS_LIST_NAME_PARAMETER = "actionsListName";

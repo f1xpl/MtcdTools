@@ -37,7 +37,7 @@
         <activity android:name=".activities.ManageNamedObjectsActivity" />
         <activity android:name=".activities.ManageBindingsActivity" />
         <activity
-            android:name=".activities.SelectActionActivity"
+            android:name=".activities.SelectNamedObjectActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />

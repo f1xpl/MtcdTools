@@ -7,6 +7,7 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
+import com.f1x.mtcdtools.KeysSequenceDispatcher;
 import com.f1x.mtcdtools.configuration.Configuration;
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.activities.MainActivity;
@@ -39,7 +40,7 @@ public class MtcdService extends android.app.Service {
         FileWriter fileWriter = new FileWriter(this);
         mNamedObjectsStorage = new NamedObjectsStorage(fileReader, fileWriter);
         mKeysSequenceBindingsStorage = new KeysSequenceBindingsStorage(fileReader, fileWriter);
-        mDispatcher = new Dispatcher(this, mNamedObjectsStorage, mKeysSequenceBindingsStorage);
+        mKeysSequenceDispatcher = new KeysSequenceDispatcher(this, mNamedObjectsStorage, mKeysSequenceBindingsStorage);
         mPressedKeysSequenceManager = new PressedKeysSequenceManager(mConfiguration);
     }
 
@@ -55,7 +56,7 @@ public class MtcdService extends android.app.Service {
             unregisterReceiver(mPressedKeysSequenceManager);
         }
 
-        mPressedKeysSequenceManager.popListener(mDispatcher);
+        mPressedKeysSequenceManager.popListener(mKeysSequenceDispatcher);
         mPressedKeysSequenceManager.destroy();
         mServiceInitialized = false;
     }
@@ -75,7 +76,7 @@ public class MtcdService extends android.app.Service {
                 mKeysSequenceBindingsStorage.read();
                 registerReceiver(mPressedKeysSequenceManager, mPressedKeysSequenceManager.getIntentFilter());
 
-                mPressedKeysSequenceManager.pushListener(mDispatcher);
+                mPressedKeysSequenceManager.pushListener(mKeysSequenceDispatcher);
                 mServiceInitialized = true;
                 mForceRestart = true;
                 startForeground(1555, createNotification());
@@ -102,7 +103,7 @@ public class MtcdService extends android.app.Service {
     private NamedObjectsStorage mNamedObjectsStorage;
     private KeysSequenceBindingsStorage mKeysSequenceBindingsStorage;
     private PressedKeysSequenceManager mPressedKeysSequenceManager;
-    private Dispatcher mDispatcher;
+    private KeysSequenceDispatcher mKeysSequenceDispatcher;
     private Configuration mConfiguration;
 
     private final ServiceBinder mServiceBinder = new ServiceBinder() {
