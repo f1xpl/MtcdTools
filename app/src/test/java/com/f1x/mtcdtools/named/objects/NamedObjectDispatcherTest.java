@@ -2,6 +2,7 @@ package com.f1x.mtcdtools.named.objects;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 
 import com.f1x.mtcdtools.named.objects.NamedObjectDispatcher;
 import com.f1x.mtcdtools.named.objects.actions.Action;
@@ -44,14 +45,14 @@ public class NamedObjectDispatcherTest {
 
     @Test
     public void test_ActionDispatch() {
-        NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage);
-
         KeyAction action = mock(KeyAction.class);
         String actionName = "testActionName";
         when(action.getName()).thenReturn(actionName);
         when(action.getObjectType()).thenReturn(KeyAction.OBJECT_TYPE);
 
         when(mMockNamedObjectsStorage.getItem(actionName)).thenReturn(action);
+
+        NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage);
         dispatcher.dispatch(actionName, mMockContext);
         verify(action, times(1)).evaluate(mMockContext);
     }
@@ -59,7 +60,6 @@ public class NamedObjectDispatcherTest {
     @Test
     public void test_ActionsListDispatch() throws Exception {
         PowerMockito.whenNew(Intent.class).withAnyArguments().thenReturn(mMockIntent);
-        NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage);
 
         String actionsListName = "actionsListName";
         ActionsList actionsList = mock(ActionsList.class);
@@ -68,14 +68,13 @@ public class NamedObjectDispatcherTest {
 
         when(mMockNamedObjectsStorage.getItem(actionsListName)).thenReturn(actionsList);
 
+        NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage);
         dispatcher.dispatch(actionsListName, mMockContext);
         verify(mMockContext, times(1)).startActivity(mMockIntent);
     }
 
     @Test
     public void test_ActionsSequenceDispatch() throws Exception {
-        NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage);
-
         String actionsSequenceName = "actionsSequenceName";
         ActionsSequence actionsSequence = mock(ActionsSequence.class);
         when(actionsSequence.getName()).thenReturn(actionsSequenceName);
@@ -91,9 +90,13 @@ public class NamedObjectDispatcherTest {
         when(mMockNamedObjectsStorage.getItem(actionsNames.get(1))).thenReturn(action);
         when(mMockNamedObjectsStorage.getItem(actionsNames.get(2))).thenReturn(action);
 
+        ActionsSequenceDispatchTask actionsSequenceDispatchTask = mock(ActionsSequenceDispatchTask.class);
+        PowerMockito.whenNew(ActionsSequenceDispatchTask.class).withArguments(actionsNames, mMockContext, mMockNamedObjectsStorage).thenReturn(actionsSequenceDispatchTask);
+
+        NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage);
         dispatcher.dispatch(actionsSequenceName, mMockContext);
 
-        verify(action, times(actionsNames.size())).evaluate(mMockContext);
+        verify(actionsSequenceDispatchTask, times(1)).execute(3000);
     }
 
     @Test

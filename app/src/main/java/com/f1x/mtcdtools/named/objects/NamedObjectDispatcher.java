@@ -2,10 +2,14 @@ package com.f1x.mtcdtools.named.objects;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Handler;
 
 import com.f1x.mtcdtools.named.objects.actions.Action;
 import com.f1x.mtcdtools.activities.SelectNamedObjectActivity;
 import com.f1x.mtcdtools.storage.NamedObjectsStorage;
+
+import java.util.List;
 
 /**
  * Created by COMPUTER on 2017-02-05.
@@ -49,14 +53,7 @@ public class NamedObjectDispatcher {
 
     private void dispatchActionsSequence(NamedObject namedObject, Context context) {
         ActionsSequence actionsSequence = (ActionsSequence)namedObject;
-
-        for(String actionName : actionsSequence.getActionNames()) {
-            Action action = (Action)mNamedObjectsStorage.getItem(actionName);
-
-            if(action != null) {
-                action.evaluate(context);
-            }
-        }
+        new ActionsSequenceDispatchTask(actionsSequence.getActionNames(), context, mNamedObjectsStorage).execute(3000);
     }
 
     private void dispatchAction(NamedObject namedObject, Context context) {
