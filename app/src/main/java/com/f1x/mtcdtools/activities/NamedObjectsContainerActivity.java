@@ -5,21 +5,12 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.adapters.NamedObjectsArrayAdapter;
 import com.f1x.mtcdtools.adapters.NamesArrayAdapter;
-import com.f1x.mtcdtools.named.objects.ActionsSequence;
 import com.f1x.mtcdtools.named.objects.NamedObject;
 import com.f1x.mtcdtools.named.objects.NamedObjectsContainer;
-import com.f1x.mtcdtools.named.objects.actions.BroadcastIntentAction;
-import com.f1x.mtcdtools.named.objects.actions.KeyAction;
-import com.f1x.mtcdtools.named.objects.actions.LaunchAction;
-import com.f1x.mtcdtools.named.objects.actions.StartActivityAction;
-
-import java.util.Arrays;
-import java.util.TreeSet;
 
 /**
  * Created by COMPUTER on 2017-02-05.
@@ -35,7 +26,6 @@ public abstract class NamedObjectsContainerActivity extends NamedObjectActivity 
         super.initControls();
 
         mNamedObjectsArrayAdapter = new NamedObjectsArrayAdapter(this);
-        mNamedObjectsArrayAdapter.setObjectTypeFilters(new TreeSet<>(Arrays.asList(ActionsSequence.OBJECT_TYPE, KeyAction.OBJECT_TYPE, LaunchAction.OBJECT_TYPE, BroadcastIntentAction.OBJECT_TYPE, StartActivityAction.OBJECT_TYPE)));
         final Spinner actionsSpinner = (Spinner)this.findViewById(R.id.spinnerNamedObjects);
         actionsSpinner.setAdapter(mNamedObjectsArrayAdapter);
 
