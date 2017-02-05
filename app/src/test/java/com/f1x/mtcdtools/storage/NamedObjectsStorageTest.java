@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.TreeSet;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;

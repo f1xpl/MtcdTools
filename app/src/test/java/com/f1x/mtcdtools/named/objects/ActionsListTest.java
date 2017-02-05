@@ -10,8 +10,6 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;

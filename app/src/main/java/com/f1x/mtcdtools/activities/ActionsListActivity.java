@@ -6,10 +6,10 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TabHost;
 
-import com.f1x.mtcdtools.named.objects.ActionsList;
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.adapters.KeysSequenceArrayAdapter;
 import com.f1x.mtcdtools.input.KeysSequenceConverter;
+import com.f1x.mtcdtools.named.objects.ActionsList;
 import com.f1x.mtcdtools.named.objects.ActionsSequence;
 import com.f1x.mtcdtools.named.objects.NamedObject;
 import com.f1x.mtcdtools.named.objects.actions.BroadcastIntentAction;

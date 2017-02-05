@@ -7,10 +7,10 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
-import com.f1x.mtcdtools.input.KeysSequenceDispatcher;
-import com.f1x.mtcdtools.configuration.Configuration;
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.activities.MainActivity;
+import com.f1x.mtcdtools.configuration.Configuration;
+import com.f1x.mtcdtools.input.KeysSequenceDispatcher;
 import com.f1x.mtcdtools.input.PressedKeysSequenceManager;
 import com.f1x.mtcdtools.storage.FileReader;
 import com.f1x.mtcdtools.storage.FileWriter;

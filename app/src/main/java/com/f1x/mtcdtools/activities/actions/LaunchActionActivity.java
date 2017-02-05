@@ -1,17 +1,16 @@
 package com.f1x.mtcdtools.activities.actions;
 
-import android.content.pm.PackageManager;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 
 import com.f1x.mtcdtools.R;
-import com.f1x.mtcdtools.named.objects.actions.Action;
-import com.f1x.mtcdtools.named.objects.actions.LaunchAction;
 import com.f1x.mtcdtools.activities.NamedObjectActivity;
 import com.f1x.mtcdtools.adapters.InstalledPackagesArrayAdapter;
 import com.f1x.mtcdtools.adapters.PackageEntry;
 import com.f1x.mtcdtools.named.objects.NamedObject;
+import com.f1x.mtcdtools.named.objects.actions.Action;
+import com.f1x.mtcdtools.named.objects.actions.LaunchAction;
 
 public class LaunchActionActivity extends NamedObjectActivity {
     public LaunchActionActivity() {

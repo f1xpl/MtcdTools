@@ -2,10 +2,8 @@ package com.f1x.mtcdtools.named.objects;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 
 import com.f1x.mtcdtools.configuration.Configuration;
-import com.f1x.mtcdtools.named.objects.NamedObjectDispatcher;
 import com.f1x.mtcdtools.named.objects.actions.Action;
 import com.f1x.mtcdtools.named.objects.actions.KeyAction;
 import com.f1x.mtcdtools.storage.NamedObjectsStorage;
@@ -22,8 +20,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;

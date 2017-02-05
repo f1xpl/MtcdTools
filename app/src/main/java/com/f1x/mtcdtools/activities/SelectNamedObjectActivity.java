@@ -10,14 +10,13 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.f1x.mtcdtools.named.objects.ActionsList;
 import com.f1x.mtcdtools.ListIndexer;
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.configuration.Configuration;
 import com.f1x.mtcdtools.configuration.ConfigurationChangeListener;
 import com.f1x.mtcdtools.input.KeysSequenceListener;
+import com.f1x.mtcdtools.named.objects.ActionsList;
 import com.f1x.mtcdtools.named.objects.NamedObjectDispatcher;
-import com.f1x.mtcdtools.named.objects.NamedObject;
 
 import java.util.List;
 
