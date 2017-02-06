@@ -6,7 +6,7 @@ import android.os.Handler;
 import android.speech.RecognizerIntent;
 
 import com.f1x.mtcdtools.R;
-import com.f1x.mtcdtools.storage.SpeechParser;
+import com.f1x.mtcdtools.SpeechParser;
 
 import java.util.List;
 import java.util.Locale;
@@ -37,20 +37,18 @@ public class VoiceDispatchActivity extends ServiceActivity {
             List<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             final List<String> namedObjectsNames = mSpeechParser.parse(text, mServiceBinder.getConfiguration().getActionsVoiceDelimiter());
 
+            // Recognizer will pause playback during speech recognition
+            // If user wants to execute any media button action, it can
+            // collides and overlaps with recognizer
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     mServiceBinder.getNamedObjectsDispatcher().dispatchNamedObjects(namedObjectsNames, VoiceDispatchActivity.this);
                     VoiceDispatchActivity.this.finish();
                 }
-            }, ACTION_EXECUTION_DELAY_MS);
+            }, mServiceBinder.getConfiguration().getVoiceCommandExecutionDelay());
         }
     }
 
     private SpeechParser mSpeechParser;
-
-    // Recognizer will pause playback during speech recognition
-    // If user wants to execute any media button action, it can
-    // collides and overlaps with recognizer
-    private final int ACTION_EXECUTION_DELAY_MS = 1000;
 }

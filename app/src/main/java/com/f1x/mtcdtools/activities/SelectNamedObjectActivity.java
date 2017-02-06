@@ -47,6 +47,7 @@ public class SelectNamedObjectActivity extends ServiceActivity implements KeysSe
 
     @Override
     protected void onResume() {
+        super.onResume();
         mListViewScroller.reset();
     }
 
@@ -77,11 +78,11 @@ public class SelectNamedObjectActivity extends ServiceActivity implements KeysSe
 
         mActionsList = (ActionsList)namedObject;
         mServiceBinder.getConfiguration().addChangeListener(this);
-        mExecuteActionProgressBar.setMax(mServiceBinder.getConfiguration().getVoiceCommandExecutionDelay());
+        mExecuteActionProgressBar.setMax(mServiceBinder.getConfiguration().getActionExecutionDelay());
         mServiceBinder.getPressedKeysSequenceManager().pushListener(this);
 
         fillControls();
-        mActionExecutionTimer = createActionExecutionTimer(mServiceBinder.getConfiguration().getVoiceCommandExecutionDelay());
+        mActionExecutionTimer = createActionExecutionTimer(mServiceBinder.getConfiguration().getActionExecutionDelay());
         restartTimer();
     }
 
@@ -110,9 +111,9 @@ public class SelectNamedObjectActivity extends ServiceActivity implements KeysSe
     @Override
     public void onParameterChanged(String parameterName, Configuration configuration) {
         if(parameterName.equals(Configuration.VOICE_COMMAND_EXECUTION_DELAY_PROPERTY_NAME)) {
-            mActionExecutionTimer = createActionExecutionTimer(mServiceBinder.getConfiguration().getVoiceCommandExecutionDelay());
+            mActionExecutionTimer = createActionExecutionTimer(mServiceBinder.getConfiguration().getActionExecutionDelay());
             mActionExecutionTimer.start();
-            mExecuteActionProgressBar.setMax(mServiceBinder.getConfiguration().getVoiceCommandExecutionDelay());
+            mExecuteActionProgressBar.setMax(mServiceBinder.getConfiguration().getActionExecutionDelay());
         }
     }
 
@@ -149,16 +150,16 @@ public class SelectNamedObjectActivity extends ServiceActivity implements KeysSe
 
     private void fillControls() {
         mExecuteActionProgressBar.setProgress(0);
-        mExecuteActionProgressBar.setMax(mServiceBinder.getConfiguration().getVoiceCommandExecutionDelay());
+        mExecuteActionProgressBar.setMax(mServiceBinder.getConfiguration().getActionExecutionDelay());
 
         mActionsNamesArrayAdapter.clear();
         mActionsNamesArrayAdapter.addAll(mActionsList.getActionNames());
         mActionsNamesArrayAdapter.insert(this.getText(R.string.Cancel).toString(), 0);
-        mListViewScroller.reset();
 
         mActionsListView.post(new Runnable() {
             @Override
             public void run() {
+                mListViewScroller.reset();
                 mExecuteActionProgressBar.setLayoutParams(new RelativeLayout.LayoutParams(mActionsListView.getWidth(), mActionsListView.getHeight()));
             }
         });

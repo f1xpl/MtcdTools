@@ -2,6 +2,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <TextView
+        android:text="@string/ActionExecutionDelay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/element_spacing" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewActionExecutionDelayValue" />
+
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/element_spacing"
+            android:id="@+id/seekBarActionExecutionDelay"
+            android:max="10000" />
+    </LinearLayout>
+
     <TextView
         android:text="@string/VoiceCommandExecutionDelay"
         android:layout_width="match_parent"
@@ -22,8 +47,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/element_spacing"
-            android:id="@+id/seekBarActionExecutionDelay"
-            android:max="10" />
+            android:id="@+id/seekBarVoiceCommandExecutionDelay"
+            android:max="5000" />
     </LinearLayout>
 
     <TextView
@@ -47,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/element_spacing"
             android:id="@+id/seekBarKeyPressSpeed"
-            android:max="3000" />
+            android:max="5000" />
 
     </LinearLayout>
 

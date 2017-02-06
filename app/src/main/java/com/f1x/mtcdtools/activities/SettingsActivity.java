@@ -37,12 +37,31 @@ public class SettingsActivity extends ServiceActivity {
         storeSettingsTab.setIndicator(this.getString(R.string.StoreSettings));
         tabHost.addTab(storeSettingsTab);
 
-        mAVoiceCommandExecutionDelaySeekBar = (SeekBar)this.findViewById(R.id.seekBarActionExecutionDelay);
-        mVoiceCommandExecutionDelayValueTextView = (TextView)this.findViewById(R.id.textViewVoiceCommandExecutionDelayValue);
-        mAVoiceCommandExecutionDelaySeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        mActionExecutionDelaySeekBar = (SeekBar)this.findViewById(R.id.seekBarActionExecutionDelay);
+        mActionExecutionDelayValueTextView = (TextView)this.findViewById(R.id.textViewActionExecutionDelayValue);
+        mActionExecutionDelaySeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
-                mVoiceCommandExecutionDelayValueTextView.setText(String.format(Locale.getDefault(), "%d", progress));
+                mActionExecutionDelayValueTextView.setText(String.format(Locale.getDefault(), "%d [ms]", progress));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        mVoiceCommandExecutionDelaySeekBar = (SeekBar)this.findViewById(R.id.seekBarVoiceCommandExecutionDelay);
+        mVoiceCommandExecutionDelayValueTextView = (TextView)this.findViewById(R.id.textViewVoiceCommandExecutionDelayValue);
+        mVoiceCommandExecutionDelaySeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
+                mVoiceCommandExecutionDelayValueTextView.setText(String.format(Locale.getDefault(), "%d [ms]", progress));
             }
 
             @Override
@@ -62,7 +81,7 @@ public class SettingsActivity extends ServiceActivity {
         mKeyPressSpeedSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
-                mKeyPressSpeedValueTextView.setText(String.format(Locale.getDefault(), "%d", progress));
+                mKeyPressSpeedValueTextView.setText(String.format(Locale.getDefault(), "%d [ms]", progress));
             }
 
             @Override
@@ -82,7 +101,7 @@ public class SettingsActivity extends ServiceActivity {
         mActionSequenceDelaySeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
-                mActionSequenceDelayValueTextView.setText(String.format(Locale.getDefault(), "%d", progress));
+                mActionSequenceDelayValueTextView.setText(String.format(Locale.getDefault(), "%d [ms]", progress));
             }
 
             @Override
@@ -108,7 +127,8 @@ public class SettingsActivity extends ServiceActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mServiceBinder.getConfiguration().setVoiceCommandExecutionDelay(mAVoiceCommandExecutionDelaySeekBar.getProgress() * 1000);
+                mServiceBinder.getConfiguration().setActionExecutionDelay(mActionExecutionDelaySeekBar.getProgress());
+                mServiceBinder.getConfiguration().setVoiceCommandExecutionDelay(mVoiceCommandExecutionDelaySeekBar.getProgress());
                 mServiceBinder.getConfiguration().setKeyPressSpeed(mKeyPressSpeedSeekBar.getProgress());
                 mServiceBinder.getConfiguration().getActionsVoiceDelimiter(mActionsVoiceDelimiterEditText.getText().toString());
                 mServiceBinder.getConfiguration().setCallVoiceCommand(mCallVoiceCommandEditText.getText().toString());
@@ -126,33 +146,39 @@ public class SettingsActivity extends ServiceActivity {
         super.onResume();
 
         if(mServiceBinder != null) {
-            mAVoiceCommandExecutionDelaySeekBar.setProgress(mServiceBinder.getConfiguration().getVoiceCommandExecutionDelay() / 1000);
-            mVoiceCommandExecutionDelayValueTextView.setText(String.format(Locale.getDefault(), "%d", mAVoiceCommandExecutionDelaySeekBar.getProgress()));
+            mVoiceCommandExecutionDelaySeekBar.setProgress(mServiceBinder.getConfiguration().getVoiceCommandExecutionDelay());
+            mVoiceCommandExecutionDelayValueTextView.setText(String.format(Locale.getDefault(), "%d [ms]", mVoiceCommandExecutionDelaySeekBar.getProgress()));
 
             mKeyPressSpeedSeekBar.setProgress(mServiceBinder.getConfiguration().getKeyPressSpeed());
-            mKeyPressSpeedValueTextView.setText(String.format(Locale.getDefault(), "%d", mKeyPressSpeedSeekBar.getProgress()));
+            mKeyPressSpeedValueTextView.setText(String.format(Locale.getDefault(), "%d [ms]", mKeyPressSpeedSeekBar.getProgress()));
 
             mActionSequenceDelaySeekBar.setProgress(mServiceBinder.getConfiguration().getActionsSequenceDelay());
-            mActionSequenceDelayValueTextView.setText(String.format(Locale.getDefault(), "%d", mActionSequenceDelaySeekBar.getProgress()));
+            mActionSequenceDelayValueTextView.setText(String.format(Locale.getDefault(), "%d [ms]", mActionSequenceDelaySeekBar.getProgress()));
         }
     }
 
     @Override
     protected void onServiceConnected() {
-        mAVoiceCommandExecutionDelaySeekBar.setProgress(mServiceBinder.getConfiguration().getVoiceCommandExecutionDelay() / 1000);
-        mVoiceCommandExecutionDelayValueTextView.setText(String.format(Locale.getDefault(), "%d", mAVoiceCommandExecutionDelaySeekBar.getProgress()));
+        mActionExecutionDelaySeekBar.setProgress(mServiceBinder.getConfiguration().getActionExecutionDelay());
+        mActionExecutionDelayValueTextView.setText(String.format(Locale.getDefault(), "%d [ms]", mActionExecutionDelaySeekBar.getProgress()));
+
+        mVoiceCommandExecutionDelaySeekBar.setProgress(mServiceBinder.getConfiguration().getVoiceCommandExecutionDelay());
+        mVoiceCommandExecutionDelayValueTextView.setText(String.format(Locale.getDefault(), "%d [ms]", mVoiceCommandExecutionDelaySeekBar.getProgress()));
 
         mKeyPressSpeedSeekBar.setProgress(mServiceBinder.getConfiguration().getKeyPressSpeed());
-        mKeyPressSpeedValueTextView.setText(String.format(Locale.getDefault(), "%d", mKeyPressSpeedSeekBar.getProgress()));
+        mKeyPressSpeedValueTextView.setText(String.format(Locale.getDefault(), "%d [ms]", mKeyPressSpeedSeekBar.getProgress()));
 
         mActionSequenceDelaySeekBar.setProgress(mServiceBinder.getConfiguration().getActionsSequenceDelay());
-        mActionSequenceDelayValueTextView.setText(String.format(Locale.getDefault(), "%d", mActionSequenceDelaySeekBar.getProgress()));
+        mActionSequenceDelayValueTextView.setText(String.format(Locale.getDefault(), "%d [ms]", mActionSequenceDelaySeekBar.getProgress()));
 
         mActionsVoiceDelimiterEditText.setText(mServiceBinder.getConfiguration().getActionsVoiceDelimiter());
         mCallVoiceCommandEditText.setText(mServiceBinder.getConfiguration().getCallVoiceCommand());
     }
 
-    private SeekBar mAVoiceCommandExecutionDelaySeekBar;
+    private SeekBar mActionExecutionDelaySeekBar;
+    private TextView mActionExecutionDelayValueTextView;
+
+    private SeekBar mVoiceCommandExecutionDelaySeekBar;
     private TextView mVoiceCommandExecutionDelayValueTextView;
 
     private SeekBar mKeyPressSpeedSeekBar;

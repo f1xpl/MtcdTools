@@ -16,7 +16,7 @@ import java.util.List;
  * Created by f1x on 2017-02-05.
  */
 
-class NamedObjectsListDispatchTask extends AsyncTask<Integer, String, Void> {
+public class NamedObjectsListDispatchTask extends AsyncTask<Integer, String, Void> {
     NamedObjectsListDispatchTask(List<String> actionNames, Context context, NamedObjectsStorage namedObjectsStorage) {
         mActionNames = actionNames;
         mContext = context;
@@ -39,6 +39,10 @@ class NamedObjectsListDispatchTask extends AsyncTask<Integer, String, Void> {
 
     protected void onProgressUpdate(String... progress) {
         NamedObject namedObject = mNamedObjectsStorage.getItem(progress[0]);
+        if(namedObject == null) {
+            return;
+        }
+
         String namedObjectType = namedObject.getObjectType();
 
         if(namedObjectType.equals(KeyAction.OBJECT_TYPE) ||

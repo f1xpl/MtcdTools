@@ -27,7 +27,6 @@ public class ListViewScroller {
     }
 
     private void setListViewItem(int position) {
-        mListView.requestFocusFromTouch();
         mListView.clearChoices();
         mListView.requestLayout();
 

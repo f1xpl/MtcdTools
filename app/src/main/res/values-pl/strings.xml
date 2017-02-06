@@ -32,8 +32,8 @@
     <string name="UnknownObjectType">Nieznany typ obiektu</string>
     <string name="ProvideKeysSequence">Wprowadź sekwencję klawiszy</string>
     <string name="Name">Nazwa</string>
-    <string name="VoiceCommandExecutionDelay">Opóźnienie uruchomienia komendy głosowej [s]</string>
-    <string name="KeyPressSpeed">Szybkość wciśnięcia przycisku [ms]</string>
+    <string name="VoiceCommandExecutionDelay">Opóźnienie uruchomienia komendy głosowej</string>
+    <string name="KeyPressSpeed">Szybkość wciśnięcia przycisku</string>
     <string name="IntentAction">Akcja intencji</string>
     <string name="Misc">Różne</string>
     <string name="VoiceCommands">Komendy głosowe</string>
@@ -47,5 +47,6 @@
     <string name="Objects">Obiekty</string>
     <string name="AddObject">Dodaj obiekt</string>
     <string name="CreateNewActionsSequence">Utwórz nową sekwencję akcji</string>
-    <string name="ActionsSequenceDelay">Odstęp uruchamiania akcji w sekwencji [ms]</string>
+    <string name="ActionsSequenceDelay">Odstęp uruchamiania akcji w sekwencji</string>
+    <string name="ActionExecutionDelay">Opóźnienie uruchomienia akcji z listy</string>
 </resources>
