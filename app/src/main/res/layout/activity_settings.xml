@@ -32,8 +32,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <include layout="@layout/layout_misc_settings"
-                            android:id="@+id/tabMiscSettings"/>
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tabMiscSettings">
+                    <include layout="@layout/layout_misc_settings" />
+                </ScrollView>
 
                 <include layout="@layout/layout_voice_commands_settings"
                     android:id="@+id/tabVoiceCommandsSettings"/>
