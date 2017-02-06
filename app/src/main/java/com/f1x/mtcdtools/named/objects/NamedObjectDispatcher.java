@@ -33,23 +33,19 @@ public class NamedObjectDispatcher {
 
         String objectType = namedObject.getObjectType();
 
-        try {
-            switch(objectType) {
-                case ActionsList.OBJECT_TYPE:
-                    this.dispatchActionsList((ActionsList)namedObject, context);
-                    break;
+        switch(objectType) {
+            case ActionsList.OBJECT_TYPE:
+                this.dispatchActionsList((ActionsList)namedObject, context);
+                break;
 
-                case ActionsSequence.OBJECT_TYPE:
-                    ActionsSequence actionsSequence = (ActionsSequence)namedObject;
-                    this.dispatchNamedObjects(actionsSequence.getActionNames(), context);
-                    break;
+            case ActionsSequence.OBJECT_TYPE:
+                ActionsSequence actionsSequence = (ActionsSequence)namedObject;
+                this.dispatchNamedObjects(actionsSequence.getActionNames(), context);
+                break;
 
-                default:
-                    Action action = ((Action)namedObject);
-                    action.evaluate(context);
-            }
-        } catch(ClassCastException e) {
-            e.printStackTrace();
+            default:
+                Action action = ((Action)namedObject);
+                action.evaluate(context);
         }
     }
 
