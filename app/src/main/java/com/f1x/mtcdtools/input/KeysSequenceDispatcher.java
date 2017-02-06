@@ -13,12 +13,11 @@ import java.util.List;
  * Created by COMPUTER on 2017-01-28.
  */
 
-public class KeysSequenceDispatcher extends NamedObjectDispatcher implements KeysSequenceListener {
-    public KeysSequenceDispatcher(Context context, Configuration configuration, NamedObjectsStorage namedObjectsStorage, KeysSequenceBindingsStorage keysSequenceBindingsStorage) {
-        super(namedObjectsStorage, configuration);
-
+public class KeysSequenceDispatcher implements KeysSequenceListener {
+    public KeysSequenceDispatcher(Context context, KeysSequenceBindingsStorage keysSequenceBindingsStorage, NamedObjectDispatcher namedObjectDispatcher) {
         mContext = context;
         mKeysSequenceBindingsStorage = keysSequenceBindingsStorage;
+        mNamedObjectDispatcher = namedObjectDispatcher;
     }
 
     @Override
@@ -26,7 +25,7 @@ public class KeysSequenceDispatcher extends NamedObjectDispatcher implements Key
         KeysSequenceBinding keysSequenceBinding = mKeysSequenceBindingsStorage.getItem(keysSequence);
 
         if(keysSequenceBinding != null) {
-            dispatch(keysSequenceBinding.getTargetName(), mContext);
+            mNamedObjectDispatcher.dispatch(keysSequenceBinding.getTargetName(), mContext);
         }
     }
 
@@ -37,4 +36,5 @@ public class KeysSequenceDispatcher extends NamedObjectDispatcher implements Key
 
     private final Context mContext;
     private final KeysSequenceBindingsStorage mKeysSequenceBindingsStorage;
+    private final NamedObjectDispatcher mNamedObjectDispatcher;
 }

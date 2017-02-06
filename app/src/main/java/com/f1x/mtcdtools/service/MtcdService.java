@@ -12,6 +12,7 @@ import com.f1x.mtcdtools.activities.MainActivity;
 import com.f1x.mtcdtools.configuration.Configuration;
 import com.f1x.mtcdtools.input.KeysSequenceDispatcher;
 import com.f1x.mtcdtools.input.PressedKeysSequenceManager;
+import com.f1x.mtcdtools.named.objects.NamedObjectDispatcher;
 import com.f1x.mtcdtools.storage.FileReader;
 import com.f1x.mtcdtools.storage.FileWriter;
 import com.f1x.mtcdtools.storage.KeysSequenceBindingsStorage;
@@ -40,8 +41,9 @@ public class MtcdService extends android.app.Service {
         FileWriter fileWriter = new FileWriter(this);
         mNamedObjectsStorage = new NamedObjectsStorage(fileReader, fileWriter);
         mKeysSequenceBindingsStorage = new KeysSequenceBindingsStorage(fileReader, fileWriter);
-        mKeysSequenceDispatcher = new KeysSequenceDispatcher(this, mConfiguration, mNamedObjectsStorage, mKeysSequenceBindingsStorage);
         mPressedKeysSequenceManager = new PressedKeysSequenceManager(mConfiguration);
+        mNamedObjectsDispatcher = new NamedObjectDispatcher(mNamedObjectsStorage, mConfiguration);
+        mKeysSequenceDispatcher = new KeysSequenceDispatcher(this,mKeysSequenceBindingsStorage, mNamedObjectsDispatcher);
     }
 
     @Override
@@ -105,6 +107,7 @@ public class MtcdService extends android.app.Service {
     private PressedKeysSequenceManager mPressedKeysSequenceManager;
     private KeysSequenceDispatcher mKeysSequenceDispatcher;
     private Configuration mConfiguration;
+    private NamedObjectDispatcher mNamedObjectsDispatcher;
 
     private final ServiceBinder mServiceBinder = new ServiceBinder() {
         @Override
@@ -125,6 +128,11 @@ public class MtcdService extends android.app.Service {
         @Override
         public Configuration getConfiguration() {
             return mConfiguration;
+        }
+
+        @Override
+        public NamedObjectDispatcher getNamedObjectsDispatcher() {
+            return mNamedObjectsDispatcher;
         }
     };
 }

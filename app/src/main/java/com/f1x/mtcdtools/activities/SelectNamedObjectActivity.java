@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.f1x.mtcdtools.ListIndexer;
+import com.f1x.mtcdtools.ListViewScroller;
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.configuration.Configuration;
 import com.f1x.mtcdtools.configuration.ConfigurationChangeListener;
@@ -37,12 +38,17 @@ public class SelectNamedObjectActivity extends ServiceActivity implements KeysSe
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 String namedObjectName = mActionsNamesArrayAdapter.getItem(position);
-                mDispatcher.dispatch(namedObjectName, SelectNamedObjectActivity.this);
+                mServiceBinder.getNamedObjectsDispatcher().dispatch(namedObjectName, SelectNamedObjectActivity.this);
                 SelectNamedObjectActivity.this.finish();
             }
         });
 
-        mListIndexer = new ListIndexer();
+        mListViewScroller = new ListViewScroller(mActionsListView);
+    }
+
+    @Override
+    protected void onResume() {
+        mListViewScroller.reset();
     }
 
     @Override
@@ -61,50 +67,43 @@ public class SelectNamedObjectActivity extends ServiceActivity implements KeysSe
 
     @Override
     protected void onServiceConnected() {
+        if(mActionsList == null) {
+            Toast.makeText(this, this.getText(R.string.UnknownObjectType), Toast.LENGTH_LONG).show();
+            finish();
+
+            return;
+        }
+
         mServiceBinder.getConfiguration().addChangeListener(this);
         mExecuteActionProgressBar.setMax(mServiceBinder.getConfiguration().getActionExecutionDelay());
         mActionsList = mActionsListName == null ? null : (ActionsList)mServiceBinder.getNamedObjectsStorage().getItem(mActionsListName);
         mServiceBinder.getPressedKeysSequenceManager().pushListener(this);
-        mDispatcher = new NamedObjectDispatcher(mServiceBinder.getNamedObjectsStorage(), mServiceBinder.getConfiguration());
 
-        if(mActionsList != null) {
-            fillControls();
-            mActionExecutionTimer = createActionExecutionTimer(mServiceBinder.getConfiguration().getActionExecutionDelay());
-            restartTimer();
-        } else {
-            Toast.makeText(this, this.getText(R.string.UnknownObjectType), Toast.LENGTH_LONG).show();
-            finish();
-        }
+        fillControls();
+        mActionExecutionTimer = createActionExecutionTimer(mServiceBinder.getConfiguration().getActionExecutionDelay());
+        restartTimer();
     }
 
     @Override
     public void handleKeysSequence(List<Integer> keysSequence) {
-        if(mActionsList != null) {
-            try {
-                int index;
-
-                if (mActionsList.getKeysSequenceDown().equals(keysSequence)) {
-                    index = mListIndexer.down();
-                } else if (mActionsList.getKeysSequenceUp().equals(keysSequence)) {
-                    index = mListIndexer.up();
-                } else {
-                    return;
-                }
-
-                mActionsListView.setItemChecked(index, true);
-                mActionsListView.setSelection(index);
-
-                restartTimer();
-            }
-            catch(IndexOutOfBoundsException e) {
-                e.printStackTrace();
-            }
+        if(mActionsList.getKeysSequenceDown().size() > 1 && mActionsList.getKeysSequenceDown().equals(keysSequence)) {
+            mListViewScroller.scrollDown();
+            restartTimer();
+        } else if(mActionsList.getKeysSequenceUp().size() > 1 && mActionsList.getKeysSequenceUp().equals(keysSequence)) {
+            mListViewScroller.scrollUp();
+            restartTimer();
         }
     }
 
     @Override
     public void handleSingleKey(int keyCode) {
-
+        if(mActionsList.getKeysSequenceDown().size() == 1 && mActionsList.getKeysSequenceDown().contains(keyCode)) {
+            mListViewScroller.scrollDown();
+            restartTimer();
+        } else if(mActionsList.getKeysSequenceUp().size() == 1 && mActionsList.getKeysSequenceUp().contains(keyCode)) {
+            mListViewScroller.scrollUp();
+            restartTimer();
+        }
     }
 
     @Override
@@ -148,22 +147,17 @@ public class SelectNamedObjectActivity extends ServiceActivity implements KeysSe
     }
 
     private void fillControls() {
-        mActionsListView.clearChoices();
-        mActionsListView.requestLayout();
-
         mExecuteActionProgressBar.setProgress(0);
         mExecuteActionProgressBar.setMax(mServiceBinder.getConfiguration().getActionExecutionDelay());
 
         mActionsNamesArrayAdapter.clear();
         mActionsNamesArrayAdapter.addAll(mActionsList.getActionNames());
         mActionsNamesArrayAdapter.insert(this.getText(R.string.Cancel).toString(), 0);
-        mListIndexer.reset(mActionsNamesArrayAdapter.getCount());
+        mListViewScroller.reset();
 
         mActionsListView.post(new Runnable() {
             @Override
             public void run() {
-                mActionsListView.setItemChecked(0, true);
-                mActionsListView.setSelection(0);
                 mExecuteActionProgressBar.setLayoutParams(new RelativeLayout.LayoutParams(mActionsListView.getWidth(), mActionsListView.getHeight()));
             }
         });
@@ -175,9 +169,8 @@ public class SelectNamedObjectActivity extends ServiceActivity implements KeysSe
     private ActionsList mActionsList;
     private String mActionsListName;
     private ArrayAdapter<String> mActionsNamesArrayAdapter;
-    private ListIndexer mListIndexer;
+    private ListViewScroller mListViewScroller;
     private ProgressBar mExecuteActionProgressBar;
-    private NamedObjectDispatcher mDispatcher;
 
     private static final int PROGRESS_BAR_DELTA = 50;
     public static final String ACTIONS_LIST_NAME_PARAMETER = "actionsListName";

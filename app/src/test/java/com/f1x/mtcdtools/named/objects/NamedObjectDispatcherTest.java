@@ -108,18 +108,17 @@ public class NamedObjectDispatcherTest {
         dispatcher.dispatch(namedObjectName, mMockContext);
     }
 
-    @Test
-    public void test_Dispatch_WrongObjectType() {
-        NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage, mMockConfiguration);
-
-        String actionsSequenceName = "actionsSequenceName";
-        ActionsSequence actionsSequence = mock(ActionsSequence.class);
-        when(actionsSequence.getName()).thenReturn(actionsSequenceName);
-        when(actionsSequence.getObjectType()).thenReturn(ActionsList.OBJECT_TYPE);
-
-        when(mMockNamedObjectsStorage.getItem(actionsSequenceName)).thenReturn(actionsSequence);
-        dispatcher.dispatch(actionsSequenceName, mMockContext);
-    }
+//    public void test_Dispatch_WrongObjectType() {
+//        NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage, mMockConfiguration);
+//
+//        String actionsSequenceName = "actionsSequenceName";
+//        ActionsSequence actionsSequence = mock(ActionsSequence.class);
+//        when(actionsSequence.getName()).thenReturn(actionsSequenceName);
+//        when(actionsSequence.getObjectType()).thenReturn(ActionsList.OBJECT_TYPE);
+//
+//        when(mMockNamedObjectsStorage.getItem(actionsSequenceName)).thenReturn(actionsSequence);
+//        dispatcher.dispatch(actionsSequenceName, mMockContext);
+//    }
 
     @Mock
     Configuration mMockConfiguration;
