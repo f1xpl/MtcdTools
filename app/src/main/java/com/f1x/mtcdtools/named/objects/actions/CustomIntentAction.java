@@ -7,11 +7,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Created by COMPUTER on 2017-01-09.
+ * Created by f1x on 2017-01-09.
  */
 
 public abstract class CustomIntentAction extends Action {
-    public CustomIntentAction(JSONObject json) throws JSONException {
+    CustomIntentAction(JSONObject json) throws JSONException {
         super(json);
 
         mIntentPackage = json.getString(INTENT_PACKAGE_PROPERTY);
@@ -48,7 +48,7 @@ public abstract class CustomIntentAction extends Action {
         return json;
     }
 
-    protected Intent getIntent() {
+    Intent getIntent() {
         Intent intent = new Intent();
 
         if(!mIntentPackage.isEmpty()) {
@@ -102,12 +102,12 @@ public abstract class CustomIntentAction extends Action {
         return ExtrasParser.toJSON(mIntentExtras);
     }
 
-    protected final String mIntentPackage;
-    protected final String mIntentAction;
-    protected final String mIntentCategory;
-    protected final String mIntentData;
-    protected final String mIntentType;
-    protected final Bundle mIntentExtras;
+    final String mIntentPackage;
+    private final String mIntentAction;
+    private final String mIntentCategory;
+    private final String mIntentData;
+    private final String mIntentType;
+    private final Bundle mIntentExtras;
 
     static public final String INTENT_PACKAGE_PROPERTY = "intentPackage";
     static public final String INTENT_ACTION_PROPERTY = "intentAction";

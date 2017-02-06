@@ -10,14 +10,13 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.f1x.mtcdtools.ListIndexer;
 import com.f1x.mtcdtools.ListViewScroller;
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.configuration.Configuration;
 import com.f1x.mtcdtools.configuration.ConfigurationChangeListener;
 import com.f1x.mtcdtools.input.KeysSequenceListener;
 import com.f1x.mtcdtools.named.objects.ActionsList;
-import com.f1x.mtcdtools.named.objects.NamedObjectDispatcher;
+import com.f1x.mtcdtools.named.objects.NamedObject;
 
 import java.util.List;
 
@@ -67,20 +66,22 @@ public class SelectNamedObjectActivity extends ServiceActivity implements KeysSe
 
     @Override
     protected void onServiceConnected() {
-        if(mActionsList == null) {
+        NamedObject namedObject = mActionsListName == null ? null : mServiceBinder.getNamedObjectsStorage().getItem(mActionsListName);
+
+        if(namedObject == null || !namedObject.getObjectType().equals(ActionsList.OBJECT_TYPE)) {
             Toast.makeText(this, this.getText(R.string.UnknownObjectType), Toast.LENGTH_LONG).show();
             finish();
 
             return;
         }
 
+        mActionsList = (ActionsList)namedObject;
         mServiceBinder.getConfiguration().addChangeListener(this);
-        mExecuteActionProgressBar.setMax(mServiceBinder.getConfiguration().getActionExecutionDelay());
-        mActionsList = mActionsListName == null ? null : (ActionsList)mServiceBinder.getNamedObjectsStorage().getItem(mActionsListName);
+        mExecuteActionProgressBar.setMax(mServiceBinder.getConfiguration().getVoiceCommandExecutionDelay());
         mServiceBinder.getPressedKeysSequenceManager().pushListener(this);
 
         fillControls();
-        mActionExecutionTimer = createActionExecutionTimer(mServiceBinder.getConfiguration().getActionExecutionDelay());
+        mActionExecutionTimer = createActionExecutionTimer(mServiceBinder.getConfiguration().getVoiceCommandExecutionDelay());
         restartTimer();
     }
 
@@ -108,14 +109,14 @@ public class SelectNamedObjectActivity extends ServiceActivity implements KeysSe
 
     @Override
     public void onParameterChanged(String parameterName, Configuration configuration) {
-        if(parameterName.equals(Configuration.ACTION_EXECUTION_DELAY_PROPERTY_NAME)) {
-            mActionExecutionTimer = createActionExecutionTimer(mServiceBinder.getConfiguration().getActionExecutionDelay());
+        if(parameterName.equals(Configuration.VOICE_COMMAND_EXECUTION_DELAY_PROPERTY_NAME)) {
+            mActionExecutionTimer = createActionExecutionTimer(mServiceBinder.getConfiguration().getVoiceCommandExecutionDelay());
             mActionExecutionTimer.start();
-            mExecuteActionProgressBar.setMax(mServiceBinder.getConfiguration().getActionExecutionDelay());
+            mExecuteActionProgressBar.setMax(mServiceBinder.getConfiguration().getVoiceCommandExecutionDelay());
         }
     }
 
-    CountDownTimer createActionExecutionTimer(int delayMs) {
+    private CountDownTimer createActionExecutionTimer(int delayMs) {
         return new CountDownTimer(delayMs, PROGRESS_BAR_DELTA) {
             @Override
             public void onTick(long l) {
@@ -148,7 +149,7 @@ public class SelectNamedObjectActivity extends ServiceActivity implements KeysSe
 
     private void fillControls() {
         mExecuteActionProgressBar.setProgress(0);
-        mExecuteActionProgressBar.setMax(mServiceBinder.getConfiguration().getActionExecutionDelay());
+        mExecuteActionProgressBar.setMax(mServiceBinder.getConfiguration().getVoiceCommandExecutionDelay());
 
         mActionsNamesArrayAdapter.clear();
         mActionsNamesArrayAdapter.addAll(mActionsList.getActionNames());

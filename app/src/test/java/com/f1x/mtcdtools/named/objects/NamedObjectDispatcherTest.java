@@ -28,7 +28,7 @@ import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 /**
- * Created by COMPUTER on 2017-02-05.
+ * Created by f1x on 2017-02-05.
  */
 
 @PowerMockIgnore({ "org.mockito.*", "org.robolectric.*", "android.*" })
@@ -87,8 +87,8 @@ public class NamedObjectDispatcherTest {
         when(mMockNamedObjectsStorage.getItem(actionsNames.get(1))).thenReturn(action);
         when(mMockNamedObjectsStorage.getItem(actionsNames.get(2))).thenReturn(action);
 
-        ActionsSequenceDispatchTask actionsSequenceDispatchTask = mock(ActionsSequenceDispatchTask.class);
-        PowerMockito.whenNew(ActionsSequenceDispatchTask.class).withArguments(actionsNames, mMockContext, mMockNamedObjectsStorage).thenReturn(actionsSequenceDispatchTask);
+        NamedObjectsListDispatchTask namedObjectsListDispatchTask = mock(NamedObjectsListDispatchTask.class);
+        PowerMockito.whenNew(NamedObjectsListDispatchTask.class).withArguments(actionsNames, mMockContext, mMockNamedObjectsStorage).thenReturn(namedObjectsListDispatchTask);
 
         int executionDelay = 1234;
         when(mMockConfiguration.getActionsSequenceDelay()).thenReturn(executionDelay);
@@ -96,7 +96,7 @@ public class NamedObjectDispatcherTest {
         NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage, mMockConfiguration);
         dispatcher.dispatch(actionsSequenceName, mMockContext);
 
-        verify(actionsSequenceDispatchTask, times(1)).execute(executionDelay);
+        verify(namedObjectsListDispatchTask, times(1)).execute(executionDelay);
     }
 
     @Test

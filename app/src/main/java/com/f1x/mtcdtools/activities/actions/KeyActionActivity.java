@@ -9,7 +9,7 @@ import com.f1x.mtcdtools.named.objects.NamedObject;
 import com.f1x.mtcdtools.named.objects.actions.KeyAction;
 
 /**
- * Created by COMPUTER on 2017-01-25.
+ * Created by f1x on 2017-01-25.
  */
 
 public class KeyActionActivity extends NamedObjectActivity {
@@ -41,6 +41,6 @@ public class KeyActionActivity extends NamedObjectActivity {
         mKeyCodesSpinner.setSelection(keyCodePosition);
     }
 
-    protected KeyCodesArrayAdapter mKeyCodesArrayAdapter;
-    protected Spinner mKeyCodesSpinner;
+    private KeyCodesArrayAdapter mKeyCodesArrayAdapter;
+    private Spinner mKeyCodesSpinner;
 }

@@ -7,7 +7,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 /**
- * Created by COMPUTER on 2016-08-01.
+ * Created by f1x on 2016-08-01.
  */
 public class FileReader {
     public FileReader(Context context) {

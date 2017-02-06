@@ -22,7 +22,7 @@ import static junit.framework.Assert.assertEquals;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 /**
- * Created by COMPUTER on 2017-01-13.
+ * Created by f1x on 2017-01-13.
  */
 
 @PowerMockIgnore({ "org.mockito.*", "org.robolectric.*", "android.*" })

@@ -11,7 +11,7 @@ import java.util.List;
 import static junit.framework.Assert.assertEquals;
 
 /**
- * Created by COMPUTER on 2017-01-16.
+ * Created by f1x on 2017-01-16.
  */
 
 public class KeysSequenceBindingTest {

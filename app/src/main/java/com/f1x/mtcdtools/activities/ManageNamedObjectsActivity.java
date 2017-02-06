@@ -105,5 +105,5 @@ public class ManageNamedObjectsActivity extends ServiceActivity {
         mNamedObjectsArrayAdapter.reset(mServiceBinder.getNamedObjectsStorage().getItems());
     }
 
-    NamedObjectsArrayAdapter mNamedObjectsArrayAdapter;
+    private NamedObjectsArrayAdapter mNamedObjectsArrayAdapter;
 }

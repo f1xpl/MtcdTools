@@ -75,7 +75,7 @@ public class BindingActivity extends ServiceActivity {
         });
     }
 
-    protected void storeKeysSequenceBinding() {
+    private void storeKeysSequenceBinding() {
         List<Integer> keysSequence = mKeysSequenceArrayAdapter.getItems();
 
         if(keysSequence.isEmpty()) {
@@ -141,7 +141,7 @@ public class BindingActivity extends ServiceActivity {
 
     private Spinner mNamesSpinner;
     private NamedObjectsArrayAdapter mNamedObjectsArrayAdapter;
-    KeysSequenceArrayAdapter mKeysSequenceArrayAdapter;
+    private KeysSequenceArrayAdapter mKeysSequenceArrayAdapter;
 
     public static final String KEYS_SEQUENCE_NAME_PARAMETER = "keysSequence";
 }

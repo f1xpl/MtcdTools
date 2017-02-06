@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.TreeSet;
 
 /**
- * Created by COMPUTER on 2017-01-31.
+ * Created by f1x on 2017-01-31.
  */
 
 public class ActionsListActivity extends NamedObjectsContainerActivity {
@@ -94,10 +94,12 @@ public class ActionsListActivity extends NamedObjectsContainerActivity {
     protected void fillControls(NamedObject namedObject) throws ClassCastException {
         super.fillControls(namedObject);
 
-        ActionsList actionsList = (ActionsList)namedObject;
+        if(namedObject.getObjectType().equals(ActionsList.OBJECT_TYPE)) {
+            ActionsList actionsList = (ActionsList)namedObject;
 
-        mKeysSequenceDownArrayAdapter.reset(actionsList.getKeysSequenceDown());
-        mKeysSequenceUpArrayAdapter.reset(actionsList.getKeysSequenceUp());
+            mKeysSequenceDownArrayAdapter.reset(actionsList.getKeysSequenceDown());
+            mKeysSequenceUpArrayAdapter.reset(actionsList.getKeysSequenceUp());
+        }
     }
 
     @Override

@@ -13,7 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Created by COMPUTER on 2017-01-24.
+ * Created by f1x on 2017-01-24.
  */
 
 public abstract class CustomIntentActionActivity extends NamedObjectActivity {
@@ -70,10 +70,10 @@ public abstract class CustomIntentActionActivity extends NamedObjectActivity {
 
     protected abstract Action createAction(String actionName, JSONObject intentExtrasJson) throws JSONException;
 
-    protected EditText mIntentActionEditText;
-    protected EditText mIntentCategoryEditText;
-    protected EditText mIntentDataEditText;
-    protected EditText mIntentPackageEditText;
-    protected EditText mIntentTypeEditText;
-    protected EditText mIntentExtrasEditText;
+    EditText mIntentActionEditText;
+    EditText mIntentCategoryEditText;
+    EditText mIntentDataEditText;
+    EditText mIntentPackageEditText;
+    EditText mIntentTypeEditText;
+    private EditText mIntentExtrasEditText;
 }

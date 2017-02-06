@@ -7,7 +7,7 @@ import android.content.Intent;
 import com.f1x.mtcdtools.service.MtcdService;
 
 /**
- * Created by COMPUTER on 2016-08-03.
+ * Created by f1x on 2016-08-03.
  */
 public class BootCompletedBroadcastReceiver extends BroadcastReceiver {
     @Override

@@ -4,18 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognizerIntent;
-import android.widget.Toast;
 
 import com.f1x.mtcdtools.R;
-import com.f1x.mtcdtools.named.objects.NamedObjectDispatcher;
 import com.f1x.mtcdtools.storage.SpeechParser;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 /**
- * Created by COMPUTER on 2017-02-03.
+ * Created by f1x on 2017-02-03.
  */
 
 public class VoiceDispatchActivity extends ServiceActivity {
@@ -34,45 +31,20 @@ public class VoiceDispatchActivity extends ServiceActivity {
         startActivityForResult(intent, 1);
     }
 
-    String extractNamedObjectName(String text) {
-        String actionExecutionCommand = mServiceBinder.getConfiguration().getLaunchVoiceCommandText();
-
-        if (text.contains(actionExecutionCommand)) {
-            return text.replace(actionExecutionCommand , "").trim();
-        }
-
-        return "";
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        boolean commandExecuted = false;
-//
-//        if(data != null) {
-//            List<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-//            List<String> namedObjectsNames = mSpeechParser.parse(text, "removeme");
-//
-//            mServiceBinder.getNamedObjectsDispatcher().
-//
-//            for (int i = 0; i < text.size() && !commandExecuted; ++i) {
-//                final String namedObjectName = extractNamedObjectName(text.get(i));
-//
-//                if(!namedObjectName.isEmpty()) {
-//                    commandExecuted = true;
-//                    new Handler().postDelayed(new Runnable() {
-//                        @Override public void run() {
-//                            mServiceBinder.getNamedObjectsDispatcher().dispatch(namedObjectName, VoiceDispatchActivity.this);
-//                            VoiceDispatchActivity.this.finish();
-//                        }
-//                    }, ACTION_EXECUTION_DELAY_MS);
-//                }
-//            }
-//        }
-//
-//        if (!commandExecuted) {
-//            Toast.makeText(this, this.getText(R.string.NotRecognizedCommand), Toast.LENGTH_LONG).show();
-//            finish();
-//        }
+        if(data != null) {
+            List<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            final List<String> namedObjectsNames = mSpeechParser.parse(text, mServiceBinder.getConfiguration().getActionsVoiceDelimiter());
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mServiceBinder.getNamedObjectsDispatcher().dispatchNamedObjects(namedObjectsNames, VoiceDispatchActivity.this);
+                    VoiceDispatchActivity.this.finish();
+                }
+            }, ACTION_EXECUTION_DELAY_MS);
+        }
     }
 
     private SpeechParser mSpeechParser;

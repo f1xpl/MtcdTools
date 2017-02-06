@@ -15,7 +15,7 @@ import org.json.JSONException;
 import java.io.IOException;
 
 /**
- * Created by COMPUTER on 2017-02-05.
+ * Created by f1x on 2017-02-05.
  */
 
 public abstract class NamedObjectActivity extends ServiceActivity {
@@ -110,8 +110,8 @@ public abstract class NamedObjectActivity extends ServiceActivity {
 
     protected abstract NamedObject createNamedObject(String namedObjectName);
 
-    protected String mEditName;
-    protected boolean mEditMode;
+    private String mEditName;
+    private boolean mEditMode;
     private final int mLayoutResId;
     protected EditText mNameEditText;
 

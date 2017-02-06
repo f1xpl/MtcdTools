@@ -14,7 +14,7 @@ import com.f1x.mtcdtools.service.MtcdService;
 import com.f1x.mtcdtools.service.ServiceBinder;
 
 /**
- * Created by COMPUTER on 2016-08-18.
+ * Created by f1x on 2016-08-18.
  */
 public abstract class ServiceActivity extends Activity {
     @Override
@@ -50,5 +50,5 @@ public abstract class ServiceActivity extends Activity {
         }
     };
 
-    protected ServiceBinder mServiceBinder;
+    ServiceBinder mServiceBinder;
 }

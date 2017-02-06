@@ -25,7 +25,7 @@ import org.json.JSONException;
 import java.io.IOException;
 
 /**
- * Created by COMPUTER on 2016-08-03.
+ * Created by f1x on 2016-08-03.
  */
 public class MtcdService extends android.app.Service {
     @Override

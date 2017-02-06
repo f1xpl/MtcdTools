@@ -13,7 +13,7 @@ import com.f1x.mtcdtools.named.objects.NamedObject;
 import com.f1x.mtcdtools.named.objects.NamedObjectsContainer;
 
 /**
- * Created by COMPUTER on 2017-02-05.
+ * Created by f1x on 2017-02-05.
  */
 
 public abstract class NamedObjectsContainerActivity extends NamedObjectActivity {
@@ -67,6 +67,6 @@ public abstract class NamedObjectsContainerActivity extends NamedObjectActivity 
         mNamedObjectsArrayAdapter.reset(mServiceBinder.getNamedObjectsStorage().getItems());
     }
 
-    protected NamedObjectsArrayAdapter mNamedObjectsArrayAdapter;
-    protected NamesArrayAdapter mAddedNamesArrayAdapter;
+    NamedObjectsArrayAdapter mNamedObjectsArrayAdapter;
+    NamesArrayAdapter mAddedNamesArrayAdapter;
 }

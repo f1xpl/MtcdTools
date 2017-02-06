@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import java.util.Iterator;
 
 /**
- * Created by COMPUTER on 2017-01-10.
+ * Created by f1x on 2017-01-10.
  */
 
 public class ExtrasParser {

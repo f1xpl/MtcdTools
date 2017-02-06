@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 /**
- * Created by COMPUTER on 2017-01-19.
+ * Created by f1x on 2017-01-19.
  */
 
 public class StartActivityButtonClickListener implements Button.OnClickListener {

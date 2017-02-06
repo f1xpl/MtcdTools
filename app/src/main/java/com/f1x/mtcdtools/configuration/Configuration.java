@@ -6,18 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by COMPUTER on 2017-02-03.
+ * Created by f1x on 2017-02-03.
  */
 
 public class Configuration implements SharedPreferences.OnSharedPreferenceChangeListener {
     public Configuration(SharedPreferences sharedPreferences) {
         mSharedPreferences = sharedPreferences;
 
-        mActionExecutionDelay = sharedPreferences.getInt(ACTION_EXECUTION_DELAY_PROPERTY_NAME, ACTION_EXECUTION_DELAY_DEFAULT_VALUE);
+        mVoiceCommandExecutionDelay = sharedPreferences.getInt(VOICE_COMMAND_EXECUTION_DELAY_PROPERTY_NAME, VOICE_COMMAND_EXECUTION_DELAY_DEFAULT_VALUE);
         mActionsSequenceDelay = sharedPreferences.getInt(ACTIONS_SEQUENCE_DELAY_PROPERTY_NAME, ACTIONS_SEQUENCE_DELAY_DEFAULT_VALUE);
         mKeyPressSpeed = sharedPreferences.getInt(KEY_PRESS_SPEED_PROPERTY_NAME, KEY_PRESS_SPEED_DEFAULT_VALUE);
-        mLaunchVoiceCommandText = sharedPreferences.getString(LAUNCH_VOICE_COMMAND_PROPERTY_NAME, LAUNCH_VOICE_COMMAND_DEFAULT_VALUE);
-        mCallVoiceCommandText = sharedPreferences.getString(CALL_VOICE_COMMAND_PROPERTY_NAME, LAUNCH_VOICE_COMMAND_DEFAULT_VALUE);
+        mActionsVoiceDelimiter = sharedPreferences.getString(ACTIONS_VOICE_DELIMITER_PROPERTY_NAME, ACTIONS_VOICE_DELIMITER_DEFAULT_VALUE);
+        mCallVoiceCommand = sharedPreferences.getString(CALL_VOICE_COMMAND_PROPERTY_NAME, ACTIONS_VOICE_DELIMITER_DEFAULT_VALUE);
 
         mSharedPreferences.registerOnSharedPreferenceChangeListener(this);
         mConfigurationChangeListeners = new ArrayList<>();
@@ -31,15 +31,15 @@ public class Configuration implements SharedPreferences.OnSharedPreferenceChange
         mConfigurationChangeListeners.remove(listener);
     }
 
-    public int getActionExecutionDelay() {
-        return mActionExecutionDelay;
+    public int getVoiceCommandExecutionDelay() {
+        return mVoiceCommandExecutionDelay;
     }
-    public void setActionExecutionDelay(int value) {
+    public void setVoiceCommandExecutionDelay(int value) {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
-        editor.putInt(ACTION_EXECUTION_DELAY_PROPERTY_NAME, value);
+        editor.putInt(VOICE_COMMAND_EXECUTION_DELAY_PROPERTY_NAME, value);
         editor.apply();
 
-        notifyListeners(ACTION_EXECUTION_DELAY_PROPERTY_NAME);
+        notifyListeners(VOICE_COMMAND_EXECUTION_DELAY_PROPERTY_NAME);
     }
 
     public int getKeyPressSpeed() {
@@ -53,21 +53,21 @@ public class Configuration implements SharedPreferences.OnSharedPreferenceChange
         notifyListeners(KEY_PRESS_SPEED_PROPERTY_NAME);
     }
 
-    public String getLaunchVoiceCommandText() {
-        return mLaunchVoiceCommandText;
+    public String getActionsVoiceDelimiter() {
+        return mActionsVoiceDelimiter;
     }
-    public void setLaunchVoiceCommandText(String value) {
+    public void getActionsVoiceDelimiter(String value) {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
-        editor.putString(LAUNCH_VOICE_COMMAND_PROPERTY_NAME, value);
+        editor.putString(ACTIONS_VOICE_DELIMITER_PROPERTY_NAME, value);
         editor.apply();
 
-        notifyListeners(LAUNCH_VOICE_COMMAND_PROPERTY_NAME);
+        notifyListeners(ACTIONS_VOICE_DELIMITER_PROPERTY_NAME);
     }
 
-    public String getCallVoiceCommandText() {
-        return mCallVoiceCommandText;
+    public String getCallVoiceCommand() {
+        return mCallVoiceCommand;
     }
-    public void setCallVoiceCommandText(String value) {
+    public void setCallVoiceCommand(String value) {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putString(CALL_VOICE_COMMAND_PROPERTY_NAME, value);
         editor.apply();
@@ -96,17 +96,17 @@ public class Configuration implements SharedPreferences.OnSharedPreferenceChange
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String propertyName) {
         switch(propertyName) {
-            case ACTION_EXECUTION_DELAY_PROPERTY_NAME:
-                mActionExecutionDelay = sharedPreferences.getInt(ACTION_EXECUTION_DELAY_PROPERTY_NAME, ACTION_EXECUTION_DELAY_DEFAULT_VALUE);
+            case VOICE_COMMAND_EXECUTION_DELAY_PROPERTY_NAME:
+                mVoiceCommandExecutionDelay = sharedPreferences.getInt(VOICE_COMMAND_EXECUTION_DELAY_PROPERTY_NAME, VOICE_COMMAND_EXECUTION_DELAY_DEFAULT_VALUE);
                 break;
             case KEY_PRESS_SPEED_PROPERTY_NAME:
                 mKeyPressSpeed = sharedPreferences.getInt(KEY_PRESS_SPEED_PROPERTY_NAME, KEY_PRESS_SPEED_DEFAULT_VALUE);
                 break;
-            case LAUNCH_VOICE_COMMAND_PROPERTY_NAME:
-                mLaunchVoiceCommandText = sharedPreferences.getString(LAUNCH_VOICE_COMMAND_PROPERTY_NAME, LAUNCH_VOICE_COMMAND_DEFAULT_VALUE);
+            case ACTIONS_VOICE_DELIMITER_PROPERTY_NAME:
+                mActionsVoiceDelimiter = sharedPreferences.getString(ACTIONS_VOICE_DELIMITER_PROPERTY_NAME, ACTIONS_VOICE_DELIMITER_DEFAULT_VALUE);
                 break;
             case CALL_VOICE_COMMAND_PROPERTY_NAME:
-                mCallVoiceCommandText = sharedPreferences.getString(CALL_VOICE_COMMAND_PROPERTY_NAME, CALL_VOICE_COMMAND_DEFAULT_VALUE);
+                mCallVoiceCommand = sharedPreferences.getString(CALL_VOICE_COMMAND_PROPERTY_NAME, CALL_VOICE_COMMAND_DEFAULT_VALUE);
                 break;
             case ACTIONS_SEQUENCE_DELAY_PROPERTY_NAME:
                 mActionsSequenceDelay = sharedPreferences.getInt(ACTIONS_SEQUENCE_DELAY_PROPERTY_NAME, ACTIONS_SEQUENCE_DELAY_DEFAULT_VALUE);
@@ -114,26 +114,26 @@ public class Configuration implements SharedPreferences.OnSharedPreferenceChange
         }
     }
 
-    private SharedPreferences mSharedPreferences;
-    private int mActionExecutionDelay;
+    private final SharedPreferences mSharedPreferences;
+    private int mVoiceCommandExecutionDelay;
     private int mActionsSequenceDelay;
     private int mKeyPressSpeed;
-    private String mLaunchVoiceCommandText;
-    private String mCallVoiceCommandText;
-    private List<ConfigurationChangeListener> mConfigurationChangeListeners;
+    private String mActionsVoiceDelimiter;
+    private String mCallVoiceCommand;
+    private final List<ConfigurationChangeListener> mConfigurationChangeListeners;
 
-    public static final String ACTION_EXECUTION_DELAY_PROPERTY_NAME = "ActionExecutionDelay";
-    private static int ACTION_EXECUTION_DELAY_DEFAULT_VALUE = 3000;
+    public static final String VOICE_COMMAND_EXECUTION_DELAY_PROPERTY_NAME = "VoiceCommandExecutionDelay";
+    private static final int VOICE_COMMAND_EXECUTION_DELAY_DEFAULT_VALUE = 3000;
 
-    public static final String ACTIONS_SEQUENCE_DELAY_PROPERTY_NAME = "ActionsSequenceDelay";
-    private static int ACTIONS_SEQUENCE_DELAY_DEFAULT_VALUE = 3000;
+    private static final String ACTIONS_SEQUENCE_DELAY_PROPERTY_NAME = "ActionsSequenceDelay";
+    private static final int ACTIONS_SEQUENCE_DELAY_DEFAULT_VALUE = 3000;
 
     public static final String KEY_PRESS_SPEED_PROPERTY_NAME = "KeySpeedPropertyName";
-    private static int KEY_PRESS_SPEED_DEFAULT_VALUE = 200;
+    private static final int KEY_PRESS_SPEED_DEFAULT_VALUE = 200;
 
-    public static final String LAUNCH_VOICE_COMMAND_PROPERTY_NAME = "LaunchVoiceCommand";
-    private static String LAUNCH_VOICE_COMMAND_DEFAULT_VALUE = "";
+    private static final String ACTIONS_VOICE_DELIMITER_PROPERTY_NAME = "ActionsDelimiter";
+    private static final String ACTIONS_VOICE_DELIMITER_DEFAULT_VALUE = "";
 
-    public static final String CALL_VOICE_COMMAND_PROPERTY_NAME = "CallVoiceCommand";
-    private static String CALL_VOICE_COMMAND_DEFAULT_VALUE = "";
+    private static final String CALL_VOICE_COMMAND_PROPERTY_NAME = "CallVoiceCommand";
+    private static final String CALL_VOICE_COMMAND_DEFAULT_VALUE = "";
 }

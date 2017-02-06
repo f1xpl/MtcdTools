@@ -1,7 +1,7 @@
 package com.f1x.mtcdtools;
 
 /**
- * Created by COMPUTER on 2017-01-28.
+ * Created by f1x on 2017-01-28.
  */
 
 public class ListIndexer {
@@ -43,6 +43,6 @@ public class ListIndexer {
         mCurrentIndex = 0;
     }
 
-    int mCurrentIndex;
-    int mMax;
+    private int mCurrentIndex;
+    private int mMax;
 }

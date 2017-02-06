@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by COMPUTER on 2017-01-16.
+ * Created by f1x on 2017-01-16.
  */
 
 public class ActionsList extends NamedObjectsContainer {
-    public ActionsList(JSONObject json) throws JSONException {
+    ActionsList(JSONObject json) throws JSONException {
         super(json);
 
         mKeysSequenceUp = KeysSequenceConverter.fromJsonArray(json.getJSONArray(KEYS_SEQUENCE_UP_PROPERTY));

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by COMPUTER on 2017-01-29.
+ * Created by f1x on 2017-01-29.
  */
 
 public class KeysSequenceBindingsStorage extends Storage<List<Integer>, KeysSequenceBinding> {

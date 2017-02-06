@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by COMPUTER on 2017-01-23.
+ * Created by f1x on 2017-01-23.
  */
 
 public class KeyCodesArrayAdapter extends ArrayAdapter<String> {
@@ -49,5 +49,5 @@ public class KeyCodesArrayAdapter extends ArrayAdapter<String> {
     }
 
     private final Map<String, Integer> mKeyCodesMap = new HashMap<>();
-    public static final int INVALID_KEY = -1;
+    private static final int INVALID_KEY = -1;
 }

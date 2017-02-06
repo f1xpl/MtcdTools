@@ -14,7 +14,7 @@ import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 /**
- * Created by COMPUTER on 2017-02-06.
+ * Created by f1x on 2017-02-06.
  */
 
 public class ListViewScrollerTest {

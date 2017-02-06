@@ -3,7 +3,7 @@ package com.f1x.mtcdtools;
 import android.widget.ListView;
 
 /**
- * Created by COMPUTER on 2017-02-06.
+ * Created by f1x on 2017-02-06.
  */
 public class ListViewScroller {
     public ListViewScroller(ListView listView) {

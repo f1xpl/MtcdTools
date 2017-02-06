@@ -13,10 +13,10 @@ import android.widget.TextView;
 import com.f1x.mtcdtools.R;
 
 /**
- * Created by COMPUTER on 2016-08-08.
+ * Created by f1x on 2016-08-08.
  */
-public class PackageEntryArrayAdapter extends ArrayAdapter<PackageEntry> {
-    public PackageEntryArrayAdapter(Context context) {
+class PackageEntryArrayAdapter extends ArrayAdapter<PackageEntry> {
+    PackageEntryArrayAdapter(Context context) {
         super(context, R.layout.layout_package_row, R.id.packageName);
         mPackageManager = context.getPackageManager();
     }
@@ -42,7 +42,7 @@ public class PackageEntryArrayAdapter extends ArrayAdapter<PackageEntry> {
         return getView(position, convertView, parent);
     }
 
-    protected PackageEntry getPackageEntry(String packageName) {
+    PackageEntry getPackageEntry(String packageName) {
         try {
             Drawable packageIcon = mPackageManager.getApplicationIcon(packageName);
             ApplicationInfo applicationInfo = mPackageManager.getApplicationInfo(packageName, 0);
@@ -54,5 +54,5 @@ public class PackageEntryArrayAdapter extends ArrayAdapter<PackageEntry> {
         return null;
     }
 
-    protected final PackageManager mPackageManager;
+    final PackageManager mPackageManager;
 }

@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
- * Created by COMPUTER on 2017-01-29.
+ * Created by f1x on 2017-01-29.
  */
 
 public abstract class Storage<Key, Value> {
@@ -58,7 +58,7 @@ public abstract class Storage<Key, Value> {
     public abstract void read() throws JSONException, IOException, DuplicatedEntryException, EntryCreationFailed;
     public abstract void write() throws JSONException, IOException;
 
-    protected final JSONArray read(String fileName, String arrayName) throws IOException, JSONException {
+    final JSONArray read(String fileName, String arrayName) throws IOException, JSONException {
         String inputString = mReader.read(fileName, CHARSET);
         if(!inputString.isEmpty()) {
             JSONObject inputsJson = new JSONObject(inputString);
@@ -68,13 +68,13 @@ public abstract class Storage<Key, Value> {
         return new JSONArray();
     }
 
-    protected final void write(String fileName, String arrayName, JSONArray array) throws IOException, JSONException {
+    final void write(String fileName, String arrayName, JSONArray array) throws IOException, JSONException {
         JSONObject inputsJson = new JSONObject();
         inputsJson.put(arrayName, array);
         mWriter.write(inputsJson.toString(), fileName, CHARSET);
     }
 
-    protected void put(Key key, Value value) throws DuplicatedEntryException {
+    void put(Key key, Value value) throws DuplicatedEntryException {
         if(mItems.containsKey(key)) {
             throw new DuplicatedEntryException(key.toString());
         } else {
@@ -84,8 +84,8 @@ public abstract class Storage<Key, Value> {
 
     protected abstract Map<Key, Value> createContainer();
 
-    protected final FileReader mReader;
-    protected final FileWriter mWriter;
+    private final FileReader mReader;
+    private final FileWriter mWriter;
     protected final Map<Key, Value> mItems;
 
     private static final String CHARSET = "UTF-8";

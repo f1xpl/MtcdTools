@@ -10,7 +10,7 @@ import java.util.List;
 import static junit.framework.Assert.assertEquals;
 
 /**
- * Created by COMPUTER on 2017-01-24.
+ * Created by f1x on 2017-01-24.
  */
 
 public class KeysSequenceConverterTest {

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by COMPUTER on 2017-01-09.
+ * Created by f1x on 2017-01-09.
  */
 
 public class PressedKeysSequenceManager extends BroadcastReceiver implements ConfigurationChangeListener {
@@ -63,7 +63,7 @@ public class PressedKeysSequenceManager extends BroadcastReceiver implements Con
         }
     }
 
-    public void onTimerFinish() {
+    private void onTimerFinish() {
         if(!mListeners.isEmpty()) {
             mListeners.get(mListeners.size() - 1).handleKeysSequence(mPressedKeysSequence);
             mPressedKeysSequence.clear();

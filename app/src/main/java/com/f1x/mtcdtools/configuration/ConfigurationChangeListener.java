@@ -1,7 +1,7 @@
 package com.f1x.mtcdtools.configuration;
 
 /**
- * Created by COMPUTER on 2017-02-04.
+ * Created by f1x on 2017-02-04.
  */
 
 public interface ConfigurationChangeListener {

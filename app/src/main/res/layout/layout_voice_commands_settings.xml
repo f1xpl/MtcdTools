@@ -9,8 +9,8 @@
         android:layout_marginBottom="@dimen/element_spacing"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/editTextLaunchVoiceCommand"
-        android:hint="@string/LaunchVoiceCommand" />
+        android:id="@+id/editTextActionsVoiceDelimiter"
+        android:hint="@string/ActionsVoiceDelimiter" />
 
     <EditText
         android:layout_width="match_parent"

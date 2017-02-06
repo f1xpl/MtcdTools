@@ -40,5 +40,5 @@ public class MainActivity extends Activity {
         this.startService(new Intent(this, MtcdService.class));
     }
 
-    public static String APP_NAME = "MtcdTools";
+    public static final String APP_NAME = "MtcdTools";
 }

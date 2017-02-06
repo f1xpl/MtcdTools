@@ -7,7 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Created by COMPUTER on 2017-01-09.
+ * Created by f1x on 2017-01-09.
  */
 
 public class LaunchAction extends Action {

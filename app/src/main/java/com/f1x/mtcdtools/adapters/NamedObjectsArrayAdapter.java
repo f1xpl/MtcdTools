@@ -8,10 +8,9 @@ import com.f1x.mtcdtools.named.objects.NamedObject;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
- * Created by COMPUTER on 2017-01-25.
+ * Created by f1x on 2017-01-25.
  */
 
 public class NamedObjectsArrayAdapter extends ArrayAdapter<String>  {
@@ -30,31 +29,9 @@ public class NamedObjectsArrayAdapter extends ArrayAdapter<String>  {
         }
     }
 
-    public boolean containsItem(String actionName) {
-        for(int i = 0; i < getCount(); ++i) {
-            String name = getItem(i);
-
-            if(name != null && name.equalsIgnoreCase(actionName)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public Set<String> getItems() {
-        Set<String> items = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
-
-        for(int i = 0; i < getCount(); ++i) {
-            items.add(getItem(i));
-        }
-
-        return items;
-    }
-
     public void setObjectTypeFilters(Set<String> objectTypeFilters) {
         mObjectTypeFilters = objectTypeFilters;
     }
 
-    Set<String> mObjectTypeFilters;
+    private Set<String> mObjectTypeFilters;
 }

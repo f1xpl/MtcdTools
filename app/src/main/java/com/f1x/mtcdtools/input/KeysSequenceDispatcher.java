@@ -2,15 +2,13 @@ package com.f1x.mtcdtools.input;
 
 import android.content.Context;
 
-import com.f1x.mtcdtools.configuration.Configuration;
 import com.f1x.mtcdtools.named.objects.NamedObjectDispatcher;
 import com.f1x.mtcdtools.storage.KeysSequenceBindingsStorage;
-import com.f1x.mtcdtools.storage.NamedObjectsStorage;
 
 import java.util.List;
 
 /**
- * Created by COMPUTER on 2017-01-28.
+ * Created by f1x on 2017-01-28.
  */
 
 public class KeysSequenceDispatcher implements KeysSequenceListener {

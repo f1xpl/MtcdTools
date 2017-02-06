@@ -15,7 +15,7 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
 
 /**
- * Created by COMPUTER on 2017-01-29.
+ * Created by f1x on 2017-01-29.
  */
 
 public class StorageTest {

@@ -5,7 +5,7 @@ import org.junit.Test;
 import static junit.framework.Assert.assertEquals;
 
 /**
- * Created by COMPUTER on 2017-01-28.
+ * Created by f1x on 2017-01-28.
  */
 
 public class ListIndexerTest {

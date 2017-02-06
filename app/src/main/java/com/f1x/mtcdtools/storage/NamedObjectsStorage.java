@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * Created by COMPUTER on 2017-02-05.
+ * Created by f1x on 2017-02-05.
  */
 
 public class NamedObjectsStorage extends Storage<String, NamedObject> {
@@ -72,7 +72,7 @@ public class NamedObjectsStorage extends Storage<String, NamedObject> {
         }
     }
 
-    private void replaceDependency(String oldName, String newName) throws IOException, JSONException {
+    private void replaceDependency(String oldName, String newName) {
         for(Map.Entry<String, NamedObject> entry : mItems.entrySet()) {
             entry.getValue().replaceDependency(oldName, newName);
         }

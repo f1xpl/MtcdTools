@@ -16,7 +16,7 @@ import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
 /**
- * Created by COMPUTER on 2017-01-16.
+ * Created by f1x on 2017-01-16.
  */
 
 public class ActionsListTest {

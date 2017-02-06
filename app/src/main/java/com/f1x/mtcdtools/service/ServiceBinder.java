@@ -9,7 +9,7 @@ import com.f1x.mtcdtools.storage.KeysSequenceBindingsStorage;
 import com.f1x.mtcdtools.storage.NamedObjectsStorage;
 
 /**
- * Created by COMPUTER on 2017-01-07.
+ * Created by f1x on 2017-01-07.
  */
 
 public abstract class ServiceBinder extends Binder {

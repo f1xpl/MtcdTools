@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
-        android:text="@string/ActionExecutionDelay"
+        android:text="@string/VoiceCommandExecutionDelay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/element_spacing" />
@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textViewActionExecutionDelayValue" />
+            android:id="@+id/textViewVoiceCommandExecutionDelayValue" />
 
         <SeekBar
             android:layout_width="match_parent"

@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by COMPUTER on 2017-02-05.
+ * Created by f1x on 2017-02-05.
  */
 
 public class NamedObjectsContainer extends NamedObject {
-    public NamedObjectsContainer(JSONObject json) throws JSONException {
+    NamedObjectsContainer(JSONObject json) throws JSONException {
         super(json);
         mActionNames = new ArrayList<>();
         JSONArray actionsArray = json.getJSONArray(ACTIONS_PROPERTY);
@@ -22,7 +22,7 @@ public class NamedObjectsContainer extends NamedObject {
         }
     }
 
-    public NamedObjectsContainer(String name, String objectType, List<String> actionsNames) {
+    NamedObjectsContainer(String name, String objectType, List<String> actionsNames) {
         super(name, objectType);
         mActionNames = actionsNames;
     }
@@ -58,7 +58,7 @@ public class NamedObjectsContainer extends NamedObject {
         }
     }
 
-    protected List<String> mActionNames;
+    private List<String> mActionNames;
 
     static public final String ACTIONS_PROPERTY = "actions";
 }

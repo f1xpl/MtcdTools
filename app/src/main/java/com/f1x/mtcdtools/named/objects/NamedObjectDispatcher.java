@@ -8,14 +8,20 @@ import com.f1x.mtcdtools.configuration.Configuration;
 import com.f1x.mtcdtools.named.objects.actions.Action;
 import com.f1x.mtcdtools.storage.NamedObjectsStorage;
 
+import java.util.List;
+
 /**
- * Created by COMPUTER on 2017-02-05.
+ * Created by f1x on 2017-02-05.
  */
 
 public class NamedObjectDispatcher {
     public NamedObjectDispatcher(NamedObjectsStorage namedObjectsStorage, Configuration configuration) {
         mNamedObjectsStorage = namedObjectsStorage;
         mConfiguration = configuration;
+    }
+
+    public void dispatchNamedObjects(List<String> namedObjectsNames, Context context) {
+        new NamedObjectsListDispatchTask(namedObjectsNames, context, mNamedObjectsStorage).execute(mConfiguration.getActionsSequenceDelay());
     }
 
     public void dispatch(String namedObjectName, Context context) {
@@ -28,35 +34,30 @@ public class NamedObjectDispatcher {
         String objectType = namedObject.getObjectType();
 
         try {
-            if (objectType.equals(ActionsList.OBJECT_TYPE)) {
-                this.dispatchActionsList(namedObject, context);
-            } else if (objectType.equals(ActionsSequence.OBJECT_TYPE)) {
-                this.dispatchActionsSequence(namedObject, context);
-            } else {
-                this.dispatchAction(namedObject, context);
+            switch(objectType) {
+                case ActionsList.OBJECT_TYPE:
+                    this.dispatchActionsList((ActionsList)namedObject, context);
+                    break;
+
+                case ActionsSequence.OBJECT_TYPE:
+                    ActionsSequence actionsSequence = (ActionsSequence)namedObject;
+                    this.dispatchNamedObjects(actionsSequence.getActionNames(), context);
+                    break;
+
+                default:
+                    Action action = ((Action)namedObject);
+                    action.evaluate(context);
             }
         } catch(ClassCastException e) {
             e.printStackTrace();
         }
     }
 
-    private void dispatchActionsList(NamedObject namedObject, Context context) {
-        ActionsList actionsList = (ActionsList) namedObject;
-
+    private void dispatchActionsList(ActionsList actionsList, Context context) {
         Intent intent = new Intent(context, SelectNamedObjectActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_FROM_BACKGROUND);
         intent.putExtra(SelectNamedObjectActivity.ACTIONS_LIST_NAME_PARAMETER, actionsList.getName());
         context.startActivity(intent);
-    }
-
-    private void dispatchActionsSequence(NamedObject namedObject, Context context) {
-        ActionsSequence actionsSequence = (ActionsSequence)namedObject;
-        new ActionsSequenceDispatchTask(actionsSequence.getActionNames(), context, mNamedObjectsStorage).execute(mConfiguration.getActionsSequenceDelay());
-    }
-
-    private void dispatchAction(NamedObject namedObject, Context context) {
-        Action action = (Action)namedObject;
-        action.evaluate(context);
     }
 
     private final NamedObjectsStorage mNamedObjectsStorage;

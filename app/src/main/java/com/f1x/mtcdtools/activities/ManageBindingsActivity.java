@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Created by COMPUTER on 2017-02-01.
+ * Created by f1x on 2017-02-01.
  */
 
 public class ManageBindingsActivity extends ServiceActivity  implements KeysSequenceListener {
@@ -97,7 +97,7 @@ public class ManageBindingsActivity extends ServiceActivity  implements KeysSequ
         mBindingsArrayAdapter.addAll(bindingsToStringList(mServiceBinder.getKeysSequenceBindingsStorage().getItems()));
     }
 
-    Set<String> bindingsToStringList(Map<List<Integer>, KeysSequenceBinding> bindings) {
+    private Set<String> bindingsToStringList(Map<List<Integer>, KeysSequenceBinding> bindings) {
         Set<String> bindingsList = new HashSet<>();
 
         for(List<Integer> keysSequence : bindings.keySet()) {
@@ -126,6 +126,6 @@ public class ManageBindingsActivity extends ServiceActivity  implements KeysSequ
 
     }
 
-    ListView mBindingsListView;
-    ArrayAdapter<String> mBindingsArrayAdapter;
+    private ListView mBindingsListView;
+    private ArrayAdapter<String> mBindingsArrayAdapter;
 }

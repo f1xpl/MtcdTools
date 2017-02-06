@@ -6,7 +6,7 @@ import android.content.pm.ApplicationInfo;
 import java.util.Comparator;
 
 /**
- * Created by COMPUTER on 2016-08-19.
+ * Created by f1x on 2016-08-19.
  */
 public class InstalledPackagesArrayAdapter extends PackageEntryArrayAdapter {
     public InstalledPackagesArrayAdapter(Context context) {
@@ -39,5 +39,5 @@ public class InstalledPackagesArrayAdapter extends PackageEntryArrayAdapter {
         return INVALID_INDEX;
     }
 
-    public static final int INVALID_INDEX = -1;
+    private static final int INVALID_INDEX = -1;
 }

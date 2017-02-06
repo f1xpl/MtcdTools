@@ -4,16 +4,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Created by COMPUTER on 2017-02-05.
+ * Created by f1x on 2017-02-05.
  */
 
 public abstract class NamedObject {
-    public NamedObject(String name, String objectType) {
+    protected NamedObject(String name, String objectType) {
         mName = name;
         mObjectType = objectType;
     }
 
-    public NamedObject(JSONObject json) throws JSONException {
+    protected NamedObject(JSONObject json) throws JSONException {
         mName = json.getString(NAME_PROPERTY);
         mObjectType = json.getString(OBJECT_TYPE_PROPERTY);
     }

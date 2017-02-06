@@ -3,7 +3,7 @@ package com.f1x.mtcdtools.adapters;
 import android.graphics.drawable.Drawable;
 
 /**
- * Created by COMPUTER on 2016-08-08.
+ * Created by f1x on 2016-08-08.
  */
 public class PackageEntry {
     public PackageEntry(Drawable icon, String label, String name) {
