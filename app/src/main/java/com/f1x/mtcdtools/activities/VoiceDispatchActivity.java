@@ -44,10 +44,11 @@ public class VoiceDispatchActivity extends ServiceActivity {
                 @Override
                 public void run() {
                     mServiceBinder.getNamedObjectsDispatcher().dispatchNamedObjects(namedObjectsNames, VoiceDispatchActivity.this);
-                    VoiceDispatchActivity.this.finish();
                 }
             }, mServiceBinder.getConfiguration().getVoiceCommandExecutionDelay());
         }
+
+        VoiceDispatchActivity.this.finish();
     }
 
     private SpeechParser mSpeechParser;
