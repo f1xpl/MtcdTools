@@ -30,8 +30,6 @@ public abstract class NamedObjectActivity extends ServiceActivity {
 
         mEditName = this.getIntent().getStringExtra(NAME_PARAMETER);
         mEditMode = mEditName != null;
-
-        initControls();
     }
 
     @Override
@@ -46,6 +44,7 @@ public abstract class NamedObjectActivity extends ServiceActivity {
             }
 
             try {
+                initControls();
                 fillControls(namedObject);
             } catch(ClassCastException e) {
                 e.printStackTrace();

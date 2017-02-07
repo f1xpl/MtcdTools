@@ -34,12 +34,11 @@ public abstract class ServiceActivity extends Activity {
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            mServiceBinder = (ServiceBinder)service;
-
-            if(mServiceBinder == null) {
+            if(service == null) {
                 Toast.makeText(ServiceActivity.this, ServiceActivity.this.getText(R.string.ServiceUnavailable), Toast.LENGTH_LONG).show();
                 ServiceActivity.this.finish();
             } else {
+                mServiceBinder = (ServiceBinder)service;
                 ServiceActivity.this.onServiceConnected();
             }
         }

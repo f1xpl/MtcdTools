@@ -42,8 +42,8 @@ public abstract class NamedObjectsContainerActivity extends NamedObjectActivity 
             }
         });
 
-        Button addActionButton = (Button)this.findViewById(R.id.buttonAddNamedObject);
-        addActionButton.setOnClickListener(new View.OnClickListener() {
+        Button addNamedObjectButton = (Button)this.findViewById(R.id.buttonAddNamedObject);
+        addNamedObjectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String actionName = (String)actionsSpinner.getSelectedItem();

@@ -20,7 +20,7 @@ import com.f1x.mtcdtools.named.objects.NamedObject;
 
 import java.util.List;
 
-public class SelectNamedObjectActivity extends ServiceActivity implements KeysSequenceListener, ConfigurationChangeListener {
+public class SelectNamedObjectActivity extends ServiceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +56,8 @@ public class SelectNamedObjectActivity extends ServiceActivity implements KeysSe
         super.onPause();
 
         if(mServiceBinder != null) {
-            mServiceBinder.getPressedKeysSequenceManager().popListener(this);
-            mServiceBinder.getConfiguration().removeChangeListener(this);
+            mServiceBinder.getPressedKeysSequenceManager().popListener(mKeysSequenceListener);
+            mServiceBinder.getConfiguration().removeChangeListener(mConfigurationChangeListener);
         }
 
         if(mActionExecutionTimer != null) {
@@ -77,44 +77,13 @@ public class SelectNamedObjectActivity extends ServiceActivity implements KeysSe
         }
 
         mActionsList = (ActionsList)namedObject;
-        mServiceBinder.getConfiguration().addChangeListener(this);
+        mServiceBinder.getConfiguration().addChangeListener(mConfigurationChangeListener);
         mExecuteActionProgressBar.setMax(mServiceBinder.getConfiguration().getActionExecutionDelay());
-        mServiceBinder.getPressedKeysSequenceManager().pushListener(this);
+        mServiceBinder.getPressedKeysSequenceManager().pushListener(mKeysSequenceListener);
 
         fillControls();
         mActionExecutionTimer = createActionExecutionTimer(mServiceBinder.getConfiguration().getActionExecutionDelay());
         restartTimer();
-    }
-
-    @Override
-    public void handleKeysSequence(List<Integer> keysSequence) {
-        if(mActionsList.getKeysSequenceDown().size() > 1 && mActionsList.getKeysSequenceDown().equals(keysSequence)) {
-            mListViewScroller.scrollDown();
-            restartTimer();
-        } else if(mActionsList.getKeysSequenceUp().size() > 1 && mActionsList.getKeysSequenceUp().equals(keysSequence)) {
-            mListViewScroller.scrollUp();
-            restartTimer();
-        }
-    }
-
-    @Override
-    public void handleSingleKey(int keyCode) {
-        if(mActionsList.getKeysSequenceDown().size() == 1 && mActionsList.getKeysSequenceDown().contains(keyCode)) {
-            mListViewScroller.scrollDown();
-            restartTimer();
-        } else if(mActionsList.getKeysSequenceUp().size() == 1 && mActionsList.getKeysSequenceUp().contains(keyCode)) {
-            mListViewScroller.scrollUp();
-            restartTimer();
-        }
-    }
-
-    @Override
-    public void onParameterChanged(String parameterName, Configuration configuration) {
-        if(parameterName.equals(Configuration.VOICE_COMMAND_EXECUTION_DELAY_PROPERTY_NAME)) {
-            mActionExecutionTimer = createActionExecutionTimer(mServiceBinder.getConfiguration().getActionExecutionDelay());
-            mActionExecutionTimer.start();
-            mExecuteActionProgressBar.setMax(mServiceBinder.getConfiguration().getActionExecutionDelay());
-        }
     }
 
     private CountDownTimer createActionExecutionTimer(int delayMs) {
@@ -164,6 +133,41 @@ public class SelectNamedObjectActivity extends ServiceActivity implements KeysSe
             }
         });
     }
+
+    private final ConfigurationChangeListener mConfigurationChangeListener = new ConfigurationChangeListener() {
+        @Override
+        public void onParameterChanged(String parameterName, Configuration configuration) {
+            if(parameterName.equals(Configuration.VOICE_COMMAND_EXECUTION_DELAY_PROPERTY_NAME)) {
+                mActionExecutionTimer = createActionExecutionTimer(mServiceBinder.getConfiguration().getActionExecutionDelay());
+                mActionExecutionTimer.start();
+                mExecuteActionProgressBar.setMax(mServiceBinder.getConfiguration().getActionExecutionDelay());
+            }
+        }
+    };
+
+    private final KeysSequenceListener mKeysSequenceListener = new KeysSequenceListener() {
+        @Override
+        public void handleKeysSequence(List<Integer> keysSequence) {
+            if(mActionsList.getKeysSequenceDown().size() > 1 && mActionsList.getKeysSequenceDown().equals(keysSequence)) {
+                mListViewScroller.scrollDown();
+                restartTimer();
+            } else if(mActionsList.getKeysSequenceUp().size() > 1 && mActionsList.getKeysSequenceUp().equals(keysSequence)) {
+                mListViewScroller.scrollUp();
+                restartTimer();
+            }
+        }
+
+        @Override
+        public void handleSingleKey(int keyCode) {
+            if(mActionsList.getKeysSequenceDown().size() == 1 && mActionsList.getKeysSequenceDown().contains(keyCode)) {
+                mListViewScroller.scrollDown();
+                restartTimer();
+            } else if(mActionsList.getKeysSequenceUp().size() == 1 && mActionsList.getKeysSequenceUp().contains(keyCode)) {
+                mListViewScroller.scrollUp();
+                restartTimer();
+            }
+        }
+    };
 
     private CountDownTimer mActionExecutionTimer;
 

@@ -26,7 +26,7 @@ import java.util.Set;
  * Created by f1x on 2017-02-01.
  */
 
-public class ManageBindingsActivity extends ServiceActivity  implements KeysSequenceListener {
+public class ManageBindingsActivity extends ServiceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +74,7 @@ public class ManageBindingsActivity extends ServiceActivity  implements KeysSequ
         mBindingsListView.requestLayout();
 
         if(mServiceBinder != null) {
-            mServiceBinder.getPressedKeysSequenceManager().pushListener(this);
+            mServiceBinder.getPressedKeysSequenceManager().pushListener(mKeysSequenceListener);
             mBindingsArrayAdapter.clear();
             mBindingsArrayAdapter.addAll(bindingsToStringList(mServiceBinder.getKeysSequenceBindingsStorage().getItems()));
         }
@@ -85,13 +85,13 @@ public class ManageBindingsActivity extends ServiceActivity  implements KeysSequ
         super.onPause();
 
         if(mServiceBinder != null) {
-            mServiceBinder.getPressedKeysSequenceManager().popListener(this);
+            mServiceBinder.getPressedKeysSequenceManager().popListener(mKeysSequenceListener);
         }
     }
 
     @Override
     protected void onServiceConnected() {
-        mServiceBinder.getPressedKeysSequenceManager().pushListener(this);
+        mServiceBinder.getPressedKeysSequenceManager().pushListener(mKeysSequenceListener);
 
         mBindingsArrayAdapter.clear();
         mBindingsArrayAdapter.addAll(bindingsToStringList(mServiceBinder.getKeysSequenceBindingsStorage().getItems()));
@@ -108,23 +108,25 @@ public class ManageBindingsActivity extends ServiceActivity  implements KeysSequ
         return bindingsList;
     }
 
-    @Override
-    public void handleKeysSequence(List<Integer> keysSequence) {
-        mBindingsListView.clearChoices();
-        mBindingsListView.requestLayout();
-        int position = mBindingsArrayAdapter.getPosition(KeysSequenceConverter.toJsonArray(keysSequence).toString());
+    private final KeysSequenceListener mKeysSequenceListener = new KeysSequenceListener() {
+        @Override
+        public void handleKeysSequence(List<Integer> keysSequence) {
+            mBindingsListView.clearChoices();
+            mBindingsListView.requestLayout();
+            int position = mBindingsArrayAdapter.getPosition(KeysSequenceConverter.toJsonArray(keysSequence).toString());
 
-        if(position != -1) {
-            mBindingsListView.requestFocusFromTouch();
-            mBindingsListView.setSelection(position);
-            mBindingsListView.setItemChecked(position, true);
+            if(position != -1) {
+                mBindingsListView.requestFocusFromTouch();
+                mBindingsListView.setSelection(position);
+                mBindingsListView.setItemChecked(position, true);
+            }
         }
-    }
 
-    @Override
-    public void handleSingleKey(int keyCode) {
+        @Override
+        public void handleSingleKey(int keyCode) {
 
-    }
+        }
+    };
 
     private ListView mBindingsListView;
     private ArrayAdapter<String> mBindingsArrayAdapter;
