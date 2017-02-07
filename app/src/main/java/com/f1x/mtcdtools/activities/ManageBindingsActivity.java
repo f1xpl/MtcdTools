@@ -116,9 +116,9 @@ public class ManageBindingsActivity extends ServiceActivity {
             int position = mBindingsArrayAdapter.getPosition(KeysSequenceConverter.toJsonArray(keysSequence).toString());
 
             if(position != -1) {
+                mBindingsListView.setItemChecked(position, true);
                 mBindingsListView.requestFocusFromTouch();
                 mBindingsListView.setSelection(position);
-                mBindingsListView.setItemChecked(position, true);
             }
         }
 
