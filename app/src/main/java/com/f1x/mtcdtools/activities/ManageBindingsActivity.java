@@ -41,7 +41,7 @@ public class ManageBindingsActivity extends ServiceActivity {
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
                 try {
                     String keysSequenceString = mBindingsArrayAdapter.getItem(position);
-                    List<Integer> keysSequence = KeysSequenceConverter.fromJsonArray(new JSONArray());
+                    List<Integer> keysSequence = KeysSequenceConverter.fromJsonArray(new JSONArray(keysSequenceString));
 
                     mServiceBinder.getKeysSequenceBindingsStorage().remove(keysSequence);
                     mBindingsArrayAdapter.remove(keysSequenceString);
