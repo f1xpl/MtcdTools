@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.f1x.mtcdtools.configuration.Configuration;
-import com.f1x.mtcdtools.named.objects.actions.Action;
 import com.f1x.mtcdtools.named.objects.actions.KeyAction;
 import com.f1x.mtcdtools.storage.NamedObjectsStorage;
 
@@ -17,11 +16,6 @@ import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import static org.hamcrest.CoreMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;

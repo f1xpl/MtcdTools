@@ -1,9 +1,7 @@
 package com.f1x.mtcdtools.named.objects.actions;
 
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.util.AndroidRuntimeException;
 import android.widget.Toast;
 
 import org.json.JSONException;
