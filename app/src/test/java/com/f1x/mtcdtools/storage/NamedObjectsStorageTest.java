@@ -135,13 +135,13 @@ public class NamedObjectsStorageTest {
         storage.remove(removedObjectName);
 
         ActionsList actionsList1 = (ActionsList)storage.getItem(mNamedObjectsLists.get(3).getName());
-        assertFalse(actionsList1.getActionNames().contains(removedObjectName));
-        assertTrue(actionsList1.getActionNames().contains(mNamedObjectsLists.get(1).getName()));
+        assertFalse(actionsList1.getActionsNames().contains(removedObjectName));
+        assertTrue(actionsList1.getActionsNames().contains(mNamedObjectsLists.get(1).getName()));
 
         ActionsList actionsList2 = (ActionsList)storage.getItem(mNamedObjectsLists.get(4).getName());
-        assertFalse(actionsList2.getActionNames().contains(removedObjectName));
-        assertTrue(actionsList2.getActionNames().contains(mNamedObjectsLists.get(1).getName()));
-        assertTrue(actionsList2.getActionNames().contains(mNamedObjectsLists.get(2).getName()));
+        assertFalse(actionsList2.getActionsNames().contains(removedObjectName));
+        assertTrue(actionsList2.getActionsNames().contains(mNamedObjectsLists.get(1).getName()));
+        assertTrue(actionsList2.getActionsNames().contains(mNamedObjectsLists.get(2).getName()));
 
         assertNull(storage.getItem(removedObjectName));
 
@@ -158,13 +158,13 @@ public class NamedObjectsStorageTest {
         storage.replace(mNamedObjectsLists.get(0).getName(), mNamedObjectsLists.get(0).getName(), mNamedObjectsLists.get(0));
 
         ActionsList actionsList1 = (ActionsList)storage.getItem(mNamedObjectsLists.get(3).getName());
-        assertTrue(actionsList1.getActionNames().contains(mNamedObjectsLists.get(0).getName()));
-        assertTrue(actionsList1.getActionNames().contains(mNamedObjectsLists.get(1).getName()));
+        assertTrue(actionsList1.getActionsNames().contains(mNamedObjectsLists.get(0).getName()));
+        assertTrue(actionsList1.getActionsNames().contains(mNamedObjectsLists.get(1).getName()));
 
         ActionsList actionsList2 = (ActionsList)storage.getItem(mNamedObjectsLists.get(4).getName());
-        assertTrue(actionsList2.getActionNames().contains(mNamedObjectsLists.get(0).getName()));
-        assertTrue(actionsList2.getActionNames().contains(mNamedObjectsLists.get(1).getName()));
-        assertTrue(actionsList2.getActionNames().contains(mNamedObjectsLists.get(2).getName()));
+        assertTrue(actionsList2.getActionsNames().contains(mNamedObjectsLists.get(0).getName()));
+        assertTrue(actionsList2.getActionsNames().contains(mNamedObjectsLists.get(1).getName()));
+        assertTrue(actionsList2.getActionsNames().contains(mNamedObjectsLists.get(2).getName()));
     }
 
     @Test
@@ -181,13 +181,13 @@ public class NamedObjectsStorageTest {
         assertNull(storage.getItem(newKeyAction.getName()));
 
         ActionsList actionsList1 = (ActionsList)storage.getItem(mNamedObjectsLists.get(3).getName());
-        assertTrue(actionsList1.getActionNames().contains(mNamedObjectsLists.get(0).getName()));
-        assertTrue(actionsList1.getActionNames().contains(mNamedObjectsLists.get(1).getName()));
+        assertTrue(actionsList1.getActionsNames().contains(mNamedObjectsLists.get(0).getName()));
+        assertTrue(actionsList1.getActionsNames().contains(mNamedObjectsLists.get(1).getName()));
 
         ActionsList actionsList2 = (ActionsList)storage.getItem(mNamedObjectsLists.get(4).getName());
-        assertTrue(actionsList2.getActionNames().contains(mNamedObjectsLists.get(0).getName()));
-        assertTrue(actionsList2.getActionNames().contains(mNamedObjectsLists.get(1).getName()));
-        assertTrue(actionsList2.getActionNames().contains(mNamedObjectsLists.get(2).getName()));
+        assertTrue(actionsList2.getActionsNames().contains(mNamedObjectsLists.get(0).getName()));
+        assertTrue(actionsList2.getActionsNames().contains(mNamedObjectsLists.get(1).getName()));
+        assertTrue(actionsList2.getActionsNames().contains(mNamedObjectsLists.get(2).getName()));
     }
 
     @Test
@@ -202,14 +202,14 @@ public class NamedObjectsStorageTest {
         storage.replace(replacedObjectName, newKeyAction.getName(), newKeyAction);
 
         ActionsList actionsList1 = (ActionsList)storage.getItem(mNamedObjectsLists.get(3).getName());
-        assertFalse(actionsList1.getActionNames().contains(replacedObjectName));
-        assertTrue(actionsList1.getActionNames().contains(mNamedObjectsLists.get(0).getName()));
+        assertFalse(actionsList1.getActionsNames().contains(replacedObjectName));
+        assertTrue(actionsList1.getActionsNames().contains(mNamedObjectsLists.get(0).getName()));
 
         ActionsList actionsList2 = (ActionsList)storage.getItem(mNamedObjectsLists.get(4).getName());
-        assertFalse(actionsList2.getActionNames().contains(replacedObjectName));
-        assertTrue(actionsList2.getActionNames().contains(mNamedObjectsLists.get(0).getName()));
-        assertTrue(actionsList2.getActionNames().contains(mNamedObjectsLists.get(2).getName()));
-        assertTrue(actionsList2.getActionNames().contains(newKeyAction.getName()));
+        assertFalse(actionsList2.getActionsNames().contains(replacedObjectName));
+        assertTrue(actionsList2.getActionsNames().contains(mNamedObjectsLists.get(0).getName()));
+        assertTrue(actionsList2.getActionsNames().contains(mNamedObjectsLists.get(2).getName()));
+        assertTrue(actionsList2.getActionsNames().contains(newKeyAction.getName()));
 
         assertNull(storage.getItem(replacedObjectName));
         assertEquals(newKeyAction, storage.getItem(newKeyAction.getName()));

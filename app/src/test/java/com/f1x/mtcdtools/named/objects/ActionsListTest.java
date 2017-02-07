@@ -53,7 +53,7 @@ public class ActionsListTest {
 
         assertEquals(mListName, actionsList.getName());
 
-        List<String> actionNames = new ArrayList<>(actionsList.getActionNames());
+        List<String> actionNames = new ArrayList<>(actionsList.getActionsNames());
 
         assertEquals(mActionsArray.length(), actionNames.size());
         for(int i = 0; i < mActionsArray.length(); ++i) {
@@ -93,7 +93,7 @@ public class ActionsListTest {
 
         assertEquals(mListName, actionsList.getName());
 
-        List<String> actualActionNames = actionsList.getActionNames();
+        List<String> actualActionNames = actionsList.getActionsNames();
         assertEquals(expectedActionsNames.size(), actualActionNames.size());
         assertEquals(expectedActionsNames, actualActionNames);
 
@@ -115,9 +115,9 @@ public class ActionsListTest {
         ActionsList actionsList = new ActionsList(mListJson);
         actionsList.removeDependency(mActionsArray.getString(1));
 
-        assertFalse(actionsList.getActionNames().contains(mActionsArray.getString(1)));
-        assertTrue(actionsList.getActionNames().contains(mActionsArray.getString(0)));
-        assertTrue(actionsList.getActionNames().contains(mActionsArray.getString(2)));
+        assertFalse(actionsList.getActionsNames().contains(mActionsArray.getString(1)));
+        assertTrue(actionsList.getActionsNames().contains(mActionsArray.getString(0)));
+        assertTrue(actionsList.getActionsNames().contains(mActionsArray.getString(2)));
     }
 
     @Test
@@ -127,8 +127,8 @@ public class ActionsListTest {
         String newActionName = "actionNewName";
         actionsList.replaceDependency(mActionsArray.getString(1), newActionName);
 
-        assertFalse(actionsList.getActionNames().contains(mActionsArray.getString(1)));
-        assertTrue(actionsList.getActionNames().contains(newActionName));
+        assertFalse(actionsList.getActionsNames().contains(mActionsArray.getString(1)));
+        assertTrue(actionsList.getActionsNames().contains(newActionName));
     }
 
     @Test
@@ -139,7 +139,7 @@ public class ActionsListTest {
         String newActionName = "actionNewName";
         actionsList.replaceDependency(nonExistentActionName, newActionName);
 
-        assertFalse(actionsList.getActionNames().contains(newActionName));
+        assertFalse(actionsList.getActionsNames().contains(newActionName));
     }
 
     private String mListName;

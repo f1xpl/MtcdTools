@@ -1,6 +1,7 @@
 package com.f1x.mtcdtools.named.objects.actions;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,10 +25,16 @@ public class BroadcastIntentAction extends CustomIntentAction {
 
     @Override
     public void evaluate(Context context) {
-        if(mPermissions.isEmpty()) {
-            context.sendBroadcast(getIntent());
-        } else {
-            context.sendOrderedBroadcast(getIntent(), mPermissions);
+        try {
+            if (mPermissions.isEmpty()) {
+                context.sendBroadcast(getIntent());
+            } else {
+                context.sendOrderedBroadcast(getIntent(), mPermissions);
+            }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            Toast.makeText(context, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
         }
     }
 

@@ -3,6 +3,7 @@ package com.f1x.mtcdtools.named.objects.actions;
 import android.content.Context;
 import android.media.AudioManager;
 import android.view.KeyEvent;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,13 +25,18 @@ public class KeyAction extends Action {
 
     @Override
     public void evaluate(Context context) {
-        AudioManager audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
+        try {
+            AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 
-        KeyEvent keyEventDown = new KeyEvent(KeyEvent.ACTION_DOWN, mKeyCode);
-        audioManager.dispatchMediaKeyEvent(keyEventDown);
+            KeyEvent keyEventDown = new KeyEvent(KeyEvent.ACTION_DOWN, mKeyCode);
+            audioManager.dispatchMediaKeyEvent(keyEventDown);
 
-        KeyEvent keyEventUp = new KeyEvent(KeyEvent.ACTION_UP, mKeyCode);
-        audioManager.dispatchMediaKeyEvent(keyEventUp);
+            KeyEvent keyEventUp = new KeyEvent(KeyEvent.ACTION_UP, mKeyCode);
+            audioManager.dispatchMediaKeyEvent(keyEventUp);
+        } catch(Exception e) {
+            e.printStackTrace();
+            Toast.makeText(context, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

@@ -36,7 +36,7 @@ public class BindingActivity extends ServiceActivity {
                 mEditKeysSequence = KeysSequenceConverter.fromJsonArray(new JSONArray(keysSequenceString));
             } catch (JSONException e) {
                 e.printStackTrace();
-                Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                 finish();
                 return;
             }
@@ -96,7 +96,7 @@ public class BindingActivity extends ServiceActivity {
             finish();
         } catch (JSONException | IOException e) {
             e.printStackTrace();
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
         } catch (DuplicatedEntryException e) {
             e.printStackTrace();
             Toast.makeText(this, this.getText(R.string.ObjectAlreadyAdded), Toast.LENGTH_LONG).show();

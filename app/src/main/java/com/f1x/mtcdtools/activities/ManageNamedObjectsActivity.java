@@ -46,7 +46,7 @@ public class ManageNamedObjectsActivity extends ServiceActivity {
                     mNamedObjectsArrayAdapter.remove(namedObjectName);
                 } catch(IOException | JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(ManageNamedObjectsActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(ManageNamedObjectsActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                 }
 
                 return true;

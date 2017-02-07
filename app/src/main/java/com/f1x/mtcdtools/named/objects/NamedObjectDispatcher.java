@@ -21,7 +21,8 @@ public class NamedObjectDispatcher {
     }
 
     public void dispatchNamedObjects(List<String> namedObjectsNames, Context context) {
-        new NamedObjectsListDispatchTask(namedObjectsNames, context, mNamedObjectsStorage).execute(mConfiguration.getActionsSequenceDelay());
+        List<Action> actions = ActionsExtractor.extract(namedObjectsNames, mNamedObjectsStorage);
+        new ActionsDispatchTask(mConfiguration.getActionsSequenceDelay(), context).execute(actions.toArray(new Action[actions.size()]));
     }
 
     public void dispatch(String namedObjectName, Context context) {
@@ -40,7 +41,7 @@ public class NamedObjectDispatcher {
 
             case ActionsSequence.OBJECT_TYPE:
                 ActionsSequence actionsSequence = (ActionsSequence)namedObject;
-                this.dispatchNamedObjects(actionsSequence.getActionNames(), context);
+                this.dispatchNamedObjects(actionsSequence.getActionsNames(), context);
                 break;
 
             default:

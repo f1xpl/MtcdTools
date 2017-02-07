@@ -30,4 +30,11 @@ public abstract class Action extends NamedObject {
     @Override
     public void replaceDependency(String oldDependencyName, String newDependencyName) {
     }
+
+    public static boolean isAction(String objectType) {
+        return objectType.equals(KeyAction.OBJECT_TYPE) ||
+                objectType.equals(LaunchAction.OBJECT_TYPE) ||
+                objectType.equals(BroadcastIntentAction.OBJECT_TYPE) ||
+                objectType.equals(StartActivityAction.OBJECT_TYPE);
+    }
 }

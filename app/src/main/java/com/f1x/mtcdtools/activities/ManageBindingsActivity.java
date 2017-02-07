@@ -47,7 +47,7 @@ public class ManageBindingsActivity extends ServiceActivity {
                     mBindingsArrayAdapter.remove(keysSequenceString);
                 } catch(IOException | JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(ManageBindingsActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(ManageBindingsActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                 }
 
                 return true;

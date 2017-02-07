@@ -122,7 +122,7 @@ public class SelectNamedObjectActivity extends ServiceActivity {
         mExecuteActionProgressBar.setMax(mServiceBinder.getConfiguration().getActionExecutionDelay());
 
         mActionsNamesArrayAdapter.clear();
-        mActionsNamesArrayAdapter.addAll(mActionsList.getActionNames());
+        mActionsNamesArrayAdapter.addAll(mActionsList.getActionsNames());
         mActionsNamesArrayAdapter.insert(this.getText(R.string.Cancel).toString(), 0);
 
         mActionsListView.post(new Runnable() {

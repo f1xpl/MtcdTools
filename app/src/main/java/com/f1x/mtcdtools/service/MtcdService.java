@@ -84,7 +84,7 @@ public class MtcdService extends android.app.Service {
                 startForeground(1555, createNotification());
             } catch (JSONException | IOException | DuplicatedEntryException | EntryCreationFailed e) {
                 e.printStackTrace();
-                Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
             }
         }
 

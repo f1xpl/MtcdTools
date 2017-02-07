@@ -42,7 +42,7 @@ public abstract class CustomIntentActionActivity extends NamedObjectActivity {
         }
         catch(JSONException e) {
             e.printStackTrace();
-            Toast.makeText(CustomIntentActionActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(CustomIntentActionActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
         }
 
         return null;
@@ -63,7 +63,7 @@ public abstract class CustomIntentActionActivity extends NamedObjectActivity {
             mIntentTypeEditText.setText(customIntentAction.getIntentType());
         } catch(JSONException e) {
             e.printStackTrace();
-            Toast.makeText(CustomIntentActionActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(CustomIntentActionActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
             finish();
         }
     }

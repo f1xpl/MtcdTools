@@ -3,6 +3,8 @@ package com.f1x.mtcdtools.named.objects.actions;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.util.AndroidRuntimeException;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,8 +39,9 @@ public class StartActivityAction extends CustomIntentAction {
 
         try {
             context.startActivity(intent);
-        } catch (ActivityNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            Toast.makeText(context, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
         }
     }
 

@@ -30,6 +30,8 @@ public abstract class NamedObjectActivity extends ServiceActivity {
 
         mEditName = this.getIntent().getStringExtra(NAME_PARAMETER);
         mEditMode = mEditName != null;
+
+        initControls();
     }
 
     @Override
@@ -44,7 +46,6 @@ public abstract class NamedObjectActivity extends ServiceActivity {
             }
 
             try {
-                initControls();
                 fillControls(namedObject);
             } catch(ClassCastException e) {
                 e.printStackTrace();
@@ -100,7 +101,7 @@ public abstract class NamedObjectActivity extends ServiceActivity {
             }
         } catch (IOException | JSONException e) {
             e.printStackTrace();
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
         } catch (DuplicatedEntryException e) {
             e.printStackTrace();
             Toast.makeText(this, this.getText(R.string.ObjectAlreadyAdded), Toast.LENGTH_LONG).show();

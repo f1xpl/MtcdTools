@@ -27,7 +27,7 @@ public class NamedObjectsContainer extends NamedObject {
         mActionNames = actionsNames;
     }
 
-    public List<String> getActionNames() {
+    public List<String> getActionsNames() {
         return new ArrayList<>(mActionNames);
     }
 

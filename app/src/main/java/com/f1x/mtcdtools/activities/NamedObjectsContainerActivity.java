@@ -58,7 +58,7 @@ public abstract class NamedObjectsContainerActivity extends NamedObjectActivity 
 
         NamedObjectsContainer namedObjectsContainer = (NamedObjectsContainer)namedObject;
         mAddedNamesArrayAdapter.clear();
-        mAddedNamesArrayAdapter.addAll(namedObjectsContainer.getActionNames());
+        mAddedNamesArrayAdapter.addAll(namedObjectsContainer.getActionsNames());
     }
 
     @Override
