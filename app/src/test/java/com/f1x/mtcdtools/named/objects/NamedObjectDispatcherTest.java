@@ -44,7 +44,7 @@ public class NamedObjectDispatcherTest {
 
         when(mMockNamedObjectsStorage.getItem(actionName)).thenReturn(action);
 
-        NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage, mMockConfiguration);
+        NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage);
         dispatcher.dispatch(actionName, mMockContext);
         verify(action, times(1)).evaluate(mMockContext);
     }
@@ -60,7 +60,7 @@ public class NamedObjectDispatcherTest {
 
         when(mMockNamedObjectsStorage.getItem(actionsListName)).thenReturn(actionsList);
 
-        NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage, mMockConfiguration);
+        NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage);
         dispatcher.dispatch(actionsListName, mMockContext);
         verify(mMockContext, times(1)).startActivity(mMockIntent);
     }
@@ -85,8 +85,8 @@ public class NamedObjectDispatcherTest {
 //        int executionDelay = 1234;
 //        when(mMockConfiguration.getActionsSequenceDelay()).thenReturn(executionDelay);
 //
-//        ActionsDispatchTask actionsDispatchTask = mock(ActionsDispatchTask.class);
-//        PowerMockito.whenNew(ActionsDispatchTask.class).withArguments(executionDelay, mMockContext).thenReturn(actionsDispatchTask);
+//        NamedObjectsDispatchTask actionsDispatchTask = mock(NamedObjectsDispatchTask.class);
+//        PowerMockito.whenNew(NamedObjectsDispatchTask.class).withArguments(executionDelay, mMockContext).thenReturn(actionsDispatchTask);
 //
 //        NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage, mMockConfiguration);
 //        dispatcher.dispatch(actionsSequenceName, mMockContext);
@@ -96,15 +96,12 @@ public class NamedObjectDispatcherTest {
 
     @Test
     public void test_Dispatch_NullObject() {
-        NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage, mMockConfiguration);
+        NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage);
 
         String namedObjectName = "namedObjectName";
         when(mMockNamedObjectsStorage.getItem(namedObjectName)).thenReturn(null);
         dispatcher.dispatch(namedObjectName, mMockContext);
     }
-
-    @Mock
-    Configuration mMockConfiguration;
 
     @Mock
     NamedObjectsStorage mMockNamedObjectsStorage;

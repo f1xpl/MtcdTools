@@ -1,4 +1,4 @@
-package com.f1x.mtcdtools.adapters;
+package com.f1x.mtcdtools.adapters.entries;
 
 import android.graphics.drawable.Drawable;
 

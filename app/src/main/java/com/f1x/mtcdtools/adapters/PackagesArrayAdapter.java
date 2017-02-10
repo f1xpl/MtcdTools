@@ -11,13 +11,14 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.f1x.mtcdtools.R;
+import com.f1x.mtcdtools.adapters.entries.PackageEntry;
 
 /**
  * Created by f1x on 2016-08-08.
  */
-class PackageEntryArrayAdapter extends ArrayAdapter<PackageEntry> {
-    PackageEntryArrayAdapter(Context context) {
-        super(context, R.layout.layout_package_row, R.id.packageName);
+class PackagesArrayAdapter extends ArrayAdapter<PackageEntry> {
+    PackagesArrayAdapter(Context context) {
+        super(context, R.layout.layout_package_row, R.id.textViewPackageName);
         mPackageManager = context.getPackageManager();
     }
 

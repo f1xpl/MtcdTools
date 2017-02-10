@@ -35,14 +35,13 @@ public class MtcdService extends android.app.Service {
         mForceRestart = false;
         mServiceInitialized = false;
 
-        mConfiguration = new Configuration(this.getSharedPreferences(MainActivity.APP_NAME, Context.MODE_PRIVATE));
-
         FileReader fileReader = new FileReader(this);
         FileWriter fileWriter = new FileWriter(this);
         mNamedObjectsStorage = new NamedObjectsStorage(fileReader, fileWriter);
         mKeysSequenceBindingsStorage = new KeysSequenceBindingsStorage(fileReader, fileWriter);
+        mConfiguration = new Configuration(this.getSharedPreferences(MainActivity.APP_NAME, Context.MODE_PRIVATE));
         mPressedKeysSequenceManager = new PressedKeysSequenceManager(mConfiguration);
-        mNamedObjectsDispatcher = new NamedObjectDispatcher(mNamedObjectsStorage, mConfiguration);
+        mNamedObjectsDispatcher = new NamedObjectDispatcher(mNamedObjectsStorage);
         mKeysSequenceDispatcher = new KeysSequenceDispatcher(this,mKeysSequenceBindingsStorage, mNamedObjectsDispatcher);
     }
 

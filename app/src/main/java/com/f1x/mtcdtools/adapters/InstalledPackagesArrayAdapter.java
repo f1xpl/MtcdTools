@@ -3,12 +3,14 @@ package com.f1x.mtcdtools.adapters;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 
+import com.f1x.mtcdtools.adapters.entries.PackageEntry;
+
 import java.util.Comparator;
 
 /**
  * Created by f1x on 2016-08-19.
  */
-public class InstalledPackagesArrayAdapter extends PackageEntryArrayAdapter {
+public class InstalledPackagesArrayAdapter extends PackagesArrayAdapter {
     public InstalledPackagesArrayAdapter(Context context) {
         super(context);
 

@@ -7,7 +7,7 @@ import android.widget.Spinner;
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.activities.NamedObjectActivity;
 import com.f1x.mtcdtools.adapters.InstalledPackagesArrayAdapter;
-import com.f1x.mtcdtools.adapters.PackageEntry;
+import com.f1x.mtcdtools.adapters.entries.PackageEntry;
 import com.f1x.mtcdtools.named.objects.NamedObject;
 import com.f1x.mtcdtools.named.objects.actions.Action;
 import com.f1x.mtcdtools.named.objects.actions.LaunchAction;

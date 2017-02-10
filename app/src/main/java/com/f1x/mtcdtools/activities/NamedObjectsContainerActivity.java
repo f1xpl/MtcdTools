@@ -26,39 +26,8 @@ public abstract class NamedObjectsContainerActivity extends NamedObjectActivity 
         super.initControls();
 
         mNamedObjectsArrayAdapter = new NamedObjectsArrayAdapter(this);
-        final Spinner actionsSpinner = (Spinner)this.findViewById(R.id.spinnerNamedObjects);
-        actionsSpinner.setAdapter(mNamedObjectsArrayAdapter);
-
-        ListView addedActionsListView = (ListView)this.findViewById(R.id.listViewAddedNamedObjects);
-        mAddedNamesArrayAdapter = new NamesArrayAdapter(this);
-        addedActionsListView.setAdapter(mAddedNamesArrayAdapter);
-        addedActionsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-                String actionName = mAddedNamesArrayAdapter.getItem(position);
-                mAddedNamesArrayAdapter.remove(actionName);
-
-                return true;
-            }
-        });
-
-        Button addNamedObjectButton = (Button)this.findViewById(R.id.buttonAddNamedObject);
-        addNamedObjectButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String actionName = (String)actionsSpinner.getSelectedItem();
-                mAddedNamesArrayAdapter.add(actionName);
-            }
-        });
-    }
-
-    @Override
-    protected void fillControls(NamedObject namedObject) throws ClassCastException {
-        super.fillControls(namedObject);
-
-        NamedObjectsContainer namedObjectsContainer = (NamedObjectsContainer)namedObject;
-        mAddedNamesArrayAdapter.clear();
-        mAddedNamesArrayAdapter.addAll(namedObjectsContainer.getActionsNames());
+        mNamedObjectsSpinner = (Spinner)this.findViewById(R.id.spinnerNamedObjects);
+        mNamedObjectsSpinner.setAdapter(mNamedObjectsArrayAdapter);
     }
 
     @Override
@@ -68,5 +37,5 @@ public abstract class NamedObjectsContainerActivity extends NamedObjectActivity 
     }
 
     NamedObjectsArrayAdapter mNamedObjectsArrayAdapter;
-    NamesArrayAdapter mAddedNamesArrayAdapter;
+    Spinner mNamedObjectsSpinner;
 }

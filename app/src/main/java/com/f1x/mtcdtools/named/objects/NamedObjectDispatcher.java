@@ -15,14 +15,12 @@ import java.util.List;
  */
 
 public class NamedObjectDispatcher {
-    public NamedObjectDispatcher(NamedObjectsStorage namedObjectsStorage, Configuration configuration) {
+    public NamedObjectDispatcher(NamedObjectsStorage namedObjectsStorage) {
         mNamedObjectsStorage = namedObjectsStorage;
-        mConfiguration = configuration;
     }
 
     public void dispatchNamedObjects(List<String> namedObjectsNames, Context context) {
-        List<Action> actions = ActionsExtractor.extract(namedObjectsNames, mNamedObjectsStorage);
-        new ActionsDispatchTask(mConfiguration.getActionsSequenceDelay(), context).execute(actions.toArray(new Action[actions.size()]));
+        new NamedObjectsDispatchTask(mNamedObjectsStorage, context).execute(namedObjectsNames.toArray(new String[namedObjectsNames.size()]));
     }
 
     public void dispatch(String namedObjectName, Context context) {
@@ -41,7 +39,7 @@ public class NamedObjectDispatcher {
 
             case ActionsSequence.OBJECT_TYPE:
                 ActionsSequence actionsSequence = (ActionsSequence)namedObject;
-                this.dispatchNamedObjects(actionsSequence.getActionsNames(), context);
+                new NamedObjectsDispatchTask(mNamedObjectsStorage, context).execute(actionsSequence.getName());
                 break;
 
             default:
@@ -58,5 +56,4 @@ public class NamedObjectDispatcher {
     }
 
     private final NamedObjectsStorage mNamedObjectsStorage;
-    private final Configuration mConfiguration;
 }

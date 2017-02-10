@@ -75,29 +75,4 @@
             android:max="5000" />
 
     </LinearLayout>
-
-    <TextView
-        android:text="@string/ActionsSequenceDelay"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/element_spacing" />
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textViewActionsSequenceDelayValue" />
-
-        <SeekBar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/element_spacing"
-            android:id="@+id/seekBarActionSequenceDelay"
-            android:max="5000" />
-
-    </LinearLayout>
 </LinearLayout>

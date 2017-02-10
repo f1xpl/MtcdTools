@@ -121,7 +121,15 @@ public class ActionsListTest {
     }
 
     @Test
-    public void test_ReplaceActionName() throws JSONException {
+    public void test_ReplaceActionName_SameName() throws JSONException {
+        ActionsList actionsList = new ActionsList(mListJson);
+        actionsList.replaceDependency(mActionsArray.getString(1), mActionsArray.getString(1));
+        assertTrue(actionsList.getActionsNames().contains(mActionsArray.getString(1)));
+    }
+
+
+    @Test
+    public void test_ReplaceActionName_NewName() throws JSONException {
         ActionsList actionsList = new ActionsList(mListJson);
 
         String newActionName = "actionNewName";

@@ -2,16 +2,21 @@ package com.f1x.mtcdtools.activities;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TabHost;
 
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.adapters.KeysSequenceArrayAdapter;
+import com.f1x.mtcdtools.adapters.NamedObjectsArrayAdapter;
+import com.f1x.mtcdtools.adapters.NamesArrayAdapter;
 import com.f1x.mtcdtools.input.KeysSequenceConverter;
 import com.f1x.mtcdtools.named.objects.ActionsList;
 import com.f1x.mtcdtools.named.objects.ActionsSequence;
 import com.f1x.mtcdtools.named.objects.NamedObject;
+import com.f1x.mtcdtools.named.objects.NamedObjectsContainer;
 import com.f1x.mtcdtools.named.objects.actions.BroadcastIntentAction;
 import com.f1x.mtcdtools.named.objects.actions.KeyAction;
 import com.f1x.mtcdtools.named.objects.actions.LaunchAction;
@@ -88,6 +93,30 @@ public class ActionsListActivity extends NamedObjectsContainerActivity {
             }
         });
         // -----------------------------------------------------------------------------------------
+
+        // -----------------------------------------------------------------------------------------
+        ListView addedActionsListView = (ListView)this.findViewById(R.id.listViewAddedNamedObjects);
+        mAddedNamesArrayAdapter = new NamesArrayAdapter(this);
+        addedActionsListView.setAdapter(mAddedNamesArrayAdapter);
+        addedActionsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+                String actionName = mAddedNamesArrayAdapter.getItem(position);
+                mAddedNamesArrayAdapter.remove(actionName);
+
+                return true;
+            }
+        });
+
+        Button addNamedObjectButton = (Button)this.findViewById(R.id.buttonAddNamedObject);
+        addNamedObjectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String actionName = (String)mNamedObjectsSpinner.getSelectedItem();
+                mAddedNamesArrayAdapter.add(actionName);
+            }
+        });
+        // -----------------------------------------------------------------------------------------
     }
 
     @Override
@@ -99,6 +128,9 @@ public class ActionsListActivity extends NamedObjectsContainerActivity {
 
             mKeysSequenceDownArrayAdapter.reset(actionsList.getKeysSequenceDown());
             mKeysSequenceUpArrayAdapter.reset(actionsList.getKeysSequenceUp());
+
+            mAddedNamesArrayAdapter.clear();
+            mAddedNamesArrayAdapter.addAll(actionsList.getActionsNames());
         }
     }
 
@@ -125,6 +157,7 @@ public class ActionsListActivity extends NamedObjectsContainerActivity {
         }
     }
 
+    private NamesArrayAdapter mAddedNamesArrayAdapter;
     private KeysSequenceArrayAdapter mKeysSequenceUpArrayAdapter;
     private KeysSequenceArrayAdapter mKeysSequenceDownArrayAdapter;
 
