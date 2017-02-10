@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.f1x.mtcdtools.activities.SelectNamedObjectActivity;
-import com.f1x.mtcdtools.configuration.Configuration;
 import com.f1x.mtcdtools.named.objects.actions.Action;
 import com.f1x.mtcdtools.storage.NamedObjectsStorage;
 

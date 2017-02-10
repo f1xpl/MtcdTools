@@ -18,7 +18,6 @@ import com.f1x.mtcdtools.named.objects.actions.StartActivityAction;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
@@ -83,5 +82,5 @@ public class ActionsSequenceActivity extends NamedObjectsContainerActivity {
         return new ActionsSequence(namedObjectName, actionNames, actionDelays);
     }
 
-    ActionsInSequenceArrayAdapter mActionsInSequenceArrayAdapter;
+    private ActionsInSequenceArrayAdapter mActionsInSequenceArrayAdapter;
 }

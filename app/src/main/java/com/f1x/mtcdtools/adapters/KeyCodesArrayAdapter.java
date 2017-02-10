@@ -24,9 +24,7 @@ public class KeyCodesArrayAdapter extends ArrayAdapter<String> {
         mKeyCodesMap.put("KEYCODE_MEDIA_REWIND", KeyEvent.KEYCODE_MEDIA_REWIND);
         mKeyCodesMap.put("KEYCODE_MEDIA_STOP", KeyEvent.KEYCODE_MEDIA_STOP);
 
-        for(Map.Entry<String, Integer> entry : mKeyCodesMap.entrySet()) {
-            add(entry.getKey());
-        }
+        addAll(mKeyCodesMap.keySet());
     }
 
     public int getKeyCode(String key) {

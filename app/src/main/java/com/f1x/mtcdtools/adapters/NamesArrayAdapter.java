@@ -25,6 +25,11 @@ public class NamesArrayAdapter extends ArrayAdapter<String> {
         return items;
     }
 
+    public void reset(List<String> items) {
+        clear();
+        addAll(items);
+    }
+
     public void removeAt(int position) {
         if(position != -1 && position < getCount()) {
             List<String> items = new ArrayList<>();

@@ -25,7 +25,7 @@ public class InstalledPackagesArrayAdapter extends PackagesArrayAdapter {
         sort(new Comparator<PackageEntry>() {
             @Override
             public int compare(PackageEntry left, PackageEntry right) {
-                return left.getLabel().compareTo(right.getLabel());
+                return left.getLabel().compareToIgnoreCase(right.getLabel());
             }
         });
     }

@@ -5,18 +5,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TabHost;
 
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.adapters.KeysSequenceArrayAdapter;
-import com.f1x.mtcdtools.adapters.NamedObjectsArrayAdapter;
 import com.f1x.mtcdtools.adapters.NamesArrayAdapter;
 import com.f1x.mtcdtools.input.KeysSequenceConverter;
 import com.f1x.mtcdtools.named.objects.ActionsList;
 import com.f1x.mtcdtools.named.objects.ActionsSequence;
 import com.f1x.mtcdtools.named.objects.NamedObject;
-import com.f1x.mtcdtools.named.objects.NamedObjectsContainer;
 import com.f1x.mtcdtools.named.objects.actions.BroadcastIntentAction;
 import com.f1x.mtcdtools.named.objects.actions.KeyAction;
 import com.f1x.mtcdtools.named.objects.actions.LaunchAction;
@@ -128,8 +125,7 @@ public class ActionsListActivity extends NamedObjectsContainerActivity {
             mKeysSequenceDownArrayAdapter.reset(actionsList.getKeysSequenceDown());
             mKeysSequenceUpArrayAdapter.reset(actionsList.getKeysSequenceUp());
 
-            mAddedNamesArrayAdapter.clear();
-            mAddedNamesArrayAdapter.addAll(actionsList.getActionsNames());
+            mAddedNamesArrayAdapter.reset(actionsList.getActionsNames());
         }
     }
 

@@ -3,7 +3,6 @@ package com.f1x.mtcdtools.named.objects;
 import android.content.Context;
 import android.content.Intent;
 
-import com.f1x.mtcdtools.configuration.Configuration;
 import com.f1x.mtcdtools.named.objects.actions.KeyAction;
 import com.f1x.mtcdtools.storage.NamedObjectsStorage;
 
