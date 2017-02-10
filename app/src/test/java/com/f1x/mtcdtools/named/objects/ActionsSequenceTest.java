@@ -10,10 +10,12 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertNotEquals;
 
 /**
  * Created by COMPUTER on 2017-02-09.
@@ -33,24 +35,24 @@ public class ActionsSequenceTest {
         mActionsArray.put("action3");
         mSequenceJson.put(ActionsSequence.ACTIONS_PROPERTY, mActionsArray);
 
-        mDelaysArray = new JSONArray();
+        JSONArray delaysArray = new JSONArray();
 
         JSONObject action1Delay = new JSONObject();
         action1Delay.put(Action.NAME_PROPERTY, "action1");
         action1Delay.put(ActionsSequence.ACTION_DELAY_PROPERTY, 30);
-        mDelaysArray.put(action1Delay);
+        delaysArray.put(action1Delay);
 
         JSONObject action2Delay = new JSONObject();
         action2Delay.put(Action.NAME_PROPERTY, "action2");
-        action2Delay.put(ActionsSequence.ACTION_DELAY_PROPERTY, 90);
-        mDelaysArray.put(action2Delay);
+        action2Delay.put(ActionsSequence.ACTION_DELAY_PROPERTY, 60);
+        delaysArray.put(action2Delay);
 
         JSONObject action3Delay = new JSONObject();
         action3Delay.put(Action.NAME_PROPERTY, "action3");
-        action3Delay.put(ActionsSequence.ACTION_DELAY_PROPERTY, 0);
-        mDelaysArray.put(action3Delay);
+        action3Delay.put(ActionsSequence.ACTION_DELAY_PROPERTY, 90);
+        delaysArray.put(action3Delay);
 
-        mSequenceJson.put(ActionsSequence.ACTION_DELAYS_PROPERTY, mDelaysArray);
+        mSequenceJson.put(ActionsSequence.ACTION_DELAYS_PROPERTY, delaysArray);
     }
 
     @Test
@@ -65,9 +67,14 @@ public class ActionsSequenceTest {
             assertEquals(mActionsArray.get(i), actionNames.get(i));
         }
 
-        assertEquals(30, actionsSequence.getDelayForAction("action1"));
-        assertEquals(90, actionsSequence.getDelayForAction("action2"));
-        assertEquals(0, actionsSequence.getDelayForAction("action3"));
+        assertEquals(30, actionsSequence.getDelayForAction(0));
+        assertEquals("action1", actionsSequence.getActionDelays().get(0).getKey());
+
+        assertEquals(60, actionsSequence.getDelayForAction(1));
+        assertEquals("action2", actionsSequence.getActionDelays().get(1).getKey());
+
+        assertEquals(90, actionsSequence.getDelayForAction(2));
+        assertEquals("action3", actionsSequence.getActionDelays().get(2).getKey());
     }
 
     @Test
@@ -84,9 +91,14 @@ public class ActionsSequenceTest {
             assertEquals(mActionsArray.get(i), actionNames.get(i));
         }
 
-        assertEquals(0, actionsSequence.getDelayForAction("action1"));
-        assertEquals(0, actionsSequence.getDelayForAction("action2"));
-        assertEquals(0, actionsSequence.getDelayForAction("action3"));
+        assertEquals(0, actionsSequence.getDelayForAction(0));
+        assertEquals("action1", actionsSequence.getActionDelays().get(0).getKey());
+
+        assertEquals(0, actionsSequence.getDelayForAction(1));
+        assertEquals("action2", actionsSequence.getActionDelays().get(1).getKey());
+
+        assertEquals(0, actionsSequence.getDelayForAction(2));
+        assertEquals("action3", actionsSequence.getActionDelays().get(2).getKey());
     }
 
     @Test
@@ -96,7 +108,7 @@ public class ActionsSequenceTest {
     }
 
     @Test
-    public void test_RemoveActionName() throws JSONException {
+    public void test_RemoveDependency() throws JSONException {
         ActionsSequence actionsSequence = new ActionsSequence(mSequenceJson);
         actionsSequence.removeDependency(mActionsArray.getString(1));
 
@@ -104,20 +116,27 @@ public class ActionsSequenceTest {
         assertTrue(actionsSequence.getActionsNames().contains(mActionsArray.getString(0)));
         assertTrue(actionsSequence.getActionsNames().contains(mActionsArray.getString(2)));
 
-        assertEquals(0, actionsSequence.getDelayForAction(mActionsArray.getString(1)));
+        assertEquals(2, actionsSequence.getActionDelays().size());
+
+        assertEquals(30, actionsSequence.getDelayForAction(0));
+        assertEquals("action1", actionsSequence.getActionDelays().get(0).getKey());
+
+        assertEquals(90, actionsSequence.getDelayForAction(1));
+        assertEquals("action3", actionsSequence.getActionDelays().get(1).getKey());
     }
 
     @Test
-    public void test_ReplaceActionName_SameName() throws JSONException {
+    public void test_ReplaceDependency_SameName() throws JSONException {
         ActionsSequence actionsSequence = new ActionsSequence(mSequenceJson);
 
         actionsSequence.replaceDependency(mActionsArray.getString(1), mActionsArray.getString(1));
         assertTrue(actionsSequence.getActionsNames().contains(mActionsArray.getString(1)));
-        assertEquals(90, actionsSequence.getDelayForAction(mActionsArray.getString(1)));
+        assertEquals(60, actionsSequence.getDelayForAction(1));
+        assertEquals(mActionsArray.getString(1), actionsSequence.getActionDelays().get(1).getKey());
     }
 
     @Test
-    public void test_ReplaceActionName_NewName() throws JSONException {
+    public void test_ReplaceDependency_NewName() throws JSONException {
         ActionsSequence actionsSequence = new ActionsSequence(mSequenceJson);
 
         String newActionName = "actionNewName";
@@ -126,12 +145,17 @@ public class ActionsSequenceTest {
         assertFalse(actionsSequence.getActionsNames().contains(mActionsArray.getString(1)));
         assertTrue(actionsSequence.getActionsNames().contains(newActionName));
 
-        assertEquals(0, actionsSequence.getDelayForAction(mActionsArray.getString(1)));
-        assertEquals(90, actionsSequence.getDelayForAction(newActionName));
+        assertEquals(60, actionsSequence.getDelayForAction(1));
+        assertEquals(newActionName, actionsSequence.getActionDelays().get(1).getKey());
+
+        assertEquals(3, actionsSequence.getActionDelays().size());
+        for(Map.Entry<String, Integer> entry : actionsSequence.getActionDelays()) {
+            assertNotEquals(entry.getKey(), mActionsArray.getString(1));
+        }
     }
 
     @Test
-    public void test_ReplaceActionName_NonExistent() throws JSONException {
+    public void test_ReplaceDependency_NonExistent() throws JSONException {
         ActionsSequence actionsSequence = new ActionsSequence(mSequenceJson);
 
         String nonExistentActionName = "nonExistentAction";
@@ -139,11 +163,15 @@ public class ActionsSequenceTest {
         actionsSequence.replaceDependency(nonExistentActionName, newActionName);
 
         assertFalse(actionsSequence.getActionsNames().contains(newActionName));
-        assertEquals(0, actionsSequence.getDelayForAction(newActionName));
+
+        assertEquals(3, actionsSequence.getActionDelays().size());
+        for(Map.Entry<String, Integer> entry : actionsSequence.getActionDelays()) {
+            assertNotEquals(entry.getKey(), nonExistentActionName);
+            assertNotEquals(entry.getKey(), newActionName);
+        }
     }
 
     private String mSequenceName;
     private JSONObject mSequenceJson;
     private JSONArray mActionsArray;
-    private JSONArray mDelaysArray;
 }

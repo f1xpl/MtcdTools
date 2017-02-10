@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.adapters.entries.ActionInSequenceEntry;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -68,12 +69,25 @@ public class ActionsInSequenceArrayAdapter extends ArrayAdapter<ActionInSequence
         return getView(position, convertView, parent);
     }
 
-    public void reset(List<String> actionNames, Map<String, Integer> actionDelays) {
+    public void reset(List<Map.Entry<String, Integer>> items) {
         clear();
 
-        for(String actionName : actionNames) {
-            int delay = actionDelays.containsKey(actionName) ? actionDelays.get(actionName) : 0;
-            add(new ActionInSequenceEntry(actionName, delay));
+        for(Map.Entry<String, Integer> entry : items) {
+            add(new ActionInSequenceEntry(entry.getKey(), entry.getValue()));
+        }
+    }
+
+    public void removeAt(int position) {
+        if(position != -1 && position < getCount()) {
+            List<ActionInSequenceEntry> items = new ArrayList<>();
+
+            for(int i = 0; i < getCount(); ++i) {
+                items.add(getItem(i));
+            }
+
+            items.remove(position);
+            clear();
+            addAll(items);
         }
     }
 }

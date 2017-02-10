@@ -111,7 +111,7 @@ public class ActionsListTest {
     }
 
     @Test
-    public void test_RemoveActionName() throws JSONException {
+    public void test_RemoveDependency() throws JSONException {
         ActionsList actionsList = new ActionsList(mListJson);
         actionsList.removeDependency(mActionsArray.getString(1));
 
@@ -121,7 +121,7 @@ public class ActionsListTest {
     }
 
     @Test
-    public void test_ReplaceActionName_SameName() throws JSONException {
+    public void test_ReplaceDependency_SameName() throws JSONException {
         ActionsList actionsList = new ActionsList(mListJson);
         actionsList.replaceDependency(mActionsArray.getString(1), mActionsArray.getString(1));
         assertTrue(actionsList.getActionsNames().contains(mActionsArray.getString(1)));
@@ -129,7 +129,7 @@ public class ActionsListTest {
 
 
     @Test
-    public void test_ReplaceActionName_NewName() throws JSONException {
+    public void test_ReplaceDependency_NewName() throws JSONException {
         ActionsList actionsList = new ActionsList(mListJson);
 
         String newActionName = "actionNewName";
@@ -140,7 +140,7 @@ public class ActionsListTest {
     }
 
     @Test
-    public void test_ReplaceActionName_NonExistent() throws JSONException {
+    public void test_ReplaceDependency_NonExistent() throws JSONException {
         ActionsList actionsList = new ActionsList(mListJson);
 
         String nonExistentActionName = "nonExistentAction";

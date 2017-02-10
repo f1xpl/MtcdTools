@@ -24,4 +24,18 @@ public class NamesArrayAdapter extends ArrayAdapter<String> {
 
         return items;
     }
+
+    public void removeAt(int position) {
+        if(position != -1 && position < getCount()) {
+            List<String> items = new ArrayList<>();
+
+            for(int i = 0; i < getCount(); ++i) {
+                items.add(getItem(i));
+            }
+
+            items.remove(position);
+            clear();
+            addAll(items);
+        }
+    }
 }

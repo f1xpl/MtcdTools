@@ -101,8 +101,7 @@ public class ActionsListActivity extends NamedObjectsContainerActivity {
         addedActionsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-                String actionName = mAddedNamesArrayAdapter.getItem(position);
-                mAddedNamesArrayAdapter.remove(actionName);
+                mAddedNamesArrayAdapter.removeAt(position);
 
                 return true;
             }

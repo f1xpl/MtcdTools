@@ -15,6 +15,7 @@ import com.f1x.mtcdtools.named.objects.actions.KeyAction;
 import com.f1x.mtcdtools.named.objects.actions.LaunchAction;
 import com.f1x.mtcdtools.named.objects.actions.StartActivityAction;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -42,8 +43,7 @@ public class ActionsSequenceActivity extends NamedObjectsContainerActivity {
         addedActionsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-                ActionInSequenceEntry actionInSequenceEntry = mActionsInSequenceArrayAdapter.getItem(position);
-                mActionsInSequenceArrayAdapter.remove(actionInSequenceEntry);
+                mActionsInSequenceArrayAdapter.removeAt(position);
 
                 return true;
             }
@@ -65,19 +65,19 @@ public class ActionsSequenceActivity extends NamedObjectsContainerActivity {
         super.fillControls(namedObject);
         if(namedObject.getObjectType().equals(ActionsSequence.OBJECT_TYPE)) {
             ActionsSequence actionsSequence = (ActionsSequence)namedObject;
-            mActionsInSequenceArrayAdapter.reset(actionsSequence.getActionsNames(), actionsSequence.getActionDelays());
+            mActionsInSequenceArrayAdapter.reset(actionsSequence.getActionDelays());
         }
     }
 
      @Override
     protected NamedObject createNamedObject(String namedObjectName) {
          List<String> actionNames = new ArrayList<>();
-         Map<String, Integer> actionDelays = new HashMap<>();
+         List<Map.Entry<String, Integer>> actionDelays = new ArrayList<>();
 
          for(int i = 0; i < mActionsInSequenceArrayAdapter.getCount(); ++i) {
              ActionInSequenceEntry actionInSequenceEntry = mActionsInSequenceArrayAdapter.getItem(i);
              actionNames.add(actionInSequenceEntry.getActionName());
-             actionDelays.put(actionInSequenceEntry.getActionName(), actionInSequenceEntry.getDelay());
+             actionDelays.add(new AbstractMap.SimpleEntry<>(actionInSequenceEntry.getActionName(), actionInSequenceEntry.getDelay()));
          }
 
         return new ActionsSequence(namedObjectName, actionNames, actionDelays);
