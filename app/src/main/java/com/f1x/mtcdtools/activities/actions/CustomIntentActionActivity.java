@@ -6,6 +6,7 @@ import android.widget.Toast;
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.activities.NamedObjectActivity;
 import com.f1x.mtcdtools.named.objects.NamedObject;
+import com.f1x.mtcdtools.named.objects.NamedObjectId;
 import com.f1x.mtcdtools.named.objects.actions.Action;
 import com.f1x.mtcdtools.named.objects.actions.CustomIntentAction;
 
@@ -34,11 +35,11 @@ public abstract class CustomIntentActionActivity extends NamedObjectActivity {
     }
 
     @Override
-    protected NamedObject createNamedObject(String namedObjectName) {
+    protected NamedObject createNamedObject(NamedObjectId namedObjectId) {
         try {
             String intentExtrasJsonString = mIntentExtrasEditText.getEditableText().toString();
             JSONObject intentExtrasJson = intentExtrasJsonString.isEmpty() ? new JSONObject() : new JSONObject(intentExtrasJsonString);
-            return createAction(namedObjectName, intentExtrasJson);
+            return createAction(namedObjectId, intentExtrasJson);
         }
         catch(JSONException e) {
             e.printStackTrace();
@@ -68,7 +69,7 @@ public abstract class CustomIntentActionActivity extends NamedObjectActivity {
         }
     }
 
-    protected abstract Action createAction(String actionName, JSONObject intentExtrasJson) throws JSONException;
+    protected abstract Action createAction(NamedObjectId actionId, JSONObject intentExtrasJson) throws JSONException;
 
     EditText mIntentActionEditText;
     EditText mIntentCategoryEditText;

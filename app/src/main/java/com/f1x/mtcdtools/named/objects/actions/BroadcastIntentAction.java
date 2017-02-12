@@ -3,6 +3,8 @@ package com.f1x.mtcdtools.named.objects.actions;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.f1x.mtcdtools.named.objects.NamedObjectId;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,10 +18,10 @@ public class BroadcastIntentAction extends CustomIntentAction {
         mPermissions = json.getString(PERMISSIONS_PROPERTY);
     }
 
-    public BroadcastIntentAction(String actionName, String intentPackage, String intentAction,
+    public BroadcastIntentAction(NamedObjectId id, String intentPackage, String intentAction,
                                  String intentCategory, String intentData, String intentType,
                                  JSONObject intentExtras, String intentPermissions) throws JSONException {
-        super(actionName, OBJECT_TYPE, intentPackage, intentAction, intentCategory, intentData, intentType, intentExtras);
+        super(id, OBJECT_TYPE, intentPackage, intentAction, intentCategory, intentData, intentType, intentExtras);
         mPermissions = intentPermissions;
     }
 

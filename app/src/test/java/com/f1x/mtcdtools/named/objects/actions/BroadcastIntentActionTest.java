@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.f1x.mtcdtools.named.objects.NamedObjectId;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -36,8 +38,10 @@ public class BroadcastIntentActionTest {
         initMocks(this);
         PowerMockito.mockStatic(ExtrasParser.class);
 
+        mActionId = new NamedObjectId("TestBroadcastIntentAction");
+
         mActionJson = new JSONObject();
-        mActionJson.put(BroadcastIntentAction.NAME_PROPERTY, "TestBroadcastIntentAction");
+        mActionJson.put(BroadcastIntentAction.NAME_PROPERTY, mActionId.toString());
         mActionJson.put(BroadcastIntentAction.OBJECT_TYPE_PROPERTY, BroadcastIntentAction.OBJECT_TYPE);
         mActionJson.put(BroadcastIntentAction.INTENT_PACKAGE_PROPERTY, "com.test.package");
         mActionJson.put(BroadcastIntentAction.INTENT_CATEGORY_PROPERTY, "intentCategory");
@@ -54,7 +58,7 @@ public class BroadcastIntentActionTest {
         JSONObject intentExtras = new JSONObject();
         PowerMockito.when(ExtrasParser.toJSON(mMockBundle)).thenReturn(intentExtras);
 
-        BroadcastIntentAction broadcastIntentAction = new BroadcastIntentAction(mActionJson.getString(BroadcastIntentAction.NAME_PROPERTY),
+        BroadcastIntentAction broadcastIntentAction = new BroadcastIntentAction(mActionId,
                                                                                 mActionJson.getString(BroadcastIntentAction.INTENT_PACKAGE_PROPERTY),
                                                                                 mActionJson.getString(BroadcastIntentAction.INTENT_ACTION_PROPERTY),
                                                                                 mActionJson.getString(BroadcastIntentAction.INTENT_CATEGORY_PROPERTY),
@@ -64,7 +68,7 @@ public class BroadcastIntentActionTest {
                                                                                 mActionJson.getString(BroadcastIntentAction.PERMISSIONS_PROPERTY));
 
         assertEquals(mActionJson.toString(), broadcastIntentAction.toJson().toString());
-        assertEquals(mActionJson.getString(BroadcastIntentAction.NAME_PROPERTY), broadcastIntentAction.getName());
+        assertEquals(mActionId, broadcastIntentAction.getId());
         assertEquals(mActionJson.getString(BroadcastIntentAction.OBJECT_TYPE_PROPERTY), broadcastIntentAction.getObjectType());
         assertEquals(mActionJson.getString(BroadcastIntentAction.INTENT_PACKAGE_PROPERTY), broadcastIntentAction.getIntentPackage());
         assertEquals(mActionJson.getString(BroadcastIntentAction.INTENT_ACTION_PROPERTY), broadcastIntentAction.getIntentAction());
@@ -103,7 +107,7 @@ public class BroadcastIntentActionTest {
         PowerMockito.when(UriParser.fromString(any(String.class))).thenReturn(mMockUri);
         PowerMockito.when(ExtrasParser.fromJSON(any(JSONObject.class))).thenReturn(mMockBundle);
 
-        BroadcastIntentAction broadcastIntentAction = new BroadcastIntentAction("testAction", "com.package", "intentAction", "intentCategory", "intentData", "intentType", new JSONObject(), "");
+        BroadcastIntentAction broadcastIntentAction = new BroadcastIntentAction(mActionId, "com.package", "intentAction", "intentCategory", "intentData", "intentType", new JSONObject(), "");
         broadcastIntentAction.evaluate(mMockContext);
 
         verify(mMockContext).sendBroadcast(mBroadcastIntent);
@@ -114,7 +118,7 @@ public class BroadcastIntentActionTest {
         PowerMockito.when(ExtrasParser.fromJSON(any(JSONObject.class))).thenReturn(mMockBundle);
         PowerMockito.when(mMockBundle.isEmpty()).thenReturn(true);
 
-        BroadcastIntentAction broadcastIntentAction = new BroadcastIntentAction("testAction", "", "", "", "", "", new JSONObject(), "");
+        BroadcastIntentAction broadcastIntentAction = new BroadcastIntentAction(mActionId, "", "", "", "", "", new JSONObject(), "");
         broadcastIntentAction.evaluate(mMockContext);
 
         verify(mBroadcastIntent, times(0)).setType(any(String.class));
@@ -133,7 +137,7 @@ public class BroadcastIntentActionTest {
 
         BroadcastIntentAction broadcastIntentAction = new BroadcastIntentAction(mActionJson);
         assertEquals(mActionJson.toString(), broadcastIntentAction.toJson().toString());
-        assertEquals(mActionJson.getString(BroadcastIntentAction.NAME_PROPERTY), broadcastIntentAction.getName());
+        assertEquals(mActionId, broadcastIntentAction.getId());
         assertEquals(mActionJson.getString(BroadcastIntentAction.OBJECT_TYPE_PROPERTY), broadcastIntentAction.getObjectType());
         assertEquals(mActionJson.getString(BroadcastIntentAction.INTENT_PACKAGE_PROPERTY), broadcastIntentAction.getIntentPackage());
         assertEquals(mActionJson.getString(BroadcastIntentAction.INTENT_ACTION_PROPERTY), broadcastIntentAction.getIntentAction());
@@ -143,6 +147,8 @@ public class BroadcastIntentActionTest {
         assertEquals(mActionJson.getString(BroadcastIntentAction.PERMISSIONS_PROPERTY), broadcastIntentAction.getPermissions());
         assertEquals(intentExtras.toString(), broadcastIntentAction.getIntentExtras().toString());
     }
+
+    private NamedObjectId mActionId;
 
     @Mock
     Context mMockContext;
@@ -156,5 +162,5 @@ public class BroadcastIntentActionTest {
     @Mock
     Bundle mMockBundle;
 
-    JSONObject mActionJson;
+    private JSONObject mActionJson;
 }

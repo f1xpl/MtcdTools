@@ -1,5 +1,7 @@
 package com.f1x.mtcdtools;
 
+import com.f1x.mtcdtools.named.objects.NamedObjectId;
+
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -20,15 +22,15 @@ public class SpeechParserTest {
         texts.add("spotify then play then pause then triple word command then stop");
 
         SpeechParser speechParser = new SpeechParser();
-        List<String> parsedTexts = speechParser.parse(texts, "then");
+        List<NamedObjectId> parsedTexts = speechParser.parse(texts, "then");
 
         assertEquals(5, parsedTexts.size());
 
-        assertEquals("spotify", parsedTexts.get(0));
-        assertEquals("play", parsedTexts.get(1));
-        assertEquals("pause", parsedTexts.get(2));
-        assertEquals("triple word command", parsedTexts.get(3));
-        assertEquals("stop", parsedTexts.get(4));
+        assertEquals(new NamedObjectId("spotify"), parsedTexts.get(0));
+        assertEquals(new NamedObjectId("play"), parsedTexts.get(1));
+        assertEquals(new NamedObjectId("pause"), parsedTexts.get(2));
+        assertEquals(new NamedObjectId("triple word command"), parsedTexts.get(3));
+        assertEquals(new NamedObjectId("stop"), parsedTexts.get(4));
 
         assertEquals(0, countElements(parsedTexts, "then"));
     }
@@ -41,7 +43,7 @@ public class SpeechParserTest {
         texts.add("This is third command");
 
         SpeechParser speechParser = new SpeechParser();
-        List<String> parsedTexts = speechParser.parse(texts, " ");
+        List<NamedObjectId> parsedTexts = speechParser.parse(texts, " ");
 
         assertEquals(1, countElements(parsedTexts, "this"));
         assertEquals(1, countElements(parsedTexts, "is"));
@@ -58,15 +60,15 @@ public class SpeechParserTest {
         texts.add("triple word command");
 
         SpeechParser speechParser = new SpeechParser();
-        List<String> parsedTexts = speechParser.parse(texts, "");
-        assertTrue(parsedTexts.contains("triple word command"));
+        List<NamedObjectId> parsedTexts = speechParser.parse(texts, "");
+        assertTrue(parsedTexts.contains(new NamedObjectId("triple word command")));
     }
 
-    private int countElements(List<String> list, String element) {
+    private int countElements(List<NamedObjectId> list, String element) {
         int count = 0;
 
-        for(String value : list) {
-            if(value.equalsIgnoreCase(element)) {
+        for(NamedObjectId value : list) {
+            if(value.equals(new NamedObjectId(element))) {
                 ++count;
             }
         }

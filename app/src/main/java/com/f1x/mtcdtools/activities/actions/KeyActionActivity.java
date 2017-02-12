@@ -6,6 +6,7 @@ import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.activities.NamedObjectActivity;
 import com.f1x.mtcdtools.adapters.KeyCodesArrayAdapter;
 import com.f1x.mtcdtools.named.objects.NamedObject;
+import com.f1x.mtcdtools.named.objects.NamedObjectId;
 import com.f1x.mtcdtools.named.objects.actions.KeyAction;
 
 /**
@@ -27,9 +28,9 @@ public class KeyActionActivity extends NamedObjectActivity {
     }
 
     @Override
-    protected NamedObject createNamedObject(String namedObjectName) {
+    protected NamedObject createNamedObject(NamedObjectId namedObjectId) {
         String keyCodeName = (String)mKeyCodesSpinner.getSelectedItem();
-        return new KeyAction(namedObjectName, mKeyCodesArrayAdapter.getKeyCode(keyCodeName));
+        return new KeyAction(namedObjectId, mKeyCodesArrayAdapter.getKeyCode(keyCodeName));
     }
 
     @Override

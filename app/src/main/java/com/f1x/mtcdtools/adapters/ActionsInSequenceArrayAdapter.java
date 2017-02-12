@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.adapters.entries.ActionInSequenceEntry;
+import com.f1x.mtcdtools.named.objects.NamedObjectId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +57,7 @@ public class ActionsInSequenceArrayAdapter extends ArrayAdapter<ActionInSequence
         ActionInSequenceEntry entry = getItem(position);
 
         if(entry != null) {
-            actionNameTextView.setText(entry.getActionName());
+            actionNameTextView.setText(entry.getActionId().toString());
             actionDelaySeekBar.setProgress(entry.getDelay());
         }
 
@@ -68,10 +69,10 @@ public class ActionsInSequenceArrayAdapter extends ArrayAdapter<ActionInSequence
         return getView(position, convertView, parent);
     }
 
-    public void reset(List<Map.Entry<String, Integer>> items) {
+    public void reset(List<Map.Entry<NamedObjectId, Integer>> items) {
         clear();
 
-        for(Map.Entry<String, Integer> entry : items) {
+        for(Map.Entry<NamedObjectId, Integer> entry : items) {
             add(new ActionInSequenceEntry(entry.getKey(), entry.getValue()));
         }
     }

@@ -4,6 +4,7 @@ import android.widget.EditText;
 
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.named.objects.NamedObject;
+import com.f1x.mtcdtools.named.objects.NamedObjectId;
 import com.f1x.mtcdtools.named.objects.actions.Action;
 import com.f1x.mtcdtools.named.objects.actions.StartActivityAction;
 
@@ -34,11 +35,11 @@ public class StartActivityActionActivity extends CustomIntentActionActivity {
     }
 
     @Override
-    protected Action createAction(String actionName, JSONObject intentExtrasJson) throws JSONException {
+    protected Action createAction(NamedObjectId actionId, JSONObject intentExtrasJson) throws JSONException {
         String flagsString = mFlagsNameEditText.getText().toString();
         int flags = flagsString.isEmpty() ? 0 : Integer.parseInt(flagsString);
 
-        return new StartActivityAction(actionName,
+        return new StartActivityAction(actionId,
                 mIntentPackageEditText.getEditableText().toString(),
                 mIntentActionEditText.getEditableText().toString(),
                 mIntentCategoryEditText.getEditableText().toString(),

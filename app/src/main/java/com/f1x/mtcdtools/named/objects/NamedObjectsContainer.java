@@ -14,21 +14,21 @@ import java.util.List;
 public class NamedObjectsContainer extends NamedObject {
     NamedObjectsContainer(JSONObject json) throws JSONException {
         super(json);
-        mActionNames = new ArrayList<>();
+        mActionIds = new ArrayList<>();
         JSONArray actionsArray = json.getJSONArray(ACTIONS_PROPERTY);
 
         for (int i = 0; i < actionsArray.length(); ++i) {
-            mActionNames.add(actionsArray.getString(i));
+            mActionIds.add(new NamedObjectId(actionsArray.getString(i)));
         }
     }
 
-    NamedObjectsContainer(String name, String objectType, List<String> actionsNames) {
-        super(name, objectType);
-        mActionNames = actionsNames;
+    NamedObjectsContainer(NamedObjectId id, String objectType, List<NamedObjectId> actionIds) {
+        super(id, objectType);
+        mActionIds = actionIds;
     }
 
-    public List<String> getActionsNames() {
-        return new ArrayList<>(mActionNames);
+    public List<NamedObjectId> getActionIds() {
+        return new ArrayList<>(mActionIds);
     }
 
     @Override
@@ -36,8 +36,8 @@ public class NamedObjectsContainer extends NamedObject {
         JSONObject json = super.toJson();
 
         JSONArray actionsArray = new JSONArray();
-        for (String action : mActionNames) {
-            actionsArray.put(action);
+        for (NamedObjectId id : mActionIds) {
+            actionsArray.put(id);
         }
 
         json.put(ACTIONS_PROPERTY, actionsArray);
@@ -46,19 +46,19 @@ public class NamedObjectsContainer extends NamedObject {
     }
 
     @Override
-    public void removeDependency(String dependencyName) {
-        mActionNames.remove(dependencyName);
+    public void removeDependency(NamedObjectId id) {
+        mActionIds.remove(id);
     }
 
     @Override
-    public void replaceDependency(String oldDependencyName, String newDependencyName) {
-        if(mActionNames.contains(oldDependencyName)) {
-            int index = mActionNames.indexOf(oldDependencyName);
-            mActionNames.set(index, newDependencyName);
+    public void replaceDependency(NamedObjectId oldId, NamedObjectId newId) {
+        if(mActionIds.contains(oldId)) {
+            int index = mActionIds.indexOf(oldId);
+            mActionIds.set(index, newId);
         }
     }
 
-    private List<String> mActionNames;
+    private List<NamedObjectId> mActionIds;
 
     static public final String ACTIONS_PROPERTY = "actions";
 }

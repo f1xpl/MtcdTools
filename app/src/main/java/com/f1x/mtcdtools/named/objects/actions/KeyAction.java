@@ -5,6 +5,8 @@ import android.media.AudioManager;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
+import com.f1x.mtcdtools.named.objects.NamedObjectId;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,8 +20,8 @@ public class KeyAction extends Action {
         mKeyCode = json.getInt(KEYCODE_PROPERTY);
     }
 
-    public KeyAction(String actionName, int keyCode) {
-        super(actionName, OBJECT_TYPE);
+    public KeyAction(NamedObjectId id, int keyCode) {
+        super(id, OBJECT_TYPE);
         mKeyCode = keyCode;
     }
 

@@ -1,6 +1,7 @@
 package com.f1x.mtcdtools.storage;
 
 import com.f1x.mtcdtools.named.objects.NamedObject;
+import com.f1x.mtcdtools.named.objects.NamedObjectId;
 import com.f1x.mtcdtools.named.objects.NamedObjectsFactory;
 import com.f1x.mtcdtools.storage.exceptions.DuplicatedEntryException;
 import com.f1x.mtcdtools.storage.exceptions.EntryCreationFailed;
@@ -17,7 +18,7 @@ import java.util.TreeMap;
  * Created by f1x on 2017-02-05.
  */
 
-public class NamedObjectsStorage extends Storage<String, NamedObject> {
+public class NamedObjectsStorage extends Storage<NamedObjectId, NamedObject> {
     public NamedObjectsStorage(FileReader reader, FileWriter writer) {
         super(reader, writer);
     }
@@ -33,7 +34,7 @@ public class NamedObjectsStorage extends Storage<String, NamedObject> {
             if(namedObject == null) {
                 throw new EntryCreationFailed(namedObjectJson.getString(NamedObject.NAME_PROPERTY));
             } else {
-                put(namedObject.getName(), namedObject);
+                put(namedObject.getId(), namedObject);
             }
         }
     }
@@ -42,7 +43,7 @@ public class NamedObjectsStorage extends Storage<String, NamedObject> {
     public void write() throws JSONException, IOException {
         JSONArray namedObjectsArray = new JSONArray();
 
-        for(Map.Entry<String, NamedObject> entry : mItems.entrySet()) {
+        for(Map.Entry<NamedObjectId, NamedObject> entry : mItems.entrySet()) {
             namedObjectsArray.put(entry.getValue().toJson());
         }
 
@@ -50,31 +51,26 @@ public class NamedObjectsStorage extends Storage<String, NamedObject> {
     }
 
     @Override
-    protected Map<String, NamedObject> createContainer() {
-        return new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    public void remove(NamedObjectId id) throws IOException, JSONException {
+        removeDependency(id);
+        super.remove(id);
     }
 
     @Override
-    public void remove(String name) throws IOException, JSONException {
-        removeDependency(name);
-        super.remove(name);
+    public void replace(NamedObjectId oldId, NamedObjectId newId, NamedObject newItem) throws JSONException, IOException, DuplicatedEntryException {
+        replaceDependency(oldId, newId);
+        super.replace(oldId, newId, newItem);
     }
 
-    @Override
-    public void replace(String oldName, String newName, NamedObject newItem) throws JSONException, IOException, DuplicatedEntryException {
-        replaceDependency(oldName, newName);
-        super.replace(oldName, newName, newItem);
-    }
-
-    private void removeDependency(String dependencyName) {
-        for(Map.Entry<String, NamedObject> entry : mItems.entrySet()) {
-            entry.getValue().removeDependency(dependencyName);
+    private void removeDependency(NamedObjectId dependencyId) {
+        for(Map.Entry<NamedObjectId, NamedObject> entry : mItems.entrySet()) {
+            entry.getValue().removeDependency(dependencyId);
         }
     }
 
-    private void replaceDependency(String oldName, String newName) {
-        for(Map.Entry<String, NamedObject> entry : mItems.entrySet()) {
-            entry.getValue().replaceDependency(oldName, newName);
+    private void replaceDependency(NamedObjectId oldId, NamedObjectId newId) {
+        for(Map.Entry<NamedObjectId, NamedObject> entry : mItems.entrySet()) {
+            entry.getValue().replaceDependency(oldId, newId);
         }
     }
 

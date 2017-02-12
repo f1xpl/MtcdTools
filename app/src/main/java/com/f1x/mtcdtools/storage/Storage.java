@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -18,7 +19,7 @@ public abstract class Storage<Key, Value> {
     public Storage(FileReader reader, FileWriter writer) {
         mReader = reader;
         mWriter = writer;
-        mItems = createContainer();
+        mItems = new LinkedHashMap<>();
     }
 
     public void insert(Key key, Value item) throws JSONException, IOException, DuplicatedEntryException {
@@ -50,9 +51,7 @@ public abstract class Storage<Key, Value> {
     }
 
     public Map<Key, Value> getItems() {
-        Map<Key, Value> copy = createContainer();
-        copy.putAll(mItems);
-        return copy;
+        return new LinkedHashMap<>(mItems);
     }
 
     public abstract void read() throws JSONException, IOException, DuplicatedEntryException, EntryCreationFailed;
@@ -82,11 +81,9 @@ public abstract class Storage<Key, Value> {
         }
     }
 
-    protected abstract Map<Key, Value> createContainer();
-
     private final FileReader mReader;
     private final FileWriter mWriter;
-    protected final Map<Key, Value> mItems;
+    final Map<Key, Value> mItems;
 
     private static final String CHARSET = "UTF-8";
 }

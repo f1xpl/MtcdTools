@@ -3,6 +3,7 @@ package com.f1x.mtcdtools.named.objects.actions;
 import android.content.Context;
 
 import com.f1x.mtcdtools.named.objects.NamedObject;
+import com.f1x.mtcdtools.named.objects.NamedObjectId;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,8 +13,8 @@ import org.json.JSONObject;
  */
 
 public abstract class Action extends NamedObject {
-    Action(String name, String type) {
-        super(name, type);
+    Action(NamedObjectId id, String type) {
+        super(id, type);
     }
 
     Action(JSONObject json) throws JSONException {
@@ -23,13 +24,10 @@ public abstract class Action extends NamedObject {
     public abstract void evaluate(Context context);
 
     @Override
-    public void removeDependency(String dependencyName) {
-
-    }
+    public void removeDependency(NamedObjectId id) {}
 
     @Override
-    public void replaceDependency(String oldDependencyName, String newDependencyName) {
-    }
+    public void replaceDependency(NamedObjectId oldId, NamedObjectId newId) {}
 
     public static boolean isAction(String objectType) {
         return objectType.equals(KeyAction.OBJECT_TYPE) ||

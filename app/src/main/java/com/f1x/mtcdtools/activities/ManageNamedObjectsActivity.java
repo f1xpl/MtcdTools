@@ -12,10 +12,11 @@ import com.f1x.mtcdtools.activities.actions.BroadcastIntentActionActivity;
 import com.f1x.mtcdtools.activities.actions.KeyActionActivity;
 import com.f1x.mtcdtools.activities.actions.LaunchActionActivity;
 import com.f1x.mtcdtools.activities.actions.StartActivityActionActivity;
-import com.f1x.mtcdtools.adapters.NamedObjectsArrayAdapter;
+import com.f1x.mtcdtools.adapters.NamedObjectIdsArrayAdapter;
 import com.f1x.mtcdtools.named.objects.ActionsList;
 import com.f1x.mtcdtools.named.objects.ActionsSequence;
 import com.f1x.mtcdtools.named.objects.NamedObject;
+import com.f1x.mtcdtools.named.objects.NamedObjectId;
 import com.f1x.mtcdtools.named.objects.actions.BroadcastIntentAction;
 import com.f1x.mtcdtools.named.objects.actions.KeyAction;
 import com.f1x.mtcdtools.named.objects.actions.LaunchAction;
@@ -33,17 +34,17 @@ public class ManageNamedObjectsActivity extends ServiceActivity {
         setContentView(R.layout.activity_manage_named_objects);
 
         ListView mNamedObjectsListView = (ListView)this.findViewById(R.id.listViewAddedNamedObjects);
-        mNamedObjectsArrayAdapter = new NamedObjectsArrayAdapter(this);
-        mNamedObjectsListView.setAdapter(mNamedObjectsArrayAdapter);
+        mNamedObjectIdsArrayAdapter = new NamedObjectIdsArrayAdapter(this);
+        mNamedObjectsListView.setAdapter(mNamedObjectIdsArrayAdapter);
 
         mNamedObjectsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
                 try {
-                    String namedObjectName = mNamedObjectsArrayAdapter.getItem(position);
-                    mServiceBinder.getNamedObjectsStorage().remove(namedObjectName);
-                    mServiceBinder.getKeysSequenceBindingsStorage().removeBindingWithTarget(namedObjectName);
-                    mNamedObjectsArrayAdapter.remove(namedObjectName);
+                    NamedObjectId namedObjectId = mNamedObjectIdsArrayAdapter.getItem(position);
+                    mServiceBinder.getNamedObjectsStorage().remove(namedObjectId);
+                    mServiceBinder.getKeysSequenceBindingsStorage().removeBindingWithTarget(namedObjectId);
+                    mNamedObjectIdsArrayAdapter.remove(namedObjectId);
                 } catch(IOException | JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(ManageNamedObjectsActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
@@ -56,11 +57,11 @@ public class ManageNamedObjectsActivity extends ServiceActivity {
         mNamedObjectsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                String namedObjectName = mNamedObjectsArrayAdapter.getItem(position);
-                NamedObject namedObject = mServiceBinder.getNamedObjectsStorage().getItem(namedObjectName);
+                NamedObjectId namedObjectId = mNamedObjectIdsArrayAdapter.getItem(position);
+                NamedObject namedObject = mServiceBinder.getNamedObjectsStorage().getItem(namedObjectId);
 
                 Intent intent = new Intent();
-                intent.putExtra(NamedObjectActivity.NAME_PARAMETER, namedObjectName);
+                intent.putExtra(NamedObjectActivity.NAMED_OBJECT_ID_PARAMETER, namedObjectId);
 
                 switch(namedObject.getObjectType()) {
                     case KeyAction.OBJECT_TYPE:
@@ -96,14 +97,14 @@ public class ManageNamedObjectsActivity extends ServiceActivity {
         super.onResume();
 
         if(mServiceBinder != null) {
-            mNamedObjectsArrayAdapter.reset(mServiceBinder.getNamedObjectsStorage().getItems());
+            mNamedObjectIdsArrayAdapter.reset(mServiceBinder.getNamedObjectsStorage().getItems());
         }
     }
 
     @Override
     protected void onServiceConnected() {
-        mNamedObjectsArrayAdapter.reset(mServiceBinder.getNamedObjectsStorage().getItems());
+        mNamedObjectIdsArrayAdapter.reset(mServiceBinder.getNamedObjectsStorage().getItems());
     }
 
-    private NamedObjectsArrayAdapter mNamedObjectsArrayAdapter;
+    private NamedObjectIdsArrayAdapter mNamedObjectIdsArrayAdapter;
 }

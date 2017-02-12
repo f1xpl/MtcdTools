@@ -23,7 +23,7 @@ public class KeysSequenceDispatcher implements KeysSequenceListener {
         KeysSequenceBinding keysSequenceBinding = mKeysSequenceBindingsStorage.getItem(keysSequence);
 
         if(keysSequenceBinding != null) {
-            mNamedObjectDispatcher.dispatch(keysSequenceBinding.getTargetName(), mContext);
+            mNamedObjectDispatcher.dispatch(keysSequenceBinding.getTargetId(), mContext);
         }
     }
 

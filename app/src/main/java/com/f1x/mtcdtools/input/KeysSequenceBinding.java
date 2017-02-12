@@ -1,5 +1,7 @@
 package com.f1x.mtcdtools.input;
 
+import com.f1x.mtcdtools.named.objects.NamedObjectId;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,20 +21,20 @@ public class KeysSequenceBinding {
             mKeysSequence.add(keysSequenceArray.getInt(i));
         }
 
-        mTargetName = json.getString(TARGET_NAME_PROPERTY);
+        mTargetId = new NamedObjectId(json.getString(TARGET_NAME_PROPERTY));
     }
 
-    public KeysSequenceBinding(List<Integer> keysSequence, String targetName) {
+    public KeysSequenceBinding(List<Integer> keysSequence, NamedObjectId targetId) {
         mKeysSequence = keysSequence;
-        mTargetName = targetName;
+        mTargetId = targetId;
     }
 
-    public void setTargetName(String name) {
-        mTargetName = name;
+    public void setTargetId(NamedObjectId targetId) {
+        mTargetId = targetId;
     }
 
-    public String getTargetName() {
-        return mTargetName;
+    public NamedObjectId getTargetId() {
+        return mTargetId;
     }
 
     public List<Integer> getKeysSequence() {
@@ -42,18 +44,19 @@ public class KeysSequenceBinding {
     public JSONObject toJson() throws JSONException {
         JSONObject json = new JSONObject();
         JSONArray keysSequenceArray = new JSONArray();
+
         for (int key : mKeysSequence) {
             keysSequenceArray.put(key);
         }
-        json.put(KEYS_SEQUENCE_PROPERTY, keysSequenceArray);
 
-        json.put(TARGET_NAME_PROPERTY, mTargetName);
+        json.put(KEYS_SEQUENCE_PROPERTY, keysSequenceArray);
+        json.put(TARGET_NAME_PROPERTY, mTargetId);
 
         return json;
     }
 
     private final List<Integer> mKeysSequence;
-    private String mTargetName;
+    private NamedObjectId mTargetId;
 
     public static final String KEYS_SEQUENCE_PROPERTY = "keysSequence";
     public static final String TARGET_NAME_PROPERTY = "targetName";

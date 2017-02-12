@@ -4,6 +4,8 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.view.KeyEvent;
 
+import com.f1x.mtcdtools.named.objects.NamedObjectId;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -35,8 +37,10 @@ public class KeyActionTest {
         initMocks(this);
         Mockito.doReturn(mMockAudioManager).when(mMockContext).getSystemService(Context.AUDIO_SERVICE);
 
+        mActionId = new NamedObjectId("TestKeyAction");
+
         mActionJson = new JSONObject();
-        mActionJson.put(KeyAction.NAME_PROPERTY, "TestKeyAction");
+        mActionJson.put(KeyAction.NAME_PROPERTY, mActionId.toString());
         mActionJson.put(KeyAction.OBJECT_TYPE_PROPERTY, KeyAction.OBJECT_TYPE);
         mActionJson.put(KeyAction.KEYCODE_PROPERTY, 123);
     }
@@ -56,11 +60,11 @@ public class KeyActionTest {
 
     @Test
     public void test_ConstructFromParameters() throws JSONException {
-        KeyAction keyAction = new KeyAction(mActionJson.getString(KeyAction.NAME_PROPERTY),
+        KeyAction keyAction = new KeyAction(mActionId,
                                             mActionJson.getInt(KeyAction.KEYCODE_PROPERTY));
 
         assertEquals(keyAction.toJson().toString(), mActionJson.toString());
-        assertEquals(mActionJson.getString(KeyAction.NAME_PROPERTY), keyAction.getName());
+        assertEquals(mActionId, keyAction.getId());
         assertEquals(mActionJson.getString(KeyAction.OBJECT_TYPE_PROPERTY), keyAction.getObjectType());
         assertEquals(mActionJson.getInt(KeyAction.KEYCODE_PROPERTY), keyAction.getKeyCode());
     }
@@ -69,10 +73,12 @@ public class KeyActionTest {
     public void test_toJson() throws JSONException {
         KeyAction keyAction = new KeyAction(mActionJson);
         assertEquals(keyAction.toJson().toString(), mActionJson.toString());
-        assertEquals(mActionJson.getString(KeyAction.NAME_PROPERTY), keyAction.getName());
+        assertEquals(mActionId, keyAction.getId());
         assertEquals(mActionJson.getString(KeyAction.OBJECT_TYPE_PROPERTY), keyAction.getObjectType());
         assertEquals(mActionJson.getInt(KeyAction.KEYCODE_PROPERTY), keyAction.getKeyCode());
     }
+
+    private NamedObjectId mActionId;
 
     @Mock
     KeyEvent mMockKeyEventUp;
@@ -86,5 +92,5 @@ public class KeyActionTest {
     @Mock
     AudioManager mMockAudioManager;
 
-    JSONObject mActionJson;
+    private JSONObject mActionJson;
 }

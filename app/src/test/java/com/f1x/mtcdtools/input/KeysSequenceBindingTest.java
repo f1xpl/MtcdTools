@@ -1,5 +1,7 @@
 package com.f1x.mtcdtools.input;
 
+import com.f1x.mtcdtools.named.objects.NamedObjectId;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,7 +40,7 @@ public class KeysSequenceBindingTest {
             assertEquals(mKeysSequenceArray.get(i), keysSequence.get(i));
         }
 
-        assertEquals(mKeysSequenceBindingJson.get(KeysSequenceBinding.TARGET_NAME_PROPERTY), keysSequenceBinding.getTargetName());
+        assertEquals(new NamedObjectId(mKeysSequenceBindingJson.getString(KeysSequenceBinding.TARGET_NAME_PROPERTY)), keysSequenceBinding.getTargetId());
     }
 
     @Test

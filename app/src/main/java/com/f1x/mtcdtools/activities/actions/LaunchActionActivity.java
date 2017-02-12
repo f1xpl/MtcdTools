@@ -9,6 +9,7 @@ import com.f1x.mtcdtools.activities.NamedObjectActivity;
 import com.f1x.mtcdtools.adapters.InstalledPackagesArrayAdapter;
 import com.f1x.mtcdtools.adapters.entries.PackageEntry;
 import com.f1x.mtcdtools.named.objects.NamedObject;
+import com.f1x.mtcdtools.named.objects.NamedObjectId;
 import com.f1x.mtcdtools.named.objects.actions.Action;
 import com.f1x.mtcdtools.named.objects.actions.LaunchAction;
 
@@ -40,9 +41,9 @@ public class LaunchActionActivity extends NamedObjectActivity {
     }
 
     @Override
-    protected Action createNamedObject(String namedObjectName) {
+    protected Action createNamedObject(NamedObjectId namedObjectId) {
         PackageEntry packageEntry = (PackageEntry)mInstalledPackagesSpinner.getSelectedItem();
-        return new LaunchAction(namedObjectName, packageEntry.getName());
+        return new LaunchAction(namedObjectId, packageEntry.getName());
     }
 
     @Override

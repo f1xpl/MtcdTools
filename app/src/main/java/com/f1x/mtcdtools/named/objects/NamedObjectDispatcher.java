@@ -18,12 +18,12 @@ public class NamedObjectDispatcher {
         mNamedObjectsStorage = namedObjectsStorage;
     }
 
-    public void dispatchNamedObjects(List<String> namedObjectsNames, Context context) {
-        new NamedObjectsDispatchTask(mNamedObjectsStorage, context).execute(namedObjectsNames.toArray(new String[namedObjectsNames.size()]));
+    public void dispatchNamedObjects(List<NamedObjectId> namedObjectIds, Context context) {
+        new NamedObjectsDispatchTask(mNamedObjectsStorage, context).execute(namedObjectIds.toArray(new NamedObjectId[namedObjectIds.size()]));
     }
 
-    public void dispatch(String namedObjectName, Context context) {
-        NamedObject namedObject = mNamedObjectsStorage.getItem(namedObjectName);
+    public void dispatch(NamedObjectId namedObjectId, Context context) {
+        NamedObject namedObject = mNamedObjectsStorage.getItem(namedObjectId);
 
         if(namedObject == null) {
             return;
@@ -38,7 +38,7 @@ public class NamedObjectDispatcher {
 
             case ActionsSequence.OBJECT_TYPE:
                 ActionsSequence actionsSequence = (ActionsSequence)namedObject;
-                new NamedObjectsDispatchTask(mNamedObjectsStorage, context).execute(actionsSequence.getName());
+                new NamedObjectsDispatchTask(mNamedObjectsStorage, context).execute(actionsSequence.getId());
                 break;
 
             default:
@@ -50,7 +50,7 @@ public class NamedObjectDispatcher {
     private void dispatchActionsList(ActionsList actionsList, Context context) {
         Intent intent = new Intent(context, SelectNamedObjectActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_FROM_BACKGROUND);
-        intent.putExtra(SelectNamedObjectActivity.ACTIONS_LIST_NAME_PARAMETER, actionsList.getName());
+        intent.putExtra(SelectNamedObjectActivity.ACTIONS_LIST_ID_PARAMETER, actionsList.getId());
         context.startActivity(intent);
     }
 

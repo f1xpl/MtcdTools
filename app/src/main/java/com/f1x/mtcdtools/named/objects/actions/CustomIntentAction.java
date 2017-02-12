@@ -3,6 +3,8 @@ package com.f1x.mtcdtools.named.objects.actions;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.f1x.mtcdtools.named.objects.NamedObjectId;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,10 +24,10 @@ public abstract class CustomIntentAction extends Action {
         mIntentExtras = ExtrasParser.fromJSON(json.getJSONObject(INTENT_EXTRAS_PROPERTY));
     }
 
-    CustomIntentAction(String actionName, String actionType, String intentPackage,
+    CustomIntentAction(NamedObjectId id, String actionType, String intentPackage,
                        String intentAction, String intentCategory, String intentData,
                        String intentType, JSONObject intentExtras) throws JSONException {
-        super(actionName, actionType);
+        super(id, actionType);
         mIntentPackage = intentPackage;
         mIntentAction = intentAction;
         mIntentCategory = intentCategory;

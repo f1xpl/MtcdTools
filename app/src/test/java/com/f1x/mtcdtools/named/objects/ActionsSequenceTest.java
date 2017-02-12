@@ -25,8 +25,8 @@ public class ActionsSequenceTest {
     @Before
     public void init() throws JSONException {
         mSequenceJson = new JSONObject();
-        mSequenceName = "sequence1";
-        mSequenceJson.put(ActionsSequence.NAME_PROPERTY, mSequenceName);
+        mSequenceId = new NamedObjectId("sequence1");
+        mSequenceJson.put(ActionsSequence.NAME_PROPERTY, mSequenceId.toString());
         mSequenceJson.put(ActionsSequence.OBJECT_TYPE_PROPERTY, ActionsSequence.OBJECT_TYPE);
 
         mActionsArray = new JSONArray();
@@ -58,23 +58,23 @@ public class ActionsSequenceTest {
     @Test
     public void test_Construct() throws JSONException {
         ActionsSequence actionsSequence = new ActionsSequence(mSequenceJson);
-        assertEquals(mSequenceName, actionsSequence.getName());
+        assertEquals(mSequenceId, actionsSequence.getId());
 
-        List<String> actionNames = new ArrayList<>(actionsSequence.getActionsNames());
+        List<NamedObjectId> actionIds = new ArrayList<>(actionsSequence.getActionIds());
 
-        assertEquals(mActionsArray.length(), actionNames.size());
+        assertEquals(mActionsArray.length(), actionIds.size());
         for (int i = 0; i < mActionsArray.length(); ++i) {
-            assertEquals(mActionsArray.get(i), actionNames.get(i));
+            assertEquals(new NamedObjectId(mActionsArray.getString(i)), actionIds.get(i));
         }
 
         assertEquals(30, actionsSequence.getDelayForAction(0));
-        assertEquals("action1", actionsSequence.getActionDelays().get(0).getKey());
+        assertEquals(new NamedObjectId("action1"), actionsSequence.getActionDelays().get(0).getKey());
 
         assertEquals(60, actionsSequence.getDelayForAction(1));
-        assertEquals("action2", actionsSequence.getActionDelays().get(1).getKey());
+        assertEquals(new NamedObjectId("action2"), actionsSequence.getActionDelays().get(1).getKey());
 
         assertEquals(90, actionsSequence.getDelayForAction(2));
-        assertEquals("action3", actionsSequence.getActionDelays().get(2).getKey());
+        assertEquals(new NamedObjectId("action3"), actionsSequence.getActionDelays().get(2).getKey());
     }
 
     @Test
@@ -82,23 +82,23 @@ public class ActionsSequenceTest {
         mSequenceJson.remove(ActionsSequence.ACTION_DELAYS_PROPERTY);
 
         ActionsSequence actionsSequence = new ActionsSequence(mSequenceJson);
-        assertEquals(mSequenceName, actionsSequence.getName());
+        assertEquals(mSequenceId, actionsSequence.getId());
 
-        List<String> actionNames = new ArrayList<>(actionsSequence.getActionsNames());
+        List<NamedObjectId> actionIds = new ArrayList<>(actionsSequence.getActionIds());
 
-        assertEquals(mActionsArray.length(), actionNames.size());
+        assertEquals(mActionsArray.length(), actionIds.size());
         for (int i = 0; i < mActionsArray.length(); ++i) {
-            assertEquals(mActionsArray.get(i), actionNames.get(i));
+            assertEquals(new NamedObjectId(mActionsArray.getString(i)), actionIds.get(i));
         }
 
         assertEquals(0, actionsSequence.getDelayForAction(0));
-        assertEquals("action1", actionsSequence.getActionDelays().get(0).getKey());
+        assertEquals(new NamedObjectId("action1"), actionsSequence.getActionDelays().get(0).getKey());
 
         assertEquals(0, actionsSequence.getDelayForAction(1));
-        assertEquals("action2", actionsSequence.getActionDelays().get(1).getKey());
+        assertEquals(new NamedObjectId("action2"), actionsSequence.getActionDelays().get(1).getKey());
 
         assertEquals(0, actionsSequence.getDelayForAction(2));
-        assertEquals("action3", actionsSequence.getActionDelays().get(2).getKey());
+        assertEquals(new NamedObjectId("action3"), actionsSequence.getActionDelays().get(2).getKey());
     }
 
     @Test
@@ -110,47 +110,47 @@ public class ActionsSequenceTest {
     @Test
     public void test_RemoveDependency() throws JSONException {
         ActionsSequence actionsSequence = new ActionsSequence(mSequenceJson);
-        actionsSequence.removeDependency(mActionsArray.getString(1));
+        actionsSequence.removeDependency(new NamedObjectId(mActionsArray.getString(1)));
 
-        assertFalse(actionsSequence.getActionsNames().contains(mActionsArray.getString(1)));
-        assertTrue(actionsSequence.getActionsNames().contains(mActionsArray.getString(0)));
-        assertTrue(actionsSequence.getActionsNames().contains(mActionsArray.getString(2)));
+        assertFalse(actionsSequence.getActionIds().contains(new NamedObjectId(mActionsArray.getString(1))));
+        assertTrue(actionsSequence.getActionIds().contains(new NamedObjectId(mActionsArray.getString(0))));
+        assertTrue(actionsSequence.getActionIds().contains(new NamedObjectId(mActionsArray.getString(2))));
 
         assertEquals(2, actionsSequence.getActionDelays().size());
 
         assertEquals(30, actionsSequence.getDelayForAction(0));
-        assertEquals("action1", actionsSequence.getActionDelays().get(0).getKey());
+        assertEquals(new NamedObjectId("action1"), actionsSequence.getActionDelays().get(0).getKey());
 
         assertEquals(90, actionsSequence.getDelayForAction(1));
-        assertEquals("action3", actionsSequence.getActionDelays().get(1).getKey());
+        assertEquals(new NamedObjectId("action3"), actionsSequence.getActionDelays().get(1).getKey());
     }
 
     @Test
     public void test_ReplaceDependency_SameName() throws JSONException {
         ActionsSequence actionsSequence = new ActionsSequence(mSequenceJson);
 
-        actionsSequence.replaceDependency(mActionsArray.getString(1), mActionsArray.getString(1));
-        assertTrue(actionsSequence.getActionsNames().contains(mActionsArray.getString(1)));
+        actionsSequence.replaceDependency(new NamedObjectId(mActionsArray.getString(1)), new NamedObjectId(mActionsArray.getString(1)));
+        assertTrue(actionsSequence.getActionIds().contains(new NamedObjectId(mActionsArray.getString(1))));
         assertEquals(60, actionsSequence.getDelayForAction(1));
-        assertEquals(mActionsArray.getString(1), actionsSequence.getActionDelays().get(1).getKey());
+        assertEquals(new NamedObjectId(mActionsArray.getString(1)), actionsSequence.getActionDelays().get(1).getKey());
     }
 
     @Test
     public void test_ReplaceDependency_NewName() throws JSONException {
         ActionsSequence actionsSequence = new ActionsSequence(mSequenceJson);
 
-        String newActionName = "actionNewName";
-        actionsSequence.replaceDependency(mActionsArray.getString(1), newActionName);
+        NamedObjectId newActionId = new NamedObjectId("actionNewName");
+        actionsSequence.replaceDependency(new NamedObjectId(mActionsArray.getString(1)), newActionId);
 
-        assertFalse(actionsSequence.getActionsNames().contains(mActionsArray.getString(1)));
-        assertTrue(actionsSequence.getActionsNames().contains(newActionName));
+        assertFalse(actionsSequence.getActionIds().contains(new NamedObjectId(mActionsArray.getString(1))));
+        assertTrue(actionsSequence.getActionIds().contains(newActionId));
 
         assertEquals(60, actionsSequence.getDelayForAction(1));
-        assertEquals(newActionName, actionsSequence.getActionDelays().get(1).getKey());
+        assertEquals(newActionId, actionsSequence.getActionDelays().get(1).getKey());
 
         assertEquals(3, actionsSequence.getActionDelays().size());
-        for(Map.Entry<String, Integer> entry : actionsSequence.getActionDelays()) {
-            assertNotEquals(entry.getKey(), mActionsArray.getString(1));
+        for(Map.Entry<NamedObjectId, Integer> entry : actionsSequence.getActionDelays()) {
+            assertNotEquals(entry.getKey(), new NamedObjectId(mActionsArray.getString(1)));
         }
     }
 
@@ -158,20 +158,20 @@ public class ActionsSequenceTest {
     public void test_ReplaceDependency_NonExistent() throws JSONException {
         ActionsSequence actionsSequence = new ActionsSequence(mSequenceJson);
 
-        String nonExistentActionName = "nonExistentAction";
-        String newActionName = "actionNewName";
-        actionsSequence.replaceDependency(nonExistentActionName, newActionName);
+        NamedObjectId nonExistentActionId = new NamedObjectId("nonExistentAction");
+        NamedObjectId newActionId = new NamedObjectId("actionNewName");
+        actionsSequence.replaceDependency(nonExistentActionId, newActionId);
 
-        assertFalse(actionsSequence.getActionsNames().contains(newActionName));
+        assertFalse(actionsSequence.getActionIds().contains(newActionId));
 
         assertEquals(3, actionsSequence.getActionDelays().size());
-        for(Map.Entry<String, Integer> entry : actionsSequence.getActionDelays()) {
-            assertNotEquals(entry.getKey(), nonExistentActionName);
-            assertNotEquals(entry.getKey(), newActionName);
+        for(Map.Entry<NamedObjectId, Integer> entry : actionsSequence.getActionDelays()) {
+            assertNotEquals(entry.getKey(), nonExistentActionId);
+            assertNotEquals(entry.getKey(), newActionId);
         }
     }
 
-    private String mSequenceName;
+    private NamedObjectId mSequenceId;
     private JSONObject mSequenceJson;
     private JSONArray mActionsArray;
 }

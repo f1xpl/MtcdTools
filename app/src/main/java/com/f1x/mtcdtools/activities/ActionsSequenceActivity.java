@@ -10,6 +10,7 @@ import com.f1x.mtcdtools.adapters.ActionsInSequenceArrayAdapter;
 import com.f1x.mtcdtools.adapters.entries.ActionInSequenceEntry;
 import com.f1x.mtcdtools.named.objects.ActionsSequence;
 import com.f1x.mtcdtools.named.objects.NamedObject;
+import com.f1x.mtcdtools.named.objects.NamedObjectId;
 import com.f1x.mtcdtools.named.objects.actions.BroadcastIntentAction;
 import com.f1x.mtcdtools.named.objects.actions.KeyAction;
 import com.f1x.mtcdtools.named.objects.actions.LaunchAction;
@@ -34,7 +35,7 @@ public class ActionsSequenceActivity extends NamedObjectsContainerActivity {
     @Override
     protected void initControls() {
         super.initControls();
-        mNamedObjectsArrayAdapter.setObjectTypeFilters(new TreeSet<>(Arrays.asList(KeyAction.OBJECT_TYPE, LaunchAction.OBJECT_TYPE, BroadcastIntentAction.OBJECT_TYPE, StartActivityAction.OBJECT_TYPE)));
+        mNamedObjectIdsArrayAdapter.setObjectTypeFilters(new TreeSet<>(Arrays.asList(KeyAction.OBJECT_TYPE, LaunchAction.OBJECT_TYPE, BroadcastIntentAction.OBJECT_TYPE, StartActivityAction.OBJECT_TYPE)));
         mActionsInSequenceArrayAdapter = new ActionsInSequenceArrayAdapter(this);
 
         ListView addedActionsListView = (ListView)this.findViewById(R.id.listViewAddedNamedObjects);
@@ -52,8 +53,8 @@ public class ActionsSequenceActivity extends NamedObjectsContainerActivity {
         addNamedObjectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String actionName = (String)mNamedObjectsSpinner.getSelectedItem();
-                ActionInSequenceEntry actionInSequenceEntry = new ActionInSequenceEntry(actionName, 0);
+                NamedObjectId actionId = (NamedObjectId)mNamedObjectsSpinner.getSelectedItem();
+                ActionInSequenceEntry actionInSequenceEntry = new ActionInSequenceEntry(actionId, 0);
                 mActionsInSequenceArrayAdapter.add(actionInSequenceEntry);
             }
         });
@@ -69,17 +70,17 @@ public class ActionsSequenceActivity extends NamedObjectsContainerActivity {
     }
 
      @Override
-    protected NamedObject createNamedObject(String namedObjectName) {
-         List<String> actionNames = new ArrayList<>();
-         List<Map.Entry<String, Integer>> actionDelays = new ArrayList<>();
+    protected NamedObject createNamedObject(NamedObjectId namedObjectId) {
+         List<NamedObjectId> actionNames = new ArrayList<>();
+         List<Map.Entry<NamedObjectId, Integer>> actionDelays = new ArrayList<>();
 
          for(int i = 0; i < mActionsInSequenceArrayAdapter.getCount(); ++i) {
              ActionInSequenceEntry actionInSequenceEntry = mActionsInSequenceArrayAdapter.getItem(i);
-             actionNames.add(actionInSequenceEntry.getActionName());
-             actionDelays.add(new AbstractMap.SimpleEntry<>(actionInSequenceEntry.getActionName(), actionInSequenceEntry.getDelay()));
+             actionNames.add(actionInSequenceEntry.getActionId());
+             actionDelays.add(new AbstractMap.SimpleEntry<>(actionInSequenceEntry.getActionId(), actionInSequenceEntry.getDelay()));
          }
 
-        return new ActionsSequence(namedObjectName, actionNames, actionDelays);
+        return new ActionsSequence(namedObjectId, actionNames, actionDelays);
     }
 
     private ActionsInSequenceArrayAdapter mActionsInSequenceArrayAdapter;

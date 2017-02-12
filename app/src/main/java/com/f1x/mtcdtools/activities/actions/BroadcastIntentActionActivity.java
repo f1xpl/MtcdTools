@@ -4,6 +4,7 @@ import android.widget.EditText;
 
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.named.objects.NamedObject;
+import com.f1x.mtcdtools.named.objects.NamedObjectId;
 import com.f1x.mtcdtools.named.objects.actions.Action;
 import com.f1x.mtcdtools.named.objects.actions.BroadcastIntentAction;
 
@@ -22,8 +23,8 @@ public class BroadcastIntentActionActivity extends CustomIntentActionActivity {
     }
 
     @Override
-    protected Action createAction(String actionName, JSONObject intentExtrasJson) throws JSONException {
-        return new BroadcastIntentAction(actionName,
+    protected Action createAction(NamedObjectId actionId, JSONObject intentExtrasJson) throws JSONException {
+        return new BroadcastIntentAction(actionId,
                                          mIntentPackageEditText.getEditableText().toString(),
                                          mIntentActionEditText.getEditableText().toString(),
                                          mIntentCategoryEditText.getEditableText().toString(),

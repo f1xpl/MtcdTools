@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
+import com.f1x.mtcdtools.named.objects.NamedObjectId;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,10 +20,10 @@ public class StartActivityAction extends CustomIntentAction {
         mFlags = json.getInt(FLAGS_PROPERTY);
     }
 
-    public StartActivityAction(String actionName, String intentPackage, String intentAction,
-                                 String intentCategory, String intentData, String intentType,
-                                 JSONObject intentExtras, String className, int flags) throws JSONException {
-        super(actionName, OBJECT_TYPE, intentPackage, intentAction, intentCategory, intentData, intentType, intentExtras);
+    public StartActivityAction(NamedObjectId id, String intentPackage, String intentAction,
+                               String intentCategory, String intentData, String intentType,
+                               JSONObject intentExtras, String className, int flags) throws JSONException {
+        super(id, OBJECT_TYPE, intentPackage, intentAction, intentCategory, intentData, intentType, intentExtras);
         mClassName = className;
         mFlags = flags;
     }

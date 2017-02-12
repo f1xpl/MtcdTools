@@ -3,7 +3,7 @@ package com.f1x.mtcdtools.activities;
 import android.widget.Spinner;
 
 import com.f1x.mtcdtools.R;
-import com.f1x.mtcdtools.adapters.NamedObjectsArrayAdapter;
+import com.f1x.mtcdtools.adapters.NamedObjectIdsArrayAdapter;
 
 /**
  * Created by f1x on 2017-02-05.
@@ -18,17 +18,17 @@ public abstract class NamedObjectsContainerActivity extends NamedObjectActivity 
     protected void initControls() {
         super.initControls();
 
-        mNamedObjectsArrayAdapter = new NamedObjectsArrayAdapter(this);
+        mNamedObjectIdsArrayAdapter = new NamedObjectIdsArrayAdapter(this);
         mNamedObjectsSpinner = (Spinner)this.findViewById(R.id.spinnerNamedObjects);
-        mNamedObjectsSpinner.setAdapter(mNamedObjectsArrayAdapter);
+        mNamedObjectsSpinner.setAdapter(mNamedObjectIdsArrayAdapter);
     }
 
     @Override
     protected void onServiceConnected() {
         super.onServiceConnected();
-        mNamedObjectsArrayAdapter.reset(mServiceBinder.getNamedObjectsStorage().getItems());
+        mNamedObjectIdsArrayAdapter.reset(mServiceBinder.getNamedObjectsStorage().getItems());
     }
 
-    NamedObjectsArrayAdapter mNamedObjectsArrayAdapter;
+    NamedObjectIdsArrayAdapter mNamedObjectIdsArrayAdapter;
     Spinner mNamedObjectsSpinner;
 }

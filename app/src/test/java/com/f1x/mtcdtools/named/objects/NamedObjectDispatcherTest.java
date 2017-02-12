@@ -37,14 +37,14 @@ public class NamedObjectDispatcherTest {
     @Test
     public void test_ActionDispatch() {
         KeyAction action = mock(KeyAction.class);
-        String actionName = "testActionName";
-        when(action.getName()).thenReturn(actionName);
+        NamedObjectId actionId = new NamedObjectId("testActionName");
+        when(action.getId()).thenReturn(actionId);
         when(action.getObjectType()).thenReturn(KeyAction.OBJECT_TYPE);
 
-        when(mMockNamedObjectsStorage.getItem(actionName)).thenReturn(action);
+        when(mMockNamedObjectsStorage.getItem(actionId)).thenReturn(action);
 
         NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage);
-        dispatcher.dispatch(actionName, mMockContext);
+        dispatcher.dispatch(actionId, mMockContext);
         verify(action, times(1)).evaluate(mMockContext);
     }
 
@@ -52,15 +52,15 @@ public class NamedObjectDispatcherTest {
     public void test_ActionsListDispatch() throws Exception {
         PowerMockito.whenNew(Intent.class).withAnyArguments().thenReturn(mMockIntent);
 
-        String actionsListName = "actionsListName";
+        NamedObjectId actionsListId = new NamedObjectId("actionsListName");
         ActionsList actionsList = mock(ActionsList.class);
-        when(actionsList.getName()).thenReturn(actionsListName);
+        when(actionsList.getId()).thenReturn(actionsListId);
         when(actionsList.getObjectType()).thenReturn(ActionsList.OBJECT_TYPE);
 
-        when(mMockNamedObjectsStorage.getItem(actionsListName)).thenReturn(actionsList);
+        when(mMockNamedObjectsStorage.getItem(actionsListId)).thenReturn(actionsList);
 
         NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage);
-        dispatcher.dispatch(actionsListName, mMockContext);
+        dispatcher.dispatch(actionsListId, mMockContext);
         verify(mMockContext, times(1)).startActivity(mMockIntent);
     }
 
@@ -72,7 +72,7 @@ public class NamedObjectDispatcherTest {
 //        when(actionsSequence.getObjectType()).thenReturn(ActionsSequence.OBJECT_TYPE);
 //
 //        List<String> actionsNames = new ArrayList<>(Arrays.asList("action12", "action15", "action16"));
-//        when(actionsSequence.getActionsNames()).thenReturn(actionsNames);
+//        when(actionsSequence.getActionIds()).thenReturn(actionsNames);
 //
 //        Action action = mock(Action.class);
 //
@@ -97,9 +97,9 @@ public class NamedObjectDispatcherTest {
     public void test_Dispatch_NullObject() {
         NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage);
 
-        String namedObjectName = "namedObjectName";
-        when(mMockNamedObjectsStorage.getItem(namedObjectName)).thenReturn(null);
-        dispatcher.dispatch(namedObjectName, mMockContext);
+        NamedObjectId namedObjectId = new NamedObjectId("namedObjectName");
+        when(mMockNamedObjectsStorage.getItem(namedObjectId)).thenReturn(null);
+        dispatcher.dispatch(namedObjectId, mMockContext);
     }
 
     @Mock

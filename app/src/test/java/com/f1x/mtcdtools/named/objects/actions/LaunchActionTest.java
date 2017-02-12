@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
+import com.f1x.mtcdtools.named.objects.NamedObjectId;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -31,17 +33,19 @@ public class LaunchActionTest {
     public void init() throws JSONException {
         initMocks(this);
 
+        mActionId = new NamedObjectId("TestLaunchAction");
+
         mActionJson = new JSONObject();
-        mActionJson.put(LaunchAction.NAME_PROPERTY, "TestLaunchAction");
+        mActionJson.put(LaunchAction.NAME_PROPERTY, mActionId.toString());
         mActionJson.put(LaunchAction.OBJECT_TYPE_PROPERTY, LaunchAction.OBJECT_TYPE);
         mActionJson.put(LaunchAction.PACKAGE_NAME_PROPERTY, "com.test.package.to.launch");
     }
 
     @Test
     public void test_construct() throws JSONException {
-        LaunchAction launchAction = new LaunchAction(mActionJson.getString(LaunchAction.NAME_PROPERTY), mActionJson.getString(LaunchAction.PACKAGE_NAME_PROPERTY));
+        LaunchAction launchAction = new LaunchAction(mActionId, mActionJson.getString(LaunchAction.PACKAGE_NAME_PROPERTY));
         assertEquals(mActionJson.toString(), launchAction.toJson().toString());
-        assertEquals(mActionJson.getString(LaunchAction.NAME_PROPERTY), launchAction.getName());
+        assertEquals(mActionId, launchAction.getId());
         assertEquals(mActionJson.getString(LaunchAction.OBJECT_TYPE_PROPERTY), launchAction.getObjectType());
         assertEquals(mActionJson.getString(LaunchAction.PACKAGE_NAME_PROPERTY), launchAction.getPackageName());
     }
@@ -73,10 +77,12 @@ public class LaunchActionTest {
     public void test_toJson() throws JSONException {
         LaunchAction launchAction = new LaunchAction(mActionJson);
         assertEquals(launchAction.toJson().toString(), mActionJson.toString());
-        assertEquals(mActionJson.getString(LaunchAction.NAME_PROPERTY), launchAction.getName());
+        assertEquals(mActionId, launchAction.getId());
         assertEquals(mActionJson.getString(LaunchAction.OBJECT_TYPE_PROPERTY), launchAction.getObjectType());
         assertEquals(mActionJson.getString(LaunchAction.PACKAGE_NAME_PROPERTY), launchAction.getPackageName());
     }
+
+    private NamedObjectId mActionId;
 
     @Mock
     Context mMockContext;
@@ -87,5 +93,5 @@ public class LaunchActionTest {
     @Mock
     Intent mMockLaunchIntent;
 
-    JSONObject mActionJson;
+    private JSONObject mActionJson;
 }

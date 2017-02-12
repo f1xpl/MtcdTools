@@ -20,8 +20,8 @@ public class ActionsList extends NamedObjectsContainer {
         mKeysSequenceDown = KeysSequenceConverter.fromJsonArray(json.getJSONArray(KEYS_SEQUENCE_DOWN_PROPERTY));
     }
 
-    public ActionsList(String name, List<Integer> keysSequenceUp, List<Integer> keysSequenceDown, List<String> actionsNames) {
-        super(name, OBJECT_TYPE, actionsNames);
+    public ActionsList(NamedObjectId id, List<Integer> keysSequenceUp, List<Integer> keysSequenceDown, List<NamedObjectId> actionIds) {
+        super(id, OBJECT_TYPE, actionIds);
 
         mKeysSequenceUp = keysSequenceUp;
         mKeysSequenceDown = keysSequenceDown;

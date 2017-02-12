@@ -1,6 +1,7 @@
 package com.f1x.mtcdtools.storage;
 
 import com.f1x.mtcdtools.input.KeysSequenceBinding;
+import com.f1x.mtcdtools.named.objects.NamedObjectId;
 import com.f1x.mtcdtools.storage.exceptions.DuplicatedEntryException;
 import com.f1x.mtcdtools.storage.exceptions.EntryCreationFailed;
 
@@ -44,8 +45,8 @@ public class KeysSequenceBindingsStorageTest {
         initMocks(this);
 
         mKeysSequenceBindings = new ArrayList<>();
-        mKeysSequenceBindings.add(new KeysSequenceBinding(Arrays.asList(1, 2, 5), "binding1"));
-        mKeysSequenceBindings.add(new KeysSequenceBinding(Arrays.asList(5, 6, 7), "binding2"));
+        mKeysSequenceBindings.add(new KeysSequenceBinding(Arrays.asList(1, 2, 5), new NamedObjectId("binding1")));
+        mKeysSequenceBindings.add(new KeysSequenceBinding(Arrays.asList(5, 6, 7), new NamedObjectId("binding2")));
         mKeysSequenceBindingsArray = new JSONArray();
         mKeysSequenceBindingsJson = new JSONObject();
     }
@@ -87,7 +88,7 @@ public class KeysSequenceBindingsStorageTest {
         KeysSequenceBindingsStorage storage = new KeysSequenceBindingsStorage(mMockFileReader, mMockFileWriter);
         storage.read();
 
-        storage.removeBindingWithTarget(mKeysSequenceBindings.get(0).getTargetName());
+        storage.removeBindingWithTarget(mKeysSequenceBindings.get(0).getTargetId());
         assertNull(storage.getItem(mKeysSequenceBindings.get(0).getKeysSequence()));
 
         verify(mMockFileWriter, times(1)).write(any(String.class), eq(KeysSequenceBindingsStorage.STORAGE_FILE_NAME), eq("UTF-8"));
@@ -111,9 +112,9 @@ public class KeysSequenceBindingsStorageTest {
         KeysSequenceBindingsStorage storage = new KeysSequenceBindingsStorage(mMockFileReader, mMockFileWriter);
         storage.read();
 
-        String newTargetName = "targetNewName";
-        storage.replaceTargetName(mKeysSequenceBindings.get(0).getTargetName(), newTargetName);
-        assertEquals(newTargetName, storage.getItem(mKeysSequenceBindings.get(0).getKeysSequence()).getTargetName());
+        NamedObjectId newTargetId = new NamedObjectId("targetNewName");
+        storage.replaceTarget(mKeysSequenceBindings.get(0).getTargetId(), newTargetId);
+        assertEquals(newTargetId, storage.getItem(mKeysSequenceBindings.get(0).getKeysSequence()).getTargetId());
 
         verify(mMockFileWriter, times(1)).write(any(String.class), eq(KeysSequenceBindingsStorage.STORAGE_FILE_NAME), eq("UTF-8"));
     }
@@ -125,12 +126,12 @@ public class KeysSequenceBindingsStorageTest {
         KeysSequenceBindingsStorage storage = new KeysSequenceBindingsStorage(mMockFileReader, mMockFileWriter);
         storage.read();
 
-        String nonExistentTargetName = "nonExistentTargetName";
-        String newTargetName = "targetNewName";
-        storage.replaceTargetName(nonExistentTargetName, newTargetName);
+        NamedObjectId nonExistentTargetId = new NamedObjectId("nonExistentTargetName");
+        NamedObjectId newTargetId = new NamedObjectId("targetNewName");
+        storage.replaceTarget(nonExistentTargetId, newTargetId);
 
         for(int i = 0; i < mKeysSequenceBindings.size(); ++i){
-            assertNotSame(newTargetName, storage.getItem(mKeysSequenceBindings.get(i).getKeysSequence()).getTargetName());
+            assertNotSame(newTargetId, storage.getItem(mKeysSequenceBindings.get(i).getKeysSequence()).getTargetId());
         }
 
         verify(mMockFileWriter, times(1)).write(any(String.class), eq(KeysSequenceBindingsStorage.STORAGE_FILE_NAME), eq("UTF-8"));

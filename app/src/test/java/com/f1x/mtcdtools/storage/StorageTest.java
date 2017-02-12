@@ -35,11 +35,6 @@ public class StorageTest {
         public void write() throws JSONException, IOException {
 
         }
-
-        @Override
-        protected Map<Integer, Integer> createContainer() {
-            return new HashMap<>();
-        }
     }
 
     @Before

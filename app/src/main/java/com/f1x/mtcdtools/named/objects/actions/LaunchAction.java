@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
+import com.f1x.mtcdtools.named.objects.NamedObjectId;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,8 +19,8 @@ public class LaunchAction extends Action {
         mPackageName = json.getString(PACKAGE_NAME_PROPERTY);
     }
 
-    public LaunchAction(String actionName, String packageName) {
-        super(actionName, OBJECT_TYPE);
+    public LaunchAction(NamedObjectId id, String packageName) {
+        super(id, OBJECT_TYPE);
         mPackageName = packageName;
     }
 

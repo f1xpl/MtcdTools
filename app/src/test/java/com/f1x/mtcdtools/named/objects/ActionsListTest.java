@@ -23,8 +23,8 @@ public class ActionsListTest {
     @Before
     public void init() throws JSONException {
         mListJson = new JSONObject();
-        mListName = "sequence1";
-        mListJson.put(ActionsList.NAME_PROPERTY, mListName);
+        mListId = new NamedObjectId("sequence1");
+        mListJson.put(ActionsList.NAME_PROPERTY, mListId.toString());
         mListJson.put(ActionsList.OBJECT_TYPE_PROPERTY, ActionsList.OBJECT_TYPE);
 
         mActionsArray = new JSONArray();
@@ -50,14 +50,12 @@ public class ActionsListTest {
     @Test
     public void test_Construct() throws JSONException {
         ActionsList actionsList = new ActionsList(mListJson);
+        assertEquals(mListId, actionsList.getId());
 
-        assertEquals(mListName, actionsList.getName());
-
-        List<String> actionNames = new ArrayList<>(actionsList.getActionsNames());
-
-        assertEquals(mActionsArray.length(), actionNames.size());
+        List<NamedObjectId> actionIds = actionsList.getActionIds();
+        assertEquals(mActionsArray.length(), actionIds.size());
         for(int i = 0; i < mActionsArray.length(); ++i) {
-            assertEquals(mActionsArray.get(i), actionNames.get(i));
+            assertEquals(new NamedObjectId(mActionsArray.getString(i)), actionIds.get(i));
         }
 
         List<Integer> keysSequenceUp = actionsList.getKeysSequenceUp();
@@ -81,21 +79,21 @@ public class ActionsListTest {
 
     @Test
     public void test_ConstructFromParameters() throws JSONException {
-        List<String> expectedActionsNames = new ArrayList<>();
+        List<NamedObjectId> expectedActionIds = new ArrayList<>();
         for(int i = 0; i < mActionsArray.length(); ++i) {
-            expectedActionsNames.add(mActionsArray.getString(i));
+            expectedActionIds.add(new NamedObjectId(mActionsArray.getString(i)));
         }
 
-        ActionsList actionsList = new ActionsList(mListName,
+        ActionsList actionsList = new ActionsList(mListId,
                                                   KeysSequenceConverter.fromJsonArray(mKeysSequenceUpArray),
                                                   KeysSequenceConverter.fromJsonArray(mKeysSequenceDownArray),
-                                                  expectedActionsNames);
+                                                  expectedActionIds);
 
-        assertEquals(mListName, actionsList.getName());
+        assertEquals(mListId, actionsList.getId());
 
-        List<String> actualActionNames = actionsList.getActionsNames();
-        assertEquals(expectedActionsNames.size(), actualActionNames.size());
-        assertEquals(expectedActionsNames, actualActionNames);
+        List<NamedObjectId> actualActionIds = actionsList.getActionIds();
+        assertEquals(expectedActionIds.size(), actualActionIds.size());
+        assertEquals(expectedActionIds, actualActionIds);
 
         List<Integer> keysSequenceUp = actionsList.getKeysSequenceUp();
         assertEquals(mKeysSequenceUpArray.length(), keysSequenceUp.size());
@@ -113,18 +111,18 @@ public class ActionsListTest {
     @Test
     public void test_RemoveDependency() throws JSONException {
         ActionsList actionsList = new ActionsList(mListJson);
-        actionsList.removeDependency(mActionsArray.getString(1));
+        actionsList.removeDependency(new NamedObjectId(mActionsArray.getString(1)));
 
-        assertFalse(actionsList.getActionsNames().contains(mActionsArray.getString(1)));
-        assertTrue(actionsList.getActionsNames().contains(mActionsArray.getString(0)));
-        assertTrue(actionsList.getActionsNames().contains(mActionsArray.getString(2)));
+        assertFalse(actionsList.getActionIds().contains(new NamedObjectId(mActionsArray.getString(1))));
+        assertTrue(actionsList.getActionIds().contains(new NamedObjectId(mActionsArray.getString(0))));
+        assertTrue(actionsList.getActionIds().contains(new NamedObjectId(mActionsArray.getString(2))));
     }
 
     @Test
     public void test_ReplaceDependency_SameName() throws JSONException {
         ActionsList actionsList = new ActionsList(mListJson);
-        actionsList.replaceDependency(mActionsArray.getString(1), mActionsArray.getString(1));
-        assertTrue(actionsList.getActionsNames().contains(mActionsArray.getString(1)));
+        actionsList.replaceDependency(new NamedObjectId(mActionsArray.getString(1)), new NamedObjectId(mActionsArray.getString(1)));
+        assertTrue(actionsList.getActionIds().contains(new NamedObjectId(mActionsArray.getString(1))));
     }
 
 
@@ -133,10 +131,10 @@ public class ActionsListTest {
         ActionsList actionsList = new ActionsList(mListJson);
 
         String newActionName = "actionNewName";
-        actionsList.replaceDependency(mActionsArray.getString(1), newActionName);
+        actionsList.replaceDependency(new NamedObjectId(mActionsArray.getString(1)), new NamedObjectId(newActionName));
 
-        assertFalse(actionsList.getActionsNames().contains(mActionsArray.getString(1)));
-        assertTrue(actionsList.getActionsNames().contains(newActionName));
+        assertFalse(actionsList.getActionIds().contains(new NamedObjectId(mActionsArray.getString(1))));
+        assertTrue(actionsList.getActionIds().contains(new NamedObjectId(newActionName)));
     }
 
     @Test
@@ -145,12 +143,12 @@ public class ActionsListTest {
 
         String nonExistentActionName = "nonExistentAction";
         String newActionName = "actionNewName";
-        actionsList.replaceDependency(nonExistentActionName, newActionName);
+        actionsList.replaceDependency(new NamedObjectId(nonExistentActionName), new NamedObjectId(newActionName));
 
-        assertFalse(actionsList.getActionsNames().contains(newActionName));
+        assertFalse(actionsList.getActionIds().contains(new NamedObjectId(newActionName)));
     }
 
-    private String mListName;
+    private NamedObjectId mListId;
     private JSONObject mListJson;
     private JSONArray mActionsArray;
     private JSONArray mKeysSequenceUpArray;

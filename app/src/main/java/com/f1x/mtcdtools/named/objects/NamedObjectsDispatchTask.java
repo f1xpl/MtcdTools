@@ -12,17 +12,17 @@ import java.util.List;
  * Created by f1x on 2017-02-05.
  */
 
-class NamedObjectsDispatchTask extends AsyncTask<String, Action, Void> {
+class NamedObjectsDispatchTask extends AsyncTask<NamedObjectId, Action, Void> {
     NamedObjectsDispatchTask(NamedObjectsStorage namedObjectsStorage, Context context) {
         mNamedObjectsStorage = namedObjectsStorage;
         mContext = context;
     }
 
     @Override
-    protected Void doInBackground(String... names) {
-        for(String name : names) {
+    protected Void doInBackground(NamedObjectId... ids) {
+        for(NamedObjectId id : ids) {
             try {
-                NamedObject namedObject = mNamedObjectsStorage.getItem(name);
+                NamedObject namedObject = mNamedObjectsStorage.getItem(id);
 
                 if(namedObject == null) {
                     continue;
@@ -45,10 +45,10 @@ class NamedObjectsDispatchTask extends AsyncTask<String, Action, Void> {
     }
 
     private void dispatchActionsSequence(ActionsSequence actionsSequence) throws InterruptedException {
-        List<String> actionNames = actionsSequence.getActionsNames();
+        List<NamedObjectId> actionIds = actionsSequence.getActionIds();
 
-        for(int i = 0; i < actionNames.size(); ++i) {
-            NamedObject namedObject = mNamedObjectsStorage.getItem(actionNames.get(i));
+        for(int i = 0; i < actionIds.size(); ++i) {
+            NamedObject namedObject = mNamedObjectsStorage.getItem(actionIds.get(i));
 
             if(Action.isAction(namedObject.getObjectType())) {
                 dispatchAction((Action)namedObject, actionsSequence.getDelayForAction(i));

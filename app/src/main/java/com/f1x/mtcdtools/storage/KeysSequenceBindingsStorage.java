@@ -1,6 +1,7 @@
 package com.f1x.mtcdtools.storage;
 
 import com.f1x.mtcdtools.input.KeysSequenceBinding;
+import com.f1x.mtcdtools.named.objects.NamedObjectId;
 import com.f1x.mtcdtools.storage.exceptions.DuplicatedEntryException;
 import com.f1x.mtcdtools.storage.exceptions.EntryCreationFailed;
 
@@ -8,7 +9,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -43,19 +43,14 @@ public class KeysSequenceBindingsStorage extends Storage<List<Integer>, KeysSequ
         write(STORAGE_FILE_NAME, ROOT_ARRAY_NAME, keysSequenceBindingsArray);
     }
 
-    @Override
-    protected Map<List<Integer>, KeysSequenceBinding> createContainer() {
-        return new HashMap<>();
-    }
-
-    public void removeBindingWithTarget(String targetName) throws IOException, JSONException {
+    public void removeBindingWithTarget(NamedObjectId targetId) throws IOException, JSONException {
         Iterator<Map.Entry<List<Integer>, KeysSequenceBinding>> iter = mItems.entrySet().iterator();
 
         while(iter.hasNext()) {
             Map.Entry<List<Integer>, KeysSequenceBinding> entry = iter.next();
 
             KeysSequenceBinding keysSequenceBinding = entry.getValue();
-            if(keysSequenceBinding.getTargetName().equals(targetName)) {
+            if(keysSequenceBinding.getTargetId().equals(targetId)) {
                 iter.remove();
             }
         }
@@ -63,12 +58,12 @@ public class KeysSequenceBindingsStorage extends Storage<List<Integer>, KeysSequ
         write();
     }
 
-    public void replaceTargetName(String oldName, String newName) throws IOException, JSONException {
+    public void replaceTarget(NamedObjectId oldId, NamedObjectId newId) throws IOException, JSONException {
         for(Map.Entry<List<Integer>, KeysSequenceBinding> entry : mItems.entrySet()) {
             KeysSequenceBinding keysSequenceBinding = entry.getValue();
 
-            if(keysSequenceBinding.getTargetName().equals(oldName)) {
-                keysSequenceBinding.setTargetName(newName);
+            if(keysSequenceBinding.getTargetId().equals(oldId)) {
+                keysSequenceBinding.setTargetId(newId);
             }
         }
 

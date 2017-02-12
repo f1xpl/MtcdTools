@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.named.objects.NamedObject;
+import com.f1x.mtcdtools.named.objects.NamedObjectId;
 import com.f1x.mtcdtools.storage.exceptions.DuplicatedEntryException;
 
 import org.json.JSONException;
@@ -28,8 +29,8 @@ public abstract class NamedObjectActivity extends ServiceActivity {
         super.onCreate(savedInstanceState);
         setContentView(mLayoutResId);
 
-        mEditName = this.getIntent().getStringExtra(NAME_PARAMETER);
-        mEditMode = mEditName != null;
+        mEditNamedObjectId = this.getIntent().getParcelableExtra(NAMED_OBJECT_ID_PARAMETER);
+        mEditMode = mEditNamedObjectId != null;
 
         initControls();
     }
@@ -37,7 +38,7 @@ public abstract class NamedObjectActivity extends ServiceActivity {
     @Override
     protected void onServiceConnected() {
         if(mEditMode) {
-            NamedObject namedObject = mServiceBinder.getNamedObjectsStorage().getItem(mEditName);
+            NamedObject namedObject = mServiceBinder.getNamedObjectsStorage().getItem(mEditNamedObjectId);
 
             if (namedObject == null) {
                 Toast.makeText(this, this.getText(R.string.ObjectNotFound), Toast.LENGTH_LONG).show();
@@ -73,7 +74,7 @@ public abstract class NamedObjectActivity extends ServiceActivity {
                 if(namedObjectName.isEmpty()) {
                     Toast.makeText(NamedObjectActivity.this, NamedObjectActivity.this.getText(R.string.EmptyNameError), Toast.LENGTH_LONG).show();
                 } else {
-                    storeNamedObject(namedObjectName);
+                    storeNamedObject(new NamedObjectId(namedObjectName));
                 }
             }
         });
@@ -82,19 +83,19 @@ public abstract class NamedObjectActivity extends ServiceActivity {
     }
 
     protected void fillControls(NamedObject namedObject) throws ClassCastException {
-        mNameEditText.setText(mEditMode ? namedObject.getName() : "");
+        mNameEditText.setText(mEditMode ? namedObject.getId().toString() : "");
     }
 
-    private void storeNamedObject(String namedObjectName) {
+    private void storeNamedObject(NamedObjectId namedObjectId) {
         try {
-            NamedObject namedObject = createNamedObject(namedObjectName);
+            NamedObject namedObject = createNamedObject(namedObjectId);
 
             if(namedObject != null) {
                 if(mEditMode) {
-                    mServiceBinder.getNamedObjectsStorage().replace(mEditName, namedObjectName, namedObject);
-                    mServiceBinder.getKeysSequenceBindingsStorage().replaceTargetName(mEditName, namedObjectName);
+                    mServiceBinder.getNamedObjectsStorage().replace(mEditNamedObjectId, namedObjectId, namedObject);
+                    mServiceBinder.getKeysSequenceBindingsStorage().replaceTarget(mEditNamedObjectId, namedObjectId);
                 } else {
-                    mServiceBinder.getNamedObjectsStorage().insert(namedObjectName, namedObject);
+                    mServiceBinder.getNamedObjectsStorage().insert(namedObjectId, namedObject);
                 }
 
                 finish();
@@ -108,12 +109,12 @@ public abstract class NamedObjectActivity extends ServiceActivity {
         }
     }
 
-    protected abstract NamedObject createNamedObject(String namedObjectName);
+    protected abstract NamedObject createNamedObject(NamedObjectId namedObjectId);
 
-    private String mEditName;
+    private NamedObjectId mEditNamedObjectId;
     private boolean mEditMode;
     private final int mLayoutResId;
     protected EditText mNameEditText;
 
-    public static final String NAME_PARAMETER = "name";
+    public static final String NAMED_OBJECT_ID_PARAMETER = "namedObjectId";
 }

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -12,11 +11,13 @@ import android.widget.Toast;
 
 import com.f1x.mtcdtools.ListViewScroller;
 import com.f1x.mtcdtools.R;
+import com.f1x.mtcdtools.adapters.NamedObjectIdsArrayAdapter;
 import com.f1x.mtcdtools.configuration.Configuration;
 import com.f1x.mtcdtools.configuration.ConfigurationChangeListener;
 import com.f1x.mtcdtools.input.KeysSequenceListener;
 import com.f1x.mtcdtools.named.objects.ActionsList;
 import com.f1x.mtcdtools.named.objects.NamedObject;
+import com.f1x.mtcdtools.named.objects.NamedObjectId;
 
 import java.util.List;
 
@@ -28,16 +29,16 @@ public class SelectNamedObjectActivity extends ServiceActivity {
         setContentView(R.layout.activity_select_named_object);
 
         mExecuteActionProgressBar = (ProgressBar)this.findViewById(R.id.progressBarExecuteAction);
-        mActionsListName = this.getIntent().getStringExtra(ACTIONS_LIST_NAME_PARAMETER);
-        mActionsNamesArrayAdapter = new ArrayAdapter<>(this, R.layout.layout_action_name_row);
+        mActionsListId = this.getIntent().getParcelableExtra(ACTIONS_LIST_ID_PARAMETER);
+        mActionIdsArrayAdapter = new NamedObjectIdsArrayAdapter(this, R.layout.layout_action_name_row);
 
         mActionsListView = (ListView)this.findViewById(R.id.listViewAddedNamedObjects);
-        mActionsListView.setAdapter(mActionsNamesArrayAdapter);
+        mActionsListView.setAdapter(mActionIdsArrayAdapter);
         mActionsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                String namedObjectName = mActionsNamesArrayAdapter.getItem(position);
-                mServiceBinder.getNamedObjectsDispatcher().dispatch(namedObjectName, SelectNamedObjectActivity.this);
+                NamedObjectId namedObjectId = mActionIdsArrayAdapter.getItem(position);
+                mServiceBinder.getNamedObjectsDispatcher().dispatch(namedObjectId, SelectNamedObjectActivity.this);
                 SelectNamedObjectActivity.this.finish();
             }
         });
@@ -67,7 +68,7 @@ public class SelectNamedObjectActivity extends ServiceActivity {
 
     @Override
     protected void onServiceConnected() {
-        NamedObject namedObject = mActionsListName == null ? null : mServiceBinder.getNamedObjectsStorage().getItem(mActionsListName);
+        NamedObject namedObject = mActionsListId == null ? null : mServiceBinder.getNamedObjectsStorage().getItem(mActionsListId);
 
         if(namedObject == null || !namedObject.getObjectType().equals(ActionsList.OBJECT_TYPE)) {
             Toast.makeText(this, this.getText(R.string.UnknownObjectType), Toast.LENGTH_LONG).show();
@@ -121,9 +122,8 @@ public class SelectNamedObjectActivity extends ServiceActivity {
         mExecuteActionProgressBar.setProgress(0);
         mExecuteActionProgressBar.setMax(mServiceBinder.getConfiguration().getActionExecutionDelay());
 
-        mActionsNamesArrayAdapter.clear();
-        mActionsNamesArrayAdapter.addAll(mActionsList.getActionsNames());
-        mActionsNamesArrayAdapter.insert(this.getText(R.string.Cancel).toString(), 0);
+        mActionIdsArrayAdapter.reset(mActionsList.getActionIds());
+        mActionIdsArrayAdapter.insert(new NamedObjectId(this.getText(R.string.Cancel).toString()), 0);
 
         mActionsListView.post(new Runnable() {
             @Override
@@ -173,11 +173,11 @@ public class SelectNamedObjectActivity extends ServiceActivity {
 
     private ListView mActionsListView;
     private ActionsList mActionsList;
-    private String mActionsListName;
-    private ArrayAdapter<String> mActionsNamesArrayAdapter;
+    private NamedObjectId mActionsListId;
+    private NamedObjectIdsArrayAdapter mActionIdsArrayAdapter;
     private ListViewScroller mListViewScroller;
     private ProgressBar mExecuteActionProgressBar;
 
     private static final int PROGRESS_BAR_DELTA = 50;
-    public static final String ACTIONS_LIST_NAME_PARAMETER = "actionsListName";
+    public static final String ACTIONS_LIST_ID_PARAMETER = "actionsListId";
 }

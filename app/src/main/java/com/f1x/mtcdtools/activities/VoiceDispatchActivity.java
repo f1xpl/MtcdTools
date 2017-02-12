@@ -7,6 +7,7 @@ import android.speech.RecognizerIntent;
 
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.SpeechParser;
+import com.f1x.mtcdtools.named.objects.NamedObjectId;
 
 import java.util.List;
 import java.util.Locale;
@@ -35,7 +36,7 @@ public class VoiceDispatchActivity extends ServiceActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(data != null) {
             List<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-            final List<String> namedObjectsNames = mSpeechParser.parse(text, mServiceBinder.getConfiguration().getActionsVoiceDelimiter());
+            final List<NamedObjectId> namedObjectIds = mSpeechParser.parse(text, mServiceBinder.getConfiguration().getActionsVoiceDelimiter());
 
             // Recognizer will pause playback during speech recognition
             // If user wants to execute any media button action, it can
@@ -43,7 +44,7 @@ public class VoiceDispatchActivity extends ServiceActivity {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    mServiceBinder.getNamedObjectsDispatcher().dispatchNamedObjects(namedObjectsNames, VoiceDispatchActivity.this);
+                    mServiceBinder.getNamedObjectsDispatcher().dispatchNamedObjects(namedObjectIds, VoiceDispatchActivity.this);
                 }
             }, mServiceBinder.getConfiguration().getVoiceCommandExecutionDelay());
         }
