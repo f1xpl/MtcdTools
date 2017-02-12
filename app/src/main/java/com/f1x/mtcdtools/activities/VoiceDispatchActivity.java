@@ -28,26 +28,39 @@ public class VoiceDispatchActivity extends ServiceActivity {
     protected void onServiceConnected() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault().toString());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, this.getText(R.string.SpeechPrompt));
 
         startActivityForResult(intent, 1);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(data != null) {
-            List<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-            final List<NamedObjectId> namedObjectIds = mSpeechParser.parse(text, mServiceBinder.getConfiguration().getActionsVoiceDelimiter());
-
-            // Recognizer will pause playback during speech recognition
-            // If user wants to execute any media button action, it can
-            // collides and overlaps with recognizer
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mServiceBinder.getNamedObjectsDispatcher().dispatchNamedObjects(namedObjectIds, VoiceDispatchActivity.this);
-                }
-            }, mServiceBinder.getConfiguration().getVoiceCommandExecutionDelay());
+        if(resultCode != RESULT_OK || data == null) {
+            VoiceDispatchActivity.this.finish();
+            return;
         }
+
+        List<String> texts = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+        if(texts.isEmpty()) {
+            VoiceDispatchActivity.this.finish();
+            return;
+        }
+
+        final List<NamedObjectId> namedObjectIds = mSpeechParser.parse(texts.get(0), mServiceBinder.getConfiguration().getActionsVoiceDelimiter());
+        if(namedObjectIds.isEmpty()) {
+            VoiceDispatchActivity.this.finish();
+            return;
+        }
+
+        // Recognizer will pause playback during speech recognition
+        // If user wants to execute any media button action, it can
+        // collides and overlaps with recognizer
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mServiceBinder.getNamedObjectsDispatcher().dispatchNamedObjects(namedObjectIds, VoiceDispatchActivity.this);
+            }
+        }, mServiceBinder.getConfiguration().getVoiceCommandExecutionDelay());
 
         VoiceDispatchActivity.this.finish();
     }

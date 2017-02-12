@@ -17,12 +17,10 @@ import static junit.framework.Assert.assertTrue;
 public class SpeechParserTest {
     @Test
     public void test_parse() {
-        List<String> texts = new ArrayList<>();
-
-        texts.add("spotify then play then pause then triple word command then stop");
+        String text = "spotify then play then pause then triple word command then stop";
 
         SpeechParser speechParser = new SpeechParser();
-        List<NamedObjectId> parsedTexts = speechParser.parse(texts, "then");
+        List<NamedObjectId> parsedTexts = speechParser.parse(text, "then");
 
         assertEquals(5, parsedTexts.size());
 
@@ -37,13 +35,10 @@ public class SpeechParserTest {
 
     @Test
     public void test_parse_without_duplicates() {
-        List<String> texts = new ArrayList<>();
-        texts.add("this is first command");
-        texts.add("this is second Command");
-        texts.add("This is third command");
+        String text = "this is first command this is second Command This is third command";
 
         SpeechParser speechParser = new SpeechParser();
-        List<NamedObjectId> parsedTexts = speechParser.parse(texts, " ");
+        List<NamedObjectId> parsedTexts = speechParser.parse(text, " ");
 
         assertEquals(1, countElements(parsedTexts, "this"));
         assertEquals(1, countElements(parsedTexts, "is"));
@@ -55,12 +50,10 @@ public class SpeechParserTest {
 
     @Test
     public void test_parse_without_delimiter() {
-        List<String> texts = new ArrayList<>();
-
-        texts.add("triple word command");
+        String text = "triple word command";
 
         SpeechParser speechParser = new SpeechParser();
-        List<NamedObjectId> parsedTexts = speechParser.parse(texts, "");
+        List<NamedObjectId> parsedTexts = speechParser.parse(text, "");
         assertTrue(parsedTexts.contains(new NamedObjectId("triple word command")));
     }
 

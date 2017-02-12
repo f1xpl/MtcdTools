@@ -10,15 +10,13 @@ import java.util.List;
  */
 
 public class SpeechParser {
-    public List<NamedObjectId> parse(List<String> texts, String separator) {
+    public List<NamedObjectId> parse(String text, String separator) {
         List<NamedObjectId> extractedObjectsNames = new ArrayList<>();
 
-        for(String text : texts) {
-            if(!separator.isEmpty()) {
-                parseText(extractedObjectsNames, text, separator);
-            } else if(!contains(extractedObjectsNames, text)) {
-                extractedObjectsNames.add(new NamedObjectId(text));
-            }
+        if(!separator.isEmpty()) {
+            parseText(extractedObjectsNames, text, separator);
+        } else if(!contains(extractedObjectsNames, text)) {
+            extractedObjectsNames.add(new NamedObjectId(text));
         }
 
         return new ArrayList<>(extractedObjectsNames);
