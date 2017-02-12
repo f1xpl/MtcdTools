@@ -10,45 +10,30 @@ import static junit.framework.Assert.assertEquals;
 
 public class ListIndexerTest {
     @Test
-    public void test_Down() {
+    public void test_down() {
         ListIndexer listIndexer = new ListIndexer();
-
         listIndexer.reset(5);
-        assertEquals(1, listIndexer.down());
-        assertEquals(2, listIndexer.down());
-        assertEquals(3, listIndexer.down());
-        assertEquals(4, listIndexer.down());
 
-        assertEquals(0, listIndexer.down());
-        assertEquals(1, listIndexer.down());
-        assertEquals(2, listIndexer.down());
-        assertEquals(3, listIndexer.down());
-        assertEquals(4, listIndexer.down());
+        for(int i = 1; i < 50; ++i) {
+            assertEquals(i % 5, listIndexer.down());
+        }
     }
 
     @Test
-    public void test_Up() {
+    public void test_up() {
         ListIndexer listIndexer = new ListIndexer();
-
         listIndexer.reset(5);
-        assertEquals(4, listIndexer.up());
-        assertEquals(3, listIndexer.up());
-        assertEquals(2, listIndexer.up());
-        assertEquals(1, listIndexer.up());
-        assertEquals(0, listIndexer.up());
 
-        assertEquals(4, listIndexer.up());
-        assertEquals(3, listIndexer.up());
-        assertEquals(2, listIndexer.up());
-        assertEquals(1, listIndexer.up());
-        assertEquals(0, listIndexer.up());
+        for(int i = 44; i >= 0; --i) {
+            assertEquals(i % 5, listIndexer.up());
+        }
     }
 
     @Test
-    public void test_UpAndDown() {
+    public void test_up_and_down() {
         ListIndexer listIndexer = new ListIndexer();
-
         listIndexer.reset(5);
+
         assertEquals(4, listIndexer.up());
         assertEquals(0, listIndexer.down());
         assertEquals(1, listIndexer.down());

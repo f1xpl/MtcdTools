@@ -8,6 +8,8 @@ import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
@@ -21,26 +23,31 @@ public class KeysSequenceBindingTest {
     public void init() throws JSONException {
         mKeysSequenceBindingJson = new JSONObject();
 
+        mKeysSequence = new ArrayList<>(Arrays.asList(1, 100, 1000));
         mKeysSequenceArray = new JSONArray();
-        mKeysSequenceArray.put(1);
-        mKeysSequenceArray.put(100);
-        mKeysSequenceArray.put(1000);
-        mKeysSequenceBindingJson.put(KeysSequenceBinding.KEYS_SEQUENCE_PROPERTY, mKeysSequenceArray);
 
-        mKeysSequenceBindingJson.put(KeysSequenceBinding.TARGET_NAME_PROPERTY, "testSequence");
+        for(Integer keyCode : mKeysSequence) {
+            mKeysSequenceArray.put(keyCode);
+        }
+
+        mKeysSequenceBindingJson.put(KeysSequenceBinding.KEYS_SEQUENCE_PROPERTY, mKeysSequenceArray);
+        mTargetId = new NamedObjectId("testSequence");
+        mKeysSequenceBindingJson.put(KeysSequenceBinding.TARGET_NAME_PROPERTY, mTargetId.toString());
     }
 
     @Test
-    public void test_Construct() throws JSONException {
+    public void test_construct() throws JSONException {
         KeysSequenceBinding keysSequenceBinding = new KeysSequenceBinding(mKeysSequenceBindingJson);
 
-        List<Integer> keysSequence = keysSequenceBinding.getKeysSequence();
-        assertEquals(mKeysSequenceArray.length(), keysSequence.size());
-        for(int i = 0; i < mKeysSequenceArray.length(); ++i) {
-            assertEquals(mKeysSequenceArray.get(i), keysSequence.get(i));
-        }
+        assertEquals(mKeysSequence, keysSequenceBinding.getKeysSequence());
+        assertEquals(mTargetId, keysSequenceBinding.getTargetId());
+    }
 
-        assertEquals(new NamedObjectId(mKeysSequenceBindingJson.getString(KeysSequenceBinding.TARGET_NAME_PROPERTY)), keysSequenceBinding.getTargetId());
+    @Test
+    public void test_construct_from_parameters() {
+        KeysSequenceBinding keysSequenceBinding = new KeysSequenceBinding(mKeysSequence, mTargetId);
+        assertEquals(mKeysSequence, keysSequenceBinding.getKeysSequence());
+        assertEquals(mTargetId, keysSequenceBinding.getTargetId());
     }
 
     @Test
@@ -49,6 +56,9 @@ public class KeysSequenceBindingTest {
         assertEquals(mKeysSequenceBindingJson.toString(), keysSequenceBinding.toJson().toString());
     }
 
-    JSONObject mKeysSequenceBindingJson;
-    JSONArray mKeysSequenceArray;
+    private NamedObjectId mTargetId;
+    private List<Integer> mKeysSequence;
+
+    private JSONObject mKeysSequenceBindingJson;
+    private JSONArray mKeysSequenceArray;
 }

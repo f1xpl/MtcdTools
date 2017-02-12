@@ -5,6 +5,8 @@ import org.json.JSONException;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
@@ -16,35 +18,31 @@ import static junit.framework.Assert.assertEquals;
 public class KeysSequenceConverterTest {
     @Before
     public void init() throws JSONException {
-        mKeysSequenceJsonArray = new JSONArray();
-        mKeysSequenceJsonArray.put(1);
-        mKeysSequenceJsonArray.put(100);
-        mKeysSequenceJsonArray.put(1000);
-    }
+        mKeysSequence = new ArrayList<>(Arrays.asList(1, 100, 1000));
 
-    @Test
-    public void test_Conversion() throws JSONException {
-        List<Integer> keysSequence = KeysSequenceConverter.fromJsonArray(mKeysSequenceJsonArray);
-        assertEquals(mKeysSequenceJsonArray.length(), keysSequence.size());
-        for(int i = 0; i < mKeysSequenceJsonArray.length(); ++i) {
-            assertEquals(mKeysSequenceJsonArray.get(i), keysSequence.get(i));
+        mKeysSequenceArray = new JSONArray();
+        for(Integer keyCode : mKeysSequence) {
+            mKeysSequenceArray.put(keyCode);
         }
-
-        JSONArray keysSequenceJsonArray = KeysSequenceConverter.toJsonArray(keysSequence);
-        assertEquals(mKeysSequenceJsonArray.toString(), keysSequenceJsonArray.toString());
     }
 
     @Test
-    public void test_Conversion_From_Array() {
-        int array[] = { 1, 2, 3, 4, 5};
+    public void test_conversion() throws JSONException {
+        List<Integer> keysSequence = KeysSequenceConverter.fromJsonArray(mKeysSequenceArray);
+        assertEquals(mKeysSequence, keysSequence);
+
+        JSONArray keysSequenceJsonArray = KeysSequenceConverter.toJsonArray(mKeysSequence);
+        assertEquals(mKeysSequenceArray.toString(), keysSequenceJsonArray.toString());
+    }
+
+    @Test
+    public void test_conversion_from_array() {
+        int array[] = { 1, 100, 1000};
         List<Integer> keysSequence = KeysSequenceConverter.fromArray(array);
 
-        assertEquals(array.length, keysSequence.size());
-
-        for(int i = 0; i < array.length; ++i) {
-            assertEquals(array[i], (int)keysSequence.get(i));
-        }
+        assertEquals(mKeysSequence, keysSequence);
     }
 
-    private JSONArray mKeysSequenceJsonArray;
+    private List<Integer> mKeysSequence;
+    private JSONArray mKeysSequenceArray;
 }

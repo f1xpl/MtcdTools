@@ -31,8 +31,8 @@ public class ListViewScrollerTest {
         when(mMockAdapter.getCount()).thenReturn(elementsCount);
 
         ListViewScroller listViewScroller = new ListViewScroller(mMockListView);
-
         listViewScroller.reset();
+
         verify(mMockListView, times(1)).setSelection(0);
         verify(mMockListView, times(1)).clearChoices();
         verify(mMockListView, times(1)).requestLayout();
