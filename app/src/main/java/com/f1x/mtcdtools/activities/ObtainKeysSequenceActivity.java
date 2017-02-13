@@ -99,7 +99,5 @@ public class ObtainKeysSequenceActivity extends ServiceActivity {
 
     private ArrayAdapter<Integer> mPressedKeysArrayAdapter;
 
-    private static final int RESULT_OK = 0;
-    public static final int RESULT_CANCELED = 1;
     public static final String RESULT_NAME = "keysSequence";
 }

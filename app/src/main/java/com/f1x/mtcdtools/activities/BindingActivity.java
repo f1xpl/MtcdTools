@@ -128,7 +128,7 @@ public class BindingActivity extends ServiceActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == ObtainKeysSequenceActivity.RESULT_CANCELED) {
+        if(resultCode == RESULT_CANCELED) {
             return;
         }
 
