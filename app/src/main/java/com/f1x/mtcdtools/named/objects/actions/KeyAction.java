@@ -29,12 +29,15 @@ public class KeyAction extends Action {
     public void evaluate(Context context) {
         try {
             AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+            String parameterValue = audioManager.getParameters("av_channel=");
 
-            KeyEvent keyEventDown = new KeyEvent(KeyEvent.ACTION_DOWN, mKeyCode);
-            audioManager.dispatchMediaKeyEvent(keyEventDown);
+            if(parameterValue.equals("sys")) { // workaround for MTC stuff
+                KeyEvent keyEventDown = new KeyEvent(KeyEvent.ACTION_DOWN, mKeyCode);
+                audioManager.dispatchMediaKeyEvent(keyEventDown);
 
-            KeyEvent keyEventUp = new KeyEvent(KeyEvent.ACTION_UP, mKeyCode);
-            audioManager.dispatchMediaKeyEvent(keyEventUp);
+                KeyEvent keyEventUp = new KeyEvent(KeyEvent.ACTION_UP, mKeyCode);
+                audioManager.dispatchMediaKeyEvent(keyEventUp);
+            }
         } catch(Exception e) {
             e.printStackTrace();
             Toast.makeText(context, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();

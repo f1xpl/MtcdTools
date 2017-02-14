@@ -20,8 +20,11 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import static junit.framework.Assert.assertEquals;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.times;
 import static org.mockito.MockitoAnnotations.initMocks;
+import static org.powermock.api.mockito.PowerMockito.when;
 
 /**
  * Created by f1x on 2017-01-13.
@@ -50,12 +53,29 @@ public class KeyActionTest {
         PowerMockito.whenNew(KeyEvent.class).withArguments(KeyEvent.ACTION_DOWN, mActionJson.getInt(KeyAction.KEYCODE_PROPERTY)).thenReturn(mMockKeyEventDown);
         PowerMockito.whenNew(KeyEvent.class).withArguments(KeyEvent.ACTION_UP, mActionJson.getInt(KeyAction.KEYCODE_PROPERTY)).thenReturn(mMockKeyEventUp);
 
+        when(mMockAudioManager.getParameters("av_channel=")).thenReturn("sys");
+
         KeyAction keyAction = new KeyAction(mActionJson);
         keyAction.evaluate(mMockContext);
 
         InOrder keyEventsOrder = inOrder(mMockAudioManager);
         keyEventsOrder.verify(mMockAudioManager).dispatchMediaKeyEvent(mMockKeyEventDown);
         keyEventsOrder.verify(mMockAudioManager).dispatchMediaKeyEvent(mMockKeyEventUp);
+    }
+
+    @Test
+    public void test_evaluate_system_is_not_focused() throws Exception {
+        PowerMockito.whenNew(KeyEvent.class).withArguments(KeyEvent.ACTION_DOWN, mActionJson.getInt(KeyAction.KEYCODE_PROPERTY)).thenReturn(mMockKeyEventDown);
+        PowerMockito.whenNew(KeyEvent.class).withArguments(KeyEvent.ACTION_UP, mActionJson.getInt(KeyAction.KEYCODE_PROPERTY)).thenReturn(mMockKeyEventUp);
+
+        when(mMockAudioManager.getParameters("av_channel=")).thenReturn("fm");
+
+        KeyAction keyAction = new KeyAction(mActionJson);
+        keyAction.evaluate(mMockContext);
+
+        InOrder keyEventsOrder = inOrder(mMockAudioManager);
+        keyEventsOrder.verify(mMockAudioManager, times(0)).dispatchMediaKeyEvent(any(KeyEvent.class));
+        keyEventsOrder.verify(mMockAudioManager, times(0)).dispatchMediaKeyEvent(any(KeyEvent.class));
     }
 
     @Test
