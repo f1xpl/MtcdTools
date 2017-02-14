@@ -1,19 +1,127 @@
 # MtcdTools
-Use this application to control your favorite music player using device hard keys or steering wheel keys.
 
-Using MtcdTools you are able to bind your device hard keys to android NEXT/PREV/TOGGLE PLAY or make an shortcut and launch any application you want by simply press of previously bound button.
+As of version 1.3, MtcdTools is even more powerful.
 
-## Features:
-# No root privileges are required
-# Launch on startup
-# Bind any device key or steering wheel key to NEXT/PREV/TOGGLE PLAY action
-# Bind any device key or steering wheel key to Launch any application
-# Create custom MODE applications list (does not override original one)
+#Available features:
 
-In order to make MtcdTools work, first you need to bind your key to the specific action. Use "Create a new binding" button, select one of available actions (NEXT/PREV/TOGGLE PLAY or LAUNCH), obtain key code and save the binding.
+## Creating of actions:
+### Key action
+Use this action to simulate press of an android media key (e.g. play, next, pause). List of available key codes to simulate:
 
-If you want to remove created binding, go to "Edit existing bindings" and long press on binding that you want to remove.
+KEYCODE_MEDIA_FAST_FORWARD
 
-Application has been tested on MTCD GS 1.61 device but it should work also for other vendors.
+KEYCODE_MEDIA_NEXT
 
-Spotify, Poweramp and Google Play Music players have been tested with MtcdTools. Application is using the most common way to control music players so I am expecting it should work for other music players as well. Just test and share your feedback.
+KEYCODE_MEDIA_PAUSE
+
+KEYCODE_MEDIA_PLAY
+
+KEYCODE_MEDIA_PLAY_PAUSE
+
+KEYCODE_MEDIA_PREVIOUS
+
+KEYCODE_MEDIA_REWIND
+
+KEYCODE_MEDIA_STOP
+
+### Launch action
+Use this action to launch an application installed on the system. MtcdTools will prepare a list of installed applications for you.
+
+### Start activity action
+Similar feature is available in Tasker. It is useful to launch an application in a non standard way, e.g. displays specific activity accordingly to provided data URI. More information how to deal with intent are available on Android Developer site.
+
+### Broadcast intent action
+Similar feature is available in Tasker. Use this action to broadcast an intent through the system. Some applications are using this mechanism to communicate with other apps. E.g. MTC devices are using this mechanism to notify about key press. More information how to deal with broadcast are available on Android Developer site.
+
+## Creating of action sequences
+
+You can group previously created actions in sequences. Actions are stored and executed in order of Addition. It is possible to manipulate the delay of execution of an action in sequence.
+
+### Example usage:
+Let's assume you defined actions "stop", "play", "my music player" and "my podcast player". Now you want to switch between your players and start playback automatically. Just declare two sequences with actions in a specific order:
+
+#### [Sequence 1]
+[Stop] *// it should stop any active playback*
+
+[My music player] *// it will launch your music player*
+
+Play *// it will trigger playback of you music player launched in previous step.*
+
+#### [Sequence 2]
+[Stop] *// it should stop any active playback*
+
+[My podcast player] *// it will launch your podcast player*
+
+[Play] *// it will trigger playback of you podcast player launched in previous step.*
+
+Then you can bind your action sequences with key sequence or add it to actions list and automate playback of your music players.
+
+## Creating of actions list
+This feature replaces "Mode" functionality from version 1.2. Use it to group your actions and action sequences. You can define key sequence to scroll the list up and down. In settings you can set time after which highlighted item is executed. This feature is more powerful than regular "mode" because you can fully control what action will be executed. You do not need to stick to the defined "mode" order and harm your devices by launching of unnecessary applications.
+
+## Keys sequences
+As of version 1.3 you are able to bind your defined objects (actions, action sequences, action lists) not only to single key but also to keys sequence. It means you can press any variation of hard keys (device keys and steering wheel keys) to execute your defined action.
+
+## Voice control
+As of version 1.3 you are able to control your device using voice. You can say your defined actions or action sequences names and MtcdTools will execute it for you with provided order. It is possible to execute a single action or action sequence, or mix them together using "concatenation word" that you can define in Settings. By voice you can mix executing of actions with actions sequences and execute as many you want. Voice control is localized. Input language corresponds to the language which is set on your device. If "Google Now" supports you language, then MtcdTools will support it as well.
+
+> ### *To use Voice control you have to define "start activity" action with below parameters and bind it with any keys sequence:*
+
+> Class name: com.f1x.mtcdtools.activities.VoiceDispatchActivity
+
+> Intent package: com.f1x.mtcdtools
+
+> Flags: 813760516
+
+## Settings
+### Delay of execution action from the list
+define time after which highlighted item from actions list is executed.
+
+### Voice command execution delay
+define time after which MtcdTools will start processing of the provided input (actions names, etc.). A parameter has been introduced due to poor performance of our devices. It is helpful when you want to execute an playback control action ("play", "pause", etc.). "Google Now" activity will interrupt playback during speech recognition and needs some time to resume it. Sometimes it can interfere with playback control actions.
+
+### Key press speed
+define how long MtcdTools will wait to collect next key press to sequence.
+
+### Actions voice delimiter (e.g. X then Y)
+Word used by MtcdTools to extract items names from provided voice input. (e.g. "my music player" <DEFINED WORD> "play").
+
+# Lollipop limitations
+Due to Lollipop limitations, it is possible that triggering of voice dispatch activity will bring MtcdTools application to front. To avoid this behavior, close MtcdTools using "recent" menu.
+
+# Useful actions:
+
+> ### *Enable MtcdTools voice control:*
+
+> Class name: com.f1x.mtcdtools.activities.VoiceDispatchActivity
+
+> Intent package: com.f1x.mtcdtools
+
+> Flags: 813760516
+
+> ### *Enable MtcdTools voice control:*
+
+> Class name: com.f1x.mtcdtools.activities.VoiceDispatchActivity
+
+> Intent package: com.f1x.mtcdtools
+
+> Flags: 813760516
+
+> ### *Display your Spotify's "starred" songs:*
+> Intent action: android.intent.action.VIEW
+
+> Intent Data: spotify:collection:tracks
+
+> Intent Flags: 268435456
+
+> ### *Launch Google Maps in "driving mode":*
+> Intent action: android.intent.action.VIEW
+
+> Intent Data: google.navigation:/?free=1&mode=d&entry=fnls
+
+> Intent Flags: 268435456
+
+> ### *Launch Google Voice Assistant*
+> Intent action: android.intent.action.VOICE_COMMAND
+
+> Intent Flags: 268435456
