@@ -47,14 +47,6 @@
             android:launchMode="singleTask"
             android:screenOrientation="landscape"
             android:theme="@style/AlertDialogTheme"/>
-
-        <activity android:name=".activities.DialActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.CALL" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="tel" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>
