@@ -1,8 +1,11 @@
-package com.f1x.mtcdtools.named.objects;
+package com.f1x.mtcdtools.dispatching;
 
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.f1x.mtcdtools.named.objects.ActionsSequence;
+import com.f1x.mtcdtools.named.objects.NamedObject;
+import com.f1x.mtcdtools.named.objects.NamedObjectId;
 import com.f1x.mtcdtools.named.objects.actions.Action;
 import com.f1x.mtcdtools.storage.NamedObjectsStorage;
 

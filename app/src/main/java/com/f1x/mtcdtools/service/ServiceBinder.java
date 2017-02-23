@@ -4,7 +4,7 @@ import android.os.Binder;
 
 import com.f1x.mtcdtools.configuration.Configuration;
 import com.f1x.mtcdtools.input.PressedKeysSequenceManager;
-import com.f1x.mtcdtools.named.objects.NamedObjectDispatcher;
+import com.f1x.mtcdtools.dispatching.NamedObjectDispatcher;
 import com.f1x.mtcdtools.storage.KeysSequenceBindingsStorage;
 import com.f1x.mtcdtools.storage.NamedObjectsStorage;
 

@@ -1,9 +1,13 @@
-package com.f1x.mtcdtools.named.objects;
+package com.f1x.mtcdtools.dispatching;
 
 import android.content.Context;
 import android.content.Intent;
 
 import com.f1x.mtcdtools.activities.SelectNamedObjectActivity;
+import com.f1x.mtcdtools.named.objects.ActionsList;
+import com.f1x.mtcdtools.named.objects.ActionsSequence;
+import com.f1x.mtcdtools.named.objects.NamedObject;
+import com.f1x.mtcdtools.named.objects.NamedObjectId;
 import com.f1x.mtcdtools.named.objects.actions.Action;
 import com.f1x.mtcdtools.storage.NamedObjectsStorage;
 
@@ -18,7 +22,7 @@ public class NamedObjectDispatcher {
         mNamedObjectsStorage = namedObjectsStorage;
     }
 
-    public void dispatchNamedObjects(List<NamedObjectId> namedObjectIds, Context context) {
+    public void dispatch(List<NamedObjectId> namedObjectIds, Context context) {
         new NamedObjectsDispatchTask(mNamedObjectsStorage, context).execute(namedObjectIds.toArray(new NamedObjectId[namedObjectIds.size()]));
     }
 

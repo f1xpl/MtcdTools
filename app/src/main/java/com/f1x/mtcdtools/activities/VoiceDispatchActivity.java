@@ -58,7 +58,7 @@ public class VoiceDispatchActivity extends ServiceActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                mServiceBinder.getNamedObjectsDispatcher().dispatchNamedObjects(namedObjectIds, VoiceDispatchActivity.this);
+                mServiceBinder.getNamedObjectsDispatcher().dispatch(namedObjectIds, VoiceDispatchActivity.this);
             }
         }, mServiceBinder.getConfiguration().getVoiceCommandExecutionDelay());
 

@@ -1,8 +1,9 @@
-package com.f1x.mtcdtools.input;
+package com.f1x.mtcdtools.dispatching;
 
 import android.content.Context;
 
-import com.f1x.mtcdtools.named.objects.NamedObjectDispatcher;
+import com.f1x.mtcdtools.input.KeysSequenceBinding;
+import com.f1x.mtcdtools.input.KeysSequenceListener;
 import com.f1x.mtcdtools.storage.KeysSequenceBindingsStorage;
 
 import java.util.List;
