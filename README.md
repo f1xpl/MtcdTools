@@ -51,17 +51,20 @@ Let's assume you defined actions "stop", "play", "my music player" and "my podca
 Then you can bind your action sequences with the desired key sequence or add it to the actions list and automate playback of your music players.
 
 ## Actions list
-This feature replaces "Mode" functionality from version 1.2. Use it to group your actions and action sequences. You can define key sequence to scroll the list up and down. In settings you can set a time after which highlighted item is executed. This feature is more powerful than regular "mode" because you can fully control what action will be executed. You do not need to stick to the defined "mode" order and harm your devices by launching of unnecessary applications.
+Use it to group your actions and action sequences. You can define key sequence to scroll the list up and down. In settings you can set a time after which highlighted item is executed. This feature is more powerful than regular "mode" because you can fully control what action will be executed. You do not need to stick to the defined "mode" order and harm your devices by launching of unnecessary applications.
+
+## MODE list
+As of version 1.4, the MODE functionality has been added. To the MODE list you can add actions and action sequences. In contrast to version 1.2, you can define as many MODE lists as you want.
 
 ## Keys sequence
-As of version 1.3 you are able to bind your defined objects (actions, action sequences, action lists) not only to single key but also to keys sequence. It means you can press any variation of hard keys (device keys and steering wheel keys) to execute your defined action.
+As of version 1.3 you are able to bind your defined objects (actions, action sequences, action lists, MODE lists) not only to single key but also to keys sequence. It means that you can press any variation of hard keys (device keys and steering wheel keys) to execute your defined action.
 
 ## Voice control
 > If you want to make hands-free calls, consider to use [MtcDialer](https://github.com/f1xpl/MtcDialer).
 
-As of version 1.3 you are able to control your device using voice. You can say your defined actions or action sequences names, then MtcdTools will execute it for you with provided order. It is possible to execute a single action or action sequence, or mix them together using "concatenation word" that you can define in Settings. Voice control is localized. Input language corresponds to the local language of your device. If "Google Now" supports you language, then MtcdTools will support it as well.
+As of version 1.3 you are able to control your device using voice. You can say your defined actions or action sequences names, then MtcdTools will execute it for you with provided order. It is possible to execute a single action or action sequence, or mix them together using "concatenation word" that you can define in Settings. Voice control is localized. Input language corresponds to the local language of your device. If "Google Now" supports your language, then MtcdTools will support it as well.
 
-### *To use the voice control feature you have to define a "start activity" action with below parameters and bind it with any keys sequence:*
+### *In order to use the voice control feature, you have to define a "start activity" action with below parameters and bind it with desired keys sequence:*
 
 > Class name: com.f1x.mtcdtools.activities.VoiceDispatchActivity
 
