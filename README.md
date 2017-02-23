@@ -51,10 +51,13 @@ Let's assume you defined actions "stop", "play", "my music player" and "my podca
 Then you can bind your action sequences with the desired key sequence or add it to the actions list and automate playback of your music players.
 
 ## Actions list
-This feature replaces "Mode" functionality from version 1.2. Use it to group your actions and action sequences. You can define key sequence to scroll the list up and down. In settings you can set a time after which highlighted item is executed. This feature is more powerful than regular "mode" because you can fully control what action will be executed. You do not need to stick to the defined "mode" order and harm your devices by launching of unnecessary applications.
+Use it to group your actions and action sequences. You can define key sequence to scroll the list up and down. In settings you can set a time after which highlighted item is executed. This feature is more powerful than regular "mode" because you can fully control what action will be executed. You do not need to stick to the defined "mode" order and harm your devices by launching of unnecessary applications.
+
+## MODE list
+As of version 1.4, the MODE functionality has been added. To the MODE list you can add actions and action sequences. In contrast to version 1.2, you can define as many MODE lists as you want.
 
 ## Keys sequence
-As of version 1.3 you are able to bind your defined objects (actions, action sequences, action lists) not only to single key but also to keys sequence. It means you can press any variation of hard keys (device keys and steering wheel keys) to execute your defined action.
+As of version 1.3 you are able to bind your defined objects (actions, action sequences, action lists, MODE lists) not only to single key but also to keys sequence. It means that you can press any variation of hard keys (device keys and steering wheel keys) to execute your defined action.
 
 ## Voice control
 > If you want to make hands-free calls, consider to use [MtcDialer](https://github.com/f1xpl/MtcDialer).
