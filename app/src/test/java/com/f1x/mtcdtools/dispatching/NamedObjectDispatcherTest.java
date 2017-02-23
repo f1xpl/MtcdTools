@@ -2,9 +2,12 @@ package com.f1x.mtcdtools.dispatching;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 
 import com.f1x.mtcdtools.dispatching.NamedObjectDispatcher;
 import com.f1x.mtcdtools.named.objects.ActionsList;
+import com.f1x.mtcdtools.named.objects.ActionsSequence;
+import com.f1x.mtcdtools.named.objects.ModeList;
 import com.f1x.mtcdtools.named.objects.NamedObjectId;
 import com.f1x.mtcdtools.named.objects.actions.KeyAction;
 import com.f1x.mtcdtools.storage.NamedObjectsStorage;
@@ -29,12 +32,13 @@ import static org.mockito.MockitoAnnotations.initMocks;
  */
 
 @PowerMockIgnore({ "org.mockito.*", "org.robolectric.*", "android.*" })
-@PrepareForTest({NamedObjectDispatcher.class})
+@PrepareForTest({NamedObjectDispatcher.class, NamedObjectsDispatchTask.class})
 @RunWith(PowerMockRunner.class)
 public class NamedObjectDispatcherTest {
     @Before
     public void init() throws Exception {
         initMocks(this);
+        PowerMockito.whenNew(NamedObjectsDispatchTask.class).withArguments(mMockNamedObjectsStorage, mMockContext).thenReturn(mActionsDispatchTask);
     }
 
     @Test
@@ -67,34 +71,73 @@ public class NamedObjectDispatcherTest {
         verify(mMockContext, times(1)).startActivity(mMockIntent);
     }
 
-//    @Test
-//    public void test_ActionsSequenceDispatch() throws Exception {
-//        String actionsSequenceName = "actionsSequenceName";
-//        ActionsSequence actionsSequence = mock(ActionsSequence.class);
-//        when(actionsSequence.getName()).thenReturn(actionsSequenceName);
-//        when(actionsSequence.getObjectType()).thenReturn(ActionsSequence.OBJECT_TYPE);
-//
-//        List<String> actionsNames = new ArrayList<>(Arrays.asList("action12", "action15", "action16"));
-//        when(actionsSequence.getActionIds()).thenReturn(actionsNames);
-//
-//        Action action = mock(Action.class);
-//
-//        when(mMockNamedObjectsStorage.getItem(actionsSequenceName)).thenReturn(actionsSequence);
-//        when(mMockNamedObjectsStorage.getItem(actionsNames.get(0))).thenReturn(action);
-//        when(mMockNamedObjectsStorage.getItem(actionsNames.get(1))).thenReturn(action);
-//        when(mMockNamedObjectsStorage.getItem(actionsNames.get(2))).thenReturn(action);
-//
-//        int executionDelay = 1234;
-//        when(mMockConfiguration.getActionsSequenceDelay()).thenReturn(executionDelay);
-//
-//        NamedObjectsDispatchTask actionsDispatchTask = mock(NamedObjectsDispatchTask.class);
-//        PowerMockito.whenNew(NamedObjectsDispatchTask.class).withArguments(executionDelay, mMockContext).thenReturn(actionsDispatchTask);
-//
-//        NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage, mMockConfiguration);
-//        dispatcher.dispatch(actionsSequenceName, mMockContext);
-//
-//        verify(actionsDispatchTask, times(1)).execute();
-//    }
+    @Test
+    public void test_ActionsSequenceDispatch() throws Exception {
+        NamedObjectId actionsSequenceId = new NamedObjectId("actionsSequenceName");
+        ActionsSequence actionsSequence = mock(ActionsSequence.class);
+        when(actionsSequence.getId()).thenReturn(actionsSequenceId);
+        when(actionsSequence.getObjectType()).thenReturn(ActionsSequence.OBJECT_TYPE);
+
+        when(mMockNamedObjectsStorage.getItem(actionsSequenceId)).thenReturn(actionsSequence);
+
+        NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage);
+        dispatcher.dispatch(actionsSequenceId, mMockContext);
+
+        verify(mActionsDispatchTask, times(1)).execute(actionsSequenceId);
+    }
+
+    @Test
+    public void test_Dispatch_When_PreviousIs_InProgress() throws Exception {
+        NamedObjectId actionsSequenceId = new NamedObjectId("actionsSequenceName");
+        ActionsSequence actionsSequence = mock(ActionsSequence.class);
+        when(actionsSequence.getId()).thenReturn(actionsSequenceId);
+        when(actionsSequence.getObjectType()).thenReturn(ActionsSequence.OBJECT_TYPE);
+        when(mMockNamedObjectsStorage.getItem(actionsSequenceId)).thenReturn(actionsSequence);
+
+        NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage);
+        dispatcher.dispatch(actionsSequenceId, mMockContext);
+
+        when(mActionsDispatchTask.getStatus()).thenReturn(AsyncTask.Status.RUNNING);
+        dispatcher.dispatch(actionsSequenceId, mMockContext);
+
+        verify(mActionsDispatchTask, times(1)).cancel(true);
+        verify(mActionsDispatchTask, times(2)).execute(actionsSequenceId);
+    }
+
+    @Test
+    public void test_ModeListDispatch() throws Exception {
+        NamedObjectId modeListId = new NamedObjectId("modeListName");
+        ModeList modeList = mock(ModeList.class);
+        when(modeList.getId()).thenReturn(modeListId);
+        when(modeList.getObjectType()).thenReturn(ModeList.OBJECT_TYPE);
+
+        KeyAction action = mock(KeyAction.class);
+        NamedObjectId actionId = new NamedObjectId("actionName");
+        when(action.getId()).thenReturn(actionId);
+        when(action.getObjectType()).thenReturn(KeyAction.OBJECT_TYPE);
+
+        when(modeList.evaluate()).thenReturn(actionId);
+        when(mMockNamedObjectsStorage.getItem(actionId)).thenReturn(action);
+        when(mMockNamedObjectsStorage.getItem(modeListId)).thenReturn(modeList);
+
+        NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage);
+        dispatcher.dispatch(modeListId, mMockContext);
+        verify(action, times(1)).evaluate(mMockContext);
+    }
+
+    @Test
+    public void test_EmptyModeListDispatch() throws Exception {
+        NamedObjectId modeListId = new NamedObjectId("modeListName");
+        ModeList modeList = mock(ModeList.class);
+
+        when(modeList.getId()).thenReturn(modeListId);
+        when(modeList.getObjectType()).thenReturn(ModeList.OBJECT_TYPE);
+        when(modeList.evaluate()).thenReturn(null);
+        when(mMockNamedObjectsStorage.getItem(modeListId)).thenReturn(modeList);
+
+        NamedObjectDispatcher dispatcher = new NamedObjectDispatcher(mMockNamedObjectsStorage);
+        dispatcher.dispatch(modeListId, mMockContext);
+    }
 
     @Test
     public void test_Dispatch_NullObject() {
@@ -104,6 +147,9 @@ public class NamedObjectDispatcherTest {
         when(mMockNamedObjectsStorage.getItem(namedObjectId)).thenReturn(null);
         dispatcher.dispatch(namedObjectId, mMockContext);
     }
+
+    @Mock
+    NamedObjectsDispatchTask mActionsDispatchTask;
 
     @Mock
     NamedObjectsStorage mMockNamedObjectsStorage;

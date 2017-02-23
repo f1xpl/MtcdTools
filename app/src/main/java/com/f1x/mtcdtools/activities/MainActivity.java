@@ -28,6 +28,9 @@ public class MainActivity extends Activity {
         Button createActionsSequenceButton = (Button)this.findViewById(R.id.buttonCreateNewActionsSequence);
         createActionsSequenceButton.setOnClickListener(new StartActivityButtonClickListener(this, ActionsSequenceActivity.class));
 
+        Button createModeListButton = (Button)this.findViewById(R.id.buttonCreateNewModeList);
+        createModeListButton.setOnClickListener(new StartActivityButtonClickListener(this, ModeListActivity.class));
+
         Button manageNamedObjectsButton = (Button)this.findViewById(R.id.buttonManageNamedObjects);
         manageNamedObjectsButton.setOnClickListener(new StartActivityButtonClickListener(this, ManageNamedObjectsActivity.class));
 

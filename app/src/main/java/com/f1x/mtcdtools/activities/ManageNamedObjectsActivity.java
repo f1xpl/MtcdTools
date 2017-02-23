@@ -15,6 +15,7 @@ import com.f1x.mtcdtools.activities.actions.StartActivityActionActivity;
 import com.f1x.mtcdtools.adapters.NamedObjectIdsArrayAdapter;
 import com.f1x.mtcdtools.named.objects.ActionsList;
 import com.f1x.mtcdtools.named.objects.ActionsSequence;
+import com.f1x.mtcdtools.named.objects.ModeList;
 import com.f1x.mtcdtools.named.objects.NamedObject;
 import com.f1x.mtcdtools.named.objects.NamedObjectId;
 import com.f1x.mtcdtools.named.objects.actions.BroadcastIntentAction;
@@ -81,6 +82,9 @@ public class ManageNamedObjectsActivity extends ServiceActivity {
                         break;
                     case ActionsSequence.OBJECT_TYPE:
                         intent.setClass(ManageNamedObjectsActivity.this, ActionsSequenceActivity.class);
+                        break;
+                    case ModeList.OBJECT_TYPE:
+                        intent.setClass(ManageNamedObjectsActivity.this, ModeListActivity.class);
                         break;
                     default:
                         Toast.makeText(ManageNamedObjectsActivity.this, ManageNamedObjectsActivity.this.getText(R.string.UnknownObjectType), Toast.LENGTH_LONG).show();

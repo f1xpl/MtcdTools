@@ -54,4 +54,5 @@
     <string name="CreateNewActionsSequence">Create a new actions sequence</string>
     <string name="ActionExecutionDelay">Delay of execution action from list</string>
     <string name="SpeechPrompt">How can I help you?</string>
+    <string name="CreateNewModeList">Create a new MODE list</string>
 </resources>

@@ -2,10 +2,12 @@ package com.f1x.mtcdtools.dispatching;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 
 import com.f1x.mtcdtools.activities.SelectNamedObjectActivity;
 import com.f1x.mtcdtools.named.objects.ActionsList;
 import com.f1x.mtcdtools.named.objects.ActionsSequence;
+import com.f1x.mtcdtools.named.objects.ModeList;
 import com.f1x.mtcdtools.named.objects.NamedObject;
 import com.f1x.mtcdtools.named.objects.NamedObjectId;
 import com.f1x.mtcdtools.named.objects.actions.Action;
@@ -23,17 +25,20 @@ public class NamedObjectDispatcher {
     }
 
     public void dispatch(List<NamedObjectId> namedObjectIds, Context context) {
-        new NamedObjectsDispatchTask(mNamedObjectsStorage, context).execute(namedObjectIds.toArray(new NamedObjectId[namedObjectIds.size()]));
+        tryCancelDispatchingTask();
+        executeDispatchingTask(context, namedObjectIds.toArray(new NamedObjectId[namedObjectIds.size()]));
     }
 
     public void dispatch(NamedObjectId namedObjectId, Context context) {
+        tryCancelDispatchingTask();
+
         NamedObject namedObject = mNamedObjectsStorage.getItem(namedObjectId);
 
         if(namedObject == null) {
             return;
         }
 
-        String objectType = namedObject.getObjectType();
+        final String objectType = namedObject.getObjectType();
 
         switch(objectType) {
             case ActionsList.OBJECT_TYPE:
@@ -42,11 +47,16 @@ public class NamedObjectDispatcher {
 
             case ActionsSequence.OBJECT_TYPE:
                 ActionsSequence actionsSequence = (ActionsSequence)namedObject;
-                new NamedObjectsDispatchTask(mNamedObjectsStorage, context).execute(actionsSequence.getId());
+                executeDispatchingTask(context, actionsSequence.getId());
+                break;
+
+            case ModeList.OBJECT_TYPE:
+                ModeList modeList = (ModeList)namedObject;
+                dispatch(modeList.evaluate(), context);
                 break;
 
             default:
-                Action action = ((Action)namedObject);
+                Action action = (Action)namedObject;
                 action.evaluate(context);
         }
     }
@@ -58,5 +68,17 @@ public class NamedObjectDispatcher {
         context.startActivity(intent);
     }
 
+    private void executeDispatchingTask(Context context, NamedObjectId... ids) {
+        mNamedObjectsDispatchingTask = new NamedObjectsDispatchTask(mNamedObjectsStorage, context);
+        mNamedObjectsDispatchingTask.execute(ids);
+    }
+
+    private void tryCancelDispatchingTask() {
+        if(mNamedObjectsDispatchingTask != null && mNamedObjectsDispatchingTask.getStatus() == AsyncTask.Status.RUNNING) {
+            mNamedObjectsDispatchingTask.cancel(true);
+        }
+    }
+
     private final NamedObjectsStorage mNamedObjectsStorage;
+    private NamedObjectsDispatchTask mNamedObjectsDispatchingTask;
 }

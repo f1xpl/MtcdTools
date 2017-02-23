@@ -58,7 +58,7 @@ public class NamedObjectsContainer extends NamedObject {
         }
     }
 
-    private List<NamedObjectId> mActionIds;
+    protected List<NamedObjectId> mActionIds;
 
     static public final String ACTIONS_PROPERTY = "actions";
 }

@@ -6,8 +6,11 @@ package com.f1x.mtcdtools;
 
 public class ListIndexer {
     public ListIndexer() {
-        mCurrentIndex = 0;
-        mMax = 0;
+        reset(0);
+    }
+
+    public ListIndexer(int max) {
+        reset(max);
     }
 
     public int up() throws IndexOutOfBoundsException {
@@ -33,6 +36,14 @@ public class ListIndexer {
             mCurrentIndex++;
         } else {
             mCurrentIndex = 0;
+        }
+
+        return mCurrentIndex;
+    }
+
+    public int current() throws IndexOutOfBoundsException {
+        if(mMax < 1) {
+            throw new  IndexOutOfBoundsException();
         }
 
         return mCurrentIndex;

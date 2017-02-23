@@ -30,6 +30,8 @@ public class NamedObjectsFactory {
                 return new ActionsList(json);
             case ActionsSequence.OBJECT_TYPE:
                 return new ActionsSequence(json);
+            case ModeList.OBJECT_TYPE:
+                return new ModeList(json);
             default:
                 return null;
         }

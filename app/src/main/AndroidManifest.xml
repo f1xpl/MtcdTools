@@ -37,6 +37,7 @@
         <activity android:name=".activities.ObtainKeysSequenceActivity" />
         <activity android:name=".activities.ManageNamedObjectsActivity" />
         <activity android:name=".activities.ActionsSequenceActivity" />
+        <activity android:name=".activities.ModeListActivity" />
         <activity
             android:name=".activities.SelectNamedObjectActivity"
             android:launchMode="singleInstance"

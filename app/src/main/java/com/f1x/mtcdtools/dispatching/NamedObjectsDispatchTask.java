@@ -25,6 +25,10 @@ class NamedObjectsDispatchTask extends AsyncTask<NamedObjectId, Action, Void> {
     protected Void doInBackground(NamedObjectId... ids) {
         for(NamedObjectId id : ids) {
             try {
+                if(isCancelled()) {
+                    return null;
+                }
+
                 NamedObject namedObject = mNamedObjectsStorage.getItem(id);
 
                 if(namedObject == null) {
@@ -59,10 +63,23 @@ class NamedObjectsDispatchTask extends AsyncTask<NamedObjectId, Action, Void> {
         }
     }
 
+    @Override
     protected void onProgressUpdate(Action... progress) {
-        progress[0].evaluate(mContext);
+        if(!isCancelled() && mContext != null) {
+            progress[0].evaluate(mContext);
+        }
+    }
+
+    @Override
+    protected void onCancelled(Void result) {
+        mContext = null;
+    }
+
+    @Override
+    protected void onPostExecute(Void result) {
+        mContext = null;
     }
 
     private final NamedObjectsStorage mNamedObjectsStorage;
-    private final Context mContext;
+    private Context mContext;
 }
