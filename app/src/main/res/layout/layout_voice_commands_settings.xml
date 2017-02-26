@@ -11,14 +11,4 @@
         android:ems="10"
         android:id="@+id/editTextActionsVoiceDelimiter"
         android:hint="@string/ActionsVoiceDelimiter" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:layout_marginBottom="@dimen/element_spacing"
-        android:ems="10"
-        android:id="@+id/editTextCallVoiceCommand"
-        android:enabled="false"
-        android:hint="@string/CalVoicelCommand" />
 </LinearLayout>

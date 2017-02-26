@@ -38,7 +38,6 @@
     <string name="Misc">Różne</string>
     <string name="VoiceCommands">Komendy głosowe</string>
     <string name="StoreSettings">Zapisz ustawienia</string>
-    <string name="CalVoicelCommand">Komenda \"Zadzwoń\"</string>
     <string name="ActionsVoiceDelimiter">Spójnik głosowy akcji (np. X potem Y)</string>
     <string name="Donate">Lubisz korzystać z tej aplikacji? Przekaż darowiznę autorowi (PayPal): michal.szwaj [at] o2 [dot] pl</string>
     <string name="ClassName">Nazwa klasy</string>

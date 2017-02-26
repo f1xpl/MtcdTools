@@ -34,33 +34,16 @@ public class MtcdService extends android.app.Service {
         super.onCreate();
 
         mForceRestart = false;
+        mServiceInitialized = false;
 
         FileReader fileReader = new FileReader(this);
         FileWriter fileWriter = new FileWriter(this);
         mNamedObjectsStorage = new NamedObjectsStorage(fileReader, fileWriter);
         mKeysSequenceBindingsStorage = new KeysSequenceBindingsStorage(fileReader, fileWriter);
         mAutorunStorage = new AutorunStorage(fileReader, fileWriter);
-
-        try {
-            mNamedObjectsStorage.read();
-            mKeysSequenceBindingsStorage.read();
-            mAutorunStorage.read();
-
-            mConfiguration = new Configuration(this.getSharedPreferences(MainActivity.APP_NAME, Context.MODE_PRIVATE));
-            mPressedKeysSequenceManager = new PressedKeysSequenceManager(mConfiguration);
-            mNamedObjectsDispatcher = new NamedObjectDispatcher(mNamedObjectsStorage);
-
-            registerReceiver(mPressedKeysSequenceManager, mPressedKeysSequenceManager.getIntentFilter());
-            mPressedKeysSequenceManager.pushListener(new KeysSequenceDispatcher(this,mKeysSequenceBindingsStorage, mNamedObjectsDispatcher));
-
-            startForeground(1555, createNotification());
-
-            mForceRestart = true;
-        } catch (JSONException | IOException | DuplicatedEntryException | EntryCreationFailed e) {
-            e.printStackTrace();
-            Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-            stopSelf();
-        }
+        mConfiguration = new Configuration(this.getSharedPreferences(MainActivity.APP_NAME, Context.MODE_PRIVATE));
+        mPressedKeysSequenceManager = new PressedKeysSequenceManager(mConfiguration);
+        mNamedObjectsDispatcher = new NamedObjectDispatcher(mNamedObjectsStorage);
     }
 
     @Override
@@ -71,9 +54,10 @@ public class MtcdService extends android.app.Service {
             MtcdServiceWatchdog.scheduleServiceRestart(this);
         }
 
-        if(mPressedKeysSequenceManager != null) {
+        if(mServiceInitialized) {
             unregisterReceiver(mPressedKeysSequenceManager);
             mPressedKeysSequenceManager.destroy();
+            mServiceInitialized = false;
         }
     }
 
@@ -86,8 +70,27 @@ public class MtcdService extends android.app.Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
 
-        if(intent.getAction() != null && intent.getAction().equals(ACTION_AUTORUN)) {
-            mNamedObjectsDispatcher.dispatch(mAutorunStorage.getItems(), this);
+        if(mServiceInitialized) {
+            return START_STICKY;
+        }
+
+        try {
+            mNamedObjectsStorage.read();
+            mKeysSequenceBindingsStorage.read();
+            mAutorunStorage.read();
+
+            registerReceiver(mPressedKeysSequenceManager, mPressedKeysSequenceManager.getIntentFilter());
+            mPressedKeysSequenceManager.pushListener(new KeysSequenceDispatcher(this, mKeysSequenceBindingsStorage, mNamedObjectsDispatcher));
+            startForeground(1555, createNotification());
+            mForceRestart = true;
+            mServiceInitialized = true;
+
+            if(intent.getAction() != null && intent.getAction().equals(ACTION_AUTORUN)) {
+                mNamedObjectsDispatcher.dispatch(mAutorunStorage.getItems(), this);
+            }
+        } catch (JSONException | IOException | DuplicatedEntryException | EntryCreationFailed e) {
+            e.printStackTrace();
+            Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
         }
 
         return START_STICKY;
@@ -103,6 +106,7 @@ public class MtcdService extends android.app.Service {
     }
 
     private boolean mForceRestart;
+    private boolean mServiceInitialized;
     private NamedObjectsStorage mNamedObjectsStorage;
     private KeysSequenceBindingsStorage mKeysSequenceBindingsStorage;
     private AutorunStorage mAutorunStorage;

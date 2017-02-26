@@ -111,13 +111,11 @@ public class SettingsActivity extends ServiceActivity {
                 mServiceBinder.getConfiguration().setVoiceCommandExecutionDelay(mVoiceCommandExecutionDelaySeekBar.getProgress());
                 mServiceBinder.getConfiguration().setKeyPressSpeed(mKeyPressSpeedSeekBar.getProgress());
                 mServiceBinder.getConfiguration().getActionsVoiceDelimiter(mActionsVoiceDelimiterEditText.getText().toString());
-                mServiceBinder.getConfiguration().setCallVoiceCommand(mCallVoiceCommandEditText.getText().toString());
                 SettingsActivity.this.finish();
             }
         });
 
         mActionsVoiceDelimiterEditText = (EditText)this.findViewById(R.id.editTextActionsVoiceDelimiter);
-        mCallVoiceCommandEditText = (EditText)this.findViewById(R.id.editTextCallVoiceCommand);
     }
 
     @Override
@@ -145,7 +143,6 @@ public class SettingsActivity extends ServiceActivity {
         mKeyPressSpeedValueTextView.setText(String.format(Locale.getDefault(), "%d [ms]", mKeyPressSpeedSeekBar.getProgress()));
 
         mActionsVoiceDelimiterEditText.setText(mServiceBinder.getConfiguration().getActionsVoiceDelimiter());
-        mCallVoiceCommandEditText.setText(mServiceBinder.getConfiguration().getCallVoiceCommand());
     }
 
     private SeekBar mActionExecutionDelaySeekBar;
@@ -158,5 +155,4 @@ public class SettingsActivity extends ServiceActivity {
     private TextView mKeyPressSpeedValueTextView;
 
     private EditText mActionsVoiceDelimiterEditText;
-    private EditText mCallVoiceCommandEditText;
 }

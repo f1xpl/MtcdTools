@@ -44,7 +44,6 @@
     <string name="VoiceCommands">Voice commands</string>
     <string name="StoreSettings">Store settings</string>
     <string name="ActionsVoiceDelimiter">Actions voice delimiter (e.g. X then Y)</string>
-    <string name="CalVoicelCommand">Call voice command</string>
     <string name="Donate">Have you enjoyed MtcdTools? Donate author (PayPal): michal.szwaj [at] o2 [dot] pl</string>
     <string name="ClassName">Class name</string>
     <string name="Flags">Flags</string>
