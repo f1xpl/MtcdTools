@@ -18,9 +18,9 @@ import static junit.framework.Assert.assertNull;
  * Created by f1x on 2017-01-29.
  */
 
-public class StorageTest {
-    private class SimpleStorage extends Storage<Integer, Integer> {
-        SimpleStorage() {
+public class UniqueObjectsStorageTest {
+    private class SimpleUniqueObjectsStorage extends UniqueObjectsStorage<Integer, Integer> {
+        SimpleUniqueObjectsStorage() {
             super(null, null);
         }
 
@@ -51,7 +51,7 @@ public class StorageTest {
         HashMap<Integer, Integer> testItems = new HashMap<>(mTestItems);
         testItems.put(5, 50);
 
-        SimpleStorage storage = new SimpleStorage();
+        SimpleUniqueObjectsStorage storage = new SimpleUniqueObjectsStorage();
         storage.read();
         storage.insert(5, 50);
 
@@ -60,7 +60,7 @@ public class StorageTest {
 
     @Test(expected=DuplicatedEntryException.class)
     public void test_Insert_Duplicated() throws IOException, JSONException, DuplicatedEntryException, EntryCreationFailed {
-        SimpleStorage storage = new SimpleStorage();
+        SimpleUniqueObjectsStorage storage = new SimpleUniqueObjectsStorage();
         storage.read();
         storage.insert(4, 40);
     }
@@ -70,7 +70,7 @@ public class StorageTest {
         HashMap<Integer, Integer> testItems = new HashMap<>(mTestItems);
         testItems.remove(3);
 
-        SimpleStorage storage = new SimpleStorage();
+        SimpleUniqueObjectsStorage storage = new SimpleUniqueObjectsStorage();
         storage.read();
         storage.remove(3);
 
@@ -79,7 +79,7 @@ public class StorageTest {
 
     @Test
     public void test_Remove_NonExistentElement() throws IOException, JSONException, DuplicatedEntryException, EntryCreationFailed {
-        SimpleStorage storage = new SimpleStorage();
+        SimpleUniqueObjectsStorage storage = new SimpleUniqueObjectsStorage();
         storage.read();
         storage.remove(5);
 
@@ -91,7 +91,7 @@ public class StorageTest {
         HashMap<Integer, Integer> testItems = new HashMap<>(mTestItems);
         testItems.put(3, 100);
 
-        SimpleStorage storage = new SimpleStorage();
+        SimpleUniqueObjectsStorage storage = new SimpleUniqueObjectsStorage();
         storage.read();
         storage.replace(3, 3, 132);
         testItems.put(3, 132);
@@ -106,7 +106,7 @@ public class StorageTest {
         testItems.remove(2);
         testItems.put(9, 1000);
 
-        SimpleStorage storage = new SimpleStorage();
+        SimpleUniqueObjectsStorage storage = new SimpleUniqueObjectsStorage();
         storage.read();
         storage.replace(2, 9, 1000);
 
@@ -115,14 +115,14 @@ public class StorageTest {
 
     @Test(expected=DuplicatedEntryException.class)
     public void test_Replace_NewKeyAlreadyExists() throws IOException, JSONException, DuplicatedEntryException, EntryCreationFailed {
-        SimpleStorage storage = new SimpleStorage();
+        SimpleUniqueObjectsStorage storage = new SimpleUniqueObjectsStorage();
         storage.read();
         storage.replace(2, 3, 1000);
     }
 
     @Test
     public void test_Replace_NonExistentKey() throws IOException, JSONException, DuplicatedEntryException, EntryCreationFailed {
-        SimpleStorage storage = new SimpleStorage();
+        SimpleUniqueObjectsStorage storage = new SimpleUniqueObjectsStorage();
         storage.read();
         storage.replace(11, 33, 1000);
 
@@ -131,7 +131,7 @@ public class StorageTest {
 
     @Test
     public void test_getItem() throws IOException, JSONException, DuplicatedEntryException, EntryCreationFailed {
-        SimpleStorage storage = new SimpleStorage();
+        SimpleUniqueObjectsStorage storage = new SimpleUniqueObjectsStorage();
         storage.read();
 
         for(Map.Entry<Integer, Integer> entry : mTestItems.entrySet()) {

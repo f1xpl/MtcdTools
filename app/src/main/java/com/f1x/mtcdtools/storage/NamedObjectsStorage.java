@@ -12,13 +12,12 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * Created by f1x on 2017-02-05.
  */
 
-public class NamedObjectsStorage extends Storage<NamedObjectId, NamedObject> {
+public class NamedObjectsStorage extends UniqueObjectsStorage<NamedObjectId, NamedObject> {
     public NamedObjectsStorage(FileReader reader, FileWriter writer) {
         super(reader, writer);
     }

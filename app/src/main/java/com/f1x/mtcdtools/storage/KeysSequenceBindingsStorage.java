@@ -17,7 +17,7 @@ import java.util.Map;
  * Created by f1x on 2017-01-29.
  */
 
-public class KeysSequenceBindingsStorage extends Storage<List<Integer>, KeysSequenceBinding> {
+public class KeysSequenceBindingsStorage extends UniqueObjectsStorage<List<Integer>, KeysSequenceBinding> {
     public KeysSequenceBindingsStorage(FileReader reader, FileWriter writer) {
         super(reader, writer);
     }
