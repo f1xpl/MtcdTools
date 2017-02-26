@@ -37,6 +37,9 @@ public class MainActivity extends Activity {
         Button manageBindingsButton = (Button)this.findViewById(R.id.buttonManageBindings);
         manageBindingsButton.setOnClickListener(new StartActivityButtonClickListener(this, ManageBindingsActivity.class));
 
+        Button manageAutorunButton = (Button)this.findViewById(R.id.buttonManageAutorun);
+        manageAutorunButton.setOnClickListener(new StartActivityButtonClickListener(this, ManageAutorunActivity.class));
+
         Button settingsButton = (Button)this.findViewById(R.id.buttonSettings);
         settingsButton.setOnClickListener(new StartActivityButtonClickListener(this, SettingsActivity.class));
 

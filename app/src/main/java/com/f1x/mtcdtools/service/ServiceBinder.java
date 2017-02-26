@@ -5,6 +5,7 @@ import android.os.Binder;
 import com.f1x.mtcdtools.configuration.Configuration;
 import com.f1x.mtcdtools.input.PressedKeysSequenceManager;
 import com.f1x.mtcdtools.dispatching.NamedObjectDispatcher;
+import com.f1x.mtcdtools.storage.AutorunStorage;
 import com.f1x.mtcdtools.storage.KeysSequenceBindingsStorage;
 import com.f1x.mtcdtools.storage.NamedObjectsStorage;
 
@@ -18,4 +19,5 @@ public abstract class ServiceBinder extends Binder {
     public abstract PressedKeysSequenceManager getPressedKeysSequenceManager();
     public abstract Configuration getConfiguration();
     public abstract NamedObjectDispatcher getNamedObjectsDispatcher();
+    public abstract AutorunStorage getAutorunStorage();
 }

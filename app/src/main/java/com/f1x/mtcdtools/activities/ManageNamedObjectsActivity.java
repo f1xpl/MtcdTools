@@ -45,6 +45,7 @@ public class ManageNamedObjectsActivity extends ServiceActivity {
                     NamedObjectId namedObjectId = mNamedObjectIdsArrayAdapter.getItem(position);
                     mServiceBinder.getNamedObjectsStorage().remove(namedObjectId);
                     mServiceBinder.getKeysSequenceBindingsStorage().removeBindingWithTarget(namedObjectId);
+                    mServiceBinder.getAutorunStorage().remove(namedObjectId);
                     mNamedObjectIdsArrayAdapter.remove(namedObjectId);
                 } catch(IOException | JSONException e) {
                     e.printStackTrace();

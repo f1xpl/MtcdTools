@@ -50,4 +50,5 @@
     <string name="ActionExecutionDelay">Opóźnienie uruchomienia akcji z listy</string>
     <string name="SpeechPrompt">Jak mogę Ci pomóc?</string>
     <string name="CreateNewModeList">Utwórz nową listę MODE</string>
+    <string name="ManageAutorun">Zarządzaj autostartem</string>
 </resources>

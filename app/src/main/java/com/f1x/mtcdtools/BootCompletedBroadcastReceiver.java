@@ -14,6 +14,7 @@ public class BootCompletedBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if(intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
             Intent startServiceIntent = new Intent(context, MtcdService.class);
+            startServiceIntent.setAction(MtcdService.ACTION_AUTORUN);
             context.startService(startServiceIntent);
         }
     }

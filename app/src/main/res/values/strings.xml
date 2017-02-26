@@ -55,4 +55,5 @@
     <string name="ActionExecutionDelay">Delay of execution action from list</string>
     <string name="SpeechPrompt">How can I help you?</string>
     <string name="CreateNewModeList">Create a new MODE list</string>
+    <string name="ManageAutorun">Manage autorun</string>
 </resources>

@@ -13,6 +13,7 @@ import com.f1x.mtcdtools.configuration.Configuration;
 import com.f1x.mtcdtools.dispatching.KeysSequenceDispatcher;
 import com.f1x.mtcdtools.input.PressedKeysSequenceManager;
 import com.f1x.mtcdtools.dispatching.NamedObjectDispatcher;
+import com.f1x.mtcdtools.storage.AutorunStorage;
 import com.f1x.mtcdtools.storage.FileReader;
 import com.f1x.mtcdtools.storage.FileWriter;
 import com.f1x.mtcdtools.storage.KeysSequenceBindingsStorage;
@@ -33,16 +34,33 @@ public class MtcdService extends android.app.Service {
         super.onCreate();
 
         mForceRestart = false;
-        mServiceInitialized = false;
 
         FileReader fileReader = new FileReader(this);
         FileWriter fileWriter = new FileWriter(this);
         mNamedObjectsStorage = new NamedObjectsStorage(fileReader, fileWriter);
         mKeysSequenceBindingsStorage = new KeysSequenceBindingsStorage(fileReader, fileWriter);
-        mConfiguration = new Configuration(this.getSharedPreferences(MainActivity.APP_NAME, Context.MODE_PRIVATE));
-        mPressedKeysSequenceManager = new PressedKeysSequenceManager(mConfiguration);
-        mNamedObjectsDispatcher = new NamedObjectDispatcher(mNamedObjectsStorage);
-        mKeysSequenceDispatcher = new KeysSequenceDispatcher(this,mKeysSequenceBindingsStorage, mNamedObjectsDispatcher);
+        mAutorunStorage = new AutorunStorage(fileReader, fileWriter);
+
+        try {
+            mNamedObjectsStorage.read();
+            mKeysSequenceBindingsStorage.read();
+            mAutorunStorage.read();
+
+            mConfiguration = new Configuration(this.getSharedPreferences(MainActivity.APP_NAME, Context.MODE_PRIVATE));
+            mPressedKeysSequenceManager = new PressedKeysSequenceManager(mConfiguration);
+            mNamedObjectsDispatcher = new NamedObjectDispatcher(mNamedObjectsStorage);
+
+            registerReceiver(mPressedKeysSequenceManager, mPressedKeysSequenceManager.getIntentFilter());
+            mPressedKeysSequenceManager.pushListener(new KeysSequenceDispatcher(this,mKeysSequenceBindingsStorage, mNamedObjectsDispatcher));
+
+            startForeground(1555, createNotification());
+
+            mForceRestart = true;
+        } catch (JSONException | IOException | DuplicatedEntryException | EntryCreationFailed e) {
+            e.printStackTrace();
+            Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            stopSelf();
+        }
     }
 
     @Override
@@ -53,13 +71,10 @@ public class MtcdService extends android.app.Service {
             MtcdServiceWatchdog.scheduleServiceRestart(this);
         }
 
-        if(mServiceInitialized) {
+        if(mPressedKeysSequenceManager != null) {
             unregisterReceiver(mPressedKeysSequenceManager);
+            mPressedKeysSequenceManager.destroy();
         }
-
-        mPressedKeysSequenceManager.popListener(mKeysSequenceDispatcher);
-        mPressedKeysSequenceManager.destroy();
-        mServiceInitialized = false;
     }
 
     @Override
@@ -71,20 +86,8 @@ public class MtcdService extends android.app.Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
 
-        if(!mServiceInitialized) {
-            try {
-                mNamedObjectsStorage.read();
-                mKeysSequenceBindingsStorage.read();
-                registerReceiver(mPressedKeysSequenceManager, mPressedKeysSequenceManager.getIntentFilter());
-
-                mPressedKeysSequenceManager.pushListener(mKeysSequenceDispatcher);
-                mServiceInitialized = true;
-                mForceRestart = true;
-                startForeground(1555, createNotification());
-            } catch (JSONException | IOException | DuplicatedEntryException | EntryCreationFailed e) {
-                e.printStackTrace();
-                Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-            }
+        if(intent.getAction() != null && intent.getAction().equals(ACTION_AUTORUN)) {
+            mNamedObjectsDispatcher.dispatch(mAutorunStorage.getItems(), this);
         }
 
         return START_STICKY;
@@ -100,11 +103,10 @@ public class MtcdService extends android.app.Service {
     }
 
     private boolean mForceRestart;
-    private boolean mServiceInitialized;
     private NamedObjectsStorage mNamedObjectsStorage;
     private KeysSequenceBindingsStorage mKeysSequenceBindingsStorage;
+    private AutorunStorage mAutorunStorage;
     private PressedKeysSequenceManager mPressedKeysSequenceManager;
-    private KeysSequenceDispatcher mKeysSequenceDispatcher;
     private Configuration mConfiguration;
     private NamedObjectDispatcher mNamedObjectsDispatcher;
 
@@ -133,5 +135,12 @@ public class MtcdService extends android.app.Service {
         public NamedObjectDispatcher getNamedObjectsDispatcher() {
             return mNamedObjectsDispatcher;
         }
+
+        @Override
+        public AutorunStorage getAutorunStorage() {
+            return mAutorunStorage;
+        }
     };
+
+    public static final String ACTION_AUTORUN = "com.f1x.mtcdtools.action.autorun";
 }
