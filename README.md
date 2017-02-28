@@ -73,7 +73,7 @@ As of version 1.3 you are able to control your device using voice. You can say y
 > Flags: 813760516
 
 ## Autorun
-As of version 1.5 there is possibility to create an autorun list. You can add on the list previously created actions and actions sequences. Items from autorun list will be executed right after MtcdTools service startup. In order to remove item from autorun, perform a long press on it.
+As of version 1.5 there is possibility to create an autorun list. To the list you can add previously created actions and actions sequences. Items from autorun list will be executed right after MtcdTools service startup. In order to remove item from autorun, perform a long press on it.
 
 ## Settings
 ### Delay of execution action from the list
