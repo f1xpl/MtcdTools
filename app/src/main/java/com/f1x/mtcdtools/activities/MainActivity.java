@@ -7,7 +7,14 @@ import android.widget.Button;
 
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.StartActivityButtonClickListener;
-import com.f1x.mtcdtools.activities.actions.CreateActionActivity;
+import com.f1x.mtcdtools.activities.input.BindingActivity;
+import com.f1x.mtcdtools.activities.named.objects.actions.CreateActionActivity;
+import com.f1x.mtcdtools.activities.managing.ManageAutorunActivity;
+import com.f1x.mtcdtools.activities.managing.ManageBindingsActivity;
+import com.f1x.mtcdtools.activities.managing.ManageNamedObjectsActivity;
+import com.f1x.mtcdtools.activities.named.objects.ActionsListActivity;
+import com.f1x.mtcdtools.activities.named.objects.ActionsSequenceActivity;
+import com.f1x.mtcdtools.activities.named.objects.ModeListActivity;
 import com.f1x.mtcdtools.service.MtcdService;
 
 public class MainActivity extends Activity {

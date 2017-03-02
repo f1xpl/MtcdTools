@@ -1,4 +1,4 @@
-package com.f1x.mtcdtools.activities;
+package com.f1x.mtcdtools.activities.managing;
 
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +9,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.f1x.mtcdtools.R;
+import com.f1x.mtcdtools.activities.ServiceActivity;
 import com.f1x.mtcdtools.adapters.NamedObjectIdsArrayAdapter;
 import com.f1x.mtcdtools.named.objects.ActionsSequence;
 import com.f1x.mtcdtools.named.objects.NamedObjectId;

@@ -1,4 +1,4 @@
-package com.f1x.mtcdtools.activities;
+package com.f1x.mtcdtools.activities.managing;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,10 +8,15 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.f1x.mtcdtools.R;
-import com.f1x.mtcdtools.activities.actions.BroadcastIntentActionActivity;
-import com.f1x.mtcdtools.activities.actions.KeyActionActivity;
-import com.f1x.mtcdtools.activities.actions.LaunchActionActivity;
-import com.f1x.mtcdtools.activities.actions.StartActivityActionActivity;
+import com.f1x.mtcdtools.activities.named.objects.ActionsListActivity;
+import com.f1x.mtcdtools.activities.named.objects.ActionsSequenceActivity;
+import com.f1x.mtcdtools.activities.named.objects.ModeListActivity;
+import com.f1x.mtcdtools.activities.named.objects.NamedObjectActivity;
+import com.f1x.mtcdtools.activities.ServiceActivity;
+import com.f1x.mtcdtools.activities.named.objects.actions.BroadcastIntentActionActivity;
+import com.f1x.mtcdtools.activities.named.objects.actions.KeyActionActivity;
+import com.f1x.mtcdtools.activities.named.objects.actions.LaunchActionActivity;
+import com.f1x.mtcdtools.activities.named.objects.actions.StartActivityActionActivity;
 import com.f1x.mtcdtools.adapters.NamedObjectIdsArrayAdapter;
 import com.f1x.mtcdtools.named.objects.ActionsList;
 import com.f1x.mtcdtools.named.objects.ActionsSequence;

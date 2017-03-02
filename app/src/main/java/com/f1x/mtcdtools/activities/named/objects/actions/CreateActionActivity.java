@@ -1,4 +1,4 @@
-package com.f1x.mtcdtools.activities.actions;
+package com.f1x.mtcdtools.activities.named.objects.actions;
 
 import android.app.Activity;
 import android.os.Bundle;

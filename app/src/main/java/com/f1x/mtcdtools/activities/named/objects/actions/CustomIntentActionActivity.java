@@ -1,10 +1,10 @@
-package com.f1x.mtcdtools.activities.actions;
+package com.f1x.mtcdtools.activities.named.objects.actions;
 
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.f1x.mtcdtools.R;
-import com.f1x.mtcdtools.activities.NamedObjectActivity;
+import com.f1x.mtcdtools.activities.named.objects.NamedObjectActivity;
 import com.f1x.mtcdtools.named.objects.NamedObject;
 import com.f1x.mtcdtools.named.objects.NamedObjectId;
 import com.f1x.mtcdtools.named.objects.actions.Action;

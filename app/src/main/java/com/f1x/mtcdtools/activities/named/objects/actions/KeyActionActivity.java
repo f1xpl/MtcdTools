@@ -1,9 +1,9 @@
-package com.f1x.mtcdtools.activities.actions;
+package com.f1x.mtcdtools.activities.named.objects.actions;
 
 import android.widget.Spinner;
 
 import com.f1x.mtcdtools.R;
-import com.f1x.mtcdtools.activities.NamedObjectActivity;
+import com.f1x.mtcdtools.activities.named.objects.NamedObjectActivity;
 import com.f1x.mtcdtools.adapters.KeyCodesArrayAdapter;
 import com.f1x.mtcdtools.named.objects.NamedObject;
 import com.f1x.mtcdtools.named.objects.NamedObjectId;

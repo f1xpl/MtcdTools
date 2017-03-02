@@ -1,4 +1,4 @@
-package com.f1x.mtcdtools.activities;
+package com.f1x.mtcdtools.activities.dispatching;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.f1x.mtcdtools.ListViewScroller;
 import com.f1x.mtcdtools.R;
+import com.f1x.mtcdtools.activities.ServiceActivity;
 import com.f1x.mtcdtools.adapters.NamedObjectIdsArrayAdapter;
 import com.f1x.mtcdtools.configuration.Configuration;
 import com.f1x.mtcdtools.configuration.ConfigurationChangeListener;
@@ -21,7 +22,7 @@ import com.f1x.mtcdtools.named.objects.NamedObjectId;
 
 import java.util.List;
 
-public class SelectNamedObjectActivity extends ServiceActivity {
+public class ActionsListDispatchActivity extends ServiceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +39,8 @@ public class SelectNamedObjectActivity extends ServiceActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 NamedObjectId namedObjectId = mActionIdsArrayAdapter.getItem(position);
-                mServiceBinder.getNamedObjectsDispatcher().dispatch(namedObjectId, SelectNamedObjectActivity.this);
-                SelectNamedObjectActivity.this.finish();
+                mServiceBinder.getNamedObjectsDispatcher().dispatch(namedObjectId, ActionsListDispatchActivity.this);
+                ActionsListDispatchActivity.this.finish();
             }
         });
 
@@ -104,7 +105,7 @@ public class SelectNamedObjectActivity extends ServiceActivity {
                         if(checkedActionPosition != ListView.INVALID_POSITION) {
                             mActionsListView.performItemClick(mActionsListView.getAdapter().getView(checkedActionPosition, null, null), checkedActionPosition, checkedActionPosition);
                         } else {
-                            SelectNamedObjectActivity.this.finish();
+                            ActionsListDispatchActivity.this.finish();
                         }
                     }
                 });

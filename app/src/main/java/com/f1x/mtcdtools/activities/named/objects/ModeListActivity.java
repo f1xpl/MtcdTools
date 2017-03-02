@@ -1,4 +1,4 @@
-package com.f1x.mtcdtools.activities;
+package com.f1x.mtcdtools.activities.named.objects;
 
 import android.view.View;
 import android.widget.AdapterView;
@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.f1x.mtcdtools.R;
+import com.f1x.mtcdtools.activities.named.objects.NamedObjectsContainerActivity;
 import com.f1x.mtcdtools.adapters.NamedObjectIdsArrayAdapter;
 import com.f1x.mtcdtools.named.objects.ActionsSequence;
 import com.f1x.mtcdtools.named.objects.ModeList;

@@ -1,4 +1,4 @@
-package com.f1x.mtcdtools.activities;
+package com.f1x.mtcdtools.activities.dispatching;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.speech.RecognizerIntent;
 
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.SpeechParser;
+import com.f1x.mtcdtools.activities.ServiceActivity;
 import com.f1x.mtcdtools.named.objects.NamedObjectId;
 
 import java.util.List;

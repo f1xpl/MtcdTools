@@ -1,4 +1,4 @@
-package com.f1x.mtcdtools.activities;
+package com.f1x.mtcdtools.activities.named.objects;
 
 import android.content.Intent;
 import android.view.View;
@@ -8,6 +8,7 @@ import android.widget.ListView;
 import android.widget.TabHost;
 
 import com.f1x.mtcdtools.R;
+import com.f1x.mtcdtools.activities.input.ObtainKeysSequenceActivity;
 import com.f1x.mtcdtools.adapters.KeysSequenceArrayAdapter;
 import com.f1x.mtcdtools.adapters.NamedObjectIdsArrayAdapter;
 import com.f1x.mtcdtools.input.KeysSequenceConverter;

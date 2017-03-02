@@ -66,7 +66,7 @@ As of version 1.3 you are able to control your device using voice. You can say y
 
 ### *In order to use the voice control feature, you have to define a "start activity" action with below parameters and bind it with desired keys sequence:*
 
-> Class name: com.f1x.mtcdtools.activities.VoiceDispatchActivity
+> Class name: com.f1x.mtcdtools.activities.dispatching.VoiceDispatchActivity
 
 > Intent package: com.f1x.mtcdtools
 
@@ -95,7 +95,7 @@ Due to Lollipop limitations, it is possible that triggering of the voice dispatc
 
 ### *Enable MtcdTools voice control:*
 
-> Class name: com.f1x.mtcdtools.activities.VoiceDispatchActivity
+> Class name: com.f1x.mtcdtools.activities.dispatching.VoiceDispatchActivity
 
 > Intent package: com.f1x.mtcdtools
 

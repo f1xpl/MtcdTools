@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 
-import com.f1x.mtcdtools.activities.SelectNamedObjectActivity;
+import com.f1x.mtcdtools.activities.dispatching.ActionsListDispatchActivity;
 import com.f1x.mtcdtools.named.objects.ActionsList;
 import com.f1x.mtcdtools.named.objects.ActionsSequence;
 import com.f1x.mtcdtools.named.objects.ModeList;
@@ -62,9 +62,9 @@ public class NamedObjectDispatcher {
     }
 
     private void dispatchActionsList(ActionsList actionsList, Context context) {
-        Intent intent = new Intent(context, SelectNamedObjectActivity.class);
+        Intent intent = new Intent(context, ActionsListDispatchActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_FROM_BACKGROUND);
-        intent.putExtra(SelectNamedObjectActivity.ACTIONS_LIST_ID_PARAMETER, actionsList.getId());
+        intent.putExtra(ActionsListDispatchActivity.ACTIONS_LIST_ID_PARAMETER, actionsList.getId());
         context.startActivity(intent);
     }
 

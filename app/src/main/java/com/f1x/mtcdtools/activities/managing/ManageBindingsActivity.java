@@ -1,4 +1,4 @@
-package com.f1x.mtcdtools.activities;
+package com.f1x.mtcdtools.activities.managing;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.f1x.mtcdtools.R;
+import com.f1x.mtcdtools.activities.input.BindingActivity;
+import com.f1x.mtcdtools.activities.ServiceActivity;
 import com.f1x.mtcdtools.input.KeysSequenceBinding;
 import com.f1x.mtcdtools.input.KeysSequenceConverter;
 import com.f1x.mtcdtools.input.KeysSequenceListener;

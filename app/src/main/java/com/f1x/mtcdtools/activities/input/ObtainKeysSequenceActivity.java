@@ -1,4 +1,4 @@
-package com.f1x.mtcdtools.activities;
+package com.f1x.mtcdtools.activities.input;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.f1x.mtcdtools.R;
+import com.f1x.mtcdtools.activities.ServiceActivity;
 import com.f1x.mtcdtools.input.KeysSequenceListener;
 
 import java.util.List;

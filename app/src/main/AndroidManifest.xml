@@ -26,26 +26,26 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activities.actions.CreateActionActivity" />
-        <activity android:name=".activities.BindingActivity" />
-        <activity android:name=".activities.ActionsListActivity" />
-        <activity android:name=".activities.actions.KeyActionActivity" />
-        <activity android:name=".activities.actions.LaunchActionActivity" />
-        <activity android:name=".activities.actions.StartActivityActionActivity" />
-        <activity android:name=".activities.actions.BroadcastIntentActionActivity" />
-        <activity android:name=".activities.ManageBindingsActivity" />
-        <activity android:name=".activities.ObtainKeysSequenceActivity" />
-        <activity android:name=".activities.ManageNamedObjectsActivity" />
-        <activity android:name=".activities.ActionsSequenceActivity" />
-        <activity android:name=".activities.ModeListActivity" />
-        <activity android:name=".activities.ManageAutorunActivity" />
+        <activity android:name=".activities.named.objects.actions.CreateActionActivity" />
+        <activity android:name=".activities.input.BindingActivity" />
+        <activity android:name=".activities.named.objects.ActionsListActivity" />
+        <activity android:name=".activities.named.objects.actions.KeyActionActivity" />
+        <activity android:name=".activities.named.objects.actions.LaunchActionActivity" />
+        <activity android:name=".activities.named.objects.actions.StartActivityActionActivity" />
+        <activity android:name=".activities.named.objects.actions.BroadcastIntentActionActivity" />
+        <activity android:name=".activities.managing.ManageBindingsActivity" />
+        <activity android:name=".activities.input.ObtainKeysSequenceActivity" />
+        <activity android:name=".activities.managing.ManageNamedObjectsActivity" />
+        <activity android:name=".activities.named.objects.ActionsSequenceActivity" />
+        <activity android:name=".activities.named.objects.ModeListActivity" />
+        <activity android:name=".activities.managing.ManageAutorunActivity" />
         <activity
-            android:name=".activities.SelectNamedObjectActivity"
+            android:name=".activities.dispatching.ActionsListDispatchActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".activities.SettingsActivity"/>
-        <activity android:name=".activities.VoiceDispatchActivity"
+        <activity android:name=".activities.dispatching.VoiceDispatchActivity"
             android:launchMode="singleTask"
             android:screenOrientation="landscape"
             android:theme="@style/AlertDialogTheme"/>

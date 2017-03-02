@@ -49,5 +49,5 @@ public abstract class ServiceActivity extends Activity {
         }
     };
 
-    ServiceBinder mServiceBinder;
+    protected ServiceBinder mServiceBinder;
 }

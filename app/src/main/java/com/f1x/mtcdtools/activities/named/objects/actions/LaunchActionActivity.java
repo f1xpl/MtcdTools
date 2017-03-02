@@ -1,11 +1,11 @@
-package com.f1x.mtcdtools.activities.actions;
+package com.f1x.mtcdtools.activities.named.objects.actions;
 
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 
 import com.f1x.mtcdtools.R;
-import com.f1x.mtcdtools.activities.NamedObjectActivity;
+import com.f1x.mtcdtools.activities.named.objects.NamedObjectActivity;
 import com.f1x.mtcdtools.adapters.InstalledPackagesArrayAdapter;
 import com.f1x.mtcdtools.adapters.entries.PackageEntry;
 import com.f1x.mtcdtools.named.objects.NamedObject;

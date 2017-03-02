@@ -1,4 +1,4 @@
-package com.f1x.mtcdtools.activities;
+package com.f1x.mtcdtools.activities.named.objects;
 
 import android.os.Bundle;
 import android.view.View;
@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.f1x.mtcdtools.R;
+import com.f1x.mtcdtools.activities.ServiceActivity;
 import com.f1x.mtcdtools.named.objects.NamedObject;
 import com.f1x.mtcdtools.named.objects.NamedObjectId;
 import com.f1x.mtcdtools.storage.exceptions.DuplicatedEntryException;
