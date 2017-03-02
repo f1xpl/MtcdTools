@@ -6,7 +6,6 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.f1x.mtcdtools.R;
-import com.f1x.mtcdtools.activities.named.objects.NamedObjectsContainerActivity;
 import com.f1x.mtcdtools.adapters.NamedObjectIdsArrayAdapter;
 import com.f1x.mtcdtools.named.objects.ActionsSequence;
 import com.f1x.mtcdtools.named.objects.ModeList;
@@ -15,7 +14,7 @@ import com.f1x.mtcdtools.named.objects.NamedObjectId;
 import com.f1x.mtcdtools.named.objects.actions.BroadcastIntentAction;
 import com.f1x.mtcdtools.named.objects.actions.KeyAction;
 import com.f1x.mtcdtools.named.objects.actions.LaunchAction;
-import com.f1x.mtcdtools.named.objects.actions.StartActivityAction;
+import com.f1x.mtcdtools.named.objects.actions.StartIntentAction;
 
 import java.util.Arrays;
 import java.util.TreeSet;
@@ -32,7 +31,7 @@ public class ModeListActivity extends NamedObjectsContainerActivity {
     @Override
     protected void initControls() {
         super.initControls();
-        mNamedObjectIdsArrayAdapter.setObjectTypeFilters(new TreeSet<>(Arrays.asList(KeyAction.OBJECT_TYPE, LaunchAction.OBJECT_TYPE, BroadcastIntentAction.OBJECT_TYPE, StartActivityAction.OBJECT_TYPE, ActionsSequence.OBJECT_TYPE)));
+        mNamedObjectIdsArrayAdapter.setObjectTypeFilters(new TreeSet<>(Arrays.asList(KeyAction.OBJECT_TYPE, LaunchAction.OBJECT_TYPE, BroadcastIntentAction.OBJECT_TYPE, StartIntentAction.OBJECT_TYPE, ActionsSequence.OBJECT_TYPE)));
         mModeListArrayAdapter = new NamedObjectIdsArrayAdapter(this);
 
         ListView addedActionsListView = (ListView) this.findViewById(R.id.listViewAddedNamedObjects);

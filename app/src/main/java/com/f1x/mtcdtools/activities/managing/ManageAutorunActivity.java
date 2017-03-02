@@ -16,7 +16,7 @@ import com.f1x.mtcdtools.named.objects.NamedObjectId;
 import com.f1x.mtcdtools.named.objects.actions.BroadcastIntentAction;
 import com.f1x.mtcdtools.named.objects.actions.KeyAction;
 import com.f1x.mtcdtools.named.objects.actions.LaunchAction;
-import com.f1x.mtcdtools.named.objects.actions.StartActivityAction;
+import com.f1x.mtcdtools.named.objects.actions.StartIntentAction;
 
 import org.json.JSONException;
 
@@ -35,7 +35,7 @@ public class ManageAutorunActivity extends ServiceActivity {
         setContentView(R.layout.activity_manage_autorun);
 
         mNamedObjectIdsArrayAdapter = new NamedObjectIdsArrayAdapter(this);
-        mNamedObjectIdsArrayAdapter.setObjectTypeFilters(new TreeSet<>(Arrays.asList(ActionsSequence.OBJECT_TYPE, KeyAction.OBJECT_TYPE, LaunchAction.OBJECT_TYPE, BroadcastIntentAction.OBJECT_TYPE, StartActivityAction.OBJECT_TYPE)));
+        mNamedObjectIdsArrayAdapter.setObjectTypeFilters(new TreeSet<>(Arrays.asList(ActionsSequence.OBJECT_TYPE, KeyAction.OBJECT_TYPE, LaunchAction.OBJECT_TYPE, BroadcastIntentAction.OBJECT_TYPE, StartIntentAction.OBJECT_TYPE)));
 
         mNamedObjectsSpinner = (Spinner)this.findViewById(R.id.spinnerNamedObjects);
         mNamedObjectsSpinner.setAdapter(mNamedObjectIdsArrayAdapter);

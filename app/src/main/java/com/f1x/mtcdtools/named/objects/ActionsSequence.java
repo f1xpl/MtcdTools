@@ -20,19 +20,11 @@ public class ActionsSequence extends NamedObjectsContainer {
 
         mDelays = new ArrayList<>();
 
-        try {
-            JSONArray delaysArray = json.getJSONArray(ACTION_DELAYS_PROPERTY);
+        JSONArray delaysArray = json.getJSONArray(ACTION_DELAYS_PROPERTY);
 
-            for (int i = 0; i < delaysArray.length(); ++i) {
-                JSONObject delayJson = delaysArray.getJSONObject(i);
-                mDelays.add(new AbstractMap.SimpleEntry<>(new NamedObjectId(delayJson.getString(NAME_PROPERTY)), delayJson.getInt(ACTION_DELAY_PROPERTY)));
-            }
-        } catch (JSONException e) { // Backward compatibility with version 1.3
-            e.printStackTrace();
-
-            for(NamedObjectId actionId : this.getActionIds()) {
-                mDelays.add(new AbstractMap.SimpleEntry<>(actionId, 0));
-            }
+        for (int i = 0; i < delaysArray.length(); ++i) {
+            JSONObject delayJson = delaysArray.getJSONObject(i);
+            mDelays.add(new AbstractMap.SimpleEntry<>(new NamedObjectId(delayJson.getString(NAME_PROPERTY)), delayJson.getInt(ACTION_DELAY_PROPERTY)));
         }
     }
 

@@ -3,6 +3,8 @@ package com.f1x.mtcdtools.storage;
 import com.f1x.mtcdtools.named.objects.NamedObject;
 import com.f1x.mtcdtools.named.objects.NamedObjectId;
 import com.f1x.mtcdtools.named.objects.NamedObjectsFactory;
+import com.f1x.mtcdtools.named.objects.actions.Action;
+import com.f1x.mtcdtools.named.objects.actions.StartIntentAction;
 import com.f1x.mtcdtools.storage.exceptions.DuplicatedEntryException;
 import com.f1x.mtcdtools.storage.exceptions.EntryCreationFailed;
 
@@ -28,6 +30,7 @@ public class NamedObjectsStorage extends UniqueObjectsStorage<NamedObjectId, Nam
 
         for (int i = 0; i < namedObjectsArray.length(); ++i) {
             JSONObject namedObjectJson = namedObjectsArray.getJSONObject(i);
+            backwardCompatibilityWith1_5_ChangeActionType(namedObjectJson);
             NamedObject namedObject = NamedObjectsFactory.createNamedObject(namedObjectJson);
 
             if(namedObject == null) {
@@ -70,6 +73,17 @@ public class NamedObjectsStorage extends UniqueObjectsStorage<NamedObjectId, Nam
     private void replaceDependency(NamedObjectId oldId, NamedObjectId newId) {
         for(Map.Entry<NamedObjectId, NamedObject> entry : mItems.entrySet()) {
             entry.getValue().replaceDependency(oldId, newId);
+        }
+    }
+
+    private void backwardCompatibilityWith1_5_ChangeActionType(JSONObject namedObjectJson) {
+        try {
+            if(namedObjectJson.getString(Action.OBJECT_TYPE_PROPERTY).equals("StartActivityAction")) {
+                namedObjectJson.remove(Action.OBJECT_TYPE_PROPERTY);
+                namedObjectJson.put(Action.OBJECT_TYPE_PROPERTY, StartIntentAction.OBJECT_TYPE);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 

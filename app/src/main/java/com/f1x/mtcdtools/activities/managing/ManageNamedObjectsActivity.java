@@ -16,7 +16,7 @@ import com.f1x.mtcdtools.activities.ServiceActivity;
 import com.f1x.mtcdtools.activities.named.objects.actions.BroadcastIntentActionActivity;
 import com.f1x.mtcdtools.activities.named.objects.actions.KeyActionActivity;
 import com.f1x.mtcdtools.activities.named.objects.actions.LaunchActionActivity;
-import com.f1x.mtcdtools.activities.named.objects.actions.StartActivityActionActivity;
+import com.f1x.mtcdtools.activities.named.objects.actions.StartIntentActionActivity;
 import com.f1x.mtcdtools.adapters.NamedObjectIdsArrayAdapter;
 import com.f1x.mtcdtools.named.objects.ActionsList;
 import com.f1x.mtcdtools.named.objects.ActionsSequence;
@@ -26,7 +26,7 @@ import com.f1x.mtcdtools.named.objects.NamedObjectId;
 import com.f1x.mtcdtools.named.objects.actions.BroadcastIntentAction;
 import com.f1x.mtcdtools.named.objects.actions.KeyAction;
 import com.f1x.mtcdtools.named.objects.actions.LaunchAction;
-import com.f1x.mtcdtools.named.objects.actions.StartActivityAction;
+import com.f1x.mtcdtools.named.objects.actions.StartIntentAction;
 
 import org.json.JSONException;
 
@@ -80,8 +80,8 @@ public class ManageNamedObjectsActivity extends ServiceActivity {
                     case BroadcastIntentAction.OBJECT_TYPE:
                         intent.setClass(ManageNamedObjectsActivity.this, BroadcastIntentActionActivity.class);
                         break;
-                    case StartActivityAction.OBJECT_TYPE:
-                        intent.setClass(ManageNamedObjectsActivity.this, StartActivityActionActivity.class);
+                    case StartIntentAction.OBJECT_TYPE:
+                        intent.setClass(ManageNamedObjectsActivity.this, StartIntentActionActivity.class);
                         break;
                     case ActionsList.OBJECT_TYPE:
                         intent.setClass(ManageNamedObjectsActivity.this, ActionsListActivity.class);

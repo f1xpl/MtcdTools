@@ -10,6 +10,26 @@
         android:layout_height="0dp"
         android:orientation="vertical" >
 
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:text="@string/Activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioButtonActivity"
+                android:layout_weight="1" />
+
+            <RadioButton
+                android:text="@string/Service"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioButtonService"
+                android:layout_weight="1" />
+        </RadioGroup>
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,7 +46,7 @@
             android:inputType="number"
             android:hint="@string/Flags" />
 
-        <include layout="@layout/layout_cutom_intent_action_details" />
+        <include layout="@layout/layout_custom_intent_action_details" />
         <include layout="@layout/layout_store_named_object" />
 
     </LinearLayout>

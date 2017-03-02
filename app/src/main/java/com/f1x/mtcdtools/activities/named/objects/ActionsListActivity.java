@@ -19,7 +19,7 @@ import com.f1x.mtcdtools.named.objects.NamedObjectId;
 import com.f1x.mtcdtools.named.objects.actions.BroadcastIntentAction;
 import com.f1x.mtcdtools.named.objects.actions.KeyAction;
 import com.f1x.mtcdtools.named.objects.actions.LaunchAction;
-import com.f1x.mtcdtools.named.objects.actions.StartActivityAction;
+import com.f1x.mtcdtools.named.objects.actions.StartIntentAction;
 
 import java.util.Arrays;
 import java.util.List;
@@ -38,7 +38,7 @@ public class ActionsListActivity extends NamedObjectsContainerActivity {
     protected void initControls() {
         super.initControls();
 
-        mNamedObjectIdsArrayAdapter.setObjectTypeFilters(new TreeSet<>(Arrays.asList(ActionsSequence.OBJECT_TYPE, KeyAction.OBJECT_TYPE, LaunchAction.OBJECT_TYPE, BroadcastIntentAction.OBJECT_TYPE, StartActivityAction.OBJECT_TYPE)));
+        mNamedObjectIdsArrayAdapter.setObjectTypeFilters(new TreeSet<>(Arrays.asList(ActionsSequence.OBJECT_TYPE, KeyAction.OBJECT_TYPE, LaunchAction.OBJECT_TYPE, BroadcastIntentAction.OBJECT_TYPE, StartIntentAction.OBJECT_TYPE)));
 
         // -----------------------------------------------------------------------------------------
         TabHost tabHost = (TabHost)findViewById(R.id.tabHost);

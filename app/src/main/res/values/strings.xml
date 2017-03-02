@@ -9,7 +9,7 @@
     <string name="CreateNewBroadcastIntentAction">Create a new broadcast Intent action</string>
     <string name="CreateNewKeyAction">Create a new key action</string>
     <string name="CreateNewLaunchAction">Create a new launch action</string>
-    <string name="CreateNewStartActivityAction">Create a new start activity action</string>
+    <string name="CreateNewStartIntentAction">Create a new start intent action</string>
 
     <string name="ObtainKeysSequence">Obtain keys sequence</string>
     <string name="Save">Save</string>
@@ -55,4 +55,6 @@
     <string name="SpeechPrompt">How can I help you?</string>
     <string name="CreateNewModeList">Create a new MODE list</string>
     <string name="ManageAutorun">Manage autorun</string>
+    <string name="Activity">Activity</string>
+    <string name="Service">Service</string>
 </resources>

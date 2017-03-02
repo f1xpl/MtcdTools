@@ -33,6 +33,6 @@ public abstract class Action extends NamedObject {
         return objectType.equals(KeyAction.OBJECT_TYPE) ||
                 objectType.equals(LaunchAction.OBJECT_TYPE) ||
                 objectType.equals(BroadcastIntentAction.OBJECT_TYPE) ||
-                objectType.equals(StartActivityAction.OBJECT_TYPE);
+                objectType.equals(StartIntentAction.OBJECT_TYPE);
     }
 }

@@ -4,7 +4,7 @@ import com.f1x.mtcdtools.named.objects.actions.Action;
 import com.f1x.mtcdtools.named.objects.actions.BroadcastIntentAction;
 import com.f1x.mtcdtools.named.objects.actions.KeyAction;
 import com.f1x.mtcdtools.named.objects.actions.LaunchAction;
-import com.f1x.mtcdtools.named.objects.actions.StartActivityAction;
+import com.f1x.mtcdtools.named.objects.actions.StartIntentAction;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,8 +22,8 @@ public class NamedObjectsFactory {
                 return new KeyAction(json);
             case LaunchAction.OBJECT_TYPE:
                 return new LaunchAction(json);
-            case StartActivityAction.OBJECT_TYPE:
-                return new StartActivityAction(json);
+            case StartIntentAction.OBJECT_TYPE:
+                return new StartIntentAction(json);
             case BroadcastIntentAction.OBJECT_TYPE:
                 return new BroadcastIntentAction(json);
             case ActionsList.OBJECT_TYPE:

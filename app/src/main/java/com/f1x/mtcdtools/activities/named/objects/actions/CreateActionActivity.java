@@ -21,7 +21,7 @@ public class CreateActionActivity extends Activity {
         createLaunchActionButton.setOnClickListener(new StartActivityButtonClickListener(this, LaunchActionActivity.class));
 
         Button createStartActivityActionButton = (Button)findViewById(R.id.buttonCreateNewStartActivityAction);
-        createStartActivityActionButton.setOnClickListener(new StartActivityButtonClickListener(this, StartActivityActionActivity.class));
+        createStartActivityActionButton.setOnClickListener(new StartActivityButtonClickListener(this, StartIntentActionActivity.class));
 
         Button createBroadcastIntentActionButton = (Button)findViewById(R.id.buttonCreateNewBroadcastIntentAction);
         createBroadcastIntentActionButton.setOnClickListener(new StartActivityButtonClickListener(this, BroadcastIntentActionActivity.class));

@@ -78,30 +78,6 @@ public class ActionsSequenceTest {
     }
 
     @Test
-    public void test_Construct_Backward_Compatibility() throws JSONException {
-        mSequenceJson.remove(ActionsSequence.ACTION_DELAYS_PROPERTY);
-
-        ActionsSequence actionsSequence = new ActionsSequence(mSequenceJson);
-        assertEquals(mSequenceId, actionsSequence.getId());
-
-        List<NamedObjectId> actionIds = new ArrayList<>(actionsSequence.getActionIds());
-
-        assertEquals(mActionsArray.length(), actionIds.size());
-        for (int i = 0; i < mActionsArray.length(); ++i) {
-            assertEquals(new NamedObjectId(mActionsArray.getString(i)), actionIds.get(i));
-        }
-
-        assertEquals(0, actionsSequence.getDelayForAction(0));
-        assertEquals(new NamedObjectId("action1"), actionsSequence.getActionDelays().get(0).getKey());
-
-        assertEquals(0, actionsSequence.getDelayForAction(1));
-        assertEquals(new NamedObjectId("action2"), actionsSequence.getActionDelays().get(1).getKey());
-
-        assertEquals(0, actionsSequence.getDelayForAction(2));
-        assertEquals(new NamedObjectId("action3"), actionsSequence.getActionDelays().get(2).getKey());
-    }
-
-    @Test
     public void test_toJSON() throws JSONException {
         ActionsSequence actionsSequence = new ActionsSequence(mSequenceJson);
         assertEquals(mSequenceJson.toString(), actionsSequence.toJson().toString());

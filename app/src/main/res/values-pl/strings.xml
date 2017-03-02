@@ -9,7 +9,7 @@
     <string name="CreateNewBroadcastIntentAction">Utwórz akcję rozgłoszeniową</string>
     <string name="CreateNewKeyAction">Utwórz akcję klawisza</string>
     <string name="CreateNewLaunchAction">Utwórz akcję uruchamiania aplikacji</string>
-    <string name="CreateNewStartActivityAction">Utwórz akcję uruchamiania aktywności</string>
+    <string name="CreateNewStartIntentAction">Utwórz akcję uruchamiania intencji</string>
     <string name="ApplicationSettings">Ustawienia</string>
     <string name="IntentCategory">Kategoria intencji</string>
     <string name="IntentData">Dane intencji</string>
@@ -50,4 +50,6 @@
     <string name="SpeechPrompt">Jak mogę Ci pomóc?</string>
     <string name="CreateNewModeList">Utwórz nową listę MODE</string>
     <string name="ManageAutorun">Zarządzaj autostartem</string>
+    <string name="Activity">Aktywność</string>
+    <string name="Service">Serwis</string>
 </resources>
