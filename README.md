@@ -21,8 +21,9 @@ Use this action to simulate a press of an android media key (e.g. play, next, pa
 ### Launch action
 Use this action to launch an application installed on the system. MtcdTools will prepare a list of installed applications for you.
 
-### Start activity action
-Similar feature is available in Tasker. It is useful to launch an application in a non standard way, e.g. displays specific activity accordingly to provided data URI. More information how to deal with intent are available on [Android Developer site](https://developer.android.com/reference/android/content/Intent.html).
+### Start intent action
+As of version 1.6, Start activity action has been replaced by Start intent action.
+Similar feature is available in Tasker. It is useful to launch an application in a non standard way, e.g. displays specific activity accordingly to provided data URI. As of version 1.6 is possible to select target for the intent (Service or Activity). More information how to deal with intent are available on [Android Developer site](https://developer.android.com/reference/android/content/Intent.html).
 
 ### Broadcast intent action
 Similar feature is available in Tasker. Use this action to broadcast an intent through the system. Some applications are using this mechanism to communicate with other apps. E.g. MTC devices are using this mechanism to notify about key press. More information how to deal with broadcast are available on [Android Developer site](https://developer.android.com/guide/components/broadcasts.html).
