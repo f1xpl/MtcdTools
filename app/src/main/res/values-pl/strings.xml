@@ -52,4 +52,5 @@
     <string name="ManageAutorun">Zarządzaj autostartem</string>
     <string name="Activity">Aktywność</string>
     <string name="Service">Serwis</string>
+    <string name="IndicatePress">Sygnalizuj dźwiękiem</string>
 </resources>

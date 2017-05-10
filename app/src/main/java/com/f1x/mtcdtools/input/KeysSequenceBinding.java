@@ -22,11 +22,13 @@ public class KeysSequenceBinding {
         }
 
         mTargetId = new NamedObjectId(json.getString(TARGET_NAME_PROPERTY));
+        mPlayIndication = json.has(PLAY_INDICATION_PROPERTY) && json.getBoolean(PLAY_INDICATION_PROPERTY);
     }
 
-    public KeysSequenceBinding(List<Integer> keysSequence, NamedObjectId targetId) {
+    public KeysSequenceBinding(List<Integer> keysSequence, NamedObjectId targetId, boolean playIndication) {
         mKeysSequence = keysSequence;
         mTargetId = targetId;
+        mPlayIndication = playIndication;
     }
 
     public void setTargetId(NamedObjectId targetId) {
@@ -41,6 +43,10 @@ public class KeysSequenceBinding {
         return new ArrayList<>(mKeysSequence);
     }
 
+    public boolean playIndication() {
+        return mPlayIndication;
+    }
+
     public JSONObject toJson() throws JSONException {
         JSONObject json = new JSONObject();
         JSONArray keysSequenceArray = new JSONArray();
@@ -51,13 +57,16 @@ public class KeysSequenceBinding {
 
         json.put(KEYS_SEQUENCE_PROPERTY, keysSequenceArray);
         json.put(TARGET_NAME_PROPERTY, mTargetId);
+        json.put(PLAY_INDICATION_PROPERTY, mPlayIndication);
 
         return json;
     }
 
     private final List<Integer> mKeysSequence;
     private NamedObjectId mTargetId;
+    private boolean mPlayIndication;
 
     public static final String KEYS_SEQUENCE_PROPERTY = "keysSequence";
     public static final String TARGET_NAME_PROPERTY = "targetName";
+    public static final String PLAY_INDICATION_PROPERTY = "playIndication";
 }

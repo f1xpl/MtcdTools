@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.f1x.mtcdtools.R;
@@ -75,6 +76,8 @@ public class BindingActivity extends ServiceActivity {
                 startActivityForResult(new Intent(BindingActivity.this, ObtainKeysSequenceActivity.class), 0);
             }
         });
+
+        mIndicatePressSwitch = (Switch)this.findViewById(R.id.indicatePressSwitch);
     }
 
     private void storeKeysSequenceBinding() {
@@ -86,7 +89,7 @@ public class BindingActivity extends ServiceActivity {
         }
 
         try {
-            KeysSequenceBinding keysSequenceBinding = new KeysSequenceBinding(keysSequence, (NamedObjectId)mNamesSpinner.getSelectedItem());
+            KeysSequenceBinding keysSequenceBinding = new KeysSequenceBinding(keysSequence, (NamedObjectId)mNamesSpinner.getSelectedItem(), mIndicatePressSwitch.isChecked());
 
             if(mEditMode) {
                 mServiceBinder.getKeysSequenceBindingsStorage().replace(mEditKeysSequence, keysSequence, keysSequenceBinding);
@@ -113,6 +116,7 @@ public class BindingActivity extends ServiceActivity {
 
             if(binding != null) {
                 mKeysSequenceArrayAdapter.reset(binding.getKeysSequence());
+                mIndicatePressSwitch.setChecked(binding.playIndication());
             } else {
                 Toast.makeText(this, this.getText(R.string.ObjectNotFound), Toast.LENGTH_LONG).show();
                 finish();
@@ -143,6 +147,7 @@ public class BindingActivity extends ServiceActivity {
     private Spinner mNamesSpinner;
     private NamedObjectIdsArrayAdapter mNamedObjectIdsArrayAdapter;
     private KeysSequenceArrayAdapter mKeysSequenceArrayAdapter;
+    private Switch mIndicatePressSwitch;
 
     public static final String KEYS_SEQUENCE_NAME_PARAMETER = "keysSequence";
 }

@@ -13,10 +13,11 @@ import java.util.List;
  */
 
 public class KeysSequenceDispatcher implements KeysSequenceListener {
-    public KeysSequenceDispatcher(Context context, KeysSequenceBindingsStorage keysSequenceBindingsStorage, NamedObjectDispatcher namedObjectDispatcher) {
+    public KeysSequenceDispatcher(Context context, KeysSequenceBindingsStorage keysSequenceBindingsStorage, NamedObjectDispatcher namedObjectDispatcher, DispatchingIndicationPlayer dispatchingIndicationPlayer) {
         mContext = context;
         mKeysSequenceBindingsStorage = keysSequenceBindingsStorage;
         mNamedObjectDispatcher = namedObjectDispatcher;
+        mDispatchingIndicationPlayer = dispatchingIndicationPlayer;
     }
 
     @Override
@@ -25,6 +26,10 @@ public class KeysSequenceDispatcher implements KeysSequenceListener {
 
         if(keysSequenceBinding != null) {
             mNamedObjectDispatcher.dispatch(keysSequenceBinding.getTargetId(), mContext);
+
+            if(keysSequenceBinding.playIndication()) {
+                mDispatchingIndicationPlayer.play();
+            }
         }
     }
 
@@ -36,4 +41,5 @@ public class KeysSequenceDispatcher implements KeysSequenceListener {
     private final Context mContext;
     private final KeysSequenceBindingsStorage mKeysSequenceBindingsStorage;
     private final NamedObjectDispatcher mNamedObjectDispatcher;
+    private final DispatchingIndicationPlayer mDispatchingIndicationPlayer;
 }

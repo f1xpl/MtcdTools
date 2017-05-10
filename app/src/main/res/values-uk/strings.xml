@@ -51,4 +51,5 @@
 	<string name="ManageAutorun">Керування автозапуском</string>
 	<string name="Activity">Активність</string>
 	<string name="Service">Сервіс</string>
+    <string name="IndicatePress">відтворення звуку</string>
 </resources>

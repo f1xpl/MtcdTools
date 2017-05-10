@@ -45,8 +45,8 @@ public class KeysSequenceBindingsStorageTest {
         initMocks(this);
 
         mKeysSequenceBindings = new ArrayList<>();
-        mKeysSequenceBindings.add(new KeysSequenceBinding(Arrays.asList(1, 2, 5), new NamedObjectId("binding1")));
-        mKeysSequenceBindings.add(new KeysSequenceBinding(Arrays.asList(5, 6, 7), new NamedObjectId("binding2")));
+        mKeysSequenceBindings.add(new KeysSequenceBinding(Arrays.asList(1, 2, 5), new NamedObjectId("binding1"), false));
+        mKeysSequenceBindings.add(new KeysSequenceBinding(Arrays.asList(5, 6, 7), new NamedObjectId("binding2"), true));
         mKeysSequenceBindingsArray = new JSONArray();
         mKeysSequenceBindingsJson = new JSONObject();
     }

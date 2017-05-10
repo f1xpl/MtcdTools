@@ -12,6 +12,12 @@
         android:spinnerMode="dialog"
         android:id="@+id/spinnerNames" />
 
+    <Switch
+        android:id="@+id/indicatePressSwitch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/IndicatePress" />
+
     <TextView
         android:layout_marginBottom="@dimen/element_spacing"
         android:text="@string/KeysSequence"

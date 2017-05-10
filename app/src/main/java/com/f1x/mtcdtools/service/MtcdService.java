@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.activities.MainActivity;
 import com.f1x.mtcdtools.configuration.Configuration;
+import com.f1x.mtcdtools.dispatching.DispatchingIndicationPlayer;
 import com.f1x.mtcdtools.dispatching.KeysSequenceDispatcher;
 import com.f1x.mtcdtools.input.PressedKeysSequenceManager;
 import com.f1x.mtcdtools.dispatching.NamedObjectDispatcher;
@@ -44,6 +45,7 @@ public class MtcdService extends android.app.Service {
         mConfiguration = new Configuration(this.getSharedPreferences(MainActivity.APP_NAME, Context.MODE_PRIVATE));
         mPressedKeysSequenceManager = new PressedKeysSequenceManager(mConfiguration);
         mNamedObjectsDispatcher = new NamedObjectDispatcher(mNamedObjectsStorage);
+        mDispatchingIndicationPlayer = new DispatchingIndicationPlayer(this);
     }
 
     @Override
@@ -59,6 +61,8 @@ public class MtcdService extends android.app.Service {
             mPressedKeysSequenceManager.destroy();
             mServiceInitialized = false;
         }
+
+        mDispatchingIndicationPlayer.release();
     }
 
     @Override
@@ -80,7 +84,7 @@ public class MtcdService extends android.app.Service {
             mAutorunStorage.read();
 
             registerReceiver(mPressedKeysSequenceManager, mPressedKeysSequenceManager.getIntentFilter());
-            mPressedKeysSequenceManager.pushListener(new KeysSequenceDispatcher(this, mKeysSequenceBindingsStorage, mNamedObjectsDispatcher));
+            mPressedKeysSequenceManager.pushListener(new KeysSequenceDispatcher(this, mKeysSequenceBindingsStorage, mNamedObjectsDispatcher, mDispatchingIndicationPlayer));
             startForeground(1555, createNotification());
             mForceRestart = true;
             mServiceInitialized = true;
@@ -113,6 +117,7 @@ public class MtcdService extends android.app.Service {
     private PressedKeysSequenceManager mPressedKeysSequenceManager;
     private Configuration mConfiguration;
     private NamedObjectDispatcher mNamedObjectsDispatcher;
+    private DispatchingIndicationPlayer mDispatchingIndicationPlayer;
 
     private final ServiceBinder mServiceBinder = new ServiceBinder() {
         @Override

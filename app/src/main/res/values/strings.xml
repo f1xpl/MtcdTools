@@ -57,4 +57,5 @@
     <string name="ManageAutorun">Manage autorun</string>
     <string name="Activity">Activity</string>
     <string name="Service">Service</string>
+    <string name="IndicatePress">Indicate press</string>
 </resources>
