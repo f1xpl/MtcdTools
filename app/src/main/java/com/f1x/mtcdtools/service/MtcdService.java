@@ -3,15 +3,19 @@ package com.f1x.mtcdtools.service;
 import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
+import android.microntek.CarManager;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
+import com.f1x.mtcdtools.PlatformChecker;
 import com.f1x.mtcdtools.R;
 import com.f1x.mtcdtools.activities.MainActivity;
 import com.f1x.mtcdtools.configuration.Configuration;
 import com.f1x.mtcdtools.dispatching.DispatchingIndicationPlayer;
 import com.f1x.mtcdtools.dispatching.KeysSequenceDispatcher;
+import com.f1x.mtcdtools.input.PX3PressedKeysSequenceManager;
+import com.f1x.mtcdtools.input.PX5PressedKeysSequenceManager;
 import com.f1x.mtcdtools.input.PressedKeysSequenceManager;
 import com.f1x.mtcdtools.dispatching.NamedObjectDispatcher;
 import com.f1x.mtcdtools.storage.AutorunStorage;
@@ -43,7 +47,7 @@ public class MtcdService extends android.app.Service {
         mKeysSequenceBindingsStorage = new KeysSequenceBindingsStorage(fileReader, fileWriter);
         mAutorunStorage = new AutorunStorage(fileReader, fileWriter);
         mConfiguration = new Configuration(this.getSharedPreferences(MainActivity.APP_NAME, Context.MODE_PRIVATE));
-        mPressedKeysSequenceManager = new PressedKeysSequenceManager(mConfiguration);
+        mPressedKeysSequenceManager = PlatformChecker.isPX5Platform() ? new PX5PressedKeysSequenceManager(mConfiguration) : new PX3PressedKeysSequenceManager(mConfiguration, this);
         mNamedObjectsDispatcher = new NamedObjectDispatcher(mNamedObjectsStorage);
         mDispatchingIndicationPlayer = new DispatchingIndicationPlayer(this);
     }
@@ -57,7 +61,6 @@ public class MtcdService extends android.app.Service {
         }
 
         if(mServiceInitialized) {
-            unregisterReceiver(mPressedKeysSequenceManager);
             mPressedKeysSequenceManager.destroy();
             mServiceInitialized = false;
         }
@@ -83,7 +86,7 @@ public class MtcdService extends android.app.Service {
             mKeysSequenceBindingsStorage.read();
             mAutorunStorage.read();
 
-            registerReceiver(mPressedKeysSequenceManager, mPressedKeysSequenceManager.getIntentFilter());
+            mPressedKeysSequenceManager.init();
             mPressedKeysSequenceManager.pushListener(new KeysSequenceDispatcher(this, mKeysSequenceBindingsStorage, mNamedObjectsDispatcher, mDispatchingIndicationPlayer));
             startForeground(1555, createNotification());
             mForceRestart = true;

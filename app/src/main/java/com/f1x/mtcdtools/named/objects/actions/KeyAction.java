@@ -2,9 +2,11 @@ package com.f1x.mtcdtools.named.objects.actions;
 
 import android.content.Context;
 import android.media.AudioManager;
+import android.microntek.CarManager;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
+import com.f1x.mtcdtools.PlatformChecker;
 import com.f1x.mtcdtools.named.objects.NamedObjectId;
 
 import org.json.JSONException;
@@ -29,9 +31,8 @@ public class KeyAction extends Action {
     public void evaluate(Context context) {
         try {
             AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-            String parameterValue = audioManager.getParameters("av_channel=");
 
-            if(parameterValue.equals("sys")) { // workaround for MTC stuff
+            if(canEvaluate(audioManager)) { // workaround for MTC stuff
                 KeyEvent keyEventDown = new KeyEvent(KeyEvent.ACTION_DOWN, mKeyCode);
                 audioManager.dispatchMediaKeyEvent(keyEventDown);
 
@@ -54,6 +55,16 @@ public class KeyAction extends Action {
 
     public int getKeyCode() {
         return mKeyCode;
+    }
+
+    private boolean canEvaluate(AudioManager audioManager) {
+        if(PlatformChecker.isPX5Platform()) {
+            CarManager carManager = new CarManager();
+            return carManager.getStringState("av_channel").equals("sys");
+        } else {
+            String parameterValue = audioManager.getParameters("av_channel=");
+            return parameterValue.equals("sys");
+        }
     }
 
     private final int mKeyCode;
