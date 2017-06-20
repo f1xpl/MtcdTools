@@ -81,33 +81,3 @@ public abstract class PressedKeysSequenceManager implements ConfigurationChangeL
     private final List<KeysSequenceListener> mListeners;
     private final List<Integer> mPressedKeysSequence;
 }
-
-//package com.microntek.radio;
-//
-//        import android.os.Bundle;
-//        import android.os.Handler;
-//        import android.os.Message;
-//
-///* renamed from: com.microntek.radio.n */
-//class C0205n extends Handler {
-//    final /* synthetic */ RadioService ey;
-//
-//    C0205n(RadioService radioService) {
-//        this.ey = radioService;
-//    }
-//
-//    public void handleMessage(Message message) {
-//        super.handleMessage(message);
-//        if ("Radio".equals((String) message.obj)) {
-//            this.ey.di(message.getData());
-//        } else if ("KeyDown".equals((String) message.obj)) {
-//            Bundle data = message.getData();
-//            if ("key".equals(data.getString("type"))) {
-//                this.ey.dh(data.getInt("value"));
-//            }
-//        }
-//    }
-//}
-//
-//        this.df = new CarManager();
-//                this.df.attach(new C0205n(this), "Radio,KeyDown");

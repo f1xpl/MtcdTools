@@ -3,7 +3,6 @@ package com.f1x.mtcdtools.service;
 import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
-import android.microntek.CarManager;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
