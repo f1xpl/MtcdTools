@@ -5,11 +5,11 @@ android {
     buildToolsVersion '25.0.0'
 
     defaultConfig {
-        applicationId "com.f1x.mtcdtools"
+        applicationId "android.microntek.f1x.mtcdtools"
         minSdkVersion 19
         targetSdkVersion 25
         versionCode 1
-        versionName "1.8"
+        versionName "1.9"
     }
     buildTypes {
         release {

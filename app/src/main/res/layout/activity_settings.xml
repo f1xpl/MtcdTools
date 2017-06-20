@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:layout_margin="@dimen/layout_spacing"
     android:orientation="vertical"
-    tools:context="com.f1x.mtcdtools.activities.SettingsActivity">
+    tools:context="android.microntek.f1x.mtcdtools.activities.SettingsActivity">
 
     <TabHost
         android:id="@+id/tabHost"
