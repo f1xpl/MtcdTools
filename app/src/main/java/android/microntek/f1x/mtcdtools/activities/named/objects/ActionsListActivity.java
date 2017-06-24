@@ -10,7 +10,7 @@ import android.widget.TabHost;
 import android.microntek.f1x.mtcdtools.R;
 import android.microntek.f1x.mtcdtools.activities.input.ObtainKeysSequenceActivity;
 import android.microntek.f1x.mtcdtools.adapters.KeysSequenceArrayAdapter;
-import android.microntek.f1x.mtcdtools.named.NamedObjectIdsArrayAdapter;
+import android.microntek.f1x.mtcdtools.adapters.NamedObjectIdsArrayAdapter;
 import android.microntek.f1x.mtcdtools.utils.KeysSequenceConverter;
 import android.microntek.f1x.mtcdtools.named.objects.containers.ActionsList;
 import android.microntek.f1x.mtcdtools.named.objects.containers.ActionsSequence;

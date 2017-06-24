@@ -3,7 +3,7 @@ package android.microntek.f1x.mtcdtools.activities.named.objects;
 import android.widget.Spinner;
 
 import android.microntek.f1x.mtcdtools.R;
-import android.microntek.f1x.mtcdtools.named.NamedObjectIdsArrayAdapter;
+import android.microntek.f1x.mtcdtools.adapters.NamedObjectIdsArrayAdapter;
 
 /**
  * Created by f1x on 2017-02-05.

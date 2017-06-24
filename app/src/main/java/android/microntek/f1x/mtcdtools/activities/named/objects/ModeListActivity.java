@@ -6,7 +6,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import android.microntek.f1x.mtcdtools.R;
-import android.microntek.f1x.mtcdtools.named.NamedObjectIdsArrayAdapter;
+import android.microntek.f1x.mtcdtools.adapters.NamedObjectIdsArrayAdapter;
 import android.microntek.f1x.mtcdtools.named.objects.containers.ActionsSequence;
 import android.microntek.f1x.mtcdtools.named.objects.containers.ModeList;
 import android.microntek.f1x.mtcdtools.named.NamedObject;

@@ -1,4 +1,4 @@
-package android.microntek.f1x.mtcdtools.named;
+package android.microntek.f1x.mtcdtools.adapters;
 
 import android.content.Context;
 import android.microntek.f1x.mtcdtools.named.NamedObjectId;

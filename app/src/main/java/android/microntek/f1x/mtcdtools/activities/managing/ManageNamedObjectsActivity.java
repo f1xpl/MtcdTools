@@ -17,7 +17,7 @@ import android.microntek.f1x.mtcdtools.activities.named.objects.actions.Broadcas
 import android.microntek.f1x.mtcdtools.activities.named.objects.actions.KeyActionActivity;
 import android.microntek.f1x.mtcdtools.activities.named.objects.actions.LaunchActionActivity;
 import android.microntek.f1x.mtcdtools.activities.named.objects.actions.StartIntentActionActivity;
-import android.microntek.f1x.mtcdtools.named.NamedObjectIdsArrayAdapter;
+import android.microntek.f1x.mtcdtools.adapters.NamedObjectIdsArrayAdapter;
 import android.microntek.f1x.mtcdtools.named.objects.containers.ActionsList;
 import android.microntek.f1x.mtcdtools.named.objects.containers.ActionsSequence;
 import android.microntek.f1x.mtcdtools.named.objects.containers.ModeList;

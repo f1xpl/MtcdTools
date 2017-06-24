@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import android.microntek.f1x.mtcdtools.R;
 import android.microntek.f1x.mtcdtools.service.ServiceActivity;
-import android.microntek.f1x.mtcdtools.named.NamedObjectIdsArrayAdapter;
+import android.microntek.f1x.mtcdtools.adapters.NamedObjectIdsArrayAdapter;
 import android.microntek.f1x.mtcdtools.service.configuration.Configuration;
 import android.microntek.f1x.mtcdtools.service.configuration.ConfigurationChangeListener;
 import android.microntek.f1x.mtcdtools.service.input.KeysSequenceListener;
