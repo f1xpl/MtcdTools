@@ -18,16 +18,7 @@ public class StartIntentAction extends CustomIntentAction {
         super(json);
         mClassName = json.getString(CLASS_NAME_PROPERTY);
         mFlags = json.getInt(FLAGS_PROPERTY);
-
-        int target = TARGET_ACTIVITY;
-
-        try { // Backward compatibility with version 1.5
-            target = json.getInt(TARGET_PROPERTY);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        mTarget = target;
+        mTarget = json.getInt(TARGET_PROPERTY);
     }
 
     public StartIntentAction(NamedObjectId id, String intentPackage, String intentAction,
