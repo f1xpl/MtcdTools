@@ -24,6 +24,7 @@
         <receiver android:name="com.microntek.f1x.mtcdtools.service.BootCompletedBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.SCREEN_ON" />
             </intent-filter>
         </receiver>
 
@@ -45,11 +46,12 @@
             android:launchMode="singleInstance"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name="com.microntek.f1x.mtcdtools.activities.SettingsActivity"/>
-        <activity android:name="com.microntek.f1x.mtcdtools.service.dispatching.activities.VoiceDispatchActivity"
+        <activity android:name="com.microntek.f1x.mtcdtools.activities.SettingsActivity" />
+        <activity
+            android:name="com.microntek.f1x.mtcdtools.service.dispatching.activities.VoiceDispatchActivity"
             android:launchMode="singleTask"
             android:screenOrientation="landscape"
-            android:theme="@style/AlertDialogTheme"/>
+            android:theme="@style/AlertDialogTheme" />
     </application>
 
 </manifest>

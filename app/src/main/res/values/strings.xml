@@ -30,7 +30,8 @@
     <string name="Reset">Reset</string>
     <string name="EmptyNameError">Please provide name</string>
 
-    <string name="MtcdServiceDescription">MtcdTools Service is now active</string>
+    <string name="MtcdServiceDescription">Service is now active.</string>
+    <string name="PersistentNotificationChannel">Persistent notification</string>
     <string name="ServiceUnavailable">Service is unavailable</string>
     <string name="ObjectNotFound">Object not found</string>
     <string name="UnknownObjectType">Unknown object type</string>
