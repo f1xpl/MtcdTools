@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="android.microntek.f1x.mtcdtools">
+    package="com.microntek.f1x.mtcdtools">
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:allowBackup="true"
@@ -10,7 +11,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="android.microntek.f1x.mtcdtools.activities.MainActivity">
+        <activity android:name="com.microntek.f1x.mtcdtools.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,34 +19,34 @@
             </intent-filter>
         </activity>
 
-        <service android:name="android.microntek.f1x.mtcdtools.service.MtcdService" />
+        <service android:name="com.microntek.f1x.mtcdtools.service.MtcdService" />
 
-        <receiver android:name="android.microntek.f1x.mtcdtools.service.BootCompletedBroadcastReceiver">
+        <receiver android:name="com.microntek.f1x.mtcdtools.service.BootCompletedBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-        <activity android:name="android.microntek.f1x.mtcdtools.activities.named.objects.actions.CreateActionActivity" />
-        <activity android:name="android.microntek.f1x.mtcdtools.activities.input.BindingActivity" />
-        <activity android:name="android.microntek.f1x.mtcdtools.activities.named.objects.ActionsListActivity" />
-        <activity android:name="android.microntek.f1x.mtcdtools.activities.named.objects.actions.KeyActionActivity" />
-        <activity android:name="android.microntek.f1x.mtcdtools.activities.named.objects.actions.LaunchActionActivity" />
-        <activity android:name="android.microntek.f1x.mtcdtools.activities.named.objects.actions.StartIntentActionActivity" />
-        <activity android:name="android.microntek.f1x.mtcdtools.activities.named.objects.actions.BroadcastIntentActionActivity" />
-        <activity android:name="android.microntek.f1x.mtcdtools.activities.managing.ManageBindingsActivity" />
-        <activity android:name="android.microntek.f1x.mtcdtools.activities.input.ObtainKeysSequenceActivity" />
-        <activity android:name="android.microntek.f1x.mtcdtools.activities.managing.ManageNamedObjectsActivity" />
-        <activity android:name="android.microntek.f1x.mtcdtools.activities.named.objects.ActionsSequenceActivity" />
-        <activity android:name="android.microntek.f1x.mtcdtools.activities.named.objects.ModeListActivity" />
-        <activity android:name="android.microntek.f1x.mtcdtools.activities.managing.ManageAutorunActivity" />
+        <activity android:name="com.microntek.f1x.mtcdtools.activities.named.objects.actions.CreateActionActivity" />
+        <activity android:name="com.microntek.f1x.mtcdtools.activities.input.BindingActivity" />
+        <activity android:name="com.microntek.f1x.mtcdtools.activities.named.objects.ActionsListActivity" />
+        <activity android:name="com.microntek.f1x.mtcdtools.activities.named.objects.actions.KeyActionActivity" />
+        <activity android:name="com.microntek.f1x.mtcdtools.activities.named.objects.actions.LaunchActionActivity" />
+        <activity android:name="com.microntek.f1x.mtcdtools.activities.named.objects.actions.StartIntentActionActivity" />
+        <activity android:name="com.microntek.f1x.mtcdtools.activities.named.objects.actions.BroadcastIntentActionActivity" />
+        <activity android:name="com.microntek.f1x.mtcdtools.activities.managing.ManageBindingsActivity" />
+        <activity android:name="com.microntek.f1x.mtcdtools.activities.input.ObtainKeysSequenceActivity" />
+        <activity android:name="com.microntek.f1x.mtcdtools.activities.managing.ManageNamedObjectsActivity" />
+        <activity android:name="com.microntek.f1x.mtcdtools.activities.named.objects.ActionsSequenceActivity" />
+        <activity android:name="com.microntek.f1x.mtcdtools.activities.named.objects.ModeListActivity" />
+        <activity android:name="com.microntek.f1x.mtcdtools.activities.managing.ManageAutorunActivity" />
         <activity
-            android:name="android.microntek.f1x.mtcdtools.service.dispatching.activities.ActionsListDispatchActivity"
+            android:name="com.microntek.f1x.mtcdtools.service.dispatching.activities.ActionsListDispatchActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name="android.microntek.f1x.mtcdtools.activities.SettingsActivity"/>
-        <activity android:name="android.microntek.f1x.mtcdtools.service.dispatching.activities.VoiceDispatchActivity"
+        <activity android:name="com.microntek.f1x.mtcdtools.activities.SettingsActivity"/>
+        <activity android:name="com.microntek.f1x.mtcdtools.service.dispatching.activities.VoiceDispatchActivity"
             android:launchMode="singleTask"
             android:screenOrientation="landscape"
             android:theme="@style/AlertDialogTheme"/>
