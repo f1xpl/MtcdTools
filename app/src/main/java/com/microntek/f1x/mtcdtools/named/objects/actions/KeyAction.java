@@ -12,6 +12,8 @@ import com.microntek.f1x.mtcdtools.named.NamedObjectId;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Objects;
+
 /**
  * Created by f1x on 2017-01-09.
  */
@@ -36,7 +38,7 @@ public class KeyAction extends Action {
 
             if(canEvaluate(audioManager)) { // workaround for MTC stuff
                 KeyEvent keyEventDown = new KeyEvent(KeyEvent.ACTION_DOWN, mKeyCode);
-                audioManager.dispatchMediaKeyEvent(keyEventDown);
+                Objects.requireNonNull(audioManager).dispatchMediaKeyEvent(keyEventDown);
 
                 KeyEvent keyEventUp = new KeyEvent(KeyEvent.ACTION_UP, mKeyCode);
                 audioManager.dispatchMediaKeyEvent(keyEventUp);

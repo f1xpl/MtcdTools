@@ -31,7 +31,7 @@ public class KeysSequenceConverter {
         return keysSequence;
     }
 
-    public static List<Integer> fromArray(int array[]) {
+    public static List<Integer> fromArray(int[] array) {
         List<Integer> keysSequence = new ArrayList<>();
 
         for(Integer value : array) {

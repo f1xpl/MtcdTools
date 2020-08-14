@@ -35,7 +35,7 @@ public class ObtainKeysSequenceActivity extends ServiceActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int keysSequence[] = new int[mPressedKeysArrayAdapter.getCount()];
+                int[] keysSequence = new int[mPressedKeysArrayAdapter.getCount()];
 
                 for(int i = 0; i < mPressedKeysArrayAdapter.getCount(); ++i) {
                     keysSequence[i] = mPressedKeysArrayAdapter.getItem(i);

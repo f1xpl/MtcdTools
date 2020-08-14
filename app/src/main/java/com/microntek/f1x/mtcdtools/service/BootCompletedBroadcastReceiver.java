@@ -8,8 +8,6 @@ import android.os.Build;
 
 import java.util.Objects;
 
-import androidx.core.content.ContextCompat;
-
 /**
  * Created by f1x on 2016-08-03.
  */
@@ -23,12 +21,10 @@ public class BootCompletedBroadcastReceiver extends BroadcastReceiver {
             startServiceIntent.setAction(MtcdService.ACTION_AUTORUN);
             startServiceIntent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
 
-            if (!isMyServiceRunning(context)) {
-                startService(context, startServiceIntent);
-            } else {
+            if (isMyServiceRunning(context)) {
                 context.stopService(startServiceIntent);
-                startService(context, startServiceIntent);
             }
+            startService(context, startServiceIntent);
         }
     }
 
@@ -49,7 +45,7 @@ public class BootCompletedBroadcastReceiver extends BroadcastReceiver {
         if (Build.VERSION.SDK_INT < 26) {
             context.startService(intent);
         } else {
-            ContextCompat.startForegroundService(context, intent);
+            context.startForegroundService(intent);
         }
     }
 

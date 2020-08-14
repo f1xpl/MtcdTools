@@ -1,6 +1,8 @@
 package com.microntek;
 
 import com.microntek.ICarService.Stub;
+
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -43,7 +45,7 @@ public class CarManager {
 
     private static IBinder getCarService() {
         try {
-            Class localClass = Class.forName("android.os.ServiceManager");
+            @SuppressLint("PrivateApi") Class localClass = Class.forName("android.os.ServiceManager");
             Method getService = localClass.getMethod("getService", new Class[] {String.class});
 
             if(getService != null) {

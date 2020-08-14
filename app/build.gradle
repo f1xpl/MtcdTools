@@ -28,6 +28,4 @@ dependencies {
     testImplementation "org.powermock:powermock-api-mockito:1.6.4"
     testImplementation "org.powermock:powermock-classloading-xstream:1.6.4"
     testImplementation "org.robolectric:robolectric:3.2.2"
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.2.0'
 }

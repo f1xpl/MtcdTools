@@ -8,9 +8,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
 
-import androidx.annotation.RequiresApi;
-import androidx.core.app.NotificationCompat;
-
 import android.widget.Toast;
 
 import com.microntek.f1x.mtcdtools.R;
@@ -109,31 +106,25 @@ public class MtcdService extends android.app.Service {
     }
 
     private Notification createNotification() {
-        String channelId;
+        Notification.Builder notification;
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            channelId = createNotificationChannel("MtcdToolsService", getString(R.string.PersistentNotificationChannel));
+            String channelId = "MtcdToolsService";
+
+            NotificationChannel channel = new NotificationChannel(channelId, getString(R.string.PersistentNotificationChannel), NotificationManager.IMPORTANCE_NONE);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            Objects.requireNonNull(notificationManager).createNotificationChannel(channel);
+
+            notification = new Notification.Builder(this, channelId);
         } else {
-            // If earlier version, channel ID is not used
-            // https://developer.android.com/reference/android/support/v4/app/NotificationCompat.Builder.html#NotificationCompat.Builder(android.content.Context)
-            channelId = "";
+            notification = new Notification.Builder(this);
         }
 
-        return new NotificationCompat.Builder(this, channelId)
-                .setContentTitle(getString(R.string.app_name))
+        return notification.setContentTitle(getString(R.string.app_name))
                 .setContentText(getString(R.string.MtcdServiceDescription))
                 .setSmallIcon(R.drawable.service_notification_icon)
                 .setOngoing(true)
                 .build();
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private String createNotificationChannel(String channelId, String channelName) {
-        NotificationChannel channel = new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_NONE);
-
-        NotificationManager notificationManager = getSystemService(NotificationManager.class);
-        Objects.requireNonNull(notificationManager).createNotificationChannel(channel);
-
-        return channelId;
     }
 
     private boolean mForceRestart;
